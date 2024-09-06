@@ -80,3 +80,8 @@
 /backend/!.vscode/tasks.json
 /backend/!.vscode/launch.json
 /backend/!.vscode/extensions.json
+
+/practicas/BereniseKu_7628/Etiquetas/dist
+/practicas/BereniseKu_7628/Etiquetas/node_modules
+/practicas/BereniseKu_7628/Etiquetas/.vscode/*
+practicas/BereniseKu_7628/Etiquetas/.angular/cache/
