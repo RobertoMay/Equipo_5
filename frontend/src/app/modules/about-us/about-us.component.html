@@ -1,0 +1,46 @@
+
+  <div class="contenedor">
+    <h1>Conoce más <span class="titulo">Sobre Nosotros</span></h1>
+  <p></p>
+    <!-- Sección de Misión -->
+    <div class="seccion">
+      <button (click)="toggle('mision')" class="accordion">
+        <span class="arrow" [ngClass]="{'rotated': sections.mision}">▼</span> MISIÓN
+      </button>
+      <div [class.active]="sections.mision" class="panel">
+        <p>La Casa Comunitaria, en estrecha colaboración con el Instituto Nacional de los Pueblos Indigenas (INPI), tiene como misión primordial consolidarse como un epicentro de empoderamiento y desarrollo integral para las comunidades indígenas. Nos comprometemos a facilitar el acceso a recursos, servicios y oportunidades que fortalezcan las capacidades de los beneficiarios, preservando sus tradiciones culturales y fomentando la inclusion social.</p>
+      </div>
+      </div>
+
+  
+    <!-- Sección de Visión -->
+    <div class="seccion">
+      <button (click)="toggle('vision')" class="accordion">
+        <span class="arrow" [ngClass]="{'rotated': sections.vision}">▼</span> VISIÓN
+      </button>
+      <div [class.active]="sections.vision" class="panel">
+        <p>Aspiramos a ser un modelo de gestión comunitaria respalda por el INPI, destacando por nuestra eficiencia en la canalización de recursos, la implementación de programas innovadores y la promoción de la autodeterminación. Buscando impulsar un cambio significativo en la calidad de vida de las comunidades, constrivuyendo a la construcción de un futuro donde la autosuficiencia y el bienestar sean la norma.</p>
+      </div>
+    </div>
+  
+    <!-- Sección de Políticas -->
+    <div class="seccion">
+      <button (click)="toggle('politicas')" class="accordion">
+        <span class="arrow" [ngClass]="{'rotated': sections.politicas}">▼</span> POLÍTICAS
+      </button>
+      <div [class.active]="sections.politicas" class="panel">
+        <p>Contenido de las políticas...</p>
+      </div>
+    </div>
+  
+    <!-- Sección de Líneas Estratégicas -->
+    <div class="seccion">
+      <button (click)="toggle('lineas')" class="accordion">
+        <span class="arrow" [ngClass]="{'rotated': sections.lineas}">▼</span> LÍNEAS ESTRATÉGICAS
+      </button>
+      <div [class.active]="sections.lineas" class="panel">
+        <p>Contenido de las líneas estratégicas...</p>
+      </div>
+    </div>
+
+  

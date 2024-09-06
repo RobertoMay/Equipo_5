@@ -1,0 +1,51 @@
+
+
+.contenedor {
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.titulo {
+  color: #61001f;
+}
+
+.accordion {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 2px solid #9400208c; /* División entre elementos */
+  transition: 0.4s;
+}
+
+.arrow {
+  margin-right: 8px;
+  transition: transform 0.4s ease; /* Animación de rotación */
+}
+
+.rotated {
+  transform: rotate(180deg); /* Rotar la flecha hacia arriba */
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: #f5f3f3;
+  overflow: hidden;
+  border-bottom: 1px solid #5f5e5e; /* Línea divisoria inferior */
+}
+
+.panel.active {
+  display: block;
+}
