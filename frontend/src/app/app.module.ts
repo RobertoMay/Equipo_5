@@ -7,9 +7,10 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { SkeletonComponent } from './layout/skeleton/skeleton.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, SkeletonComponent],
+  declarations: [AppComponent, SkeletonComponent, NavbarComponent],
   imports: [BrowserModule, AppRoutingModule, CoreModule, SharedModule],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],
