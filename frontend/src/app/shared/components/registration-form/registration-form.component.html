@@ -1,1 +1,74 @@
-<p>registration-form works!</p>
+<form [formGroup]="form" (ngSubmit)="sendData()">
+    <div class="form-group mb-3">
+        <label for="hive">Nombres completos*</label>
+        <input type="text" class="form-control" formControlName="fullNames" placeholder="Ingresa tus nombres"
+            [ngClass]="{ 'is-invalid': fm.fullNames.invalid && (fm.fullNames.dirty || fm.fullNames.touched) }">
+        <small class="text-danger mt-1 px-2 py-1"
+            *ngIf="(fm.fullNames.dirty || fm.fullNames.touched) && fm.fullNames.errors">
+            <ng-container [ngSwitch]="fm.fullNames.value">
+                <ng-container *ngSwitchCase="''">Tus nombres son requridos</ng-container>
+                <ng-container *ngSwitchDefault>El dato es invalido</ng-container>
+            </ng-container>
+        </small>
+    </div>
+
+    <div class="row">
+        <div class="form-group mb-3 col-md-6">
+            <label for="hive">Apellido paterno*</label>
+            <input type="text" class="form-control" formControlName="firstLastName"
+                placeholder="Ingresa tu primer apellido"
+                [ngClass]="{ 'is-invalid': fm.firstLastName.invalid && (fm.firstLastName.dirty || fm.firstLastName.touched) }">
+            <small class="text-danger mt-1 px-2 py-1"
+                *ngIf="(fm.firstLastName.dirty || fm.firstLastName.touched) && fm.firstLastName.errors">
+                <ng-container [ngSwitch]="fm.firstLastName.value">
+                    <ng-container *ngSwitchCase="''">Tu apellido paterno es requerido</ng-container>
+                    <ng-container *ngSwitchDefault>El dato es invalido</ng-container>
+                </ng-container>
+            </small>
+        </div>
+
+        <div class="form-group mb-3 col-md-6">
+            <label for="hive">Apellido materno*</label>
+            <input type="text" class="form-control" formControlName="secondLastName"
+                placeholder="Ingresa tus segundo apellido"
+                [ngClass]="{ 'is-invalid': fm.secondLastName.invalid && (fm.secondLastName.dirty || fm.secondLastName.touched) }">
+            <small class="text-danger mt-1 px-2 py-1"
+                *ngIf="(fm.secondLastName.dirty || fm.secondLastName.touched) && fm.secondLastName.errors">
+                <ng-container [ngSwitch]="fm.secondLastName.value">
+                    <ng-container *ngSwitchCase="''">Tu apellido materno es requerido</ng-container>
+                    <ng-container *ngSwitchDefault>El dato es invalido</ng-container>
+                </ng-container>
+            </small>
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="hive">CURP*</label>
+        <input type="text" class="form-control" formControlName="curp" maxlength="18" placeholder="Ingresa tu CURP"
+            (input)="toUppercase($event)"
+            [ngClass]="{ 'is-invalid': fm.curp.invalid && (fm.curp.dirty || fm.curp.touched) }">
+        <small class="text-danger mt-1 px-2 py-1" *ngIf="(fm.curp.dirty || fm.curp.touched) && fm.curp.errors">
+            <ng-container [ngSwitch]="fm.curp.value">
+                <ng-container *ngSwitchCase="''">Tu CURP es requerido</ng-container>
+                <ng-container *ngSwitchDefault>Ingresa tu CURP valido</ng-container>
+            </ng-container>
+        </small>
+    </div>
+
+
+    <div class="form-group mb-3">
+        <label for="hive">Correo electrónico*</label>
+        <input type="email" class="form-control" formControlName="email" placeholder="Ingresa tu correo"
+            [ngClass]="{ 'is-invalid': fm.email.invalid && (fm.email.dirty || fm.email.touched) }">
+        <small class="text-danger mt-1 px-2 py-1" *ngIf="(fm.email.dirty || fm.email.touched) && fm.email.errors">
+            <ng-container [ngSwitch]="fm.email.value">
+                <ng-container *ngSwitchCase="''">Tu correo electrónico es requerido</ng-container>
+                <ng-container *ngSwitchDefault>Ingresa un correo valido</ng-container>
+            </ng-container>
+        </small>
+    </div>
+
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-send" [disabled]="!form.valid">Enviar</button>
+    </div>
+</form>
