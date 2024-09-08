@@ -1,5 +1,5 @@
 
-  <div class="contenedor">
+<div class="contenedor">
     <h1>Conoce más <span class="titulo">Sobre Nosotros</span></h1>
   <p></p>
     <!-- Sección de Misión -->
@@ -23,24 +23,40 @@
       </div>
     </div>
   
-    <!-- Sección de Políticas -->
-    <div class="seccion">
-      <button (click)="toggle('politicas')" class="accordion">
-        <span class="arrow" [ngClass]="{'rotated': sections.politicas}">▼</span> POLÍTICAS
-      </button>
-      <div [class.active]="sections.politicas" class="panel">
-        <p>Contenido de las políticas...</p>
-      </div>
+    <!-- Sección de Beneficios -->
+<div class="seccion">
+    <button (click)="toggle('politicas')" class="accordion">
+      <span class="arrow" [ngClass]="{'rotated': sections.politicas}">▼</span> BENEFICIOS
+    </button>
+    <div [class.active]="sections.politicas" class="panel">
+      <p>La Casa Comunitaria ofrece una serie de beneficios diseñados para apoyar a los becarios en su desarrollo académico y personal:</p>
+      <ul>
+        <li>Alimentación gratuita de lunes a viernes, incluyendo desayuno, almuerzo y cena, garantizando una dieta balanceada.</li>
+        <li>Hospedaje sin costo alguno, brindando un ambiente seguro y cómodo para vivir durante el período de estudios.</li>
+        <li>Oportunidad de convivencia en un entorno sano y respetuoso con otros compañeros becarios, promoviendo la integración y el apoyo mutuo.</li>
+        <li>Espacios adecuados y cómodos para el estudio, realización de tareas y actividades necesarias para el desarrollo académico.</li>
+        <li>Acceso a talleres y actividades de desarrollo personal, como cursos de liderazgo, trabajo en equipo y habilidades para la vida.</li>
+        <li>Soporte emocional y acompañamiento en el proceso educativo a través de consejería y tutoría personalizada.</li>
+      </ul>
     </div>
+  </div>
   
-    <!-- Sección de Líneas Estratégicas -->
-    <div class="seccion">
-      <button (click)="toggle('lineas')" class="accordion">
-        <span class="arrow" [ngClass]="{'rotated': sections.lineas}">▼</span> LÍNEAS ESTRATÉGICAS
-      </button>
-      <div [class.active]="sections.lineas" class="panel">
-        <p>Contenido de las líneas estratégicas...</p>
-      </div>
+  <!-- Sección de Responsabilidades -->
+  <div class="seccion">
+    <button (click)="toggle('lineas')" class="accordion">
+      <span class="arrow" [ngClass]="{'rotated': sections.lineas}">▼</span> RESPONSABILIDADES
+    </button>
+    <div [class.active]="sections.lineas" class="panel">
+      <p>Para mantener un ambiente de convivencia armonioso y ordenado, todos los becarios de la Casa Comunitaria deben cumplir con las siguientes responsabilidades:</p>
+      <ul>
+        <li>Respetar y cumplir los horarios establecidos, tanto para la entrada y salida de la casa como para los tiempos de alimentación.</li>
+        <li>Mantener una actitud de respeto y cordialidad hacia el personal administrativo, operativo, y los demás compañeros becarios.</li>
+        <li>Participar activamente en las tareas de limpieza asignadas, respetando el horario y los turnos acordados.</li>
+        <li>Cuidar y mantener en buen estado todas las áreas y bienes comunes de la casa, haciendo uso responsable de los recursos disponibles.</li>
+        <li>Permanecer en la Casa Comunitaria durante los días laborales y notificar cualquier ausencia de manera oportuna al personal encargado.</li>
+        <li>Los padres de familia deberán asistir puntualmente a las asambleas y faenas programadas, contribuyendo activamente al bienestar de la comunidad.</li>
+        <li>Participar en las actividades comunitarias y programas de desarrollo que se organicen dentro de la Casa Comunitaria.</li>
+      </ul>
     </div>
-
+  </div>
   
