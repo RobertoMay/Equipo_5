@@ -6,7 +6,8 @@
   }
   
   .titulo {
-    color: #61001f;
+    color: #b41e46;
+
   }
   
   .accordion {
@@ -49,3 +50,6 @@
     display: block;
   }
   
+  p {
+    text-align: justify;
+  }
