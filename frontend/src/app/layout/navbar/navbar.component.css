@@ -1,0 +1,58 @@
+/* Estilos del navbar */
+.navbar {
+  display: flex;
+  
+  justify-content: space-around;
+  align-items: center;
+  background-color: #b41e46; /* Color de fondo */
+  padding: 15px 20px;
+  margin: 0 ;
+ 
+  width: 100%;
+ 
+  
+  
+}
+
+/* Logo del navbar */
+.navbar-logo img {
+  height: 70px; /* Altura del logo */
+ padding-top: 5px;
+ padding-bottom: 5px;
+  
+}
+
+/* Menú de navegación */
+.navbar-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 ;
+  display: flex;
+  gap: 15px; /* Espacio entre elementos */
+}
+
+/* Estilos para los enlaces del menú */
+.navbar-menu li a {
+  color: white; /* Color del texto */
+  text-decoration: none; /* Quitar subrayado */
+  font-size: 19px; /* Tamaño del texto */
+  font-weight: bold;
+  padding: 15px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  
+}
+
+/* Efecto hover en los enlaces */
+.navbar-menu li a:hover {
+  background-color: #ec4967; /* Fondo al pasar el cursor */
+
+}
+
+/* Estilo responsive: menú centrado en pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar-menu {
+    flex-direction: column; /* Cambiar orientación a vertical */
+    gap: 10px; /* Espacio entre elementos */
+  }
+}

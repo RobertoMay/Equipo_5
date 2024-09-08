@@ -8,9 +8,15 @@ import { SharedModule } from './shared/shared.module';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { SkeletonComponent } from './layout/skeleton/skeleton.component';
 import { AboutUsComponent } from './modules/about-us/about-us.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, SkeletonComponent, AboutUsComponent],
+  declarations: [
+    AppComponent,
+    SkeletonComponent,
+    NavbarComponent,
+    AboutUsComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, CoreModule, SharedModule],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],
