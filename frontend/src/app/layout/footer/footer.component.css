@@ -2,9 +2,9 @@
 
 footer {
   min-height: 100px;
-  background-color: #b41e46;;
+  background-color: #b41e46;
   color: white;
-  padding-top: 30px;
+  padding-top: 20px;
   max-width: 100%;
 }
 
@@ -54,19 +54,18 @@ footer {
 }
 
 .encargada {
-  font-family: 'Arial', sans-serif;
-  font-size: 15px; 
-  color: #f5b7b1 ;
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  color: #f5b7b1;
   padding: 2px;
   margin: auto;
-  Font-weight: bold
-  
+  font-weight: bold;
 }
 .derechos-de-autor {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 15px;
-  color: #f5b7b1 ;
+  color: #f5b7b1;
   padding: 20px;
   margin: auto;
-  Font-weight: bold
+  font-weight: bold;
 }

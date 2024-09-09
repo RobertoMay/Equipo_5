@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICarouselItem } from './Icarousel-item.metadata';
 
 @Component({
-  selector: 'app-carrousel',
+  selector: 'app-carrousel, [app-carrousel]',
   templateUrl: './carrousel.component.html',
   styleUrls: ['./carrousel.component.css'],
 })
