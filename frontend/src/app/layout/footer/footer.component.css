@@ -4,8 +4,10 @@ footer {
   min-height: 100px;
   background-color: #b41e46;;
   color: white;
-  padding-top: 30px;
-  max-width: 100%;
+  padding-top: 20px;
+  max-width: 200%;
+  display: flex;
+  position: relative;
 }
 
 /*.footer-logo {
