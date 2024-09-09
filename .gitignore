@@ -81,7 +81,19 @@
 /backend/!.vscode/launch.json
 /backend/!.vscode/extensions.json
 
+
+## Practicas
+/practicas/Roberto-Carlos-May-Vergara/7630-ejercicios/dist
+/practicas/Roberto-Carlos-May-Vergara/7630-ejercicios/node_modules
+/practicas/Roberto-Carlos-May-Vergara/7630-ejercicios/.vscode/*
+/practicas/Roberto-Carlos-May-Vergara/7630-ejercicios/.angular/cache/
+
+/practicas/Dylan-Fernando-Ek-Mas/Ejercicio1/primer_proyecto/proyectovacio/dist
+/practicas/Dylan-Fernando-Ek-Mas/Ejercicio1/primer_proyecto/proyectovacio/node_modules
+/practicas/Dylan-Fernando-Ek-Mas/Ejercicio1/primer_proyecto/proyectovacio/.vscode/*
+/practicas/Dylan-Fernando-Ek-Mas/Ejercicio1/primer_proyecto/proyectovacio/.angular/cache/
+
 /practicas/BereniseKu_7628/Etiquetas/dist
 /practicas/BereniseKu_7628/Etiquetas/node_modules
 /practicas/BereniseKu_7628/Etiquetas/.vscode/*
-practicas/BereniseKu_7628/Etiquetas/.angular/cache/
+/practicas/BereniseKu_7628/Etiquetas/.angular/cache/

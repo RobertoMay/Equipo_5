@@ -1,0 +1,21 @@
+.global-container {
+  margin: 80px 100px;
+}
+
+.container,
+.grid-container {
+  border: 2px solid;
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 150px;
+  padding: 0px;
+}
+
+.grid-item {
+  border: 1px solid;
+  padding: 0px;
+}

@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import * as fromComponents from './components';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 
 @NgModule({
   imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule],
-  declarations: [...fromComponents.components],
+  declarations: [...fromComponents.components, RegistrationFormComponent],
   exports: [
     FormsModule,
     ReactiveFormsModule,
