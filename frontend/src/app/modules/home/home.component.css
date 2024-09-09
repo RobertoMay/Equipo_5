@@ -6,6 +6,10 @@
   font-weight: bold;
 }
 
+* {
+  overflow: hidden;
+}
+
 @media (min-width: 768px) {
   .title {
     font-size: 3vw;

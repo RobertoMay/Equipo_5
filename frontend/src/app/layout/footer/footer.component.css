@@ -1,0 +1,71 @@
+/* Pie de pagina (footer) */
+
+footer {
+  min-height: 100px;
+  background-color: #b41e46;
+  color: white;
+  padding-top: 20px;
+  max-width: 100%;
+}
+
+/*.footer-logo {
+  height: 50px;
+  width: 1200px;
+  margin: 10px;
+}*/
+
+.footer-texto {
+  font-size: 1.5rem;
+  padding: 20px;
+  margin-bottom: 30px;
+  font-family: "Quicksand", sans-serif;
+}
+
+.footer-texto {
+  margin: 0;
+}
+
+.iconos-redes-sociales a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  margin: 10px;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  transition: all 0.2s ease-in;
+}
+
+.iconos-redes-sociales i {
+  color: rgb(252, 252, 252);
+  font-size: 1.5rem;
+  transition: all 0.2s ease-in;
+}
+
+.iconos-redes-sociales a:hover {
+  background-color: white;
+  border: 2px solid rgb(13, 110, 253);
+}
+
+.iconos-redes-sociales a:hover i {
+  color: black;
+}
+
+.encargada {
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  color: #f5b7b1;
+  padding: 2px;
+  margin: auto;
+  font-weight: bold;
+}
+.derechos-de-autor {
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  color: #f5b7b1;
+  padding: 20px;
+  margin: auto;
+  font-weight: bold;
+}
