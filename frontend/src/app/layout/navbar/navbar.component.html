@@ -1,47 +1,21 @@
 <nav class="navbar">
   <div class="navbar-logo">
-    <a href="/frontend/src/index.html">
+    <a routerLink="/">
       <img src="assets/images/logoinpi.png" alt="Logo INPI">
     </a>
   </div>
-  <ul class="navbar-menu">
+
+    <!-- Ícono de menú que se muestra en móviles -->
+    <button class="navbar-toggler" (click)="toggleMenu()">
+      &#9776; <!-- Símbolo de "hamburger menu" -->
+    </button>
+    
+
+  <ul class="navbar-menu" [ngClass]="{'active': isMenuOpen}">
     <li><a routerLink="/">Inicio</a></li>
-    <li><a routerLink="/about-us">Nosotros</a></li>
-    <li><a routerLink="/#">Actividades</a></li>
-    <li><a routerLink="/#">Inscripción</a></li>
-    <li><a routerLink="/#">Login</a></li>
+    <li><a routerLink="/nosotros">Nosotros</a></li>
+    <li><a routerLink="/actividades">Actividades</a></li>
+    <li><a routerLink="/inscripcion">Inscripción</a></li>
+    <li><a routerLink="/login">Login</a></li>
   </ul>
 </nav>
-
-
-
-
-<!--
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" routerLink="/">
-      <img src="assets/logo-inpi.png" alt="Logo INPI" height="40">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/nosotros">Nosotros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/actividades">Actividades</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/inscripcion">Inscripción</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  
-
--->

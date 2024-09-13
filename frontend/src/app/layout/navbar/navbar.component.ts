@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  isMenuOpen = false;
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    const navbarMenu = document.querySelector('.navbar-menu');
+    if (navbarMenu) {
+      navbarMenu.classList.toggle('active', this.isMenuOpen);
+    }
+  }
 }
