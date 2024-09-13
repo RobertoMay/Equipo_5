@@ -1,0 +1,40 @@
+.container {
+    margin: 20px; /* Margen alrededor del contenedor principal */
+    border: 1px solid blue; /* Borde temporal para verificar el margen */
+  }
+  
+  .margined-div {
+    margin: 20px auto; /* Márgenes superior e inferior de 20px, margen automático a los lados */
+    width: 80%; /* Ajusta el ancho según tus necesidades */
+    text-align: center; /* Centrar el texto dentro del div */
+    border: 1px solid red; /* Añadir un borde temporal para verificar el margen */
+  }
+  
+  .additional-container {
+    display: flex; /* Usar Flexbox para alinear los divs */
+    justify-content: space-between; /* Distribuir espacio entre los divs */
+    align-items: center; /* Centrar los divs verticalmente */
+    margin: 20px auto; /* Márgenes superior e inferior de 20px, margen automático a los lados */
+    width: 80%; /* Ajusta el ancho según tus necesidades */
+    border: 1px solid green; /* Añadir un borde temporal para verificar el margen */
+  }
+  
+  .additional-div {
+    flex: 1; /* Permitir que los divs crezcan y se encojan igual */
+    padding: 10px; /* Añadir algo de relleno dentro de los divs adicionales */
+    border: 1px solid orange; /* Añadir un borde temporal para verificar el margen */
+    text-align: center; /* Centrar el texto dentro de los divs */
+  }
+  
+  .additional-div.left {
+    text-align: left; /* Alinear el texto a la izquierda en el div a la izquierda */
+  }
+  
+  .additional-div.center {
+    text-align: center; /* Centrar el texto en el div central */
+  }
+  
+  .additional-div.right {
+    text-align: right; /* Alinear el texto a la derecha en el div a la derecha */
+  }
+  
