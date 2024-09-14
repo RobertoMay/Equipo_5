@@ -4,7 +4,7 @@ footer {
   min-height: 100px;
   background-color: #b41e46;
   color: white;
-  padding-top: 20px;
+  padding-top: 10px;
   max-width: 100%;
 }
 
@@ -54,6 +54,15 @@ footer {
 }
 
 .encargada {
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  color: #f5b7b1;
+  padding: 2px;
+  margin: auto;
+  font-weight: bold;
+}
+
+.direccion{
   font-family: "Arial", sans-serif;
   font-size: 15px;
   color: #f5b7b1;

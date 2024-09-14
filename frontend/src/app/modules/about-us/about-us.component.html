@@ -1,27 +1,38 @@
 
+
+<div class="encabezado">
+  <h1>Sobre nuestra  <span class="titulo">Casa comunitaria</span></h1>
+ 
+</div>
+ 
 <div class="contenedor">
-    <h1>Conoce más <span class="titulo">Sobre Nosotros</span></h1>
-    <p>La Casa Comunitaria del Estudiante Indígena es un espacio dedicado al apoyo y fortalecimiento de jóvenes de comunidades indígenas. Nuestra institución, en colaboración con el Instituto Nacional de los Pueblos Indígenas (INPI), se compromete a proporcionar un entorno que promueva el desarrollo educativo, cultural y social de nuestros residentes. A través de una gestión inclusiva y programas que fomentan el crecimiento integral, buscamos ser un pilar fundamental en la construcción de una sociedad más equitativa y justa para todos.</p>
-  
+  <p>La Casa Comunitaria del Estudiante Indígena es un espacio dedicado al apoyo y fortalecimiento de jóvenes de comunidades indígenas. Nuestra institución, en colaboración con el Instituto Nacional de los Pueblos Indígenas (INPI), se compromete a proporcionar un entorno que promueva el desarrollo educativo, cultural y social de nuestros residentes. A través de una gestión inclusiva y programas que fomentan el crecimiento integral, buscamos ser un pilar fundamental en la construcción de una sociedad más equitativa y justa para todos.</p>
+
     <!-- Sección de Misión -->
     <div class="seccion">
       <button (click)="toggle('mision')" class="accordion">
         <span class="arrow" [ngClass]="{'rotated': sections.mision}">▼</span> MISIÓN
       </button>
+      <p></p>
       <div [class.active]="sections.mision" class="panel">
-        <p>La Casa Comunitaria, en estrecha colaboración con el Instituto Nacional de los Pueblos Indigenas (INPI), tiene como misión primordial consolidarse como un epicentro de empoderamiento y desarrollo integral para las comunidades indígenas. Nos comprometemos a facilitar el acceso a recursos, servicios y oportunidades que fortalezcan las capacidades de los beneficiarios, preservando sus tradiciones culturales y fomentando la inclusion social.</p>
-      </div>
+        <div class="texto">
+          Aspiramos a ser un modelo de gestión comunitaria respaldado por el INPI, destacando por nuestra eficiencia en la canalización de recursos, la implementación de programas innovadores y la promoción de la autodeterminación. Buscamos impulsar un cambio significativo en la calidad de vida de las comunidades, contribuyendo a la construcción de un futuro donde la autosuficiencia y el bienestar sean la norma.
+        </div>
+        <p></p>
       </div>
 
   
     <!-- Sección de Visión -->
     <div class="seccion">
       <button (click)="toggle('vision')" class="accordion">
-        <span class="arrow" [ngClass]="{'rotated': sections.vision}">▼</span> VISIÓN
+        <span class="arrow" [ngClass]="{'rotated': sections.vision}">▼</span>VISIÓN
       </button>
+      <p></p>
       <div [class.active]="sections.vision" class="panel">
-        <p> Aspiramos a ser un modelo de gestión comunitaria respalda por el INPI, destacando por nuestra eficiencia en la canalización de recursos, la implementación de programas innovadores y la promoción de la autodeterminación. Buscando impulsar un cambio significativo en la calidad de vida de las comunidades, constrivuyendo a la construcción de un futuro donde la autosuficiencia y el bienestar sean la norma.</p>
-      </div>
+        <div class="texto">
+          Aspiramos a ser un modelo de gestión comunitaria respaldado por el INPI, destacando por nuestra eficiencia en la canalización de recursos, la implementación de programas innovadores y la promoción de la autodeterminación. Buscamos impulsar un cambio significativo en la calidad de vida de las comunidades, contribuyendo a la construcción de un futuro donde la autosuficiencia y el bienestar sean la norma.
+        </div>
+        <p></p>
     </div>
   
     <!-- Sección de Beneficios -->
@@ -29,17 +40,24 @@
     <button (click)="toggle('politicas')" class="accordion">
       <span class="arrow" [ngClass]="{'rotated': sections.politicas}">▼</span> BENEFICIOS
     </button>
+    <p></p>
     <div [class.active]="sections.politicas" class="panel">
-      <p>La Casa Comunitaria ofrece una serie de beneficios diseñados para apoyar a los becarios en su desarrollo académico y personal:</p>
-      <ul>
-        <li>Alimentación gratuita de lunes a viernes, incluyendo desayuno, almuerzo y cena, garantizando una dieta balanceada.</li>
-        <li>Hospedaje sin costo alguno, brindando un ambiente seguro y cómodo para vivir durante el período de estudios.</li>
-        <li>Oportunidad de convivencia en un entorno sano y respetuoso con otros compañeros becarios, promoviendo la integración y el apoyo mutuo.</li>
-        <li>Espacios adecuados y cómodos para el estudio, realización de tareas y actividades necesarias para el desarrollo académico.</li>
-        <li>Acceso a talleres y actividades de desarrollo personal, como cursos de liderazgo, trabajo en equipo y habilidades para la vida.</li>
-        <li>Soporte emocional y acompañamiento en el proceso educativo a través de consejería y tutoría personalizada.</li>
-      </ul>
+      <div class="texto">
+        Aspiramos a ser un modelo de gestión comunitaria respaldado por el INPI, destacando por nuestra eficiencia en la canalización de recursos, la implementación de programas innovadores y la promoción de la autodeterminación. Buscamos impulsar un cambio significativo en la calidad de vida de las comunidades, contribuyendo a la construcción de un futuro donde la autosuficiencia y el bienestar sean la norma.
+      </div>
+   <div class="lista">
+    <ul>
+      <li>Alimentación gratuita de lunes a viernes, incluyendo desayuno, almuerzo y cena, garantizando una dieta balanceada.</li>
+      <li>Hospedaje sin costo alguno, brindando un ambiente seguro y cómodo para vivir durante el período de estudios.</li>
+      <li>Oportunidad de convivencia en un entorno sano y respetuoso con otros compañeros becarios, promoviendo la integración y el apoyo mutuo.</li>
+      <li>Espacios adecuados y cómodos para el estudio, realización de tareas y actividades necesarias para el desarrollo académico.</li>
+      <li>Acceso a talleres y actividades de desarrollo personal, como cursos de liderazgo, trabajo en equipo y habilidades para la vida.</li>
+      <li>Soporte emocional y acompañamiento en el proceso educativo a través de consejería y tutoría personalizada.</li>
+    </ul>
+   </div>
+ 
     </div>
+
   </div>
   
   <!-- Sección de Responsabilidades -->
@@ -47,17 +65,22 @@
     <button (click)="toggle('lineas')" class="accordion">
       <span class="arrow" [ngClass]="{'rotated': sections.lineas}">▼</span> RESPONSABILIDADES
     </button>
+    <p></p>
     <div [class.active]="sections.lineas" class="panel">
-      <p>Para mantener un ambiente de convivencia armonioso y ordenado, todos los becarios de la Casa Comunitaria deben cumplir con las siguientes responsabilidades:</p>
-      <ul>
-        <li>Respetar y cumplir los horarios establecidos, tanto para la entrada y salida de la casa como para los tiempos de alimentación.</li>
-        <li>Mantener una actitud de respeto y cordialidad hacia el personal administrativo, operativo, y los demás compañeros becarios.</li>
-        <li>Participar activamente en las tareas de limpieza asignadas, respetando el horario y los turnos acordados.</li>
-        <li>Cuidar y mantener en buen estado todas las áreas y bienes comunes de la casa, haciendo uso responsable de los recursos disponibles.</li>
-        <li>Permanecer en la Casa Comunitaria durante los días laborales y notificar cualquier ausencia de manera oportuna al personal encargado.</li>
-        <li>Los padres de familia deberán asistir puntualmente a las asambleas y faenas programadas, contribuyendo activamente al bienestar de la comunidad.</li>
-        <li>Participar en las actividades comunitarias y programas de desarrollo que se organicen dentro de la Casa Comunitaria.</li>
-      </ul>
-    </div>
+      <div class="texto">
+        Aspiramos a ser un modelo de gestión comunitaria respaldado por el INPI, destacando por nuestra eficiencia en la canalización de recursos, la implementación de programas innovadores y la promoción de la autodeterminación. Buscamos impulsar un cambio significativo en la calidad de vida de las comunidades, contribuyendo a la construcción de un futuro donde la autosuficiencia y el bienestar sean la norma.
+      </div>
+  <div class="lista">
+    <ul>
+      <li>Respetar y cumplir los horarios establecidos, tanto para la entrada y salida de la casa como para los tiempos de alimentación.</li>
+      <li>Mantener una actitud de respeto y cordialidad hacia el personal administrativo, operativo, y los demás compañeros becarios.</li>
+      <li>Participar activamente en las tareas de limpieza asignadas, respetando el horario y los turnos acordados.</li>
+      <li>Cuidar y mantener en buen estado todas las áreas y bienes comunes de la casa, haciendo uso responsable de los recursos disponibles.</li>
+      <li>Permanecer en la Casa Comunitaria durante los días laborales y notificar cualquier ausencia de manera oportuna al personal encargado.</li>
+      <li>Los padres de familia deberán asistir puntualmente a las asambleas y faenas programadas, contribuyendo activamente al bienestar de la comunidad.</li>
+      <li>Participar en las actividades comunitarias y programas de desarrollo que se organicen dentro de la Casa Comunitaria.</li>
+    </ul>
   </div>
-  
+  </div>
+  </div>
+</div>
