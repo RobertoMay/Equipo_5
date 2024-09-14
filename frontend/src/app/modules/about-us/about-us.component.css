@@ -3,18 +3,65 @@
   width: 80%;
   margin: 20px auto;
   text-align: center;
-  border: 2px solid #ccc;
+
   padding: 20px;
   border-radius: 10px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+.texto {
+  font-family: 'Georgia', serif; /* Fuente elegante */
+  font-size: 1.2em; /* Tamaño del texto apreciable */
+  color: #333333; /* Color gris oscuro para elegancia y contraste */
+  line-height: 1.6; /* Espaciado entre líneas para mejor legibilidad */
+  text-align: justify; /* Alineación justificada para un acabado profesional */
+  padding: 15px; /* Espaciado interno para dar más aire */
+  background-color: #F9F9F9; /* Fondo suave para resaltar el texto */
+  border-radius: 8px; /* Bordes redondeados para un efecto suave */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar un toque de profundidad */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
 }
 
+/* Efecto cuando se pasa el mouse por encima del texto */
+.texto:hover {
+  transform: translateY(-5px); /* Efecto de levantamiento suave */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilo de la lista */
+.lista {
+  padding-top: 15px;
+}
+
+.lista ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.lista ul li {
+  font-family: 'Georgia', serif;
+  font-size: 1.1em;
+  color: #4B4B4B;
+  line-height: 1.8;
+  padding: 10px 0;
+  list-style-type: disc;
+}
+
+.lista ul li::marker {
+  color: #8B1E3F; /* Color de la viñeta */
+}
+
+.lista ul li:hover {
+  color: #000000;
+  transition: color 0.3s ease;
+  text-decoration: underline; 
+  font-size: 1.3em;
+}
 /* Encabezado con diseño mejorado y animación de entrada */
 .encabezado {
   width: 100%;
   height: 200px;
-  background-color: #c4c4c4;
+  background-color: #949494;
   position: relative;
 
   text-align: center;
@@ -22,6 +69,13 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+b{
+  font-size: 18px;
+  color: #000000;
+
+
 }
 
 h1 {
@@ -44,31 +98,53 @@ h1 {
 }
 
 .titulo {
-  color: #a8133a;
+  color: #a53654;
 }
 
 /* Diseño para los botones y secciones */
 .accordion {
-  background-color: white;
-  color: black;
+  background-color: #E0E0E0; /* Color del botón */
+  color: white; /* Texto en blanco */
   cursor: pointer;
   padding: 18px;
   width: 100%;
-  border: none;
   text-align: left;
+  border: none;
   outline: none;
-  font-size: 16px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  border-bottom: 2px solid #9400208c;
-  transition: 0.4s;
+  transition: background-color 0.4s ease;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #000000;
 }
-
-.arrow {
-  margin-right: 8px;
-  transition: transform 0.4s ease;
+.accordion:hover {
+  background-color: #e6e5e5; /* Efecto hover más oscuro */
+}
+button.accordion {
+  font-size: 1.9rem; /* Tamaño de fuente más grande */
+  font-weight: bold; /* Negrita */
+  color: #000000; /* Color principal del texto */
+  text-transform: uppercase; /* Todo el texto en mayúsculas */
+  letter-spacing: 1px; /* Espacio entre letras para elegancia */
+  background: none; /* Sin fondo para el botón */
+  border: none; /* Sin bordes */
+  cursor: pointer; /* Cambia el cursor a mano */
+  padding: 10px 0;
+  transition: color 0.3s ease;
+}
+/* Estilo adicional para personalizar "VISIÓN" */
+button.accordion::after {
+  content: " "; /* Espacio vacío para margen extra */
+  border-bottom: 2px solid#8B1E3F; /* Subrayado elegante */
+  display: block; /* Forzamos que se vea el subrayado */
+  width: 100%; /* El subrayado ocupará todo el ancho */
+  margin-top: 5px;
+  transition: border-color 0.3s ease;
+}
+span.arrow {
+  display: inline-block;
+  margin-right: 10px; /* Espacio entre la flecha y el texto */
+  font-size: 1.5rem; /* Tamaño de la flecha */
+  color: #000000; /* Color de la flecha */
+  transition: transform 0.4s ease; /* Animación de rotación */
 }
 
 .rotated {
@@ -78,16 +154,22 @@ h1 {
 .panel {
   padding: 0 18px;
   display: none;
-  background-color: #f5f3f3;
+  background-color:#ffffff;
   overflow: hidden;
-  border-bottom: 1px solid #5f5e5e;
+  border-bottom: 1px solid #ffffff;
 }
 
 .panel.active {
   display: block;
 }
 
-p {
-  text-align: justify;
-}
 
+
+/* Enlaces elegantes */
+p {
+  color: #333333; /* Color para los encabezados */
+  margin: 0;
+  padding-bottom: 30px;
+  font-weight: bold;
+  font-size: 20px;
+}
