@@ -16,7 +16,7 @@
   line-height: 1.6; /* Espaciado entre líneas para mejor legibilidad */
   text-align: justify; /* Alineación justificada para un acabado profesional */
   padding: 15px; /* Espaciado interno para dar más aire */
-  background-color: #F9F9F9; /* Fondo suave para resaltar el texto */
+  background-color: #e9e9e9; /* Fondo suave para resaltar el texto */
   border-radius: 8px; /* Bordes redondeados para un efecto suave */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar un toque de profundidad */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
@@ -49,21 +49,21 @@
 
 .lista ul li::marker {
   color: #8B1E3F; /* Color de la viñeta */
+
 }
 
 .lista ul li:hover {
   color: #000000;
   transition: color 0.3s ease;
   text-decoration: underline; 
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 /* Encabezado con diseño mejorado y animación de entrada */
 .encabezado {
   width: 100%;
-  height: 200px;
-  background-color: #949494;
+  min-height: 200px; /* Establece una altura mínima */
+  background: linear-gradient(to right, #d1d0d0, #333232c2); /* Degradado de izquierda a derecha */
   position: relative;
-
   text-align: center;
   display: flex;
   align-items: center;
@@ -71,12 +71,6 @@
   overflow: hidden;
 }
 
-b{
-  font-size: 18px;
-  color: #000000;
-
-
-}
 
 h1 {
   font-size: 64px;
@@ -115,9 +109,7 @@ h1 {
   font-size: 1.1rem;
   border-bottom: 2px solid #000000;
 }
-.accordion:hover {
-  background-color: #e6e5e5; /* Efecto hover más oscuro */
-}
+
 button.accordion {
   font-size: 1.9rem; /* Tamaño de fuente más grande */
   font-weight: bold; /* Negrita */
@@ -130,6 +122,8 @@ button.accordion {
   padding: 10px 0;
   transition: color 0.3s ease;
 }
+/* Tamaño de fuente más pequeño para dispositivos móviles */
+
 /* Estilo adicional para personalizar "VISIÓN" */
 button.accordion::after {
   content: " "; /* Espacio vacío para margen extra */
@@ -171,5 +165,29 @@ p {
   margin: 0;
   padding-bottom: 30px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 130%;
+
+  text-align: justify;
+}
+/* Tamaño de fuente más pequeño para dispositivos móviles */
+@media (max-width: 768px) {
+  p {
+    font-size: 100%; /* Tamaño de fuente reducido para pantallas pequeñas */
+  }
+  button.accordion{
+    font-size: 130%; /* Tamaño de fuente reducido para pantallas pequeñas */
+  }
+  span.arrow {
+    display: inline-block;
+    margin-right: 10px; /* Espacio entre la flecha y el texto */
+    font-size: 1.2rem; /* Tamaño de la flecha */
+    color: #000000; /* Color de la flecha */
+    transition: transform 0.4s ease; /* Animación de rotación */
+  }
+  .texto {
+   
+    font-size: 1em; /* Tamaño del texto apreciable */
+    
+  }
+  
 }
