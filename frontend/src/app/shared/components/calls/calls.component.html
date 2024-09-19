@@ -1,0 +1,29 @@
+<div *ngIf="convocatorias.length > 0; else noConvocatoria">
+    <div *ngFor="let convocatoria of convocatorias" class="container mb-5" (click)="handleConvocatoriaClick()">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm4-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+      </div>
+      <h2 class="title">{{ convocatoria.titulo }}</h2>
+      <hr class="divider">
+      <p class="description">
+        En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto" ofrece la oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus estudios en un entorno seguro y de apoyo.
+      </p>
+      <div class="date">
+        {{ convocatoria.fechaInicio }} - {{ convocatoria.fechaTermino }}
+      </div>
+      <p class="details">
+        Esta convocatoria está abierta del {{ convocatoria.fechaInicio }} al {{ convocatoria.fechaTermino }}. Los estudiantes interesados deberán cumplir con los requisitos antes de la fecha de cierre. No pierdas la oportunidad de asegurar tu lugar en un espacio que promueve la inclusión, el respeto y el crecimiento académico.
+      </p>
+      <button class="button">Registrate</button>
+    </div>
+  </div>
+  
+  <!-- Mostrar mensaje cuando no hay convocatorias -->
+  <ng-template #noConvocatoria>
+    <div class="alert alert-warning text-center elegant-alert" [ngClass]="'show'" role="alert">
+      <h4>No hay convocatorias disponibles en este momento</h4>
+      <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue. Tu participación es importante para nuestra comunidad.</p>
+    </div>
+  </ng-template>
+  
+  
