@@ -19,10 +19,9 @@ import { AspiranteModule } from './aspirante.module';
       }),
       inject: [ConfigService],
     }),
-    InstitutionModule,
-    ConvocatoriaModule
-    InstitutionModule, 
-    AspiranteModule,
+
+    InstitutionModule, AspiranteModule, ConvocatoriaModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
