@@ -7,13 +7,13 @@
   background-color: #b41e46; /* Color de fondo */
   padding: 15px 20px;
   margin: 0 ;
- 
+  z-index: 10;
   width: 100%;
  
-  
+  position: relative;
   
 }
-
+/*
 /* Logo del navbar */
 .navbar-logo img {
   height: 70px; /* Altura del logo */
@@ -22,7 +22,7 @@
   
 }
 
-/* Menú de navegación */
+/* Menú de navegación para desktop*/
 .navbar-menu {
   list-style-type: none;
   margin: 0;
@@ -34,8 +34,8 @@
 /* Estilos para los enlaces del menú */
 .navbar-menu li a {
   color: white; /* Color del texto */
-  text-decoration: none; /* Quitar subrayado */
-  font-size: 19px; /* Tamaño del texto */
+  text-decoration: none; 
+  font-size: 19px; 
   font-weight: bold;
   padding: 15px 15px;
   border-radius: 4px;
@@ -49,10 +49,75 @@
 
 }
 
-/* Estilo responsive: menú centrado en pantallas pequeñas */
-@media (max-width: 768px) {
-  .navbar-menu {
-    flex-direction: column; /* Cambiar orientación a vertical */
-    gap: 10px; /* Espacio entre elementos */
-  }
+
+/* Estilos para pantallas grandes (desktop) */
+.navbar-toggler {
+  display: none; /* Ocultar el botón de menú en pantallas grandes */
 }
+
+
+
+/* Estilos responsive: para pantallas pequeñas (móviles) */
+
+@media (max-width: 768px) {
+
+ 
+  
+  .navbar-menu {
+    display: none; /* Ocultar el menú por defecto en móviles */
+    flex-direction: column; /* Menú vertical */
+    position: absolute;
+    top: 100px;
+  
+    right: 0;
+    background-color: #b41e46; /* Color de fondo */
+    width: 100%;
+    height: auto;
+    max-height: 0; /* Altura inicial de 0 para la animación */
+    overflow: hidden; /* Ocultar el contenido cuando el menú está cerrado */
+    transition: max-height 0.5s ease-in-out; /* Animación suave */
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Asegurar que el menú esté encima de otros elementos */
+    padding-top: 2px;
+    padding-bottom: 20px;
+  }
+
+  
+ /* Estilos del ícono de menú (hamburguesa) */
+ .navbar-toggler {
+  display: block; /* Mostrar el botón del menú en móviles */
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+}
+
+ /* Mostrar el menú cuando esté activo */
+ .navbar-menu.active {
+  display: flex; /* Mostrar el menú cuando el botón sea presionado */
+  max-height: 300px; /* Altura máxima para el menú desplegable */
+}
+
+.navbar-menu li{
+  width: 100%; 
+  border-bottom: 1px solid rgb(153, 144, 144); /* Línea de separación */
+  padding: 2px;
+}
+
+
+.navbar-menu li a {
+ 
+  display: block; /* El enlace se comporta como un bloque, ocupando todo el ancho */
+  text-align: center; /* Alinacion  del texto al centro */
+  padding-top: 3px;
+  padding-bottom: 3px;
+  
+}
+
+}
+
+
+
+

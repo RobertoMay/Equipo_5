@@ -13,8 +13,23 @@ const routes: Routes = [
           import('@modules/home/home.module').then((m) => m.HomeModule),
    
       },
+      {
+        path: 'registration',
+        loadChildren: () =>
+          import('@modules/registration/registration.module').then(
+            (m) => m.RegistrationModule
+          ),
+      },
+      {
+        path: 'about-us',
+        loadChildren: () =>
+          import('@modules/about-us/about-us.module').then(
+            (m) => m.AboutUsModule
+          ),
+      },
     ],
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

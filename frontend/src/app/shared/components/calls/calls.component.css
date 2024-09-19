@@ -1,0 +1,98 @@
+.container {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  .icon svg {
+    width: 60px;
+    height: 60px;
+    fill: #333;
+  }
+  
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .divider {
+    border: none;
+    height: 2px;
+    background-color: #dc143c;
+    width: 80px;
+    margin: 10px 0;
+  }
+  
+  .description {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .date {
+    background-color: #f08080;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  
+  .details {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 15px;
+  }
+  
+  .button {
+    background-color: #dc143c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .button:hover {
+    background-color: #b22222;
+  }
+  
+  .elegant-alert {
+    background: linear-gradient(135deg, #f0a3a3, #f08080);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  
+  .elegant-alert h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .elegant-alert p {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+  
+  .elegant-alert.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  

@@ -1,0 +1,28 @@
+.btn-send {
+  width: 120px;
+  height: 45px;
+  background-color: #b41e46;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border-radius: 0px;
+}
+
+.btn-send:hover {
+  background-color: #b8244b;
+  border-radius: 50px;
+  transform: scale(1.05);
+}
+
+.btn-send:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-send:disabled {
+  background-color: transparent;
+  color: black;
+  border-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}

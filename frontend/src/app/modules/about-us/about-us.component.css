@@ -1,55 +1,193 @@
-
+/* Contenedor de la sección principal */
 .contenedor {
-    width: 80%;
-    margin: 0 auto;
-    text-align: left;
-  }
-  
-  .titulo {
-    color: #b41e46;
+  width: 80%;
+  margin: 20px auto;
+  text-align: center;
 
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+
+}
+.texto {
+  font-family: 'Georgia', serif; /* Fuente elegante */
+  font-size: 1.2em; /* Tamaño del texto apreciable */
+  color: #333333; /* Color gris oscuro para elegancia y contraste */
+  line-height: 1.6; /* Espaciado entre líneas para mejor legibilidad */
+  text-align: justify; /* Alineación justificada para un acabado profesional */
+  padding: 15px; /* Espaciado interno para dar más aire */
+  background-color: #e9e9e9; /* Fondo suave para resaltar el texto */
+  border-radius: 8px; /* Bordes redondeados para un efecto suave */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar un toque de profundidad */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
+}
+
+/* Efecto cuando se pasa el mouse por encima del texto */
+.texto:hover {
+  transform: translateY(-5px); /* Efecto de levantamiento suave */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilo de la lista */
+.lista {
+  padding-top: 15px;
+}
+
+.lista ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.lista ul li {
+  font-family: 'Georgia', serif;
+  font-size: 1.1em;
+  color: #4B4B4B;
+  line-height: 1.8;
+  padding: 10px 0;
+  list-style-type: disc;
+}
+
+.lista ul li::marker {
+  color: #8B1E3F; /* Color de la viñeta */
+
+}
+
+.lista ul li:hover {
+  color: #000000;
+  transition: color 0.3s ease;
+  text-decoration: underline; 
+  font-size: 1.2em;
+}
+/* Encabezado con diseño mejorado y animación de entrada */
+.encabezado {
+  width: 100%;
+  min-height: 200px; /* Establece una altura mínima */
+  background: linear-gradient(to right, #d1d0d0, #333232c2); /* Degradado de izquierda a derecha */
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+h1 {
+  font-size: 64px;
+  color: #000000;
+  animation: fadeIn 2s ease-out;
+  font-weight: 900;
+}
+
+/* Clase para el texto animado */
+@keyframes fadeIn {
+  0% { 
+      opacity: 0; 
+      transform: translateY(-50px); 
   }
-  
-  .accordion {
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 16px;
-    font-weight: bold;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom: 2px solid #9400208c; /* División entre elementos */
-    transition: 0.4s;
+  100% { 
+      opacity: 1; 
+      transform: translateY(0); 
   }
-  
-  .arrow {
-    margin-right: 8px;
+}
+
+.titulo {
+  color: #a53654;
+}
+
+/* Diseño para los botones y secciones */
+.accordion {
+  background-color: #E0E0E0; /* Color del botón */
+  color: white; /* Texto en blanco */
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: background-color 0.4s ease;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #000000;
+}
+
+button.accordion {
+  font-size: 1.9rem; /* Tamaño de fuente más grande */
+  font-weight: bold; /* Negrita */
+  color: #000000; /* Color principal del texto */
+  text-transform: uppercase; /* Todo el texto en mayúsculas */
+  letter-spacing: 1px; /* Espacio entre letras para elegancia */
+  background: none; /* Sin fondo para el botón */
+  border: none; /* Sin bordes */
+  cursor: pointer; /* Cambia el cursor a mano */
+  padding: 10px 0;
+  transition: color 0.3s ease;
+}
+/* Tamaño de fuente más pequeño para dispositivos móviles */
+
+/* Estilo adicional para personalizar "VISIÓN" */
+button.accordion::after {
+  content: " "; /* Espacio vacío para margen extra */
+  border-bottom: 2px solid#8B1E3F; /* Subrayado elegante */
+  display: block; /* Forzamos que se vea el subrayado */
+  width: 100%; /* El subrayado ocupará todo el ancho */
+  margin-top: 5px;
+  transition: border-color 0.3s ease;
+}
+span.arrow {
+  display: inline-block;
+  margin-right: 10px; /* Espacio entre la flecha y el texto */
+  font-size: 1.5rem; /* Tamaño de la flecha */
+  color: #000000; /* Color de la flecha */
+  transition: transform 0.4s ease; /* Animación de rotación */
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color:#ffffff;
+  overflow: hidden;
+  border-bottom: 1px solid #ffffff;
+}
+
+.panel.active {
+  display: block;
+}
+
+
+
+/* Enlaces elegantes */
+p {
+  color: #333333; /* Color para los encabezados */
+  margin: 0;
+  padding-bottom: 30px;
+  font-weight: bold;
+  font-size: 130%;
+
+  text-align: justify;
+}
+/* Tamaño de fuente más pequeño para dispositivos móviles */
+@media (max-width: 768px) {
+  p {
+    font-size: 100%; /* Tamaño de fuente reducido para pantallas pequeñas */
+  }
+  button.accordion{
+    font-size: 130%; /* Tamaño de fuente reducido para pantallas pequeñas */
+  }
+  span.arrow {
+    display: inline-block;
+    margin-right: 10px; /* Espacio entre la flecha y el texto */
+    font-size: 1.2rem; /* Tamaño de la flecha */
+    color: #000000; /* Color de la flecha */
     transition: transform 0.4s ease; /* Animación de rotación */
   }
-  
-  .rotated {
-    transform: rotate(180deg); /* Rotar la flecha hacia arriba */
+  .texto {
+   
+    font-size: 1em; /* Tamaño del texto apreciable */
+    
   }
   
-  .panel {
-    padding: 0 18px;
-    display: none;
-    background-color: #f5f3f3;
-    overflow: hidden;
-    border-bottom: 1px solid #5f5e5e; /* Línea divisoria inferior */
-  }
-  
-  .panel.active {
-    display: block;
-  }
-  
-  p {
-    text-align: justify;
-  }
+}
