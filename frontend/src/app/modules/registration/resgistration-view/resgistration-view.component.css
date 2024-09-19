@@ -1,0 +1,29 @@
+.form {
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: #b8395b !important;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 20px 0;
+}
+
+.title {
+  padding: 10px 0 10px 38px;
+  color: white;
+  background-color: #b41e46;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.form-child {
+  margin: 0 !important;
+}
+
+@media (max-width: 750px) {
+  .title {
+    padding-left: 10px;
+  }
+}
