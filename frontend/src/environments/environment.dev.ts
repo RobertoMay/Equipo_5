@@ -1,7 +1,4 @@
 export const environment = {
-
-
-  production: true,
+  production: false,
   uri: 'htpp://localhost:3000/api/',
 };
-
