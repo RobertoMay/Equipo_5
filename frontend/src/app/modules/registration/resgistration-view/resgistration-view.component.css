@@ -1,3 +1,12 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
 .form {
   border-width: 2px !important;
   border-style: solid !important;
@@ -25,5 +34,135 @@
 @media (max-width: 750px) {
   .title {
     padding-left: 10px;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+
+
+/* Banner Styles */
+.banner {
+  position: relative;
+  background: linear-gradient(to right, rgba(134, 134, 134, 0.7), rgba(51, 50, 50, 0.5)), url('assets/images/2.jpg') no-repeat center center;
+  background-size: cover;
+  height: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  text-align: right;
+  padding-right: 50px;
+  overflow: hidden;
+
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.banner h1 {
+  position: relative;
+  font-size: 3.5rem;
+  margin-left: 6%;
+  z-index: 2;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+  white-space: pre-line;
+}
+
+/* Section Styles */
+.container {
+  margin-top: 30px;
+}
+
+.section-content {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+
+}
+
+
+.section-fromulario{
+  display: none; /* Oculta la sección del formulario */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Section Inscripción */
+.section-inscripcion {
+  background: #f5f4f4;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-inscripcion h2 {
+  font-size: 2.5rem;
+  color: #444;
+  border-bottom: 4px solid #b62a4f;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  position: relative;
+
+}
+
+.section-inscripcion h3 {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.section-inscripcion p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+
+.section-inscripcion ul {
+  list-style:none;
+  padding-left: 8%;
+}
+
+.section-inscripcion ul li {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.section-inscripcion ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #666;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .banner h1 {
+    font-size: 2rem;
+  }
+
+  .section-content {
+    padding: 15px;
   }
 }

@@ -54,7 +54,7 @@ export class RegistrationFormComponent {
     }
     this._ngxUiLoaderService.start();
     alert('Data send');
-    this._ngxUiLoaderService.stop();
+    // this._ngxUiLoaderService.stop();
 
     setTimeout(() => {
       Swal.fire({

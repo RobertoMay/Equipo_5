@@ -7,7 +7,7 @@
   background-color: #b41e46; /* Color de fondo */
   padding: 15px 20px;
   margin: 0 ;
- 
+  z-index: 10;
   width: 100%;
  
   position: relative;
