@@ -4,11 +4,11 @@ import { Aspirante } from '../module/aspirante.model';
 import { AspiranteDocument } from 'src/todos/document/aspirante.document';
 import { Response as ExpressResponse } from 'express';
 import * as jwt from 'jsonwebtoken';
-@Controller('')
+@Controller('api/aspirante/')
 export class AspiranteController {
   constructor(private readonly aspiranteService: AspiranteService) {}
 
-  @Post('/api/crearAspirante')
+  @Post('crearAspirante') //crea a los aspirantes pero de igual manera verifica que no haya curps o correos duplicados
   async create(@Body() aspirante: AspiranteDocument) {
     try {
       const newAspirante = await this.aspiranteService.createAspirante(aspirante);
@@ -24,7 +24,7 @@ export class AspiranteController {
     }
   }
 
-  @Post('/api/login')
+  @Post('login') //compara los datos ya registrados para poder dar paso al inicio de sesión
   async login(@Body() credentials: { correo: string; curp: string }) {
     const { correo, curp } = credentials;
     try {
@@ -38,7 +38,7 @@ export class AspiranteController {
     }
   }
   
-  @Get('/api/obtenerAspirantes')
+  @Get('obtenerAspirantes')//obtiene todos los asopirantes registrados
   async getAll() {
     try {
       const aspirantes = await this.aspiranteService.getAllAspirantes();
@@ -48,7 +48,7 @@ export class AspiranteController {
     }
   }
 
-  @Get('/api/obtenerAspirante/:id')
+  @Get('obtenerAspirante/:id')//obtiene todos los aspirantes por id
   async getById(@Param('id') id: string) {
     try {
       const aspirante = await this.aspiranteService.getAspiranteById(id);
@@ -58,7 +58,7 @@ export class AspiranteController {
     }
   }
 
-  @Put('/api/actualizarAspirante/:id')
+  @Put('actualizarAspirante/:id')//actualiza los usuarios de acuerdo a su id
   async update(@Param('id') id: string, @Body() aspiranteDto: Partial<AspiranteDocument>) {
     try {
       await this.aspiranteService.updateAspirante(id, aspiranteDto);
@@ -68,7 +68,7 @@ export class AspiranteController {
     }
   }
 
-  @Delete('/api/eliminarAspirante/:id')
+  @Delete('eliminarAspirante/:id')//elimina a los usuarios de acuerdo a su id
   async delete(@Param('id') id: string) {
     try {
       await this.aspiranteService.deleteAspirante(id);
