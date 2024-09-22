@@ -1,98 +1,155 @@
+/* Estilos del formulario */
+.form {
+  border: 2px solid #b8395b; /* Color y grosor del borde */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 20px;
+  width: 100%; /* Ocupar todo el ancho */
+}
+
+/* Estilo para los títulos del formulario */
+.titles {
+  padding: 10px;
+  color: white;
+  background-color: #b41e46;
+  width: 110%;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+/* Estilo para los campos del formulario */
+.form-child {
+  margin: 0;
+  width: 100%; /* Ocupar todo el ancho */
+}
+
+/* Estilo del contenedor principal */
 .container {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 30px;
-    text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .icon {
-    display: inline-block;
-    margin-bottom: 20px;
-  }
-  
-  .icon svg {
-    width: 60px;
-    height: 60px;
-    fill: #333;
-  }
-  
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .divider {
-    border: none;
-    height: 2px;
-    background-color: #dc143c;
-    width: 80px;
-    margin: 10px 0;
-  }
-  
-  .description {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 15px;
-  }
-  
-  .date {
-    background-color: #f08080;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
-    display: inline-block;
-    margin-bottom: 15px;
-    font-size: 14px;
-  }
-  
-  .details {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 15px;
-  }
-  
-  .button {
-    background-color: #dc143c;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .button:hover {
-    background-color: #b22222;
-  }
-  
-  .elegant-alert {
-    background: linear-gradient(135deg, #f0a3a3, #f08080);
-    color: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-    opacity: 0;
-    transform: translateY(20px);
-    font-family: 'Helvetica Neue', sans-serif;
-  }
-  
-  .elegant-alert h4 {
-    font-size: 22px;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  
-  .elegant-alert p {
-    font-size: 16px;
-    margin-bottom: 0;
-  }
-  
-  .elegant-alert.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Alineación de íconos y texto */
+.icon-text {
+  display: flex;
+  align-items: center; /* Alinear ícono y texto verticalmente */
+}
+
+/* Estilo para los íconos dentro de .icon-text */
+.icon svg {
+  width: 40px;
+  height: 30px;
+  margin-right: 10%;
+}
+
+/* Estilo de las descripciones */
+.description {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  text-align: justify; /* Alineación justificada */
+}
+
+/* Estilo para los títulos de las secciones */
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 3px solid #b8395b;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre icono y texto */
+}
+
+/* Estilo del divisor */
+.divider {
+  border: none;
+  height: 2px;
+  background-color: #dc143c;
+  width: 80px;
+  margin: 10px 0;
+}
+
+/* Estilo para la fecha */
+.date {
+  background-color: #f08080;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* Estilo de los detalles secundarios */
+.details {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+/* Estilo para la alerta elegante */
+.elegant-alert {
+  background: linear-gradient(135deg, #f0a3a3, #f08080);
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  opacity: 0;
+  transform: translateY(20px);
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Estilo para el título de la alerta */
+.elegant-alert h4 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Estilo para el párrafo de la alerta */
+.elegant-alert p {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+/* Mostrar alerta con animación */
+.elegant-alert.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Botón personalizado */
+.custom-btn {
+  padding: 12px 24px;
+  background-color: #cf285a;
+  font-size: 1rem;
+  border-radius: 50px;
+
+}
+
+.custom-btn:hover {
+  background-color: #802943;
+  box-shadow: 0 4px 10px rgba(151, 15, 56, 0.5);
+}
+
+/* Estilo cuando el botón está en focus */
+.custom-btn:focus, 
+.custom-btn:active {
+  background-color: #721d36; /* Mismo color que el hover */
+  box-shadow: 0 4px 10px rgba(151, 15, 56, 0.5);
+  outline: none; /* Elimina el contorno azul */
+  border: none; /* Asegura que no haya borde en estado activo */
+}
+/* Estilo para las tarjetas de convocatorias */
+.convocatoria-card {
+  border-radius: 15px;
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+}
