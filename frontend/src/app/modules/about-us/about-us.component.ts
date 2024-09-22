@@ -8,14 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AboutUsComponent {
   // Define el tipo de objeto con claves específicas
-  sections: { [key in 'mision' | 'vision' | 'politicas' | 'lineas']: boolean } = {
+  sections: { [key in 'mision' | 'vision' | 'beneficios' | 'responsabilidades']: boolean } = {
     mision: false,
     vision: false,
-    politicas: false,
-    lineas: false
+    beneficios: false,
+    responsabilidades: false
   };
 
-  toggle(section: 'mision' | 'vision' | 'politicas' | 'lineas') {
+  toggle(section: 'mision' | 'vision' | 'beneficios' | 'responsabilidades') {
     this.sections[section] = !this.sections[section];
   }
 }

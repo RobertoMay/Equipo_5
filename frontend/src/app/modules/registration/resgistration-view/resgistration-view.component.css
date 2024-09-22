@@ -1,53 +1,23 @@
+/* Animación de Fade In */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in {
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 1s ease-out; /* Clase para aplicar la animación de entrada */
 }
 
-.form {
-  border-width: 2px !important;
-  border-style: solid !important;
-  border-color: #b8395b !important;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 0 20px 0;
-}
-
-.title {
-  padding: 10px 0 10px 38px;
-  color: white;
-  background-color: #b41e46;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 15px;
-}
-
-.form-child {
-  margin: 0 !important;
-}
-
-@media (max-width: 750px) {
-  .title {
-    padding-left: 10px;
-  }
-}
-
+/* Estilos Globales */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif; /* Fuente general de la página */
 }
 
-
-
-/* Banner Styles */
+/* Estilos del Banner */
 .banner {
   position: relative;
   background: linear-gradient(to right, rgba(134, 134, 134, 0.7), rgba(51, 50, 50, 0.5)), url('assets/images/2.jpg') no-repeat center center;
-  background-size: cover;
+  background-size: cover; /* Imagen de fondo del banner */
   height: 300px;
   display: flex;
   justify-content: flex-start;
@@ -55,114 +25,117 @@ body {
   color: white;
   text-align: right;
   padding-right: 50px;
-  overflow: hidden;
-
+  overflow: hidden; /* Oculta el desbordamiento del contenido */
 }
 
 .banner::before {
-  content: '';
+  content: ''; /* Capa oscura sobre la imagen de fondo */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  z-index: 1; /* Asegura que esté por encima de la imagen de fondo */
 }
 
 .banner h1 {
   position: relative;
-  font-size: 3.5rem;
+  font-size: 3.5rem; /* Tamaño de fuente del título del banner */
   margin-left: 6%;
-  z-index: 2;
-  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
-  white-space: pre-line;
+  z-index: 2; /* Asegura que el texto esté por encima de la capa oscura */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Sombra del texto para mejor legibilidad */
+  white-space: pre-line; /* Mantiene los saltos de línea en el texto */
+}
+.banner i {
+  font-size: 5rem; /* Tamaño del icono */
+  color: #ffffff; /* Color del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+/* Estilos de Secciones */
+.container {
+  margin-top: 30px; /* Espaciado superior para la sección */
 }
 
-/* Section Styles */
-.container {
-  margin-top: 30px;
+.section-inscripcion img {
+  border-radius: 15px; /* Bordes más redondeados */
+}
+
+.text-content {
+  flex: 1; /* Permite que el texto ocupe el espacio restante */
+}
+
+.section-inscripcion img {
+  border-radius: 15px; /* Bordes más redondeados */
 }
 
 .section-content {
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Relleno interno de la sección */
+  border-radius: 10px; /* Bordes redondeados */
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
   position: relative;
-  z-index: 2;
-
+  z-index: 2; /* Asegura que el contenido esté por encima de otras capas */
 }
 
-
-.section-fromulario{
-  display: none; /* Oculta la sección del formulario */
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-/* Section Inscripción */
 .section-inscripcion {
-  background: #f5f4f4;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #f5f4f4; /* Fondo gris claro para la sección de inscripción */
+  padding: 30px; /* Relleno interno */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
 }
 
 .section-inscripcion h2 {
-  font-size: 2.5rem;
-  color: #444;
-  border-bottom: 4px solid #b62a4f;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-  position: relative;
-
+  font-size: 2.5rem; /* Tamaño de fuente para subtítulos */
+  color: #444; /* Color del texto */
+  border-bottom: 4px solid #b62a4f; /* Línea debajo del subtítulo */
+  padding-bottom: 10px; /* Espacio debajo del subtítulo */
+  margin-bottom: 15px; /* Espacio inferior */
 }
 
 .section-inscripcion h3 {
-  font-size: 1.5rem;
-  color: #666;
-  margin-bottom: 10px;
+  font-size: 1.5rem; /* Tamaño de fuente para subtítulos menores */
+  color: #666; /* Color del texto */
+  margin-bottom: 10px; /* Espacio inferior */
 }
 
 .section-inscripcion p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  text-align: justify;
+  font-size: 1.2rem; /* Tamaño de fuente para párrafos */
+  line-height: 1.6; /* Espaciado entre líneas */
+  text-align: justify; /* Alineación justificada */
 }
 
-
 .section-inscripcion ul {
-  list-style:none;
-  padding-left: 8%;
+  padding-left: 0; /* Sin relleno a la izquierda */
 }
 
 .section-inscripcion ul li {
-  position: relative;
-  padding-left: 40px;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  font-weight: bold;
+  position: relative; /* Posicionamiento relativo para íconos */
+  margin-bottom: 10px; /* Espacio inferior entre ítems de la lista */
+  font-size: 1rem; /* Tamaño de fuente para lista */
+  font-weight: bold; /* Negrita */
 }
 
-.section-inscripcion ul li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-  color: #666;
-}
-
-
-/* Responsive Styles */
+/* Estilos Responsivos */
 @media (max-width: 768px) {
   .banner h1 {
-    font-size: 2rem;
+    font-size: 1.5rem; /* Tamaño reducido para pantallas pequeñas */
   }
 
   .section-content {
-    padding: 15px;
+    padding: 15px; /* Relleno reducido en pantallas pequeñas */
   }
+
+  .banner {
+    height: 150px; /* Altura reducida del banner */
+  }
+
+  .section-inscripcion h2 {
+    font-size: 1.5rem; /* Tamaño reducido del subtítulo */
+  }
+}
+
+.underline {
+  text-decoration: underline; /* Subrayado */
+  margin-bottom: 20px; /* Espacio debajo del subrayado */
 }

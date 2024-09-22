@@ -12,6 +12,7 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#b0af9d',
@@ -37,6 +38,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     FooterComponent,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgbModule,
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],

@@ -1,8 +1,8 @@
 export interface Convocatoria {
-    id: string;
-    titulo: string;
-    fechaInicio: Date;
-    fechaTermino: Date;
-    estado: boolean;
+  id: string;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+  status: boolean;
   }
   

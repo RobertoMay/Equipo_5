@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 @Component({
   selector: 'app-resgistration-view',
@@ -7,11 +7,13 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./resgistration-view.component.css'],
 })
 
-export class ResgistrationViewComponent {
-  showFormulario = false; // Propiedad para controlar la visibilidad del formulario
+export class ResgistrationViewComponent implements OnInit {
 
-  mostrarFormulario() {
-    this.showFormulario = true;
+
+  constructor() {}
+
+  ngOnInit(): void {
 
   }
+
 }
