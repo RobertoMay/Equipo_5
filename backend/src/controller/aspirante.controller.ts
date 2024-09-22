@@ -4,7 +4,7 @@ import { Aspirante } from '../module/aspirante.model';
 import { AspiranteDocument } from 'src/todos/document/aspirante.document';
 import { Response as ExpressResponse } from 'express';
 import * as jwt from 'jsonwebtoken';
-@Controller('aspirante')
+@Controller('')
 export class AspiranteController {
   constructor(private readonly aspiranteService: AspiranteService) {}
 
