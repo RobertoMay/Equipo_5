@@ -10,6 +10,52 @@
   overflow: hidden;
 }
 
+.about-us,
+.registration {
+  background-color: #fafafa;
+}
+
+.text-primary {
+  color: #b41e46 !important;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.read-more {
+  color: #b52e46;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.read-more i {
+  display: inline-block;
+  transition: transform 0.3s;
+  vertical-align: middle;
+  font-weight: 100;
+  margin-bottom: 2px;
+}
+
+.read-more:hover {
+  color: rgb(164, 13, 13);
+}
+
+.read-more i {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.read-more:hover i {
+  transform: translateX(5px);
+}
+
+.activities img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
 @media (min-width: 768px) {
   .title {
     font-size: 3vw;
