@@ -13,6 +13,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { RouterModule, Routes } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#9d2449',
@@ -37,6 +38,7 @@ const routes: Routes = [];
     FooterComponent,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+    NgbModule,
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],
