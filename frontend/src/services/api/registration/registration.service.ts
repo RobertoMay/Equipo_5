@@ -1,36 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ApiClass } from '@data/schema/ApiClass.class';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IRegistration } from '@shared/components/registration-form/iregistration-form.metadata';
+import { GenericServiceService } from '@shared/generic.service.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RegistrationService extends ApiClass {
+export class RegistrationService extends GenericServiceService<IRegistration> {
   constructor(protected override http: HttpClient) {
-    super(http);
+    super(http, 'aspirante');
   }
 
-  addStudent(studet: IRegistration): Observable<{
-    error: boolean;
-    msg: string;
-    data: IRegistration | null;
-  }> {
-    const response = {
-      error: false,
-      msg: '',
-      data: null as IRegistration | null,
-    };
-    return this.http
-      .post<IRegistration>(this.url + 'aspirante/crearAspirante', studet)
-      .pipe(
-        map((r) => {
-          response.data = r;
-          return response;
-        }),
-        catchError(this.error)
-      );
+  addStudent(
+    student: IRegistration
+  ): Observable<{ error: boolean; msg: string; data: IRegistration | null }> {
+    return this.create('aspirante/crearAspirante', student);
   }
 }

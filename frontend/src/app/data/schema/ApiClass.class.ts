@@ -13,7 +13,10 @@ export class ApiClass {
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
-      errorMessage = `Error code: ${error.status}\nMessage: ${error.message}`;
+      const errorDetails = error.error?.details;
+      errorMessage = errorDetails
+        ? errorDetails
+        : `Error code: ${error.status}\nMessage: ${error.message}`;
     }
     return of({ error: true, msg: errorMessage, data: null });
   }

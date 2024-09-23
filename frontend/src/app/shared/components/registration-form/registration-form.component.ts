@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RegistrationService } from 'services/api/registration/registration.service';
@@ -10,7 +10,7 @@ import { LoadingService } from 'services/global/loading.service';
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css'],
 })
-export class RegistrationFormComponent {
+export class RegistrationFormComponent implements OnInit {
   public submitted = false;
   form: FormGroup | any;
   private student!: IRegistration;
@@ -19,7 +19,16 @@ export class RegistrationFormComponent {
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
     private loadingService: LoadingService
-  ) {
+  ) {}
+  ngOnInit(): void {
+    this.setForm();
+  }
+
+  get fm() {
+    return this.form.controls;
+  }
+
+  setForm() {
     this.form = this.formBuilder.group({
       fullNames: ['', [Validators.required]],
       firstLastName: ['', [Validators.required]],
@@ -45,10 +54,6 @@ export class RegistrationFormComponent {
         ],
       ],
     });
-  }
-
-  get fm() {
-    return this.form.controls;
   }
 
   sendData() {
@@ -79,8 +84,11 @@ export class RegistrationFormComponent {
               showConfirmButton: true,
             });
           }, 750);
+          this.setForm();
+          this.submitted = false;
         } else {
           this.loadingService.stopLoading();
+          console.log(r.error + ' ' + r.msg);
           setTimeout(() => {
             Swal.fire({
               icon: 'error',
