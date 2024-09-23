@@ -1,10 +1,10 @@
 /* Estilos del formulario */
 .form {
-  border: 2px solid #b8395b; /* Color y grosor del borde */
+  border: 2px solid #b8395b !important; /* Color y grosor del borde */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px 20px;
+  padding: 0;
   width: 100%; /* Ocupar todo el ancho */
 }
 
@@ -13,7 +13,8 @@
   padding: 10px;
   color: white;
   background-color: #b41e46;
-  width: 110%;
+  width: 100%;
+  /* width: 103%; */
   text-align: left;
   margin-bottom: 15px;
 }
@@ -22,6 +23,7 @@
 .form-child {
   margin: 0;
   width: 100%; /* Ocupar todo el ancho */
+  padding: 0 20px 20px 20px;
 }
 
 /* Estilo del contenedor principal */
@@ -103,7 +105,7 @@
   transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
   opacity: 0;
   transform: translateY(20px);
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 /* Estilo para el título de la alerta */
@@ -131,7 +133,6 @@
   background-color: #cf285a;
   font-size: 1rem;
   border-radius: 50px;
-
 }
 
 .custom-btn:hover {
@@ -140,7 +141,7 @@
 }
 
 /* Estilo cuando el botón está en focus */
-.custom-btn:focus, 
+.custom-btn:focus,
 .custom-btn:active {
   background-color: #721d36; /* Mismo color que el hover */
   box-shadow: 0 4px 10px rgba(151, 15, 56, 0.5);
@@ -152,4 +153,30 @@
   border-radius: 15px;
   background-color: #fdfdfd;
   border: 1px solid #eee;
+}
+
+::ng-deep .modal-dialog {
+  max-width: 100% !important;
+  width: 80vw !important;
+  margin: auto;
+  padding: 0;
+}
+
+::ng-deep .modal-content {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 577px) {
+  ::ng-deep .modal-content {
+    margin-left: 48px;
+    padding: 0;
+  }
+
+  .modal-content {
+    margin: 0;
+    padding: 0;
+  }
 }

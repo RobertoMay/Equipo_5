@@ -24,7 +24,7 @@ export class RegistrationService extends ApiClass {
       data: null as IRegistration | null,
     };
     return this.http
-      .post<IRegistration>(this.url + 'crearAspirante', studet)
+      .post<IRegistration>(this.url + 'aspirante/crearAspirante', studet)
       .pipe(
         map((r) => {
           response.data = r;

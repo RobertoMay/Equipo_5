@@ -1,4 +1,5 @@
 <!-- Sección del cuerpo de la página -->
+
 <body>
   <!-- Listado de convocatorias -->
   <div *ngIf="convocatorias.length > 0; else noConvocatoria">
@@ -10,7 +11,9 @@
         </h4>
         <!-- Descripción de la convocatoria -->
         <p>
-          En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto" ofrece la oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus estudios en un entorno seguro y de apoyo.
+          En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto" ofrece la
+          oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus estudios en
+          un entorno seguro y de apoyo.
         </p>
         <!-- Rango de fechas -->
         <div class="date-range mb-3">
@@ -18,7 +21,8 @@
         </div>
         <!-- Información adicional de la convocatoria -->
         <p class="small text-muted">
-          Esta convocatoria está abierta del {{ convocatoria.startDate }} al {{ convocatoria.endDate }}. Los estudiantes interesados deberán cumplir con los requisitos antes de la fecha de cierre.
+          Esta convocatoria está abierta del {{ convocatoria.startDate }} al {{ convocatoria.endDate }}. Los estudiantes
+          interesados deberán cumplir con los requisitos antes de la fecha de cierre.
         </p>
         <!-- Botón de registro -->
         <button class="btn btn-primary custom-btn" (click)="abrirModalComentarios(convocatoria)">
@@ -27,21 +31,25 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Modal para el registro -->
   <ng-template #myModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">{{ convocatoria?.title }}</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <div class="d-flex justify-content-center mt-4">
-        <div class="form border border-3 mb-4 rounded shadow-sm col-12">
-          <div class="titles">
-            <h3>Formulario de registro</h3>
-            <p>Por favor llena todos los campos para iniciar tu proceso de inscripción</p>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ convocatoria?.title }}</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-center mt-4">
+            <div class="form border border-3 mb-4 rounded col-12">
+              <div class="titles">
+                <h3>Formulario de registro</h3>
+                <p>Por favor llena todos los campos para iniciar tu proceso de inscripción</p>
+              </div>
+              <div class="col-12 mt-4 form-child" app-registration-form></div>
+            </div>
           </div>
-          <div class="col-12 mt-4 form-child" app-registration-form></div>
         </div>
       </div>
     </div>
@@ -51,7 +59,8 @@
   <ng-template #noConvocatoria>
     <div class="alert alert-warning text-center elegant-alert show" role="alert">
       <h4>No hay convocatorias disponibles en este momento</h4>
-      <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue. Tu participación es importante para nuestra comunidad.</p>
+      <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue. Tu
+        participación es importante para nuestra comunidad.</p>
     </div>
   </ng-template>
 
