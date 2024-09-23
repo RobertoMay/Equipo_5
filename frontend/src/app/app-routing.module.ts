@@ -27,6 +27,9 @@ const routes: Routes = [
             (m) => m.AboutUsModule
           ),
       },
+     {
+      path: 'activities', loadChildren: () => import('@modules/activities/activities.module').then((m) => m.ActivitiesModule)
+     }
     ],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
