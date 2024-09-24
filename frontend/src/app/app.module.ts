@@ -14,6 +14,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { StudentPortalComponent } from './modules/student-portal/student-portal.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#9d2449',
@@ -28,7 +29,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const routes: Routes = [];
 
 @NgModule({
-  declarations: [AppComponent, SkeletonComponent, NavbarComponent],
+  declarations: [AppComponent, SkeletonComponent, NavbarComponent, StudentPortalComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

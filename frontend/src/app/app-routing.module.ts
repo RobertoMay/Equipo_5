@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SkeletonComponent } from '@layout/skeleton/skeleton.component';
 import { LoginComponent } from '@modules/login/login.component';
-
+import { StudentPortalComponent } from '@modules/student-portal/student-portal.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,6 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('@modules/home/home.module').then((m) => m.HomeModule),
-   
       },
       {
         path: 'registration',
@@ -29,9 +28,17 @@ const routes: Routes = [
             (m) => m.AboutUsModule
           ),
       },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('@modules/home-admin/home-admin.module').then(
+            (m) => m.HomeAdminModule
+          ),
+      },
     ],
   },
-  {path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'student', component: StudentPortalComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
