@@ -1,0 +1,92 @@
+.icon-background {
+    background-color: #b41e46 !important;
+  }
+.background-color{
+    background: linear-gradient(to bottom, #d1d0d0, #333232c2);
+}  
+.login-container{
+  position: absolute;
+}
+
+/* Estilo para el botón de regreso */
+.back-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #b41e46; /* Color de fondo */
+  border-radius: 25%; /* Hace el botón redondo */
+  padding: 1px ; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.back-button i {
+  color: white; /* Color del ícono */
+  font-size: 2rem; /* Tamaño del ícono */
+}
+
+.back-button a {
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color:  #ec4967; /* Color al hacer hover */
+  transition: background-color 0.3s ease;
+}
+
+
+/* Estilo para el botón de iniciar sesión */
+.btn {
+  background-color: #b41e46 ;
+  transition: background-color 0.3s ease; /* Transición para el efecto hover */
+}
+
+.btn:hover {
+  background-color: #ec4967; /* Color al hacer hover */
+}
+
+
+
+/* Responsive para pantallas pequeñas */
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .back-button {
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+  }
+
+  /* Centrar el login y ajustar tamaño */
+  .login-container {
+      
+      max-width: 95%; /* Limita el ancho máximo para que no ocupe toda la pantalla */
+      padding: 20px; /* Mantener el padding más compacto */
+      margin: auto; /* Centramos horizontalmente */
+      font-size: 1rem; 
+      height: auto; /* Ajustar la altura mínima para pantallas pequeñas */
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+/* Para distribuir el contenido verticalmente */
+  }
+
+  .back-button i {
+      font-size: 2rem;
+  }
+
+  .login-container img {
+      height: 4rem;
+  }
+
+  .input-group {
+      margin-bottom: 15px;
+  }
+
+  .btn {
+      font-size: 1rem;
+  }
+
+
+}

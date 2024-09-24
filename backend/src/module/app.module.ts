@@ -4,6 +4,7 @@ import { AppService } from 'src/service/app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreModule } from 'src/firestore/firestore.module';
 import { InstitutionModule } from './institution.module';
+import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
 
 @Module({
@@ -18,7 +19,9 @@ import { AspiranteModule } from './aspirante.module';
       }),
       inject: [ConfigService],
     }),
-    InstitutionModule, AspiranteModule,
+
+    InstitutionModule, AspiranteModule, ConvocatoriaModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
