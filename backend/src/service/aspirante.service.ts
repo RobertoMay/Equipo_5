@@ -11,6 +11,7 @@ export class AspiranteService {
     this.firestore = new Firestore();
   }
 
+  
   // Verificar duplicados de CURP y correo electrónico
   private async checkDuplicates(curp: string, correo: string): Promise<boolean> {
     const snapshot = await this.firestore.collection('aspirantes')
