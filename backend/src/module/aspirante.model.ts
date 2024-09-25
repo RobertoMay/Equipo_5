@@ -5,7 +5,7 @@ export class Aspirante {
     apellidoMaterno: string;
     curp: string;
     correo: string;
-  
+    esAdministrador?: boolean; 
     constructor(partial: Partial<Aspirante>) {
       Object.assign(this, partial);
     }

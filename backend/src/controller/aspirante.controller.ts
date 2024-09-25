@@ -29,12 +29,21 @@ export class AspiranteController {
     const { correo, curp } = credentials;
     try {
       const result = await this.aspiranteService.authenticate(correo, curp);
-      return result;
+
+      // Generación del token
+      const token = jwt.sign({ sub: result.nombresCompletos, esAdministrador: result.esAdministrador }, 'mi-llave-secreta', { expiresIn: '1h' });
+
+      return {
+        message: 'Inicio de sesión exitoso',
+        token,
+        nombresCompletos: result.nombresCompletos,
+        esAdministrador: result.esAdministrador, // Devuelve si es administrador
+      };
     } catch (error) {
       if (error instanceof ConflictException) {
-        return { message: error.message };
+        throw new HttpException({ message: error.message }, HttpStatus.CONFLICT);
       }
-      return { message: 'Error interno del servidor', error: error.message };
+      throw new HttpException({ message: 'Error interno del servidor', details: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
   

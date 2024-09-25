@@ -1,12 +1,13 @@
 export class AspiranteDocument {
-  static collectionName = 'Aspirantes'; // Nombre de la colección en Firestore
+  static collectionName = 'Aspirantes'; 
 
   id: string;
-  nombresCompletos: string;
+  nombresCompletos: string; 
   apellidoPaterno: string;
   apellidoMaterno: string;
   curp: string;
   correo: string;
+  esAdministrador?: boolean; 
 
   constructor(partial: Partial<AspiranteDocument>) {
     Object.assign(this, partial);

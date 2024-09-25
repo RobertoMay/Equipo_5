@@ -2,6 +2,7 @@ import { Injectable, ConflictException, HttpException, HttpStatus } from '@nestj
 import { Firestore, QuerySnapshot } from '@google-cloud/firestore';
 import { AspiranteDocument } from '../todos/document/aspirante.document';
 import * as jwt from 'jsonwebtoken';
+import { AuthResult } from 'src/module/auth-result.interface';
 
 @Injectable()
 export class AspiranteService {
@@ -10,6 +11,7 @@ export class AspiranteService {
   constructor() {
     this.firestore = new Firestore();
   }
+  
 
   // Verificar duplicados de CURP y correo electrónico
   private async checkDuplicates(curp: string, correo: string): Promise<boolean> {
@@ -53,29 +55,24 @@ export class AspiranteService {
     }
   }
   // Autenticar al usuario y generar un token
-  async authenticate(correo: string, curp: string): Promise<{ message: string; token?: string; nombresCompletos?: string }> {
-    const aspirantesCollection = this.firestore.collection(AspiranteDocument.collectionName);
-    const snapshot = await aspirantesCollection
+  async authenticate(correo: string, curp: string): Promise<AuthResult> {
+    const snapshot = await this.firestore.collection('Aspirantes')
       .where('correo', '==', correo)
       .where('curp', '==', curp)
       .get();
-
+  
     if (snapshot.empty) {
-      throw new ConflictException('Usuario no encontrado o datos incorrectos.');
+      throw new ConflictException('Usuario no encontrado o credenciales incorrectas');
     }
-
-    const user = snapshot.docs[0].data() as AspiranteDocument;
-
-    // Generar un token JWT
-    const token = jwt.sign({ sub: user.id }, 'mi-llave-secreta', { expiresIn: '1h' });
-
+  
+    const userDoc = snapshot.docs[0];
+    const userData = userDoc.data();
+  
     return {
-      message: 'Inicio de sesión exitoso',
-      token,
-      nombresCompletos: user.nombresCompletos
+      nombresCompletos: userData.nombresCompletos, // Asegúrate de que esta propiedad existe
+      esAdministrador: userData.esAdministrador || false, // Devuelve si es administrador
     };
   }
-
   // Obtener todos los aspirantes
   async getAllAspirantes(): Promise<AspiranteDocument[]> {
     const snapshot = await this.firestore.collection('aspirantes').get();
