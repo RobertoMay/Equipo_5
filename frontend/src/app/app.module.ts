@@ -14,7 +14,10 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginModule } from "./modules/login/login.module";
 import { StudentPortalComponent } from './modules/student-portal/student-portal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#9d2449',
@@ -40,6 +43,9 @@ const routes: Routes = [];
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
     NgbModule,
+    ReactiveFormsModule,
+    LoginModule
+    
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],

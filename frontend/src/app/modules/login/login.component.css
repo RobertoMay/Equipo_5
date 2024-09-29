@@ -47,6 +47,10 @@
   background-color: #ec4967; /* Color al hacer hover */
 }
 
+.text-danger {
+  font-size: 0.875rem; /* Ajusta el tamaño de fuente */
+  margin-top: 0.10rem; /* Espacio entre el input y el mensaje */
+}
 
 
 /* Responsive para pantallas pequeñas */
