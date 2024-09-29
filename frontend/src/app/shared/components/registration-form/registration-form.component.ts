@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { RegistrationService } from 'services/api/registration/registration.service';
 import { IRegistration } from './iregistration-form.metadata';
 import { LoadingService } from 'services/global/loading.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-registration-form, [app-registration-form]',
@@ -18,7 +19,8 @@ export class RegistrationFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private modalService: NgbModal
   ) {}
   ngOnInit(): void {
     this.setForm();
@@ -85,6 +87,7 @@ export class RegistrationFormComponent implements OnInit {
             });
           }, 750);
           this.setForm();
+          this.modalService.dismissAll();
           this.submitted = false;
         } else {
           this.loadingService.stopLoading();
