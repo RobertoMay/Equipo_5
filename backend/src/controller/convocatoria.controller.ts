@@ -1,57 +1,33 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
-  NotFoundException,
-} from '@nestjs/common';
-import { ConvocatoriaService } from 'src/service/convocatoria.service';
-import { Convocatoria } from 'src/module/modelsConvocatoria';
+import { Controller, Get, Post, Param, Body, Delete, Put } from '@nestjs/common';
+import { ConvocatoriaService } from '../service/convocatoria.service';
+import { ConvocatoriaDocument } from '../todos/document/convocatoria.document';
 
 @Controller('api/calls')
 export class ConvocatoriaController {
   constructor(private readonly convocatoriaService: ConvocatoriaService) {}
 
-  @Post('create')
-  async createNewConvocatoria(@Body() newConvocatoria: Convocatoria) {
-    const convocatoria = await this.convocatoriaService.createConvocatoria(newConvocatoria);
-    return { message: 'Convocatoria creada con éxito', convocatoria };
+  @Get('/')
+  async getAll() {
+    return this.convocatoriaService.findAll();
   }
 
-  @Get('/getallcalls')
-  async getAllConvocatorias() {
-    const convocatorias = await this.convocatoriaService.getAllConvocatorias();
-    return convocatorias;
+  @Get('/get/:id')
+  async getById(@Param('id') id: string) {
+    return this.convocatoriaService.findById(id);
   }
 
-  @Get('/getcall/:title') // Cambiado a :title
-  async getConvocatoriaByTitle(@Param('title') title: string) {
-    const convocatoria = await this.convocatoriaService.getConvocatoriaByTitle(title);
-    if (!convocatoria) {
-      throw new NotFoundException(`Announcement with title "${title}" not found.`);
-    }
-    return convocatoria;
+  @Post('/')
+  async create(@Body() convocatoria: ConvocatoriaDocument) {
+    return this.convocatoriaService.create(convocatoria);
   }
 
-  @Delete('/deletecall/:title') // Cambiado a :title
-  async deleteConvocatoriaByTitle(@Param('title') title: string) {
-    await this.convocatoriaService.deleteConvocatoriaByTitle(title);
-    return { message: 'Convocatoria(s) eliminada(s) con éxito' };
+  @Put('/update/:id')
+  async update(@Param('id') id: string, @Body() convocatoria: Partial<ConvocatoriaDocument>) {
+    return this.convocatoriaService.update(id, convocatoria);
   }
 
-  @Put('/updatecalls/:title')
-  async updateConvocatoriaByTitle(
-    @Param('title') title: string,
-    @Body() updatedConvocatoria: Partial<Convocatoria>
-  ) {
-    // Llama al servicio para actualizar la convocatoria
-    await this.convocatoriaService.updateConvocatoriaByTitle(title, updatedConvocatoria);
-    
-    // Suponiendo que la actualización fue exitosa
-    return { message: 'Announcement updated successfully' };
+  @Delete('/delete/:id')
+  async delete(@Param('id') id: string) {
+    return this.convocatoriaService.delete(id);
   }
-  
 }

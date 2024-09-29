@@ -5,4 +5,8 @@ export class ConvocatoriaDocument {
   startDate: Date;
   endDate: Date;
   status: boolean;
+
+  constructor(partial: Partial<ConvocatoriaDocument>) {
+    Object.assign(this, partial);
+  }
 }
