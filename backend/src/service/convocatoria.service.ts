@@ -4,6 +4,7 @@ import {
   NotFoundException,
   Inject,
   Logger,
+  BadRequestException,
 } from '@nestjs/common';
 
 import { Convocatoria } from 'src/module/modelsConvocatoria';
@@ -23,7 +24,7 @@ export class ConvocatoriaService {
   async createConvocatoria(convocatoria: Convocatoria): Promise<any> {
     // Verificar si la convocatoria ya existe por título
     const titleQuerySnapshot: QuerySnapshot = await this.convocatoriaCollection
-      .where('titulo', '==', convocatoria.titulo)
+      .where('title', '==', convocatoria.title)
       .get();
     if (!titleQuerySnapshot.empty) {
       throw new ConflictException('La convocatoria ya está registrada');
@@ -46,9 +47,9 @@ export class ConvocatoriaService {
   }
 
   // Nuevo método para obtener convocatoria por título
-  async getConvocatoriaByTitle(titulo: string): Promise<any> {
+  async getConvocatoriaByTitle(title: string): Promise<any> {
     const titleQuerySnapshot: QuerySnapshot = await this.convocatoriaCollection
-      .where('titulo', '==', titulo)
+      .where('title', '==', title)
       .get();
 
     if (titleQuerySnapshot.empty) {
@@ -60,35 +61,34 @@ export class ConvocatoriaService {
   }
 
   async updateConvocatoriaByTitle(
-    titulo: string,
-    updatedConvocatoria: Partial<Convocatoria>,
+    title: string,
+    updatedConvocatoria: Partial<Convocatoria>
   ): Promise<void> {
+    // Verifica que el título y los datos de la convocatoria a actualizar sean válidos
+    if (!title || !updatedConvocatoria) {
+      throw new BadRequestException('Title and updated data are required.');
+    }
     const titleQuerySnapshot: QuerySnapshot = await this.convocatoriaCollection
-      .where('titulo', '==', titulo)
+      .where('title', '==', title)
       .get();
-
     if (titleQuerySnapshot.empty) {
       throw new NotFoundException('No se encontró convocatoria con ese título');
     }
-
-    // Construir el objeto de actualización
-    const updateData = {
-      ...updatedConvocatoria,
-      // Puedes agregar lógica para limpiar los campos no permitidos aquí, si es necesario
-    };
-
+    // Filtra los campos undefined antes de la actualización
+    const updateData = Object.fromEntries(
+      Object.entries(updatedConvocatoria).filter(([_, v]) => v !== undefined)
+    );
     // Actualizar todas las convocatorias con el título dado
     const batch = this.convocatoriaCollection.firestore.batch();
     titleQuerySnapshot.docs.forEach((doc) => {
       batch.update(doc.ref, updateData);
     });
-
     await batch.commit();
   }
 
-  async deleteConvocatoriaByTitle(titulo: string): Promise<void> {
+  async deleteConvocatoriaByTitle(title: string): Promise<void> {
     const titleQuerySnapshot: QuerySnapshot = await this.convocatoriaCollection
-      .where('titulo', '==', titulo)
+      .where('title', '==', title)
       .get();
 
     if (titleQuerySnapshot.empty) {

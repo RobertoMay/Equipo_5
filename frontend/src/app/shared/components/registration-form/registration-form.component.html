@@ -30,7 +30,7 @@
         <div class="form-group mb-3 col-md-6">
             <label for="hive">Apellido materno*</label>
             <input type="text" class="form-control" formControlName="secondLastName"
-                placeholder="Ingresa tus segundo apellido"
+                placeholder="Ingresa tu segundo apellido"
                 [ngClass]="{ 'is-invalid': fm.secondLastName.invalid && (fm.secondLastName.dirty || fm.secondLastName.touched || submitted) }">
             <small class="text-danger mt-1 px-2 py-1"
                 *ngIf="(fm.secondLastName.dirty || fm.secondLastName.touched || submitted) && fm.secondLastName.errors">

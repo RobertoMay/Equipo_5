@@ -12,23 +12,23 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
+import { RouterModule, Routes } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  fgsColor: '#b0af9d',
+  fgsColor: '#9d2449',
   bgsColor: '#b0af9d',
   bgsOpacity: 0.5,
   bgsType: 'ball-spin-fade-rotating',
   fgsType: 'ball-spin-fade-rotating',
-  overlayColor: 'rgba(40,40,40,0.8)',
+  overlayColor: 'rgba(40,40,40,0.5)',
   hasProgressBar: false,
 };
 
+const routes: Routes = [];
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    SkeletonComponent,
-    NavbarComponent,
-  ],
+  declarations: [AppComponent, SkeletonComponent, NavbarComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -37,6 +37,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     FooterComponent,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+    NgbModule,
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],

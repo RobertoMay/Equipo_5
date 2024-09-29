@@ -2,14 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './module/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  // Configuración de CORS
-  app.enableCors({
-    origin: 'http://localhost:4200', // Permite solicitudes solo desde este origen
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept',
-  });
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   await app.listen(3000);
 }

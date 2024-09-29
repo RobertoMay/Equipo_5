@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Convocatoria } from '../app/modules/models'; // Asegúrate de que esta ruta sea correcta
-import { environment } from '../environments/enviroment';
+import { environment } from 'environments/environmet';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CallService {
   private myAppUrl: string;
-  private apiUrl : string;  // URL de la API base
+  private apiUrl: string; // URL de la API base
 
   constructor(private http: HttpClient) {
-    this.myAppUrl = environment.endpoint;
-    this.apiUrl = '/convocatorias/'
-   }
+    this.myAppUrl = environment.apiUrl;
+    this.apiUrl = '/convocatorias/';
+  }
 
   // Método para obtener todas las convocatorias
   getConvocatorias(): Observable<Convocatoria[]> {
@@ -40,7 +40,10 @@ export class CallService {
   }
 
   // Método para actualizar convocatorias por título
-  updateConvocatoriaByTitle(titulo: string, updatedConvocatoria: Partial<Convocatoria>): Observable<any> {
+  updateConvocatoriaByTitle(
+    titulo: string,
+    updatedConvocatoria: Partial<Convocatoria>
+  ): Observable<any> {
     const params = new HttpParams().set('titulo', titulo);
     return this.http.put(`${this.apiUrl}`, updatedConvocatoria, { params });
   }

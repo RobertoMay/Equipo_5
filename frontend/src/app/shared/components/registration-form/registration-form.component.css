@@ -11,6 +11,7 @@
 .btn-send:hover {
   background-color: #b8244b;
   border-radius: 50px;
+  color: white;
   transform: scale(1.05);
 }
 

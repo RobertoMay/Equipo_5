@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { RegistrationService } from 'services/api/registration/registration.service';
+import { IRegistration } from './iregistration-form.metadata';
+import { LoadingService } from 'services/global/loading.service';
 
 @Component({
   selector: 'app-registration-form, [app-registration-form]',
@@ -11,10 +13,12 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class RegistrationFormComponent {
   public submitted = false;
   form: FormGroup | any;
+  private student!: IRegistration;
 
   constructor(
     private formBuilder: FormBuilder,
-    private _ngxUiLoaderService: NgxUiLoaderService
+    private registrationService: RegistrationService,
+    private loadingService: LoadingService
   ) {
     this.form = this.formBuilder.group({
       fullNames: ['', [Validators.required]],
@@ -52,19 +56,45 @@ export class RegistrationFormComponent {
     if (!this.form.valid) {
       return;
     }
-    this._ngxUiLoaderService.start();
-    alert('Data send');
-    // this._ngxUiLoaderService.stop();
 
-    setTimeout(() => {
-      Swal.fire({
-        title: 'Alarma',
-        text: 'Se ha registrado correctamente',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }, 750);
+    this.loadingService.startLoading();
+
+    this.student = {
+      nombresCompletos: this.form.get('fullNames').value,
+      apellidoPaterno: this.form.get('firstLastName').value,
+      apellidoMaterno: this.form.get('secondLastName').value,
+      curp: this.form.get('curp').value,
+      correo: this.form.get('email').value,
+    };
+
+    this.registrationService.addStudent(this.student).subscribe(
+      (r) => {
+        if (!r.error) {
+          this.loadingService.stopLoading();
+          setTimeout(() => {
+            Swal.fire({
+              title: 'Se ha registrado correctamente',
+              text: 'Ve a la sección Login para iniciar sesión con Correo y Curp',
+              icon: 'success',
+              showConfirmButton: true,
+            });
+          }, 750);
+        } else {
+          this.loadingService.stopLoading();
+          setTimeout(() => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: r.msg,
+            });
+          }, 750);
+        }
+      },
+      (error) => {
+        console.error(error);
+        this.loadingService.stopLoading();
+      }
+    );
   }
 
   toUppercase(event: any) {

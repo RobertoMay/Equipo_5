@@ -3,29 +3,85 @@
   width: 80%;
   margin: 20px auto;
   text-align: center;
-
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
   background-color: #ffffff;
-
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
+.encabezado {
+  width: 100%;
+  min-height: 240px; /* Altura ajustada para el icono */
+  background: linear-gradient(to right, #b41e46, #d65d7c); /* Degradado que combina con la navbar */
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+  color: #fff; /* Color del texto */
+  border-bottom: 5px solid #fff; /* Borde inferior para destacar */
+}
+
+h1 {
+  font-size: 2.8em; /* Aumentar tamaño */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0; /* Eliminar márgenes para mejor alineación */
+}
+
+.subtitulo {
+  font-size: 1.5em; /* Tamaño aumentado */
+  margin-top: 10px; /* Espacio entre el título y el subtítulo */
+  line-height: 1.4; /* Espaciado entre líneas para mejor legibilidad */
+}
+
+/* Icono en el encabezado */
+.encabezado i {
+  font-size: 5em; /* Tamaño del icono */
+  color: #f0e5e8; /* Color del icono */
+  position: absolute;
+  top: 20px; /* Ajusta la posición del icono */
+  left: 20px; /* Ajusta la posición del icono */
+  opacity: 0.8; /* Opacidad del icono */
+  transition: transform 0.3s ease; /* Efecto de hover */
+}
+
+.encabezado i:hover {
+  transform: scale(1.1); /* Efecto de aumentar el icono al pasar el mouse */
+}
+
+/* Estilo mejorado para la imagen */
+
+
+.imagen-diseno {
+  max-width: 70%; /* Reducido tamaño de la imagen */
+  height: auto;
+  border-radius: 10px; /* Bordes redondeados */
+  transition: transform 0.3s ease;
+}
+
+.imagen-diseno:hover {
+  transform: scale(1.05);
+}
+
+/* Texto con mejor legibilidad */
 .texto {
   font-family: 'Georgia', serif; /* Fuente elegante */
-  font-size: 1.2em; /* Tamaño del texto apreciable */
-  color: #333333; /* Color gris oscuro para elegancia y contraste */
-  line-height: 1.6; /* Espaciado entre líneas para mejor legibilidad */
-  text-align: justify; /* Alineación justificada para un acabado profesional */
-  padding: 15px; /* Espaciado interno para dar más aire */
-  background-color: #e9e9e9; /* Fondo suave para resaltar el texto */
-  border-radius: 8px; /* Bordes redondeados para un efecto suave */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar un toque de profundidad */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
+  font-size: 1.2em; 
+  color: #333333; 
+  line-height: 1.8; 
+  text-align: justify; 
+  padding: 15px; 
+  background-color: #f7f7f7; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
 /* Efecto cuando se pasa el mouse por encima del texto */
 .texto:hover {
-  transform: translateY(-5px); /* Efecto de levantamiento suave */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  transform: translateY(-5px); 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
 }
 
 /* Estilo de la lista */
@@ -34,49 +90,19 @@
 }
 
 .lista ul {
-  margin: 0;
-  padding-left: 20px;
+  padding-left: 0; /* Quita el padding predeterminado */
+  list-style: none; /* Quita las viñetas predeterminadas */
 }
 
 .lista ul li {
-  font-family: 'Georgia', serif;
-  font-size: 1.1em;
-  color: #4B4B4B;
-  line-height: 1.8;
-  padding: 10px 0;
-  list-style-type: disc;
+  display: flex; /* Utiliza flexbox para alinear el icono y el texto */
+  align-items: center; /* Centra verticalmente */
+  margin-bottom: 10px; /* Espaciado entre los ítems */
 }
 
-.lista ul li::marker {
-  color: #8B1E3F; /* Color de la viñeta */
-
-}
-
-.lista ul li:hover {
-  color: #000000;
-  transition: color 0.3s ease;
-  text-decoration: underline; 
-  font-size: 1.2em;
-}
-/* Encabezado con diseño mejorado y animación de entrada */
-.encabezado {
-  width: 100%;
-  min-height: 200px; /* Establece una altura mínima */
-  background: linear-gradient(to right, #d1d0d0, #333232c2); /* Degradado de izquierda a derecha */
-  position: relative;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-
-h1 {
-  font-size: 64px;
-  color: #000000;
-  animation: fadeIn 2s ease-out;
-  font-weight: 900;
+.lista ul li i {
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+  color: #b41e46; /* Cambia el color del icono si es necesario */
 }
 
 /* Clase para el texto animado */
@@ -92,7 +118,7 @@ h1 {
 }
 
 .titulo {
-  color: #a53654;
+  color: #f0e5e8; /* Color que combina con el banner */
 }
 
 /* Diseño para los botones y secciones */
@@ -122,17 +148,17 @@ button.accordion {
   padding: 10px 0;
   transition: color 0.3s ease;
 }
-/* Tamaño de fuente más pequeño para dispositivos móviles */
 
 /* Estilo adicional para personalizar "VISIÓN" */
 button.accordion::after {
   content: " "; /* Espacio vacío para margen extra */
-  border-bottom: 2px solid#8B1E3F; /* Subrayado elegante */
+  border-bottom: 2px solid #8B1E3F; /* Subrayado elegante */
   display: block; /* Forzamos que se vea el subrayado */
   width: 100%; /* El subrayado ocupará todo el ancho */
   margin-top: 5px;
   transition: border-color 0.3s ease;
 }
+
 span.arrow {
   display: inline-block;
   margin-right: 10px; /* Espacio entre la flecha y el texto */
@@ -148,7 +174,7 @@ span.arrow {
 .panel {
   padding: 0 18px;
   display: none;
-  background-color:#ffffff;
+  background-color: #ffffff;
   overflow: hidden;
   border-bottom: 1px solid #ffffff;
 }
@@ -157,8 +183,6 @@ span.arrow {
   display: block;
 }
 
-
-
 /* Enlaces elegantes */
 p {
   color: #333333; /* Color para los encabezados */
@@ -166,28 +190,21 @@ p {
   padding-bottom: 30px;
   font-weight: bold;
   font-size: 130%;
-
   text-align: justify;
 }
+
 /* Tamaño de fuente más pequeño para dispositivos móviles */
 @media (max-width: 768px) {
   p {
     font-size: 100%; /* Tamaño de fuente reducido para pantallas pequeñas */
   }
-  button.accordion{
+  button.accordion {
     font-size: 130%; /* Tamaño de fuente reducido para pantallas pequeñas */
   }
   span.arrow {
-    display: inline-block;
-    margin-right: 10px; /* Espacio entre la flecha y el texto */
     font-size: 1.2rem; /* Tamaño de la flecha */
-    color: #000000; /* Color de la flecha */
-    transition: transform 0.4s ease; /* Animación de rotación */
   }
   .texto {
-   
     font-size: 1em; /* Tamaño del texto apreciable */
-    
   }
-  
 }

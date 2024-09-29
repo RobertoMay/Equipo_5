@@ -7,7 +7,6 @@ import { InstitutionModule } from './institution.module';
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,7 +19,6 @@ import { AspiranteModule } from './aspirante.module';
       }),
       inject: [ConfigService],
     }),
-
 
     InstitutionModule, AspiranteModule, ConvocatoriaModule,
 
