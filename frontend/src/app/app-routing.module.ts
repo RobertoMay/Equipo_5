@@ -35,6 +35,13 @@ const routes: Routes = [
             (m) => m.HomeAdminModule
           ),
       },
+      {
+        path: 'activities',
+        loadChildren: () =>
+          import('@modules/activities/activities.module').then(
+            (m) => m.ActivitiesModule
+          ),
+      },
     ],
   },
   { path: 'login', component: LoginComponent },
