@@ -40,14 +40,17 @@
   /* Cards */
   .container {
     display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se acomoden una debajo de la otra en pantallas pequeñas */
+    justify-content: center; 
     gap: 30px; /* Espacio entre las tarjetas */
 }
-.card-1, .card-2, .card-3, card-text {
-    text-align: center;
-    flex: 1;
-    /*box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);*/
-    transform: translateY(-2%);
+
+.card-1, .card-2, .card-3 {
+    flex: 1 1 calc(33.33% - 60px); /* Ajusta para restar el espacio de los márgenes y el gap */
+    max-width: 300px;
+    margin: 10px;
 }
+
 
 .card:hover {
     
@@ -129,6 +132,35 @@
 
 
 
+/* Ajustes generales */
+
+
+/* Media query para pantallas medianas (tablets) */
+@media (max-width: 768px) {
+    .card-1, .card-2, .card-3 {
+        flex: 1 1 calc(50% - 40px); /* 2 columnas en pantallas medianas */
+    }
+
+    .banner h1 {
+        font-size: 2.5rem; /* Ajuste de tamaño del título del banner */
+    }
+}
+
+/* Media query para pantallas pequeñas (teléfonos móviles) */
+@media (max-width: 480px) {
+    .card-1, .card-2, .card-3 {
+        flex: 1 1 100%; /* Las tarjetas ocupan el 100% del ancho en pantallas pequeñas */
+    }
+
+    .banner {
+        height: 150px; /* Reduce la altura del banner */
+    }
+
+    .banner h1 {
+        font-size: 1.8rem; /* Ajuste de tamaño del título del banner para pantallas pequeñas */
+        padding-right: 20px; /* Reduce el margen derecho del texto */
+    }
+}
 
 
 
