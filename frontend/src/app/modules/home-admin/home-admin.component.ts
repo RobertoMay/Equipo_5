@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./home-admin.component.css']
 })
 export class HomeAdminComponent {
-
+  startDate: Date = new Date();  // Fecha inicial
+  endDate: Date = new Date();
 }
