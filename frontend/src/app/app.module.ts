@@ -14,7 +14,6 @@ import { NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginModule } from "./modules/login/login.module";
-import { StudentPortalComponent } from './modules/student-portal/student-portal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -31,7 +30,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const routes: Routes = [];
 
 @NgModule({
-  declarations: [AppComponent, SkeletonComponent, NavbarComponent, StudentPortalComponent],
+  declarations: [AppComponent, SkeletonComponent, NavbarComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

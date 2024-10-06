@@ -19,4 +19,25 @@ export class AuthService {
       credentials // Datos enviados al backend: { correo, curp }
     );
   }
+
+// Método para verificar si el usuario está autenticado
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
+
+
+// Método para verificar si el usuario es administrador
+  isAdmin(): boolean {
+    const esAdmin = localStorage.getItem('esAdministrador');
+    return esAdmin === 'true';
+  }
+
+   // Método para cerrar sesión
+   logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('esAdministrador');
+  }
+
+
 }

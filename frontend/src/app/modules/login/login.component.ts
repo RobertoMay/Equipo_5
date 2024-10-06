@@ -17,6 +17,7 @@ export class LoginComponent {
   
   form: FormGroup;
   submitted = false;
+  showLogin: boolean = true; // Controla si el pop-up se muestra
 
   constructor(
     private fb: FormBuilder,
@@ -65,8 +66,18 @@ export class LoginComponent {
         }
 
         // Guardar el token
-        localStorage.setItem('token', response.token || '');
-console.log('token:' + response.token );
+       // localStorage.setItem('token', response.token || '');
+       // console.log('token:' + response.token );
+
+
+// Guardar el token y esAdministrador
+localStorage.setItem('token', response.token || '');
+localStorage.setItem('esAdministrador', response.esAdministrador ? 'true' : 'false');
+console.log('token:', response.token);
+console.log('esAdministrador:', response.esAdministrador);
+
+
+
         // Mostrar mensaje de éxito con SweetAlert
         Swal.fire({
           icon: 'success',
@@ -80,6 +91,9 @@ console.log('token:' + response.token );
         } else {
           this.router.navigate(['/student']);
         }
+
+
+        this.showLogin = false; // Oculta el pop-up después de iniciar sesión
       },
       error: (err) => {
         this.ngxLoader.stop(); // Detener el cargador
@@ -91,6 +105,11 @@ console.log('token:' + response.token );
         });
       }
     });
+  }
+
+  closeLogin() {
+    this.showLogin = false; // Cierra el pop-up al hacer clic en el botón de cerrar
+    this.router.navigate(['/']);
   }
 
   
