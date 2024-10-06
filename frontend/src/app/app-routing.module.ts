@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SkeletonComponent } from '@layout/skeleton/skeleton.component';
+import { HomeAdminComponent } from '@modules/home-admin/home-admin.component';
+import { HomeAdminModule } from '@modules/home-admin/home-admin.module';
 import { LoginComponent } from '@modules/login/login.component';
 import { StudentPortalComponent } from '@modules/student-portal/student-portal.component';
 
@@ -35,6 +37,13 @@ const routes: Routes = [
             (m) => m.HomeAdminModule
           ),
       },
+      /*{
+        path: 'student',
+        loadChildren: () =>
+          import('@modules/student-portal/student-portal.component').then(
+            (m) => m.StudentPortalComponent
+          ),
+      },*/
       {
         path: 'activities',
         loadChildren: () =>
@@ -42,11 +51,16 @@ const routes: Routes = [
             (m) => m.ActivitiesModule
           ),
       },
+      {
+        path: 'student',
+        loadChildren: () => import('@modules/student-portal/student-portal.module').then((m) => m.StudentPortalModule),
+      },
     ],
   },
   { path: 'login', component: LoginComponent },
-  { path: 'student', component: StudentPortalComponent },
+  //{ path: 'student', component: StudentPortalComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
+ // {path: 'admin', component:HomeAdminComponent }
 ];
 
 @NgModule({
