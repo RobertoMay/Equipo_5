@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IConvocatoria} from '@shared/components/calls/icalls.metadata';
+import { IConvocatoria } from '@shared/components/calls/icalls.metadata';
 import { GenericServiceService } from '@shared/generic.service.service';
 
 @Injectable({
@@ -19,9 +19,13 @@ export class CallService extends GenericServiceService<IConvocatoria> {
   }
 
   updateAnnouncement(
-    id: number,
+    id: string,
     updatedConvocatoria: IConvocatoria
-  ): Observable<IConvocatoria> {
+  ): Observable<{
+    error: boolean;
+    msg: string;
+    data: IConvocatoria | null;
+  }> {
     return this.update(id, updatedConvocatoria);
   }
 }
