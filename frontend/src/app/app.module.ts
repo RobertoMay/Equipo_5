@@ -17,7 +17,6 @@ import { LoginModule } from "./modules/login/login.module";
 import { StudentPortalComponent } from './modules/student-portal/student-portal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#9d2449',
   bgsColor: '#b0af9d',

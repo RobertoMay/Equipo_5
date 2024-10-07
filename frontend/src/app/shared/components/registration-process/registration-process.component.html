@@ -1,0 +1,1553 @@
+<div class="container mt-5">
+  <!-- Barra de progreso -->
+
+  <div class="progress-container">
+    <div class="progress">
+      <div
+        class="progress-bar"
+        id="progress-bar"
+        role="progressbar"
+        [ngStyle]="{ width: progressWidth }"
+        aria-valuenow="50"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      ></div>
+    </div>
+    <div class="progress-steps">
+      <div class="step" [ngClass]="{ active: currentStep >= 1 }">
+        <span class="step-number">1</span>
+        <p>Paso 1</p>
+      </div>
+      <div class="step" [ngClass]="{ active: currentStep >= 2 }">
+        <span class="step-number">2</span>
+        <p>Paso 2</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 1: Información Personal, Dirección, Familiares -->
+  <form *ngIf="currentStep === 1">
+    <div class="instructions">
+      <h4 class="instructions-title">
+        ¡Bienvenido al Proceso de Solicitud! 📄
+      </h4>
+      <p class="instructions-text">
+        Este proceso se divide en <strong>tres sencillos pasos</strong> para
+        recopilar la información necesaria. En esta primera etapa, te pedimos
+        que completes cuidadosamente todos los campos solicitados. <br /><br />
+        Asegúrate de tener a mano todos los datos personales y familiares que te
+        solicitaremos. Recuerda que los detalles que proporciones serán
+        utilizados para generar tu documento de solicitud, ¡así que cada dato
+        cuenta! ✨
+        <br /><br />
+        <strong>Importante:</strong> Todos los campos son obligatorios. No
+        podrás avanzar al Paso 2 hasta que hayas completado todo correctamente.
+        Antes de continuar, tómate un momento para verificar que la información
+        sea precisa y completa. 🔍 <br /><br />
+        Si todo está en orden, ¡estás a un paso más cerca de completar tu
+        solicitud! ✅
+      </p>
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-primary start-btn"
+          (click)="mostrarFormulario()"
+        >
+          Comenzar Paso 1 <br />
+          <i class="bi bi-arrow-right-circle"></i>
+          <!-- Icono en una nueva línea -->
+        </button>
+      </div>
+    </div>
+
+    <div class="container mt-5" [hidden]="!formularioVisible">
+      <div #formulario>
+        <!-- Sección 1: Informacion personal -->
+        <div class="section">
+          <h3 class="title">
+            <i class="fas fa-user"></i> Información Personal
+          </h3>
+          <div class="questions-container">
+            <div class="question-row">
+              <label for="curp" class="question-text">Ingresa tu CURP</label>
+              <input
+                type="text"
+                id="curp"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.curp"
+                placeholder="CURP"
+              />
+            </div>
+
+            <div class="question-row">
+              <label for="nombre" class="question-text">Nombre(s)</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.nombre"
+                name="nombre"
+                required
+                placeholder="Nombre(s)"
+              />
+            </div>
+            <div class="question-row-inline">
+              <div class="inline-question">
+                <label for="primerApellido" class="question-text"
+                  >Primer apellido</label
+                >
+                <input
+                  type="text"
+                  id="primerApellido"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.primerApellido"
+                  name="primerApellido"
+                  required
+                  placeholder="Primer apellido"
+                />
+              </div>
+              <div class="inline-question">
+                <label for="segundoApellido" class="question-text"
+                  >Segundo apellido</label
+                >
+                <input
+                  type="text"
+                  id="segundoApellido"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.segundoApellido"
+                  name="segundoApellido"
+                  required
+                  placeholder="Segundo apellido"
+                />
+              </div>
+            </div>
+            <div class="question-row-inline">
+              <div class="inline-question">
+                <label for="fechaNacimiento" class="question-text"
+                  >Fecha de nacimiento</label
+                >
+                <input
+                  type="date"
+                  id="fechaNacimiento"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.fechaNacimiento"
+                  name="fechaNacimiento"
+                  required
+                />
+                <small class="form-text text-muted">
+                  Seleccione la fecha de nacimiento
+                </small>
+              </div>
+              <div class="inline-question">
+                <label class="question-text">Sexo</label><br />
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="sexo"
+                    [(ngModel)]="formData.sexo"
+                    value="Hombre"
+                  />
+                  <label class="form-check-label">Hombre</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="sexo"
+                    [(ngModel)]="formData.sexo"
+                    value="Mujer"
+                  />
+                  <label class="form-check-label">Mujer</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="sexo"
+                    [(ngModel)]="formData.sexo"
+                    value="Otro"
+                  />
+                  <label class="form-check-label">Otro</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="question-row-inline">
+              <div class="inline-question">
+                <label for="telefonoFijo" class="question-text"
+                  >Teléfono Fijo</label
+                >
+                <input
+                  type="tel"
+                  id="telefonoFijo"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.telefonoFijo"
+                  name="telefonoFijo"
+                  pattern="[0-9]{10}"
+                  required
+                  placeholder="Tel. Fijo"
+                />
+              </div>
+              <div class="inline-question">
+                <label for="telefonoMovil" class="question-text"
+                  >Teléfono Móvil</label
+                >
+                <input
+                  type="tel"
+                  id="telefonoMovil"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.telefonoMovil"
+                  name="telefonoMovil"
+                  pattern="[0-9]{10}"
+                  required
+                  placeholder="Tel. Móvil"
+                />
+              </div>
+            </div>
+            <div class="question-row">
+              <label for="correoElectronico" class="question-text"
+                >Correo Electrónico</label
+              >
+              <input
+                type="email"
+                id="correoElectronico"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.correoElectronico"
+                name="correoElectronico"
+                required
+                placeholder="Correo Electrónico"
+              />
+            </div>
+            <div class="question-row">
+              <label for="puebloIndigena" class="question-text"
+                >Pueblo Indigena al que pertenece</label
+              >
+              <select
+                id="puebloIndigena"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.puebloIndigena"
+                name="puebloIndigena"
+                required
+              >
+                <option value="" disabled selected>
+                  Seleccione una opción
+                </option>
+                <option value="Pueblo1">Indigena</option>
+                <option value="Pueblo2">Afroamericano</option>
+              </select>
+            </div>
+            <div class="question-row">
+              <label for="lenguaIndigena" class="question-text"
+                >Lengua indígena que habla</label
+              >
+              <input
+                type="text"
+                id="lenguaIndigena"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.lenguaIndigena"
+                name="lenguaIndigena"
+                required
+                placeholder="Lengua indígena"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 2: Direccion -->
+
+        <div class="section">
+          <h3 class="title">
+            <i class="fas fa-map-marker-alt"></i> Datos de la Dirección
+          </h3>
+          <div class="questions-container">
+            <div class="question-row-inline">
+              <div class="inline-question">
+                <label for="estado" class="question-text">Estado</label>
+                <input
+                  type="text"
+                  id="estado"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.estado"
+                  name="estado"
+                  required
+                  placeholder="Estado"
+                />
+              </div>
+              <div class="inline-question">
+                <label for="municipio" class="question-text">Municipio</label>
+                <input
+                  type="text"
+                  id="municipio"
+                  class="form-control custom-input-width-small"
+                  [(ngModel)]="formData.municipio"
+                  name="municipio"
+                  required
+                  placeholder="Municipio"
+                />
+              </div>
+            </div>
+
+            <div class="question-row">
+              <label for="localidad" class="question-text">Localidad</label>
+              <input
+                type="text"
+                id="localidad"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.localidad"
+                name="localidad"
+                required
+                placeholder="Localidad"
+              />
+            </div>
+            <div class="question-row">
+              <label for="comunidad" class="question-text">Comunidad</label>
+              <input
+                type="text"
+                id="comunidad"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.comunidad"
+                name="comunidad"
+                required
+                placeholder="Comunidad"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Sección 3: Datos de la Madre -->
+        <div class="section">
+          <h3 class="title">
+            <i class="bi-person-heart"></i> Datos de la Madre
+          </h3>
+          <div class="question-row">
+            <div class="col-md-6"></div>
+            <label for="estadoMadre" class="question-text"
+              >Estado de la madre</label
+            >
+            <select
+              id="estadoMadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.estadoMadre"
+              name="estadoMadre"
+              required
+            >
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option value="finado">Finado</option>
+              <option value="ausente">Ausente</option>
+              <option value="presente">Presente</option>
+            </select>
+          </div>
+          <div class="question-row">
+            <label for="curpMadre" class="question-text"
+              >CURP de la madre</label
+            >
+            <input
+              type="text"
+              id="curpMadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.curpMadre"
+              name="curpMadre"
+              required
+              placeholder="CURP Madre"
+            />
+          </div>
+          <div class="question-row">
+            <label for="nombreMadre" class="question-text">Nombre(s)</label>
+            <input
+              type="text"
+              id="nombreMadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.nombreMadre"
+              name="nombreMadre"
+              required
+              placeholder="Nombre(s) Madre"
+            />
+          </div>
+          <div class="question-row-inline">
+            <div class="inline-question">
+              <label for="primerApellidoMadre" class="question-text"
+                >Primer apellido</label
+              >
+              <input
+                type="text"
+                id="primerApellidoMadre"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.primerApellidoMadre"
+                name="primerApellidoMadre"
+                required
+                placeholder="Primer apellido"
+              />
+            </div>
+            <div class="inline-question">
+              <label for="segundoApellidoMadre" class="question-text"
+                >Segundo apellido</label
+              >
+              <input
+                type="text"
+                id="segundoApellidoMadre"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.segundoApellidoMadre"
+                name="segundoApellidoMadre"
+                required
+                placeholder="Segundo apellido"
+              />
+            </div>
+          </div>
+          <div class="question-row-inline">
+            <div class="inline-question">
+              <label for="fechaNacimientoMadre" class="question-text"
+                >Fecha de nacimiento</label
+              >
+              <input
+                type="date"
+                id="fechaNacimientoMadre"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.fechaNacimientoMadre"
+                name="fechaNacimientoMadre"
+                required
+              />
+              <small class="form-text text-muted">
+                Seleccione la fecha de nacimiento
+              </small>
+            </div>
+            <div class="inline-question">
+              <label for="edoNacimientoMadre" class="question-text"
+                >Entidad de Nacimiento</label
+              >
+              <input
+                type="tel"
+                id="edoNacimientoMadre"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.edoNacimientoMadre"
+                name="edoNacimientoMadre"
+                required
+                placeholder="Entidad de Nacimiento"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 4: Datos del Padre (Mismos Campos) -->
+
+        <div class="section">
+          <h3 class="section-title">
+            <i class="bi-person"></i> Datos del Padre
+          </h3>
+          <div class="question-row">
+            <div class="col-md-6"></div>
+            <label for="estadoPadre" class="question-text"
+              >Estado del padre</label
+            >
+            <select
+              id="estadoMadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.estadoPadre"
+              name="estadoPadre"
+              required
+            >
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option value="finado">Finado</option>
+              <option value="ausente">Ausente</option>
+              <option value="presente">Presente</option>
+            </select>
+          </div>
+          <div class="question-row">
+            <label for="curpPadre" class="question-text">CURP del padre</label>
+            <input
+              type="text"
+              id="curpMadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.curpPadre"
+              name="curpPadre"
+              required
+              placeholder="CURP Padre"
+            />
+          </div>
+          <div class="question-row">
+            <label for="nombrePadre" class="question-text">Nombre(s)</label>
+            <input
+              type="text"
+              id="nombrePadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.nombrePadre"
+              name="nombrePadre"
+              required
+              placeholder="Nombre(s) Padre"
+            />
+          </div>
+          <div class="question-row-inline">
+            <div class="inline-question">
+              <label for="primerApellidoPadre" class="question-text"
+                >Primer apellido</label
+              >
+              <input
+                type="text"
+                id="primerApellidoPadre"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.primerApellidoPadre"
+                name="primerApellidoPadre"
+                required
+                placeholder="Primer apellido"
+              />
+            </div>
+            <div class="inline-question">
+              <label for="segundoApellidoPadre" class="question-text"
+                >Segundo apellido</label
+              >
+              <input
+                type="text"
+                id="segundoApellidoPadre"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.segundoApellidoPadre"
+                name="segundoApellidoPadre"
+                required
+                placeholder="Segundo apellido"
+              />
+            </div>
+          </div>
+          <div class="question-row-inline">
+            <div class="inline-question">
+              <label for="fechaNacimientoPadre" class="question-text"
+                >Fecha de nacimiento</label
+              >
+              <input
+                type="date"
+                id="fechaNacimientoPadre"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.fechaNacimientoPadre"
+                name="fechaNacimientoPadre"
+                required
+              />
+              <small class="form-text text-muted">
+                Seleccione la fecha de nacimiento
+              </small>
+            </div>
+            <div class="inline-question">
+              <label for="edoNacimientoPadre" class="question-text"
+                >Entidad de Nacimiento</label
+              >
+              <input
+                type="tel"
+                id="edoNacimientoPadre"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.edoNacimientoPadre"
+                name="edoNacimientoPadre"
+                required
+                placeholder="Entidad de Nacimiento"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Repetir los campos de la madre para el padre -->
+
+        <!-- Sección 5: Datos del Tutor -->
+
+        <div class="section">
+          <h3 class="title">
+            <i class="bi-person-check-fill"></i> Datos del Tutor
+          </h3>
+
+          <div class="question-row">
+            <div class="col-md-6"></div>
+            <label for="parentescoTutor" class="question-text"
+              >Parentesco</label
+            >
+            <select
+              id="parentescoTutor"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.parentescoTutor"
+              name="parentescoTutor"
+              required
+            >
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option value="Padre">Padre</option>
+              <option value="Madre">Madre</option>
+              <option value="Tío">Tío</option>
+              <option value="Tía">Tía</option>
+              <option value="Tía">Abuelo</option>
+              <option value="Tía">Abuela</option>
+              <option value="Tía">Hermano</option>
+              <option value="Tía">Hermana</option>
+              <!-- Agregar más opciones si es necesario -->
+            </select>
+          </div>
+          <div class="question-row">
+            <label for="curpTutor" class="question-text">CURP</label>
+            <input
+              type="text"
+              id="curpTutor"
+              class="form-control"
+              [(ngModel)]="formData.curpTutor"
+              name="curpTutor"
+              required
+              placeholder="CURP del tutor"
+            />
+          </div>
+          <div class="question-row">
+            <label for="nombreTutor" class="question-text">Nombre(s)</label>
+            <input
+              type="text"
+              id="nombreTutor"
+              class="form-control"
+              [(ngModel)]="formData.nombreTutor"
+              name="nombreTutor"
+              required
+              placeholder="Nombre completo del tutor"
+            />
+          </div>
+          <div class="question-row">
+            <label for="primerApellidoTutor" class="question-text"
+              >Primer Apellido</label
+            >
+            <input
+              type="text"
+              id="primerApellidoTutor"
+              class="form-control"
+              [(ngModel)]="formData.primerApellidoTutor"
+              name="primerApellidoTutor"
+              required
+              placeholder="Primer apellido del Tutor"
+            />
+          </div>
+          <div class="question-row">
+            <label for="segundoApellidoTutor" class="question-text"
+              >Segundo Apellido</label
+            >
+            <input
+              type="text"
+              id="segundoApellidoTutor"
+              class="form-control"
+              [(ngModel)]="formData.segundoApellidoTutor"
+              name="segundoApellidoTutor"
+              required
+              placeholder="Segundo apellido del tutor"
+            />
+          </div>
+          <div class="question-row-inline">
+            <div class="inline-question">
+              <label for="fechaNacimientoTutor" class="question-text"
+                >Fecha de nacimiento</label
+              >
+              <input
+                type="date"
+                id="fechaNacimientoTutor"
+                class="form-control custom-input-width-small"
+                [(ngModel)]="formData.fechaNacimientoTutor"
+                name="fechaNacimientoPadre"
+                required
+              />
+              <small class="form-text text-muted">
+                Seleccione la fecha de nacimiento
+              </small>
+            </div>
+            <div class="inline-question">
+              <label for="edoNacimientoTutor" class="question-text"
+                >Entidad de Nacimiento</label
+              >
+              <input
+                type="tel"
+                id="edoNacimientoTutor"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.edoNacimientoTutor"
+                name="entidadNacimientoTutor"
+                required
+                placeholder="Entidad de Nacimiento"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Botón para avanzar al siguiente paso -->
+      <div class="d-flex justify-content-between mt-4">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="nextStep()"
+        >
+          Siguiente <i class="bi bi-arrow-right-circle ms-2"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <form *ngIf="currentStep === 2">
+    <div class="instructions">
+      <h4 class="instructions-title">¡Estás en el Paso 2! 🚀</h4>
+      <p class="instructions-text">
+        ¡Excelente trabajo al completar el Paso 1! Ahora, en esta segunda etapa,
+        vamos a recopilar información adicional sobre la casa o comedor y tus
+        condiciones de acceso.
+        <br /><br />
+        Asegúrate de proporcionar todos los detalles requeridos con la mayor
+        precisión posible. Recuerda que esta información es crucial para el
+        proceso de solicitud y garantizará que recibas el apoyo que necesitas.
+        <br /><br />
+      </p>
+      <strong>Lo que necesitarás:</strong>
+      <ul>
+        <li>
+          Información sobre la casa o comedor, incluyendo su nombre y ubicación.
+        </li>
+        <li>
+          Detalles sobre tu medio de acceso y posibles riesgos en tu ruta.
+        </li>
+        <li>Información acerca de cualquier discapacidad, si corresponde.</li>
+        <li>Datos académicos relevantes para tu situación.</li>
+      </ul>
+
+      <!-- Botón para mostrar el formulario y desplazarse hacia él -->
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-primary start-btn"
+          (click)="mostrarFormulario()"
+        >
+          Comenzar Paso 2 <br />
+          <i class="bi bi-arrow-right-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Aquí empieza el formulario que se mostrará -->
+    <div class="container mt-5" [hidden]="!formularioVisible">
+      <div #formulario>
+        <!-- Sección 1: Datos de Identificación de la Casa o Comedor -->
+        <div class="section">
+          <h3 class="title">
+            <i class="bi-house-fill"></i> Datos de Identificación de la Casa o
+            Comedor
+          </h3>
+          <div class="questions-container">
+            <div class="row">
+              <div class="col-md-6 question-row">
+                <label for="comunidad" class="question-text">Comunidad</label>
+                <input
+                  type="text"
+                  id="comunidad"
+                  class="form-control"
+                  [(ngModel)]="formData.comunidadCasa"
+                  name="comunidadCasa"
+                  required
+                  placeholder="Comunidad donde se localiza"
+                />
+              </div>
+              <div class="col-md-6 question-row">
+                <label for="localidadCasa" class="question-text"
+                  >Localidad</label
+                >
+                <input
+                  type="text"
+                  id="localidadCasa"
+                  class="form-control"
+                  [(ngModel)]="formData.localidadCasa"
+                  name="localidadCasa"
+                  required
+                  placeholder="Localidad donde se localiza"
+                />
+              </div>
+              <div class="col-md-6 question-row">
+                <label for="lnombreCasa" class="question-text"
+                  >Nombre de la casa o comedor</label
+                >
+                <input
+                  type="text"
+                  id="nombreCasa"
+                  class="form-control"
+                  [(ngModel)]="formData.nombreCasa"
+                  name="nombreCasa"
+                  required
+                  placeholder="Nombre de la Casa o Comedor"
+                />
+              </div>
+            </div>
+            <div class="question-row">
+              <label for="centroCoordinador" class="question-text"
+                >Centro Coordinador</label
+              >
+              <input
+                type="text"
+                id="centroCoordinador"
+                class="form-control"
+                [(ngModel)]="formData.centroCoordinador"
+                name="centroCoordinador"
+                required
+                placeholder="Centro Coordinador"
+              />
+            </div>
+            <div class="question-row">
+              <label class="question-text">Seleccione:</label><br />
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoCasa"
+                  [(ngModel)]="formData.tipoCasa"
+                  value="Casa"
+                />
+                <label class="form-check-label">Casa</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoCasa"
+                  [(ngModel)]="formData.tipoCasa"
+                  value="Comedor"
+                />
+                <label class="form-check-label">Comedor</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoCasa"
+                  [(ngModel)]="formData.tipoCasa"
+                  value="Escolar de la niñez"
+                />
+                <label class="form-check-label">Escolar de la niñez</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoCasa"
+                  [(ngModel)]="formData.tipoCasa"
+                  value="Comunitario del estudiante"
+                />
+                <label class="form-check-label"
+                  >Comunitario del estudiante</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoCasa"
+                  [(ngModel)]="formData.tipoCasa"
+                  value="Universitario"
+                />
+                <label class="form-check-label">Universitario</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 2: Traslado -->
+        <div class="section">
+          <h3 class="title">
+            <i class="fas fa-road"></i> Traslado de la Casa-Comunidad de
+            Procedencia
+          </h3>
+          <div class="questions-container">
+            <div class="question-row">
+              <label class="question-text">Medio de Acceso</label>
+              <div class="row">
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="medioAcceso"
+                    [(ngModel)]="formData.medioAcceso"
+                    value="A pie"
+                  />
+                  <label class="form-check-label">A pie</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="medioAcceso"
+                    [(ngModel)]="formData.medioAcceso"
+                    value="En bicicleta"
+                  />
+                  <label class="form-check-label">En bicicleta</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="medioAcceso"
+                    [(ngModel)]="formData.medioAcceso"
+                    value="En vehículo"
+                  />
+                  <label class="form-check-label">En vehículo</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="medioAcceso"
+                    [(ngModel)]="formData.medioAcceso"
+                    value="Otro"
+                    (change)="formData.medioAcceso = 'Otro'"
+                  />
+                  <label class="form-check-label">Otro</label>
+                </div>
+              </div>
+
+              <!-- Campo para especificar el medio de acceso si se selecciona 'Otro' -->
+              <div *ngIf="formData.medioAcceso === 'Otro'" class="question-row">
+                <label for="especifAcceso" class="question-text"
+                  >Especifique</label
+                ><br />
+                <input
+                  type="text"
+                  id="especifAcceso"
+                  class="form-control"
+                  [(ngModel)]="formData.especifAcceso"
+                  name="especifAcceso"
+                  required
+                  placeholder="Especifique el medio de acceso"
+                />
+              </div>
+            </div>
+            <div class="question-row">
+              <label class="question-text">Riesgo de Acceso</label>
+              <div class="row">
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="riesgoAcceso"
+                    [(ngModel)]="formData.riesgoAcceso"
+                    value="Deslaves"
+                  />
+                  <label class="form-check-label">Deslaves</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="riesgoAcceso"
+                    [(ngModel)]="formData.riesgoAcceso"
+                    value="Barrancas"
+                  />
+                  <label class="form-check-label">Barrancas</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="riesgoAcceso"
+                    [(ngModel)]="formData.riesgoAcceso"
+                    value="Rio Crecido"
+                  />
+                  <label class="form-check-label">Rio Crecido</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="riesgoAcceso"
+                    [(ngModel)]="formData.riesgoAcceso"
+                    value="Inundación"
+                  />
+                  <label class="form-check-label">Inundación</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="medioAcceso"
+                    [(ngModel)]="formData.riesgoAcceso"
+                    value="Otro"
+                    (change)="formData.riesgoAcceso = 'Otro'"
+                  />
+                  <label class="form-check-label">Otro</label>
+                </div>
+              </div>
+
+              <!-- Campo para especificar el medio de acceso si se selecciona 'Otro' -->
+              <div
+                *ngIf="formData.especifRiesgo === 'Otro'"
+                class="question-row"
+              >
+                <label for="especifRiesgo" class="question-text"
+                  >Especifique</label
+                ><br />
+                <input
+                  type="text"
+                  id="especifRiesgo"
+                  class="form-control"
+                  [(ngModel)]="formData.especifRiesgo"
+                  name="especifRiesgo"
+                  required
+                  placeholder="Especifique el riesgo de acceso"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 3: Discapacidades -->
+        <div class="section">
+          <h3 class="title">
+            <i class="fas fa-wheelchair"></i> Discapacidades
+          </h3>
+          <div class="questions-container">
+            <div class="question-row">
+              <label class="question-text">¿Presenta alguna discapacidad?</label
+              ><br />
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="discapacidad"
+                  [(ngModel)]="formData.discapacidad"
+                  value="No"
+                />
+                <label class="form-check-label">No</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="discapacidad"
+                  [(ngModel)]="formData.discapacidad"
+                  value="Sí"
+                />
+                <label class="form-check-label">Sí</label>
+              </div>
+            </div>
+            <div *ngIf="formData.discapacidad === 'Sí'" class="question-row">
+              <label for="tipoDiscapacidad" class="question-text"
+                >¿Qué tipo de discapacidad?</label
+              ><br />
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoDiscapacidad"
+                  [(ngModel)]="formData.tipoDiscapacidad"
+                  value="Motriz"
+                />
+                <label class="form-check-label">Motriz</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoDiscapacidad"
+                  [(ngModel)]="formData.tipoDiscapacidad"
+                  value="Auditivo"
+                />
+                <label class="form-check-label">Auditivo</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoDiscapacidad"
+                  [(ngModel)]="formData.tipoDiscapacidad"
+                  value="Visual"
+                />
+                <label class="form-check-label">Visual</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoDiscapacidad"
+                  [(ngModel)]="formData.tipoDiscapacidad"
+                  value="Mental"
+                />
+                <label class="form-check-label">Mental</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="tipoDiscapacidad"
+                  [(ngModel)]="formData.tipoDiscapacidad"
+                  value="Otro"
+                />
+                <label class="form-check-label">Otro</label>
+              </div>
+              <div
+                *ngIf="formData.tipoDiscapacidad === 'Otro'"
+                class="question-row"
+              >
+                <label for="especifDiscapacidad" class="question-text"
+                  >Especifique</label
+                ><br />
+                <input
+                  type="text"
+                  id="especifDiscapacidad"
+                  class="form-control"
+                  [(ngModel)]="formData.especifDiscapacidad"
+                  name="especifDiscapacidad"
+                  required
+                  placeholder="Especifique e la discapacidad que presenta"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 4: Datos Académicos -->
+        <div class="section">
+          <h3 class="title"><i class="fas fa-book"></i> Datos Académicos</h3>
+          <div class="questions-container">
+            <div class="question-row">
+              <label for="tipoEscuela" class="question-text"
+                >Tipo de Escuela</label
+              >
+              <select
+                id="tipoEscuela"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.tipoEscuela"
+                name="tipoEscuela"
+                required
+              >
+              <option value="" disabled selected>Seleccione una opción</option>
+                <option value="Pública">Pública</option>
+                <option value="Comunitaria">Comunitaria</option>
+              </select>
+            </div>
+
+            <!-- Campo adicional que se muestra solo si se selecciona 'Pública' -->
+            <div
+              class="question-row"
+              *ngIf="formData.tipoEscuela === 'Pública'"
+            >
+              <label for="cct" class="question-text">CCT</label>
+              <input
+                type="text"
+                id="cct"
+                class="form-control"
+                [(ngModel)]="formData.cct"
+                name="cct"
+                required
+              />
+            </div>
+            <div class="question-row">
+              <label for="nombreEscuela" class="question-text"
+                >Nombre de la Escuela</label
+              >
+              <input
+                type="text"
+                id="nombreEscuela"
+                class="form-control"
+                [(ngModel)]="formData.nombreEscuela"
+                name="nombreEscuela"
+                required
+                placeholder="Ingrese el nombre de la Institución educativa"
+              />
+            </div>
+            <div class="question-row">
+              <label for="escolaridad" class="question-text"
+                >Grado Escolar</label
+              >
+              <select
+                id="escolaridad"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.escolaridad"
+                name="escolaridad"
+                required
+              >
+              <option value="" disabled selected>Seleccione una opción</option>
+                <option value="Prescolar">Prescolar</option>
+                <option value="Primaria">Primaria</option>
+                <option value="Secundaria">Secundaria</option>
+                <option value="Bachillerato">Bachillerato</option>
+                <option value="Superior">Superior</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <!-- Campo adicional que se muestra solo si se selecciona 'Pública' -->
+            <div class="question-row" *ngIf="formData.escolaridad === 'Otro'">
+              <label for="" class="question-text">especifica:</label>
+              <input
+                type="text"
+                id="otraesco"
+                class="form-control"
+                [(ngModel)]="formData.otraesco"
+                name="otraesco"
+                required
+              />
+            </div>
+            <div class="question-row">
+              <label for="anosCursados" class="question-text"
+                >Años Cursados</label
+              >
+
+              <!-- Años cursados para Prescolar, Secundaria y Bachillerato -->
+              <div
+                class="row mb-3"
+                *ngIf="
+                  formData.escolaridad === 'Prescolar' ||
+                  formData.escolaridad === 'Secundaria' ||
+                  formData.escolaridad === 'Bachillerato'
+                "
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="1"
+                  />
+                  <label class="form-check-label">1</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="2"
+                  />
+                  <label class="form-check-label">2</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="3"
+                  />
+                  <label class="form-check-label">3</label>
+                </div>
+              </div>
+
+              <!-- Años cursados para Primaria -->
+              <div class="row mb-3" *ngIf="formData.escolaridad === 'Primaria'">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="1"
+                  />
+                  <label class="form-check-label">1</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="2"
+                  />
+                  <label class="form-check-label">2</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="3"
+                  />
+                  <label class="form-check-label">3</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="4"
+                  />
+                  <label class="form-check-label">4</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="5"
+                  />
+                  <label class="form-check-label">5</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="6"
+                  />
+                  <label class="form-check-label">6</label>
+                </div>
+              </div>
+
+              <!-- Años cursados para Superior y Otro -->
+              <div
+                class="row mb-3"
+                *ngIf="
+                  formData.escolaridad === 'Superior' ||
+                  formData.escolaridad === 'Otro'
+                "
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="1"
+                  />
+                  <label class="form-check-label">1</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="2"
+                  />
+                  <label class="form-check-label">2</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="3"
+                  />
+                  <label class="form-check-label">3</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="4"
+                  />
+                  <label class="form-check-label">4</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="5"
+                  />
+                  <label class="form-check-label">5</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="6"
+                  />
+                  <label class="form-check-label">6</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="semestreoanosCursado"
+                    [(ngModel)]="formData.semestreoanosCursados"
+                    value="7"
+                  />
+                  <label class="form-check-label">7</label>
+                </div>
+              </div>
+            </div>
+            <div class="question-row">
+              <label class="question-text">Tipo de Curso</label>
+              <div class="row">
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tipoCurso"
+                    [(ngModel)]="formData.tipoCurso"
+                    value="Anual"
+                  />
+                  <label class="form-check-label">Anual</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tipoCurso"
+                    [(ngModel)]="formData.tipoCurso"
+                    value="Semestral"
+                  />
+                  <label class="form-check-label">Semestral</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tipoCurso"
+                    [(ngModel)]="formData.tipoCurso"
+                    value="Cuatrimestral"
+                  />
+                  <label class="form-check-label">Cuatrimestral</label>
+                </div>
+                <div class="col-md-3 form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tipoCurso"
+                    [(ngModel)]="formData.tipoCurso"
+                    value="Trimestral"
+                  />
+                  <label class="form-check-label">Trimestral</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sección 5: Antecedentes de Salud -->
+        <div class="section">
+            <h3 class="title">
+              <i class="fas fa-wheelchair"></i> Antecedentes de Salud
+            </h3>
+            <div class="questions-container">
+              <div class="question-row">
+                <label class="question-text">¿Es alérgico a algún alimento o medicamento?</label><br>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="alergia"
+                    [(ngModel)]="formData.alergia"
+                    value="No"
+                  />
+                  <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="alergia"
+                    [(ngModel)]="formData.alergia"
+                    value="Sí"
+                  />
+                  <label class="form-check-label">Sí</label>
+                </div>
+              </div>
+              <div *ngIf="formData.alergia === 'Sí'" class="question-row">
+                <label for="alergiaDetalles" class="question-text"
+                  >¿Qué tipo de alergia?</label
+                ><br />
+                <input
+                type="text"
+                id="alergiaDetalles"
+                class="form-control"
+                [(ngModel)]="formData.alergiaDetalles"
+                name="alergiaDetalles"
+                required
+                placeholder="Especifique la alergia que presenta"
+              />
+
+              </div>
+
+              <div class="question-row">
+                <label class="question-text">¿Presenta problemas para respirar cotidianamente?</label><br>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="respirar"
+                    [(ngModel)]="formData.respirar"
+                    value="No"
+                  />
+                  <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="respirar"
+                    [(ngModel)]="formData.respirar"
+                    value="Sí"
+                  />
+                  <label class="form-check-label">Sí</label>
+                </div>
+              </div>
+              <div *ngIf="formData.respirar=== 'Sí'" class="question-row">
+                <label for="respirarDetalles" class="question-text"
+                  >¿Cual es la causa?</label
+                ><br />
+                <input
+                type="text"
+                id="respirarDetalles"
+                class="form-control"
+                [(ngModel)]="formData.respirarDetalles"
+                name="respirarDetalles"
+                required
+                placeholder="Especifique cual es la razón"
+              />
+
+              </div>
+
+              <div class="question-row">
+                <label class="question-text">¿Recibe algun tratamiento médico?</label><br>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tratamiento"
+                    [(ngModel)]="formData.tratamiento"
+                    value="No"
+                  />
+                  <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tratamiento"
+                    [(ngModel)]="formData.tratamiento"
+                    value="Sí"
+                  />
+                  <label class="form-check-label">Sí</label>
+                </div>
+              </div>
+              <div *ngIf="formData.tratamiento === 'Sí'" class="question-row">
+                <label for="tratamientoDetalles" class="question-text"
+                  >¿Cual es la razón o tratamiento que esta llevando?</label
+                ><br />
+                <input
+                type="text"
+                id="tratamientoDetalles"
+                class="form-control"
+                [(ngModel)]="formData.tratamientoDetalles"
+                name="tratamientoDetalles"
+                required
+                placeholder="Especifique la alergia que presenta"
+              />
+
+              </div>
+            </div>
+          </div>
+  
+        <!-- Botones para enviar o regresar al paso anterior -->
+        <div class="d-flex justify-content-between mt-4">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="previousStep()"
+          >
+            <i class="bi bi-arrow-left-circle me-2"></i>Anterior
+          </button>
+          <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+            Enviar <i class="bi bi-send-fill ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+</div>
