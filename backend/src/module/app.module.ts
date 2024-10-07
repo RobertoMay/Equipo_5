@@ -6,8 +6,6 @@ import { FirestoreModule } from 'src/firestore/firestore.module';
 import { InstitutionModule } from './institution.module';
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
-import { BecarioModule } from './becario.module';
-import { EnrollmentPeriodModule } from './enrollment-period.module';
 import { StudentModule } from './student.module';
 
 @Module({
@@ -23,7 +21,7 @@ import { StudentModule } from './student.module';
       inject: [ConfigService],
     }),
 
-    InstitutionModule, AspiranteModule, ConvocatoriaModule, BecarioModule, EnrollmentPeriodModule, StudentModule,
+    InstitutionModule, AspiranteModule, ConvocatoriaModule, StudentModule,
 
   ],
   controllers: [AppController],
