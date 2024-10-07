@@ -4,6 +4,7 @@
   margin-bottom: 40px;
   font-size: 4vw;
   font-weight: bold;
+  color: #b41e46;
 }
 
 * {
@@ -12,7 +13,7 @@
 
 .about-us,
 .registration {
-  background-color: #fafafa;
+  background-color: #f8f8f8;
 }
 
 .text-primary {

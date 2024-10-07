@@ -81,7 +81,7 @@ export class RegistrationFormComponent implements OnInit {
           setTimeout(() => {
             Swal.fire({
               title: 'Se ha registrado correctamente',
-              text: 'Ve a la sección Login para iniciar sesión con Correo y Curp',
+              text: 'Ve a la sección "Iniciar sesión" para ingresar con Correo y Curp',
               icon: 'success',
               showConfirmButton: true,
             });

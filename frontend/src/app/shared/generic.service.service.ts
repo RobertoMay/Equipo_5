@@ -16,14 +16,25 @@ export class GenericServiceService<T extends IBaseModel> extends ApiClass {
     super(http);
   }
 
-  getAll(): Observable<T[]> {
+  getAll(): Observable<{
+    error: boolean;
+    msg: string;
+    data: T[] | null;
+  }> {
     return this.http.get<T[]>(`${this.url}${this.endpoint}`).pipe(
-      map((data: T[]) => data),
+      map((data: T[]) => ({
+        error: false,
+        msg: 'Datos recuperados con éxito',
+        data: data,
+      })),
       catchError((error) => {
         console.error('Error fetching data:', error);
-        return throwError(
-          () => new Error(error.message || 'Error del servidor')
-        );
+        const errorMessage = error.error.details || 'Error del servidor';
+        return of({
+          error: true,
+          msg: errorMessage,
+          data: null,
+        });
       })
     );
   }
@@ -62,14 +73,25 @@ export class GenericServiceService<T extends IBaseModel> extends ApiClass {
     );
   }
 
-  update(id: number, item: T): Observable<T> {
+  update(
+    id: string,
+    item: T
+  ): Observable<{ error: boolean; msg: string; data: T | null }> {
     return this.http.put<T>(`${this.url}${this.endpoint}/${id}`, item).pipe(
-      map((data: T) => data),
+      map((data: T) => ({
+        error: false,
+        msg: 'Datos actualizados con éxito',
+        data: data,
+      })),
       catchError((error) => {
-        console.error('Error updating data:', error);
-        return throwError(
-          () => new Error(error.message || 'Error del servidor')
-        );
+        console.error('Error al actualizar los datos:', error);
+        const errorMessage =
+          error.error.details || 'Error del servidor al actualizar';
+        return of({
+          error: true,
+          msg: errorMessage,
+          data: null,
+        });
       })
     );
   }

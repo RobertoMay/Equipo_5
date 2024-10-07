@@ -7,6 +7,8 @@ import { InstitutionModule } from './institution.module';
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
 import { BecarioModule } from './becario.module';
+import { EnrollmentPeriodModule } from './enrollment-period.module';
+import { StudentModule } from './student.module';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { BecarioModule } from './becario.module';
       inject: [ConfigService],
     }),
 
-    InstitutionModule, AspiranteModule, ConvocatoriaModule, BecarioModule,
+    InstitutionModule, AspiranteModule, ConvocatoriaModule, BecarioModule, EnrollmentPeriodModule, StudentModule,
 
   ],
   controllers: [AppController],
