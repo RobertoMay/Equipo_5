@@ -16,7 +16,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginModule } from "./modules/login/login.module";
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#9d2449',
   bgsColor: '#b0af9d',
