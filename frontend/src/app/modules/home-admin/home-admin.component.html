@@ -1,16 +1,34 @@
 <div class="container mt-5 mb-5">
-    <h2>El periodo de inscripción queda comprendido del:</h2>
-  
+  <h2>El periodo de inscripción queda comprendido:</h2>
+
+  <form [formGroup]="form" (ngSubmit)="updateDate()">
+    <div *ngIf="form.errors?.dateRangeInvalid && (fm.startDate.dirty || fm.endDate.dirty || submitted)">
+      <small class="text-danger">La fecha de inicio debe ser menor que la fecha de cierre.</small>
+    </div>
+
     <div class="form-group">
       <label for="startDate">Desde:</label>
-      <input type="date" placeholder="Seleccionar fecha" class="form-control" bsDatepicker [(ngModel)]="startDate">
+      <input type="date" class="form-control" id="startDate" formControlName="startDate"
+        [ngClass]="{ 'is-invalid': fm.startDate.invalid && (fm.startDate.dirty || fm.startDate.touched || submitted) }">
+      <small class="text-danger mt-1 px-2 py-1"
+        *ngIf="(fm.startDate.dirty || fm.startDate.touched || submitted) && fm.startDate.errors">
+        La fecha de inicio es requerida
+      </small>
     </div>
-  
+
     <div class="form-group">
       <label for="endDate">Hasta:</label>
-      <input type="date" placeholder="Seleccionar fecha" class="form-control" bsDatepicker [(ngModel)]="endDate">
+      <input type="date" class="form-control" id="endDate" formControlName="endDate"
+        [ngClass]="{ 'is-invalid': fm.endDate.invalid && (fm.endDate.dirty || fm.endDate.touched || submitted) }">
+      <small class="text-danger mt-1 px-2 py-1"
+        *ngIf="(fm.endDate.dirty || fm.endDate.touched || submitted) && fm.endDate.errors">
+        La fecha de inicio es requerida
+      </small>
     </div>
-  
-</div>
-  
 
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-send">Actualizar</button>
+    </div>
+  </form>
+
+</div>
