@@ -24,18 +24,25 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> {
   async saveConvocatoria(data: Partial<ConvocatoriaDocument>): Promise<ConvocatoriaDocument> {
     const { startDate, endDate } = data;
 
-    // Validar que las fechas sean correctas
-    this.ensureValidDates(startDate as Date, endDate as Date);
+    if (!startDate || !endDate) {
+      throw new HttpException('Start date and end date are required', HttpStatus.BAD_REQUEST);
+    }
 
+    // Crear el documento y calcular el estado
     const convocatoria = {
       ...data,
       id: this.firestore.collection(ConvocatoriaDocument.collectionName).doc().id,
-      status: false,
+      status: false, // Estado inicial, se calculará después
     } as ConvocatoriaDocument;
 
+    // Calcular el estado antes de guardar
+    this.calculateStatus(convocatoria);
+
+    // Guardar el documento en Firestore, incluyendo el estado calculado
     await this.firestore.collection(ConvocatoriaDocument.collectionName).doc(convocatoria.id).set(convocatoria);
-    return this.calculateStatus(convocatoria);
-  }
+    return convocatoria;
+}
+
   async getAllConvocatorias(): Promise<ConvocatoriaDocument[]> {
     const snapshot = await this.firestore.collection(ConvocatoriaDocument.collectionName).get();
 
@@ -53,18 +60,23 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> {
 
     return convocatorias;
 }
-  async updateConvocatoria(id: string, data: Partial<ConvocatoriaDocument>): Promise<ConvocatoriaDocument> {
-    const docRef = this.firestore.collection(ConvocatoriaDocument.collectionName).doc(id);
-    const currentDoc = await docRef.get();
+async updateConvocatoria(id: string, data: Partial<ConvocatoriaDocument>): Promise<ConvocatoriaDocument> {
+  const docRef = this.firestore.collection(ConvocatoriaDocument.collectionName).doc(id);
+  const currentDoc = await docRef.get();
 
-    if (!currentDoc.exists) {
-      throw new HttpException('Convocatoria not found', HttpStatus.NOT_FOUND);
-    }
+  if (!currentDoc.exists) {
+    throw new HttpException('Convocatoria not found', HttpStatus.NOT_FOUND);
+  }
 
-    await docRef.update(data);
+  // Obtener el documento actual y combinar los cambios
+  const updatedData = { ...currentDoc.data(), ...data } as ConvocatoriaDocument;
 
-    const updatedConvocatoria = (await docRef.get()).data() as ConvocatoriaDocument;
-    return this.calculateStatus(updatedConvocatoria); // Calcula el estado internamente antes de devolver
+  // Calcular el estado actualizado
+  this.calculateStatus(updatedData);
+
+  // Guardar el documento actualizado en Firestore, incluyendo el estado calculado
+  await docRef.set(updatedData);
+  return updatedData;
 }
 
 
@@ -76,29 +88,32 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> {
     }
 
     if (startDate > endDate) {
-    //  console.error("Error: Fecha de cierre es menor que la fecha de inicio");  // Línea de depuración
+     // console.error("Error: Fecha de cierre es menor que la fecha de inicio");  // Línea de depuración
       throw new HttpException('End date cannot be earlier than start date', HttpStatus.BAD_REQUEST);
     }
   }
+
   private calculateStatus(convocatoria: ConvocatoriaDocument): ConvocatoriaDocument {
-    const now = new Date(); // Fecha actual
-    const startDate = new Date(convocatoria.startDate); // Fecha de inicio de la convocatoria
-    const endDate = new Date(convocatoria.endDate); // Fecha de finalización de la convocatoria
+    const now = new Date();
   
-    // Convertimos todas las fechas a sólo el día en UTC para comparación
-    const currentDateUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-    const startDayUTC = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate());
-    const endDayUTC = Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate(), 23, 59, 59, 999);
+    // Asegurarse de que las fechas estén en la zona horaria local
+    const startDate = new Date(convocatoria.startDate);
+    const endDate = new Date(convocatoria.endDate);
   
-    // Depuración detallada de cada paso
-   // console.log("Fecha actual en UTC (sólo día):", new Date(currentDateUTC).toISOString());
-   // console.log("Fecha de inicio en UTC:", new Date(startDayUTC).toISOString());
-   // console.log("Fecha de fin en UTC (fin del día):", new Date(endDayUTC).toISOString());
+    // Ajustar las fechas para que estén en la zona horaria local
+    const startDayLocal = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate()).getTime();
+    const endDayLocal = new Date(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate(), 23, 59, 59, 999).getTime();
+    const currentDateLocal = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
   
-    // Lógica de estado de apertura de la convocatoria
-    convocatoria.status = currentDateUTC >= startDayUTC && currentDateUTC <= endDayUTC;
+    // Depuración detallada para verificar cada valor
+    //console.log("Fecha actual (solo día):", new Date(currentDateLocal).toLocaleDateString());
+    //console.log("Fecha de inicio ajustada (solo día):", new Date(startDayLocal).toLocaleDateString());
+    //console.log("Fecha de fin ajustada (solo día):", new Date(endDayLocal).toLocaleDateString());
   
-   // console.log("Estado calculado:", convocatoria.status); // Depuración del resultado final
+    // Comparación de rango de fechas sin horas
+    convocatoria.status = currentDateLocal >= startDayLocal && currentDateLocal <= endDayLocal;
+  
+    //console.log("Estado calculado:", convocatoria.status); // Depuración del resultado final
     return convocatoria;
   }
   
