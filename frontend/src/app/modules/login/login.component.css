@@ -1,37 +1,28 @@
-/* Fondo semi-transparente */
-.popup-overlay {
-  position: fixed;  
+
+.modal-overlay {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color:rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Asegura que esté por encima de todo */
+  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+  z-index: 1000; /* Debajo del pop-up pero por encima del contenido */
 }
 
-/* Estilo del contenedor de login (igual que antes) */
+
+/* Estilo del contenedor de login */
 .login-container {
-  position: relative;
-  z-index: 1001; /* Asegura que esté por encima del fondo */
-  background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente para el formulario */
+  position: fixed; /* Cambia a fixed para que flote sobre la página */
+  top: 50%; /* Centrado vertical */
+  left: 50%; /* Centrado horizontal */
+  transform: translate(-50%, -50%); /* Ajusta el desplazamiento */
+  z-index: 1001; /* Asegura que esté por encima del contenido */
+  background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco con algo de opacidad */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle efecto de profundidad */
-  backdrop-filter: blur(10px); /* Añadir un ligero desenfoque al fondo detrás del contenedor */
+  backdrop-filter: blur(5px); /* Desenfoque ligero */
+  width: 27rem; /* Ancho del contenedor */
+  max-width: 90%; /* Para que sea responsivo */
 }
-
-
-
-.icon-background {
-    background-color: #b41e46 !important;
-  }
-/*.background-color{
-    background: linear-gradient(to bottom, #d1d0d0, #333232c2);
-}  */
-/*.login-container{
-  position: absolute;
-}*/
 
 /* Estilo para el botón de regreso */
 .back-button {
@@ -40,11 +31,10 @@
   right: 10px;
   background-color: #b41e46; /* Color de fondo */
   border-radius: 25%; /* Hace el botón redondo */
-  padding: 1px ; 
+  padding: 1px; 
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
 .back-button i {
@@ -52,19 +42,14 @@
   font-size: 2rem; /* Tamaño del ícono */
 }
 
-/*.back-button a {
-  text-decoration: none;
-} */
-
 .back-button:hover {
   background-color:  #ec4967; /* Color al hacer hover */
   transition: background-color 0.3s ease;
 }
 
-
 /* Estilo para el botón de iniciar sesión */
 .btn {
-  background-color: #b41e46 ;
+  background-color: #b41e46;
   transition: background-color 0.3s ease; /* Transición para el efecto hover */
 }
 
@@ -77,45 +62,22 @@
   margin-top: 0.10rem; /* Espacio entre el input y el mensaje */
 }
 
+/* Aplica el mismo color del botón a los íconos de los inputs */
+.icon-background {
+  color: #b41e46; /* Mismo color que el botón */
+  transition: color 0.3s ease; /* Añade una transición para suavizar el cambio de color */
+}
+
+
 
 /* Responsive para pantallas pequeñas */
-/* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
-  .back-button {
-      top: 10px;
-      right: 10px;
-      font-size: 2rem;
-  }
-
-  /* Centrar el login y ajustar tamaño */
   .login-container {
-      
-      max-width: 95%; /* Limita el ancho máximo para que no ocupe toda la pantalla */
-      padding: 20px; /* Mantener el padding más compacto */
-      margin: auto; /* Centramos horizontalmente */
-      font-size: 1rem; 
-      height: auto; /* Ajustar la altura mínima para pantallas pequeñas */
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-/* Para distribuir el contenido verticalmente */
+    padding: 20px; /* Mantener el padding más compacto */
+    margin: auto; /* Centramos horizontalmente */
   }
-
-  /*.back-button i {
-      font-size: 2rem;
-  }*/
 
   .login-container img {
-      height: 4rem;
+    height: 4rem;
   }
-
-  /*.input-group {
-      margin-bottom: 15px;
-  }*/
-
-  /*.btn {
-      font-size: 1rem;
-  } */
-
-
 }
