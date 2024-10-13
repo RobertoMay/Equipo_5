@@ -1,56 +1,58 @@
-<div class="popup-overlay" *ngIf="showLogin">
-  <div class="login-container bg-white p-5 rounded-5 text-secondary shadow" style="width: 27rem">
-    <!-- Botón de regreso (cerrar) -->
-    <div class="back-button" (click)="closeLogin()">
-      <i class="bi bi-x-lg"></i>
-    </div>
-    
-    <div class="d-flex justify-content-center">
-      <img src="assets/images/login-icon.svg" alt="login-icon" style="height: 6rem" />
-    </div>
+<!-- Fondo oscuro -->
+<div class="modal-overlay" *ngIf="showLogin"></div>
 
-    <div class="text-center fs-1 fw-bold">Inicio de sesión</div>
-
-    <form [formGroup]="form" (ngSubmit)="sendData()">
-      <div class="input-group mt-4 mb-2">
-        <div class="input-group-text icon-background">
-          <i class="bi bi-envelope-at-fill" style="color: white;"></i>
-        </div>
-        <input
-          class="form-control bg-light"
-          type="text"
-          placeholder="Correo"
-          name="correo"
-          formControlName="correo"
-          required
-          [ngClass]="{ 'is-invalid': fm['correo'].invalid && (fm['correo'].dirty || fm['correo'].touched || submitted) }"
-        />
-      </div>
-      <div *ngIf="fm['correo'].invalid && (fm['correo'].dirty || fm['correo'].touched || submitted)" class="text-danger mt-1">
-        <small *ngIf="fm['correo'].errors?.['required']">El correo es requerido</small>
-        <small *ngIf="fm['correo'].errors?.['correo']">Ingresa un correo válido</small>
-      </div>
-
-      <div class="input-group mt-1">
-        <div class="input-group-text icon-background">
-          <i class="bi bi-person-badge-fill" style="color: white;"></i>
-        </div>
-        <input
-          class="form-control bg-light"
-          type="text"
-          placeholder="CURP"
-          name="curp"
-          formControlName="curp"
-          required
-          [ngClass]="{ 'is-invalid': fm['curp'].invalid && (fm['curp'].dirty || fm['curp'].touched || submitted) }"
-        />
-      </div>
-      <div *ngIf="fm['curp'].invalid && (fm['curp'].dirty || fm['curp'].touched || submitted)" class="text-danger mt-1">
-        <small *ngIf="fm['curp'].errors?.['required']">La CURP es requerida</small>
-        <small *ngIf="fm['curp'].errors?.['minlength']">Ingresa una CURP válida</small>
-      </div>
-
-      <button type="submit" class="btn text-white w-100 mt-4 fw-semibold shadow-sm">Iniciar sesión</button>
-    </form>
+<!-- Contenedor del Pop-up -->
+<div class="login-container bg-white p-5 rounded-5 text-secondary shadow" *ngIf="showLogin">
+  <!-- Botón de regreso (cerrar) -->
+  <div class="back-button" (click)="closeLogin()">
+    <i class="bi bi-x-lg"></i>
   </div>
+
+  <div class="d-flex justify-content-center">
+    <img src="assets/images/login-icon.svg" alt="login-icon" style="height: 6rem" />
+  </div>
+
+  <div class="text-center fs-1 fw-bold">Inicio de sesión</div>
+
+  <form [formGroup]="form" (ngSubmit)="sendData()">
+    <div class="input-group mt-4 mb-2">
+      <div class="input-group-text icon-background">
+        <i class="bi bi-envelope-at-fill" ></i>
+      </div>
+      <input
+        class="form-control bg-light"
+        type="text"
+        placeholder="Correo"
+        name="correo"
+        formControlName="correo"
+        required
+        [ngClass]="{ 'is-invalid': fm['correo'].invalid && (fm['correo'].dirty || fm['correo'].touched || submitted) }"
+      />
+    </div>
+    <div *ngIf="fm['correo'].invalid && (fm['correo'].dirty || fm['correo'].touched || submitted)" class="text-danger mt-1">
+      <small *ngIf="fm['correo'].errors?.['required']">El correo es requerido</small>
+      <small *ngIf="fm['correo'].errors?.['email']">Ingresa un correo válido</small>
+    </div>
+
+    <div class="input-group mt-1">
+      <div class="input-group-text icon-background">
+        <i class="bi bi-person-badge-fill"></i>
+      </div>
+      <input
+        class="form-control bg-light"
+        type="text"
+        placeholder="CURP"
+        name="curp"
+        formControlName="curp"
+        required
+        [ngClass]="{ 'is-invalid': fm['curp'].invalid && (fm['curp'].dirty || fm['curp'].touched || submitted) }"
+      />
+    </div>
+    <div *ngIf="fm['curp'].invalid && (fm['curp'].dirty || fm['curp'].touched || submitted)" class="text-danger mt-1">
+      <small *ngIf="fm['curp'].errors?.['required']">La CURP es requerida</small>
+      <small *ngIf="fm['curp'].errors?.['minlength']">Ingresa una CURP válida</small>
+    </div>
+
+    <button type="submit" class="btn text-white w-100 mt-4 fw-semibold shadow-sm">Iniciar sesión</button>
+  </form>
 </div>

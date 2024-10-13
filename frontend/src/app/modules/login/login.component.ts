@@ -5,31 +5,37 @@ import { AuthService } from '../../../services/api/auth/auth.service'; // Import
 import Swal from 'sweetalert2'; // Importar SweetAlert2
 import { Router } from '@angular/router'; // Para manejar redirección
 import { ILogin } from 'app/modules/login/ilogin-form.metadata'; // Para manejar el modelo de login
-
+import { ModalLoginService } from "services/api/modalloginservice/modal-login.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent  implements OnInit {
   
   
   form: FormGroup;
   submitted = false;
-  showLogin: boolean = true; // Controla si el pop-up se muestra
+ showLogin: boolean = true; // Controla si el pop-up se muestra
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private ngxLoader: NgxUiLoaderService,
-    private router: Router
+    private router: Router,
+    private modalLoginService: ModalLoginService
+    
   ) {
+    console.log('LoginComponent initialized');
     this.form = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       curp: ['', [Validators.required, Validators.minLength(18)]],
     });
   }
+
+
+  
 
   get fm() {
     return this.form.controls;
@@ -66,8 +72,8 @@ export class LoginComponent {
         }
 
         // Guardar el token
-       // localStorage.setItem('token', response.token || '');
-       // console.log('token:' + response.token );
+       //localStorage.setItem('token', response.token || '');
+     //  console.log('token:' + response.token );
 
 
 // Guardar el token y esAdministrador
@@ -75,6 +81,8 @@ localStorage.setItem('token', response.token || '');
 localStorage.setItem('esAdministrador', response.esAdministrador ? 'true' : 'false');
 console.log('token:', response.token);
 console.log('esAdministrador:', response.esAdministrador);
+ // Actualizar el estado de autenticación y rol
+ this.authService.updateAuthStatus();  // Llama al método para actualizar el navbar
 
 
 
@@ -91,9 +99,10 @@ console.log('esAdministrador:', response.esAdministrador);
         } else {
           this.router.navigate(['/student']);
         }
-
-
-        this.showLogin = false; // Oculta el pop-up después de iniciar sesión
+  // Ocultar el modal de login
+  this.modalLoginService.closeLogin();
+  
+        //this.showLogin = false; // Oculta el pop-up después de iniciar sesión
       },
       error: (err) => {
         this.ngxLoader.stop(); // Detener el cargador
@@ -107,11 +116,32 @@ console.log('esAdministrador:', response.esAdministrador);
     });
   }
 
-  closeLogin() {
+ /* closeLogin() {
     this.showLogin = false; // Cierra el pop-up al hacer clic en el botón de cerrar
     this.router.navigate(['/']);
-  }
+  }*/
+  
 
+    ngOnInit() {
+      // Suscríbete a las actualizaciones del estado de `showLogin`
+      this.modalLoginService.showLogin$.subscribe(show => {
+        this.showLogin = show;
+        console.log('LoginComponent: showLogin is', show);
+
+        if (show) {
+          // Resetea el formulario cada vez que se abre el login
+          this.form.reset();
+          this.submitted = false; // Resetear el estado del formulario
+        }
+
+
+      });
+    }
+  
+    closeLogin() {
+      this.form.reset(); // Esto limpiará el formulario
+      this.modalLoginService.closeLogin(); // Cierra el modal usando el servicio
+    }
   
 
 }

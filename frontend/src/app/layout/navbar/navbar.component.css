@@ -2,12 +2,12 @@
 .navbar {
   display: flex;
   
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-color: #b41e46; /* Color de fondo */
   padding: 15px 20px;
-  margin: 0 ;
-  z-index: 10;
+ 
+  
   width: 100%;
  
   position: relative;
@@ -20,6 +20,10 @@
  padding-top: 5px;
  padding-bottom: 5px;
   
+}
+
+.navbar-logo {
+  flex-shrink: 0; /* Asegura que el logo no se reduzca cuando el espacio es limitado */
 }
 
 /* Menú de navegación para desktop*/
@@ -61,7 +65,9 @@
 
 @media (max-width: 768px) {
 
- 
+  .navbar {
+    justify-content: space-between;
+  }
   
   .navbar-menu {
     display: none; /* Ocultar el menú por defecto en móviles */
@@ -78,7 +84,7 @@
     transition: max-height 0.5s ease-in-out; /* Animación suave */
     justify-content: center;
     align-items: center;
-    z-index: 1; /* Asegurar que el menú esté encima de otros elementos */
+    z-index: 5; /* Asegurar que el menú esté encima de otros elementos */
     padding-top: 2px;
     padding-bottom: 20px;
   }
