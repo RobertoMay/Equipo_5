@@ -102,7 +102,6 @@ export class AspiranteService {
   // Actualizar un aspirante por ID
   async updateAspirante(id: string, aspiranteDto: Partial<AspiranteDocument>): Promise<void> {
     const docRef = this.firestore.collection('Aspirantes').doc(id);
-
     const doc = await docRef.get();
     if (!doc.exists) {
       throw new HttpException('Aspirante no encontrado', HttpStatus.NOT_FOUND);
