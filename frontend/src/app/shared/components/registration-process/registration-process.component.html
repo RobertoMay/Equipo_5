@@ -15,6 +15,10 @@
         <span class="step-number">2</span>
         <p>Paso 2</p>
       </div>
+      <div class="step" [ngClass]="{'active': currentStep === 3}">
+        <div class="step-number">3</div>
+        <p>Paso 3</p>
+      </div>
     </div>
   </div>
 
@@ -853,6 +857,33 @@
       </div>
     </div>
   </form>
+
+  <div class="" *ngIf="currentStep === 3">
+    <div class="instructions">
+      <h3>
+        Bienvenido al paso 3
+      </h3>
+
+      <p class="instructions-text">
+        En esta <strong>tercera etapa</strong> te invitamos a <strong>subir todos los documentos necesarios</strong>
+        tanto
+        tuyos como de tu tutor. Este paso es crucial para concluir en tu proceso de inscripción.
+        <br /><br />
+        Todos los documentos deben ser aprobados por el promotor antes de que puedas ser finalmente inscrito.
+        ¡Así que asegúrate de que estén completos y sean legibles! 🗂️
+        <br /><br />
+      </p>
+    </div>
+
+
+    <app-step-3 class="mt-2"></app-step-3>
+  </div>
+
+  <div class="button-container">
+    <button (click)="previousStep()" [disabled]="currentStep === 1">Anterior</button>
+    <button (click)="nextStep()" [disabled]="currentStep === 3">Siguiente</button>
+  </div>
+
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </div>

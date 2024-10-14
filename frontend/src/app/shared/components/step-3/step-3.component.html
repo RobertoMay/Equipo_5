@@ -1,0 +1,196 @@
+<div class="container mt-4 mb-1">
+
+    <div *ngIf="isAccepted" class="alert alert-success d-flex align-items-center">
+        <i class="bi bi-check2-circle me-3" style="font-size: 2.2rem;"></i>
+        <div>
+            <h5>Felicidades, [Nombre]</h5>
+            <p>Has sido aceptado en el albergue.</p>
+        </div>
+    </div>
+
+
+    <div class="card custom-card">
+        <div class="card-body">
+            <h3 class="card-title">Bienvenido, [Nombre Alumno]</h3>
+            <p class="card-text">
+                La hoja de inscripción generada: <strong>[Formulario_2024.pdf]</strong>
+            </p>
+            <a href="path_to_your_backend/Enrollment_Form_2024.pdf" class="btn btn-light btn-custom mb-2 w-100"
+                download> <i class="bi bi-download me-1"></i> Descargar</a>
+            <div class="info-text">
+                <p class="card-text mb-0">
+                    Es necesario firmar de manera autógrafa y entregar presencialmente en las instalaciones durante el
+                    periodo de [ingresar el periodo].
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4 mt-5">
+        <div class="col-12 col-md-6">
+            <div class=" card card-documents">
+                <div class="card-body">
+                    <h4 class="card-title">Documentos del Alumno</h4>
+                    <div class="list-group mt-4">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Acta de nacimiento</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[0].status)">
+                                    {{ studentDocuments[0].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[0]" [isAccepted]="isAccepted"></app-file-btn>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Ultima boleta de calificaciones</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[1].status)">
+                                    {{ studentDocuments[1].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[1]" [isAccepted]="isAccepted"></app-file-btn>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Cartilla de vacunación</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[2].status)">
+                                    {{ studentDocuments[2].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[2]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>CURP (Actualizada)</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[3].status)">
+                                    {{ studentDocuments[3].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[3]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Comprobante de domicilio</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[4].status)">
+                                    {{ studentDocuments[4].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[4]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong class="max">Constancia de identidad o escrito libre emitido por la
+                                    autoridad</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[5].status)">
+                                    {{ studentDocuments[5].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[5]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Certificado médico</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[6].status)">
+                                    {{ studentDocuments[6].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="studentDocuments[6]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <div class="card card-documents">
+                <div class="card-body">
+                    <h4 class="card-title">Documentos del Tutor</h4>
+                    <div class="list-group mt-4">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>CURP (Actualizada)</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[0].status)">
+                                    {{ tutorDocuments[0].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="tutorDocuments[0]" [isAccepted]="isAccepted"></app-file-btn>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Comprobante de domicilio</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[1].status)">
+                                    {{ tutorDocuments[1].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="tutorDocuments[1]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Credencial del lector</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[2].status)">
+                                    {{ tutorDocuments[2].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="tutorDocuments[2]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong class="max">Constancia del último grado de estudio</strong><br />
+                                <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[3].status)">
+                                    {{ tutorDocuments[3].status }}
+                                </span>
+                            </div>
+                            <div>
+                                <app-file-btn [document]="tutorDocuments[3]" [isAccepted]="isAccepted"></app-file-btn>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="comments.length > 0" class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Comentarios del Promotor</h5>
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item" *ngFor="let comment of comments">
+                            <p> <i class="bi bi-chat-left i-color me-1"></i> {{ comment.text }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

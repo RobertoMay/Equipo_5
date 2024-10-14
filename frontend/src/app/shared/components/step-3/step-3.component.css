@@ -1,0 +1,99 @@
+.list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+}
+
+.custom-card {
+  border-radius: 10px;
+  background-color: #b41e46;
+  color: white;
+  border: 0;
+}
+
+.info-text {
+  background-color: white;
+  color: #333;
+  padding: 1.6rem;
+  border-radius: 0 0 5px 5px;
+  margin-top: 1rem;
+  margin-bottom: -16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  border: 0.5px solid #d5d5d5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.btn-custom {
+  font-size: 1.1rem;
+}
+
+.list-group-item {
+  border: none;
+}
+
+.list-group {
+  margin: 0;
+}
+
+.card-documents {
+  border: 0.5px solid #d5d5d5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.max {
+  max-width: 300px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+}
+
+.i-color {
+  color: #929292;
+}
+
+.badge-custom {
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid !important;
+  display: inline-block;
+}
+
+.badge-pending {
+  background-color: #fef9c3;
+  color: #d49e32;
+  border-color: #efe180;
+}
+
+.badge-uploaded {
+  background-color: #dbeafe;
+  color: #4067c6;
+  border-color: #d4e6fe;
+}
+
+.badge-approved {
+  background-color: #dcfce7;
+  color: #297854;
+  border-color: #a6f4c2;
+}
+
+.badge-default {
+  background-color: #e0e0e0;
+  color: #333333;
+  border-color: #cccccc;
+}
+
+@media (max-width: 768px) {
+  .list-group-item {
+    flex-wrap: wrap;
+  }
+
+  .list-group-item div {
+    margin-top: 10px;
+  }
+
+  .card-documents {
+    margin-top: 20px;
+  }
+}

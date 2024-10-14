@@ -4,12 +4,12 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-registration-process',
   templateUrl: './registration-process.component.html',
-  styleUrls: ['./registration-process.component.css']
+  styleUrls: ['./registration-process.component.css'],
 })
 export class RegistrationProcessComponent {
   currentStep: number = 1;
-  progressWidth: string = '50%';
-  @ViewChild('formulario', { static: false }) formulario!: ElementRef; 
+  progressWidth: string = '33.33%';
+  @ViewChild('formulario', { static: false }) formulario!: ElementRef;
   formularioVisible = false;
   formData = {
     curp: '',
@@ -23,19 +23,19 @@ export class RegistrationProcessComponent {
     puebloIndigena: '',
     lenguaIndigena: '',
     fechaNacimiento: '',
-        // Direccion
+    // Direccion
     estado: '',
     municipio: '',
     localidad: '',
     comunidad: '',
-        // Información de la madre
+    // Información de la madre
     estadoMadre: '',
     curpMadre: '',
     nombreMadre: '',
     primerApellidoMadre: '',
     segundoApellidoMadre: '',
     fechaNacimientoMadre: '',
-    edoNacimientoMadre:'',
+    edoNacimientoMadre: '',
     // Información del padre
     estadoPadre: '',
     curpPadre: '',
@@ -43,7 +43,7 @@ export class RegistrationProcessComponent {
     primerApellidoPadre: '',
     segundoApellidoPadre: '',
     fechaNacimientoPadre: '',
-    edoNacimientoPadre:'',
+    edoNacimientoPadre: '',
     // Información del tutor
     parentescoTutor: '',
     curpTutor: '',
@@ -51,28 +51,28 @@ export class RegistrationProcessComponent {
     primerApellidoTutor: '',
     segundoApellidoTutor: '',
     fechaNacimientoTutor: '',
-    edoNacimientoTutor:'',
+    edoNacimientoTutor: '',
     // Datos Casa o Comedor
     comunidadCasa: '',
     localidadCasa: '',
     centroCoordinador: '',
     tipoCasa: '',
-    nombreCasa:'',
+    nombreCasa: '',
     //Translado de la Casa-Comunidad de porocedencia
     medioAcceso: '',
-    especifAcceso:'',
+    especifAcceso: '',
     riesgoAcceso: '',
-    especifRiesgo:'',
+    especifRiesgo: '',
     //Discapacidades
     discapacidad: '',
     tipoDiscapacidad: '',
-    especifDiscapacidad:'',
+    especifDiscapacidad: '',
     //Datos Academicos
     tipoEscuela: '',
-    cct:'',
+    cct: '',
     nombreEscuela: '',
     escolaridad: '',
-    otraesco:'',
+    otraesco: '',
     semestreoanosCursados: '',
     tipoCurso: '',
     //Salud
@@ -83,23 +83,30 @@ export class RegistrationProcessComponent {
     tratamiento: '',
     tratamientoDetalles: '',
     //Tramite
-    solicitud: ''
+    solicitud: '',
   };
 
   mostrarFormulario() {
-    this. formularioVisible = true; // Muestra el formulario
+    this.formularioVisible = true; // Muestra el formulario
     setTimeout(() => {
       // Espera un breve momento para que el formulario se muestre completamente
       this.formulario.nativeElement.scrollIntoView({ behavior: 'smooth' }); // Desplaza suavemente hacia el formulario
     }, 100); // Ajusta el tiempo si es necesario
   }
   nextStep() {
-    if (this.validateStep(this.currentStep)) {
+    // if (this.validateStep(this.currentStep)) {
+    //   this.currentStep++;
+    //   this.updateProgressBar();
+    //   this.formularioVisible = false;
+    // } else {
+    //   this.showError('Por favor, llena todos los campos requeridos.');
+    // }
+
+    if (true) {
       this.currentStep++;
       this.updateProgressBar();
-      this.formularioVisible=false;
+      this.formularioVisible = false;
     } else {
-
       this.showError('Por favor, llena todos los campos requeridos.');
     }
   }
@@ -110,37 +117,37 @@ export class RegistrationProcessComponent {
   }
 
   updateProgressBar() {
-    if (this.currentStep === 1) {
-      this.progressWidth = '50%';
-    } else if (this.currentStep === 2) {
-      this.progressWidth = '100%';
-    }
+    this.progressWidth = `${(this.currentStep / 3) * 100}%`;
   }
 
   validateStep(step: number): boolean {
     if (step === 1) {
-      return !!this.formData.nombre;  // Convertir a booleano
+      return !!this.formData.nombre; // Convertir a booleano
     } else if (step === 2) {
-
+      return true;
     }
-    return false;
+    return true;
   }
-  
 
   onSubmit() {
     if (this.validateStep(this.currentStep)) {
       Swal.fire({
         title: '¿Estás seguro?',
-        text: "Revisa los datos antes de enviar",
+        text: 'Revisa los datos antes de enviar',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, enviar'
+        confirmButtonText: 'Sí, enviar',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Enviado', 'Tu formulario ha sido enviado correctamente.', 'success');
+          Swal.fire(
+            'Enviado',
+            'Tu formulario ha sido enviado correctamente.',
+            'success'
+          );
           // Aquí puedes enviar los datos al servidor...
+          this.nextStep();
         }
       });
     } else {
