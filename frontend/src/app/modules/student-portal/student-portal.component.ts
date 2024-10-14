@@ -17,10 +17,12 @@ export class StudentPortalComponent implements OnInit {
   constructor(private router: Router,     private callService: CallService) {}
 
   ngOnInit(): void {
+    // Obtener todas las convocatorias usando el nuevo método genérico `getAll`
+   
     const token = localStorage.getItem('token');
     this.isAdmin =
       localStorage.getItem('esAdministrador') === 'true' ? true : false;
-
+this.start();
     if (token) {
       if (this.isAdmin) {
         this.logout();
@@ -28,26 +30,7 @@ export class StudentPortalComponent implements OnInit {
     } else {
       this.logout();
     }
-    // Obtener todas las convocatorias usando el nuevo método genérico `getAll`
-    this.callService.getAll().subscribe(
-      (response) => {
-        if (response.error) {
-          console.error('Error al obtener las convocatorias:', response.msg);
-          this.convocatorias = [];
-        } else {
-          this.convocatorias =
-            response.data?.filter((conv) => conv.status === true) || [];
-          console.log(
-            'Convocatorias obtenidas y filtradas:',
-            this.convocatorias
-          );
-        }
-      },
-      (error) => {
-        console.error('Error al obtener las convocatorias', error);
-        this.convocatorias = [];
-      }
-    );
+    
   }
 
   logout() {
@@ -64,7 +47,36 @@ isConvocatoriaExpired(endDate: string | Date): boolean {
     return end < today;
 }
 
+//metodo traer convocatorias
+start():void{
+  this.callService.getAll().subscribe(
+    (response) => {
+      if (response.error) {
+        console.error('Error al obtener las convocatorias:', response.msg);
+        this.convocatorias = [];
+      } else {
+        if (Array.isArray(response.data)) {
+          this.convocatorias = response.data.filter(
+            (conv: IConvocatoria) => conv.status === true
+          );
+        } else if (
+          response.data &&
+          (response.data as IConvocatoria).status === true
+        ) {
+          this.convocatorias = [response.data as IConvocatoria];
+        } else {
+          this.convocatorias = [];
+        }
 
+        console.log('Convocatorias obtenidas:', this.convocatorias);
+      }
+    },
+    (error) => {
+      console.error('Error al obtener las convocatorias', error);
+      this.convocatorias = [];
+    }
+  );
+}
 
   // Método para iniciar el proceso de registro
   startRegistration(): void {
