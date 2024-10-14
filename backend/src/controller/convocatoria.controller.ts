@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { ConvocatoriaService } from '../service/convocatoria.service';
 import { ConvocatoriaDocument } from '../todos/document/convocatoria.document';
 
@@ -7,27 +7,60 @@ export class ConvocatoriaController {
   constructor(private readonly convocatoriaService: ConvocatoriaService) {}
 
   @Get('/')
-  async getAll() {
-    return this.convocatoriaService.findAll();
+  async getCurrentConvocatoria() {
+    try {
+      const convocatoria = await this.convocatoriaService.getCurrentConvocatoria();
+      return convocatoria;
+    } catch (error) {
+      throw new HttpException({ message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
-
-  @Get('/get/:id')
-  async getById(@Param('id') id: string) {
-    return this.convocatoriaService.findById(id);
+  @Get('/all')
+  async getAllConvocatorias() {
+    try {
+      return await this.convocatoriaService.getAllConvocatorias();
+    } catch (error) {
+      throw new HttpException({ message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
-
+  
   @Post('/')
-  async create(@Body() convocatoria: ConvocatoriaDocument) {
-    return this.convocatoriaService.create(convocatoria);
+  async saveConvocatoria(@Body() data: Partial<ConvocatoriaDocument>) {
+    try {
+      const convocatoria = await this.convocatoriaService.saveConvocatoria(data);
+      return convocatoria;
+    } catch (error) {
+      throw new HttpException({ message: error.message }, HttpStatus.BAD_REQUEST);
+    }
   }
 
-  @Put('/update/:id')
-  async update(@Param('id') id: string, @Body() convocatoria: Partial<ConvocatoriaDocument>) {
-    return this.convocatoriaService.update(id, convocatoria);
+  @Put('/:id')
+  async updateConvocatoria(@Param('id') id: string, @Body() data: Partial<ConvocatoriaDocument>) {
+    const { startDate, endDate } = data;
+  
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+  
+      if (start > end) {
+        throw new HttpException('End date cannot be earlier than start date', HttpStatus.BAD_REQUEST);
+      }
+    }
+  
+    try {
+      return await this.convocatoriaService.updateConvocatoria(id, data);
+    } catch (error) {
+      throw new HttpException({ message: error.message }, HttpStatus.BAD_REQUEST);
+    }
   }
-
-  @Delete('/delete/:id')
-  async delete(@Param('id') id: string) {
-    return this.convocatoriaService.delete(id);
+  
+  @Delete('/:id')
+  async deleteConvocatoria(@Param('id') id: string) {
+    try {
+      await this.convocatoriaService.delete(id);
+      return { message: 'Convocatoria deleted successfully' };
+    } catch (error) {
+      throw new HttpException({ message: error.message }, HttpStatus.NOT_FOUND);
+    }
   }
 }

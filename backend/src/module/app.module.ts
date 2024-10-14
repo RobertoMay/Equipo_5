@@ -6,8 +6,6 @@ import { FirestoreModule } from 'src/firestore/firestore.module'; // Importa el 
 import { InstitutionModule } from './institution.module';
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
-import { BecarioModule } from './becario.module';
-import { EnrollmentPeriodModule } from './enrollment-period.module';
 import { StudentModule } from './student.module';
 
 import { HojasinscripcionModule } from './hojasinscripcion.module';

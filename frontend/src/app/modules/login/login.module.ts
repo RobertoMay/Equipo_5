@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
     SharedModule, LoginRoutingModule,
     ReactiveFormsModule, CommonModule
    
-  ]
+  ],
+  exports: [LoginComponent] // Exporta el componente para usarlo fuera del LoginModule
 })
 export class LoginModule { }

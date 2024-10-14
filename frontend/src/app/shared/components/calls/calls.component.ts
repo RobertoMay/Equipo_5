@@ -20,19 +20,26 @@ export class CallsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener todas las convocatorias usando el nuevo método genérico `getAll`
     this.callService.getAll().subscribe(
       (response) => {
         if (response.error) {
           console.error('Error al obtener las convocatorias:', response.msg);
           this.convocatorias = [];
         } else {
-          this.convocatorias =
-            response.data?.filter((conv) => conv.status === true) || [];
-          console.log(
-            'Convocatorias obtenidas y filtradas:',
-            this.convocatorias
-          );
+          if (Array.isArray(response.data)) {
+            this.convocatorias = response.data.filter(
+              (conv: IConvocatoria) => conv.status === true
+            );
+          } else if (
+            response.data &&
+            (response.data as IConvocatoria).status === true
+          ) {
+            this.convocatorias = [response.data as IConvocatoria];
+          } else {
+            this.convocatorias = [];
+          }
+
+          console.log('Convocatorias obtenidas:', this.convocatorias);
         }
       },
       (error) => {
@@ -40,6 +47,14 @@ export class CallsComponent implements OnInit {
         this.convocatorias = [];
       }
     );
+  }
+
+  formatDate(date: string | Date): string {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
   }
 
   abrirModalComentarios(convocatoria: IConvocatoria) {

@@ -17,11 +17,16 @@
         </p>
         <!-- Rango de fechas -->
         <div class="date-range mb-3">
-          <span class="badge bg-danger">{{ convocatoria.startDate }} - {{ convocatoria.endDate }}</span>
+          <span class="badge bg-danger">{{ convocatoria.startDate | date: 'dd/MM/yyyy'}} - {{ convocatoria.endDate |
+            date: 'dd/MM/yyyy'
+            }}</span>
         </div>
         <!-- Información adicional de la convocatoria -->
         <p class="small text-muted">
-          Esta convocatoria está abierta del {{ convocatoria.startDate }} al {{ convocatoria.endDate }}. Los estudiantes
+          Esta convocatoria está abierta del {{ convocatoria.startDate | date: 'dd/MM/yyyy'}} - {{ convocatoria.endDate
+          |
+          date: 'dd/MM/yyyy'
+          }}. Los estudiantes
           interesados deberán cumplir con los requisitos antes de la fecha de cierre.
         </p>
         <!-- Botón de registro -->
