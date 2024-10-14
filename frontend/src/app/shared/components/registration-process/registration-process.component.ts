@@ -328,6 +328,7 @@ export class RegistrationProcessComponent {
                           'El PDF fue generado y los datos del aspirante se actualizaron exitosamente.',
                           'success'
                         );
+                        this.nextStep();
                       } else {
                         this.showError(response.msg);
                       }
