@@ -26,8 +26,7 @@ import { HojasinscripcionModule } from './hojasinscripcion.module';
     InstitutionModule,
     AspiranteModule,
     ConvocatoriaModule,
-    BecarioModule,
-    EnrollmentPeriodModule,
+  
     StudentModule,
     HojasinscripcionModule,
   ],
