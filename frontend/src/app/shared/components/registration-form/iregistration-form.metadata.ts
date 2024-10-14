@@ -6,4 +6,6 @@ export interface IRegistration extends IBaseModel {
   apellidoMaterno: string;
   curp: string;
   correo: string;
+  periodoinscripcion?: string;
+  statusinscripcion?: boolean;
 }

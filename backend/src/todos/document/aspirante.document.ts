@@ -8,6 +8,8 @@ export class AspiranteDocument {
   curp: string;
   correo: string;
   esAdministrador?: boolean; 
+  periodoinscripcion?: string;
+  statusinscripcion?: boolean;
 
   constructor(partial: Partial<AspiranteDocument>) {
     Object.assign(this, partial);
