@@ -101,7 +101,7 @@ export class AspiranteService {
 
   // Actualizar un aspirante por ID
   async updateAspirante(id: string, aspiranteDto: Partial<AspiranteDocument>): Promise<void> {
-    const docRef = this.firestore.collection('aspirantes').doc(id);
+    const docRef = this.firestore.collection('Aspirantes').doc(id);
 
     const doc = await docRef.get();
     if (!doc.exists) {
@@ -122,4 +122,19 @@ export class AspiranteService {
 
     await docRef.delete();
   }
+
+  // Obtener un aspirante por CURP
+async getAspiranteByCurp(curp: string): Promise<string> {
+  console.log(`Buscando aspirante con CURP: ${curp}`); 
+  const snapshot = await this.firestore.collection('Aspirantes')
+    .where('curp', '==', curp)
+    .get();
+
+  if (snapshot.empty) {
+    throw new HttpException('Aspirante no encontrado', HttpStatus.NOT_FOUND);
+  }
+
+  const aspiranteDoc = snapshot.docs[0];
+  return aspiranteDoc.id;
+}
 }

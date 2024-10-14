@@ -74,7 +74,7 @@
                 type="text"
                 id="curp"
                 class="form-control custom-input-width"
-                [(ngModel)]="formData.curp"
+                [(ngModel)]="formData.curp" name="curp" 
                 placeholder="CURP"
               />
             </div>
@@ -334,7 +334,7 @@
               <option value="" disabled selected>Seleccione una opción</option>
               <option value="finado">Finado</option>
               <option value="ausente">Ausente</option>
-              <option value="presente">Presente</option>
+              <option value="presente">Vivo</option>
             </select>
           </div>
           <div class="question-row">
@@ -439,7 +439,7 @@
               >Estado del padre</label
             >
             <select
-              id="estadoMadre"
+              id="estadoPadre"
               class="form-control custom-input-width"
               [(ngModel)]="formData.estadoPadre"
               name="estadoPadre"
@@ -949,7 +949,7 @@
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="medioAcceso"
+                    name="riesgoAcceso"
                     [(ngModel)]="formData.riesgoAcceso"
                     value="Otro"
                     (change)="formData.riesgoAcceso = 'Otro'"
