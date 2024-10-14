@@ -63,8 +63,13 @@
           <div class="questions-container">
             <div class="question-row">
               <label for="curp" class="question-text">Ingresa tu CURP</label>
-              <input type="text" id="curp" class="form-control custom-input-width" [(ngModel)]="formData.curp"
-                placeholder="CURP" />
+              <input
+                type="text"
+                id="curp"
+                class="form-control custom-input-width"
+                [(ngModel)]="formData.curp" name="curp" 
+                placeholder="CURP"
+              />
             </div>
 
             <div class="question-row">
@@ -195,7 +200,7 @@
               <option value="" disabled selected>Seleccione una opción</option>
               <option value="finado">Finado</option>
               <option value="ausente">Ausente</option>
-              <option value="presente">Presente</option>
+              <option value="presente">Vivo</option>
             </select>
           </div>
           <div class="question-row">
@@ -248,9 +253,16 @@
           </h3>
           <div class="question-row">
             <div class="col-md-6"></div>
-            <label for="estadoPadre" class="question-text">Estado del padre</label>
-            <select id="estadoMadre" class="form-control custom-input-width" [(ngModel)]="formData.estadoPadre"
-              name="estadoPadre" required>
+            <label for="estadoPadre" class="question-text"
+              >Estado del padre</label
+            >
+            <select
+              id="estadoPadre"
+              class="form-control custom-input-width"
+              [(ngModel)]="formData.estadoPadre"
+              name="estadoPadre"
+              required
+            >
               <option value="" disabled selected>Seleccione una opción</option>
               <option value="finado">Finado</option>
               <option value="ausente">Ausente</option>
@@ -533,8 +545,14 @@
                   <label class="form-check-label">Inundación</label>
                 </div>
                 <div class="col-md-3 form-check">
-                  <input class="form-check-input" type="radio" name="medioAcceso" [(ngModel)]="formData.riesgoAcceso"
-                    value="Otro" (change)="formData.riesgoAcceso = 'Otro'" />
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="riesgoAcceso"
+                    [(ngModel)]="formData.riesgoAcceso"
+                    value="Otro"
+                    (change)="formData.riesgoAcceso = 'Otro'"
+                  />
                   <label class="form-check-label">Otro</label>
                 </div>
               </div>

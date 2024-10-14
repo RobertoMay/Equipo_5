@@ -10,6 +10,9 @@
 body {
   font-family: Arial, sans-serif; /* Fuente general de la página */
 }
+.error-field {
+  border: 2px solid red; /* Resalta el borde en rojo */
+}
 
 /* Contenedor de la barra de progreso */
 .progress-container {

@@ -12,7 +12,20 @@ type FirestoreModuleOptions = {
     inject: any[];
 };
 
-@Module({})
+@Module({
+    providers: [
+        {
+          provide: Firestore,
+          useFactory: () => {
+            // Configuración de Firestore aquí
+            return new Firestore();
+          },
+        },
+      ],
+      exports: [Firestore], // Exporta Firestore para que otros módulos puedan utilizarlo
+
+
+})
 export class FirestoreModule{
     static forRoot(options: FirestoreModuleOptions): DynamicModule{
         const optionsProvider = {

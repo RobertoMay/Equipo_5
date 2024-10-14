@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Ingreso a la Casa o Comedor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+          
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid #000;
+            padding: 5px;
+            font-size: 12px;
+        }
+        .header {
+            background-color: #610f23;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .subheader {
+            background-color: #d9d9d9;
+            font-weight: bold;
+            text-align: center;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 10px;
+            font-size: 10px;
+        }
+        input[type="text"], input[type="date"], select {
+            width: 95%;
+            padding: 2px;
+            border: none;
+            border-bottom: 1px solid #000;
+            background-color: transparent;
+        }
+        .checkbox-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .notice {
+            font-size: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        .logo {
+            text-align: left;
+            font-weight: bold;
+            font-size: 12px;
+            color: #ffffff;
+        }
+        h1, h2, h3 {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="notice">
+            Este programa es ajeno a cualquier partido político. Queda prohibido el uso para fines distintos a los establecidos en el programa.
+        </div>
+        
+        <div class="header">
+            <div class="logo">gob.mx</div>
+        </div>
+
+        <table>
+            <tr>
+                <td colspan="4" class="subheader">Instituto Nacional de los Pueblos Indigenas</td>
+            </tr>
+            <tr>
+                <td colspan="3"> 
+
+                    Anexo 1.
+                    <h3>Solicitud de Ingreso a la Casa o Comedor</h3>
+                    (Solicitantes)
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="1" class="subheader">Fecha de publicación del formato en el DOF</td>
+                <td colspan="3" class="subheader">Fecha de solicitud del trámite</td>
+            </tr>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"  class="date" placeholder="DD"></td>
+                <td><input type="text"  class="date" placeholder="MM"></td>
+                <td><input type="text"  class="date" placeholder="AAAA"></td>
+
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="5" class="subheader">Datos generales del solicitante</td>
+
+            </tr>
+            <tr>
+                <td colspan="1" class="subheader">Información personal</td>
+                <td >Pueblo indígena al que pertenece:</td>
+            
+            </tr>
+
+            <tr>
+                <td>CURP:</td>
+                <td colspan="2">
+                    <label class="checkbox-label"><input type="checkbox"> Indígena</label>
+                    <label class="checkbox-label"><input type="checkbox"> Afromexicano</label>
+                </td>
+            </tr>
+            <tr>
+                <td> {{curp}}</td>
+                <td>Lengua indígena que habla: <input type="text"></td>
+
+            </tr>
+            <tr>
+                <td>Nombre(s): {{nombre}}</td>
+                <td>Fecha de nacimiento: <input type="text"></td>
+
+            </tr>
+            <tr>
+                <td>Primer apellido: <input type="text"></td>
+                <td colspan="1" class="subheader">*Datos de la dirección donde vive</td>
+            </tr>
+            <tr>
+                <td>Segundo apellido: <input type="text"></td>
+                <td>Estado: <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Sexo:
+                    <label class="checkbox-label"><input type="checkbox"> Hombre</label>
+                    <label class="checkbox-label"><input type="checkbox"> Mujer</label>
+                    <label class="checkbox-label"><input type="checkbox"> Otro</label>
+                </td>
+                <td>Municipio: <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Teléfono Fijo (10 dígitos): <input type="text"></td>
+                <td>Localidad: <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Teléfono móvil: <input type="text"></td>
+                <td>Comunidad: <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Correo electrónico: <input type="text"></td>
+                <td></td>
+            </tr>
+            <tr>
+            </tr>
+        
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="2" class="subheader">Datos generales de la madre</td>
+                <td colspan="2" class="subheader">Datos generales del padre</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="checkbox-label"><input type="checkbox"> Finado</label>
+                    <label class="checkbox-label"><input type="checkbox"> Ausente</label>
+                </td>
+                <td colspan="2">
+                    <label class="checkbox-label"><input type="checkbox"> Finado</label>
+                    <label class="checkbox-label"><input type="checkbox"> Ausente</label>
+                </td>
+            </tr>
+            <tr>
+                <td>Nombre(s):</td>
+                <td><input type="text"></td>
+                <td>Nombre(s):</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Primer apellido:</td>
+                <td><input type="text"></td>
+                <td>Primer apellido:</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Segundo apellido:</td>
+                <td><input type="text"></td>
+                <td>Segundo apellido:</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Fecha de nacimiento:</td>
+                <td><input type="date"></td>
+                <td>Fecha de nacimiento:</td>
+                <td><input type="date"></td>
+            </tr>
+            <tr>
+                <td>Entidad de nacimiento:</td>
+                <td><input type="text"></td>
+                <td>Entidad de nacimiento:</td>
+                <td><input type="text"></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="2" class="subheader">Datos generales del tutor</td>
+                <td colspan="2" class="subheader">Datos generales del padre</td>
+            </tr>
+            <tr>
+                <td>Parentesco:</td>
+                <td><input type="text"></td>
+                <td>Comunidad: :</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2">CURP:</td>
+                
+                <td>Localidad:</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="text"></td>
+                <td>Centro Coordinador:</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Nombre(S):</td>
+                <td><input type="text"></td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>                
+                <td>Primer apellido:</td>
+                <td><input type="text"></td>
+                <td colspan="5">
+                    <label class="checkbox-label">Casa: <input type="checkbox"></label>
+                    <label class="checkbox-label">Comedor:<input type="checkbox"></label>
+                    <label class="checkbox-label">Escolar de la Niñez: <input type="checkbox"></label>
+                    <label class="checkbox-label">Comunitario del Estudiante:<input type="checkbox"></label>
+                    <label class="checkbox-label">Universitario: <input type="checkbox"></label>
+                
+                </td>
+            </tr>
+            <tr>
+                <td>Segundo apellido:</td>
+                <td><input type="text"></td>
+                <td>Nombre de la casa Comedor:</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Fecha de nacimiento:</td>
+                <td><input type="text"></td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td >Entidad de nacimiento:</td>
+                <td ><input type="text"></td>
+                <td colspan="2"></td>
+            </tr>
+        </table>
+<div> <p></p></div>
+
+<table>
+    <tr>
+        <td colspan="2" class="subheader">Documentacion Presentada</td>
+        <td colspan="2" class="subheader">Traslado de la Casa-Comunidad de procedencia</td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox"> Acta de Nacimiento</label></td>
+        <td colspan="2"> <strong>Modo de Acceso:</strong> </td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox"> Cartilla de Vacunación</label></td>
+        <td colspan="4"> 
+            <label class="checkbox-label"><input type="checkbox"> A pie</label>
+            <label class="checkbox-label"><input type="checkbox"> En bicicleta</label>
+            <label class="checkbox-label"><input type="checkbox"> En vehiculo</label>
+            <label class="checkbox-label"><input type="checkbox"> Otro, Especifique: <input type="text"> </label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox"> CURP</label></td>
+        <td colspan="2"> 
+            <strong>Riesgo de Acceso: </strong>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox"> Boleta de Calificaciones</label></td>
+        <td colspan="5"> 
+            <label class="checkbox-label"><input type="checkbox"> Deslaves</label>
+            <label class="checkbox-label"><input type="checkbox"> Barrancas</label>
+            <label class="checkbox-label"><input type="checkbox"> Rio crecido</label>
+            <label class="checkbox-label"><input type="checkbox"> Inundación </label>
+            <label class="checkbox-label"><input type="checkbox"> Otro, Especifique: <input type="text"> </label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox">Comprobante de Domicilio </label></td>
+        <td colspan="2" class="subheader">Discapacidad</td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox">Comprobante de Domicilio </label></td>
+        <td colspan="5"> 
+            <label class="checkbox-label"><input type="checkbox"> Motriz</label>
+            <label class="checkbox-label"><input type="checkbox"> Auditivo</label>
+            <label class="checkbox-label"><input type="checkbox"> Visual</label>
+            <label class="checkbox-label"><input type="checkbox"> Mental </label>
+            <label class="checkbox-label"><input type="checkbox"> Otro, Especifique: <input type="text"> </label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox">Copia de identificación oficial del padre, madre o tutor </label></td>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="2"> <label class="checkbox-label"><input type="checkbox">Certificado médico (en caso de discapacidad, registrarlo en el 
+            certificado y anexar recetas, diagnósticos o indicaciones 
+            médicas) </label></td>
+        <td colspan="2"></td>
+    </tr>
+</table>
+        <table>
+            <tr>
+                <td colspan="6" class="subheader">Datos académicos</td>
+            </tr>
+            <tr>
+                <td colspan="2" >Tipo de Escuela:</td>
+                <td colspan="1">
+                    <label class="checkbox-label"><input type="checkbox"> Pública</label>
+                    CCT: <input type="text" style="width: 50%;">
+                </td>
+                <td colspan="3">
+                    <label class="checkbox-label"><input type="checkbox"> Comunitaria</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Nombre de la Escuela:</td>
+                <td colspan="3"><input type="text" style="width: 80%;"></td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <label> Preescolar</label>
+
+                </td>
+                <td colspan="1">
+
+                    <label> Primaria</label>
+
+
+                </td>
+                <td colspan="1">
+                    <label> Secundaria</label>
+                </td>
+                <td colspan="1">
+                    <label> Bachillerato</label>
+                </td>
+                <td colspan="1">
+                    <label> Superior</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <label class="checkbox-label"><input type="checkbox"> 1</label>
+                    <label class="checkbox-label"><input type="checkbox"> 2</label>
+                    <label class="checkbox-label"><input type="checkbox"> 3</label>
+                </td>
+                <td colspan="1">
+                    <label class="checkbox-label"><input type="checkbox"> 1</label>
+                    <label class="checkbox-label"><input type="checkbox"> 2</label>
+                    <label class="checkbox-label"><input type="checkbox"> 3</label>
+                    <label class="checkbox-label"><input type="checkbox"> 4</label>
+                    <label class="checkbox-label"><input type="checkbox"> 5</label>
+                </td>
+                <td colspan="1">
+                    <label class="checkbox-label"><input type="checkbox"> 1</label>
+                    <label class="checkbox-label"><input type="checkbox"> 2</label>
+                    <label class="checkbox-label"><input type="checkbox"> 3</label>
+                </td>
+                <td colspan="1">
+                    <label class="checkbox-label"><input type="checkbox"> 1</label>
+                    <label class="checkbox-label"><input type="checkbox"> 2</label>
+                    <label class="checkbox-label"><input type="checkbox"> 3</label>
+                </td>
+                <td colspan="1">
+                    <label class="checkbox-label"><input type="checkbox"> 1</label>
+                    <label class="checkbox-label"><input type="checkbox"> 2</label>
+                    <label class="checkbox-label"><input type="checkbox"> 3</label>
+                    <label class="checkbox-label"><input type="checkbox"> 4</label>
+                    <label class="checkbox-label"><input type="checkbox"> 5</label>
+                    <label class="checkbox-label"><input type="checkbox"> 6</label>
+                    <label class="checkbox-label"><input type="checkbox"> 7</label>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Continuar con las secciones de Antecedentes de Salud, Información del trámite, etc. -->
+
+        <div class="footer">
+            <h3>AVISO DE PRIVACIDAD</h3>
+            <p>Las Reglas Operación del Programa de Apoyo a la Educación Indígena publicadas en el Diario Oficial de la Federación (DOF) el XX de diciembre de 2023 en el numeral 10. Transparencia establecen que:</p>
+            <p>Los padrones de beneficiarios de este Programa serán públicos conforme a lo previsto y aplicable en la Ley General de Transparencia y Acceso a la Información Pública y en, la Ley Federal de Transparencia y Acceso a la Información Pública, cumpliendo en todo momento los principios y deberes previstos en la Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados.</p>
+            <!-- Incluir el resto del aviso de privacidad -->
+        </div>
+    </div>
+</body>
+</html>

@@ -86,4 +86,13 @@ export class AspiranteController {
       throw new HttpException({ message: 'Error eliminando aspirante', details: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Get('obtenerAspirantePorCurp/:curp') // Obtiene un aspirante por CURP
+  async getByCurp(@Param('curp') curp: string) {
+    try {
+      const aspiranteId = await this.aspiranteService.getAspiranteByCurp(curp);
+      return { aspiranteId };
+    } catch (error) {
+      throw new HttpException({ message: 'Error obteniendo aspirante por CURP', details: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
