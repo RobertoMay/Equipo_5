@@ -1,0 +1,30 @@
+.convocatoria-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #b41e46;
+}
+
+.convocatoria-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-btn {
+    background-color: #b41e46;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #a01b3d;
+    transform: scale(1.05);
+}
+
+.description {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.elegant-alert {
+    background-color: #f8d7da;
+    color: #842029;
+}
