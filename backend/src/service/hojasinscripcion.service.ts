@@ -34,7 +34,7 @@ export class HojasInscripcionService {
       }
 
       // Carga la plantilla HTML
-      const templatePath = path.join(__dirname, '../../pdfs/formato.html');
+      const templatePath = path.join(__dirname, '../templates/formato.html');
       const htmlTemplate = fs.readFileSync(templatePath, 'utf8');
 
       // Usa el JSON recibido para poblar la plantilla
