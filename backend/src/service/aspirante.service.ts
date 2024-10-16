@@ -56,7 +56,7 @@ export class AspiranteService {
     }
   }
   // Autenticar al usuario y generar un token
-  async authenticate(correo: string, curp: string): Promise<AuthResult> {
+  async authenticate(correo: string, curp: string): Promise<AuthResult & { id: string }> {
     const snapshot = await this.firestore.collection('Aspirantes')
       .where('correo', '==', correo)
       .where('curp', '==', curp)
@@ -70,13 +70,15 @@ export class AspiranteService {
     const userData = userDoc.data();
   
     return {
-      nombresCompletos: userData.nombresCompletos, // Asegúrate de que esta propiedad existe
-      esAdministrador: userData.esAdministrador || false, // Devuelve si es administrador
+      id: userDoc.id,  // Agrega el id del documento aquí
+      nombresCompletos: userData.nombresCompletos,
+      esAdministrador: userData.esAdministrador || false
     };
   }
+  
   // Obtener todos los aspirantes
   async getAllAspirantes(): Promise<AspiranteDocument[]> {
-    const snapshot = await this.firestore.collection('aspirantes').get();
+    const snapshot = await this.firestore.collection('Aspirantes').get();
     if (snapshot.empty) {
       throw new HttpException('No se encontraron aspirantes', HttpStatus.NOT_FOUND);
     }
@@ -91,7 +93,7 @@ export class AspiranteService {
 
   // Obtener un aspirante por ID
   async getAspiranteById(id: string): Promise<AspiranteDocument> {
-    const doc = await this.firestore.collection('aspirantes').doc(id).get();
+    const doc = await this.firestore.collection('Aspirantes').doc(id).get();
     if (!doc.exists) {
       throw new HttpException('Aspirante no encontrado', HttpStatus.NOT_FOUND);
     }
