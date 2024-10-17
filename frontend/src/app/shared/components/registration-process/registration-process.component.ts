@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { HojasInscripcionService } from '../../../../services/api/inscription/inscription.service';
 import { RegistrationService } from 'services/api/registration/registration.service';
-import { IRegistration } from '../registration-form/iregistration-form.metadata';
+import { IRegistration } from '../../../../models/iregistration-form.metadata';
 
 @Component({
   selector: 'app-registration-process',
@@ -328,7 +328,10 @@ export class RegistrationProcessComponent {
                           'El PDF fue generado y los datos del aspirante se actualizaron exitosamente.',
                           'success'
                         );
+<<<<<<< HEAD
                         this.nextStep();
+=======
+>>>>>>> 946de563afa308d7cce5e8b7a6cf1cc74f120cce
                       } else {
                         this.showError(response.msg);
                       }

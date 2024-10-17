@@ -3,10 +3,8 @@ import { AppController } from 'src/controller/app.controller';
 import { AppService } from 'src/service/app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreModule } from 'src/firestore/firestore.module'; // Importa el módulo de Firestore
-import { InstitutionModule } from './institution.module';
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
-import { StudentModule } from './student.module';
 
 import { HojasinscripcionModule } from './hojasinscripcion.module';
 
@@ -23,12 +21,9 @@ import { HojasinscripcionModule } from './hojasinscripcion.module';
       inject: [ConfigService], // Inyecta el servicio de configuración
     }),
     // Importa todos los módulos necesarios
-    InstitutionModule,
     AspiranteModule,
     ConvocatoriaModule,
-  
-    StudentModule,
-    HojasinscripcionModule,
+      HojasinscripcionModule,
   ],
   controllers: [AppController], // Controladores de la aplicación
   providers: [AppService], // Servicios de la aplicación

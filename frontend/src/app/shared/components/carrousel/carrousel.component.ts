@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICarouselItem } from './Icarousel-item.metadata';
+import { ICarouselItem } from '../../../../models/Icarousel-item.metadata';
 
 @Component({
   selector: 'app-carrousel, [app-carrousel]',

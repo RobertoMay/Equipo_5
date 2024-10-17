@@ -23,21 +23,21 @@ export class AspiranteController {
       throw new HttpException({ message: 'Error interno del servidor', details: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-  @Post('login') //compara los datos ya registrados para poder dar paso al inicio de sesión
+  @Post('login') // Compara los datos ya registrados para el inicio de sesión
   async login(@Body() credentials: { correo: string; curp: string }) {
     const { correo, curp } = credentials;
     try {
       const result = await this.aspiranteService.authenticate(correo, curp);
-
+  
       // Generación del token
       const token = jwt.sign({ sub: result.nombresCompletos, esAdministrador: result.esAdministrador }, 'mi-llave-secreta', { expiresIn: '1h' });
-
+  
       return {
         message: 'Inicio de sesión exitoso',
         token,
+        id: result.id, // Incluye el id en la respuesta
         nombresCompletos: result.nombresCompletos,
-        esAdministrador: result.esAdministrador, // Devuelve si es administrador
+        esAdministrador: result.esAdministrador
       };
     } catch (error) {
       if (error instanceof ConflictException) {

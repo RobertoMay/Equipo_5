@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CAROUSEL_DATA_ITEMS } from '@data/constants/carousel.const';
-import { ICarouselItem } from '@shared/components/carrousel/Icarousel-item.metadata';
+import { ICarouselItem } from 'models/Icarousel-item.metadata';
 
 @Component({
   selector: 'app-home',
