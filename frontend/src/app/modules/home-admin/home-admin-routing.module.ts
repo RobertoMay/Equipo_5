@@ -7,7 +7,7 @@ import { EnrolledStudentsComponent } from './enrolled-students/enrolled-students
 const routes: Routes = [
   { path: '', component: HomeAdminComponent },
   { path: 'applicants', component: ApplicantsComponent },
-  { path: 'enrrolled', component: EnrolledStudentsComponent },
+  { path: 'enrolled', component: EnrolledStudentsComponent },
 ];
 
 @NgModule({
