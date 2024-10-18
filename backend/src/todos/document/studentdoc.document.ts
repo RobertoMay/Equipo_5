@@ -1,10 +1,18 @@
 export class StudentDocDocument {
   static collectionName = 'StudentDocDocument';
   id: string;
-  aspiranteCurp: string;
+  aspiranteId: string;
+  nombres: string;
+  firstName: string;
+  lastName1: string;
+  lastName2: string;
+  enrollmentPeriod: string;
+  enrollmentStatus: boolean;
   Documents: {
     name: string;
+    type: string;
     link: string;
+    date: Date;
     status: 'accepted' | 'rejected' | 'pending'; // Estado del documento
   }[];
 

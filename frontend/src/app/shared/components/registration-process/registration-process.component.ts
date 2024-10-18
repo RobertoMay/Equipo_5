@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
-import { HojasInscripcionService } from '../../../../services/api/inscription/inscription.service';
+import { DataStudentService} from 'services/api/datastudent/datastudent.service'; // Actualiza la ruta si es necesario
 import { RegistrationService } from 'services/api/registration/registration.service';
 import { IRegistration } from '../../../../models/iregistration-form.metadata';
 
@@ -90,7 +90,7 @@ export class RegistrationProcessComponent {
     solicitud: '',
   };
   constructor(
-    private pdfService: HojasInscripcionService,
+    private datastudentservice: DataStudentService, 
     private updateservice: RegistrationService
   ) {}
 
@@ -238,107 +238,79 @@ export class RegistrationProcessComponent {
             return;
           }
 
-          const data = {
-            curp: this.formData.curp,
-            nombre: this.formData.nombre,
-            primerApellido: this.formData.primerApellido,
-            segundoApellido: this.formData.segundoApellido,
-            sexo: this.formData.sexo,
-            telefonoFijo: this.formData.telefonoFijo,
-            telefonoMovil: this.formData.telefonoMovil,
-            correoElectronico: this.formData.correoElectronico,
-            puebloIndigena: this.formData.puebloIndigena,
-            lenguaIndigena: this.formData.lenguaIndigena,
-            fechaNacimiento: this.formData.fechaNacimiento,
-            estado: this.formData.estado,
-            municipio: this.formData.municipio,
-            localidad: this.formData.localidad,
-            comunidad: this.formData.comunidad,
-            estadoMadre: this.formData.estadoMadre,
-            curpMadre: this.formData.curpMadre,
-            nombreMadre: this.formData.nombreMadre,
-            primerApellidoMadre: this.formData.primerApellidoMadre,
-            segundoApellidoMadre: this.formData.segundoApellidoMadre,
-            fechaNacimientoMadre: this.formData.fechaNacimientoMadre,
-            edoNacimientoMadre: this.formData.edoNacimientoMadre,
-            estadoPadre: this.formData.estadoPadre,
-            curpPadre: this.formData.curpPadre,
-            nombrePadre: this.formData.nombrePadre,
-            primerApellidoPadre: this.formData.primerApellidoPadre,
-            segundoApellidoPadre: this.formData.segundoApellidoPadre,
-            fechaNacimientoPadre: this.formData.fechaNacimientoPadre,
-            edoNacimientoPadre: this.formData.edoNacimientoPadre,
-            parentescoTutor: this.formData.parentescoTutor,
-            curpTutor: this.formData.curpTutor,
-            nombreTutor: this.formData.nombreTutor,
-            primerApellidoTutor: this.formData.primerApellidoTutor,
-            segundoApellidoTutor: this.formData.segundoApellidoTutor,
-            fechaNacimientoTutor: this.formData.fechaNacimientoTutor,
-            edoNacimientoTutor: this.formData.edoNacimientoTutor,
-            comunidadCasa: this.formData.comunidadCasa,
-            localidadCasa: this.formData.localidadCasa,
-            centroCoordinador: this.formData.centroCoordinador,
-            tipoCasa: this.formData.tipoCasa,
-            nombreCasa: this.formData.nombreCasa,
-            medioAcceso: this.formData.medioAcceso,
-            riesgoAcceso: this.formData.riesgoAcceso,
-            discapacidad: this.formData.discapacidad,
-            tipoDiscapacidad: this.formData.tipoDiscapacidad,
-            tipoEscuela: this.formData.tipoEscuela,
-            cct: this.formData.cct,
-            nombreEscuela: this.formData.nombreEscuela,
-            escolaridad: this.formData.escolaridad,
-            semestreoanosCursados: this.formData.semestreoanosCursados,
-            tipoCurso: this.formData.tipoCurso,
-            alergia: this.formData.alergia,
-            alergiaDetalles: this.formData.alergiaDetalles,
-            respirar: this.formData.respirar,
-            respirarDetalles: this.formData.respirarDetalles,
-            tratamiento: this.formData.tratamiento,
-            tratamientoDetalles: this.formData.tratamientoDetalles,
-            solicitud: this.formData.solicitud,
+          const dataStudent = {
+            id: '', 
+            aspiranteId,
+            aspiranteCurp: this.formData.curp,
+            data: {  curp: this.formData.curp,
+              nombre: this.formData.nombre,
+              primerApellido: this.formData.primerApellido,
+              segundoApellido: this.formData.segundoApellido,
+              sexo: this.formData.sexo,
+              telefonoFijo: this.formData.telefonoFijo,
+              telefonoMovil: this.formData.telefonoMovil,
+              correoElectronico: this.formData.correoElectronico,
+              puebloIndigena: this.formData.puebloIndigena,
+              lenguaIndigena: this.formData.lenguaIndigena,
+              fechaNacimiento: this.formData.fechaNacimiento,
+              estado: this.formData.estado,
+              municipio: this.formData.municipio,
+              localidad: this.formData.localidad,
+              comunidad: this.formData.comunidad,
+              estadoMadre: this.formData.estadoMadre,
+              curpMadre: this.formData.curpMadre,
+              nombreMadre: this.formData.nombreMadre,
+              primerApellidoMadre: this.formData.primerApellidoMadre,
+              segundoApellidoMadre: this.formData.segundoApellidoMadre,
+              fechaNacimientoMadre: this.formData.fechaNacimientoMadre,
+              edoNacimientoMadre: this.formData.edoNacimientoMadre,
+              estadoPadre: this.formData.estadoPadre,
+              curpPadre: this.formData.curpPadre,
+              nombrePadre: this.formData.nombrePadre,
+              primerApellidoPadre: this.formData.primerApellidoPadre,
+              segundoApellidoPadre: this.formData.segundoApellidoPadre,
+              fechaNacimientoPadre: this.formData.fechaNacimientoPadre,
+              edoNacimientoPadre: this.formData.edoNacimientoPadre,
+              parentescoTutor: this.formData.parentescoTutor,
+              curpTutor: this.formData.curpTutor,
+              nombreTutor: this.formData.nombreTutor,
+              primerApellidoTutor: this.formData.primerApellidoTutor,
+              segundoApellidoTutor: this.formData.segundoApellidoTutor,
+              fechaNacimientoTutor: this.formData.fechaNacimientoTutor,
+              edoNacimientoTutor: this.formData.edoNacimientoTutor,
+              comunidadCasa: this.formData.comunidadCasa,
+              localidadCasa: this.formData.localidadCasa,
+              centroCoordinador: this.formData.centroCoordinador,
+              tipoCasa: this.formData.tipoCasa,
+              nombreCasa: this.formData.nombreCasa,
+              medioAcceso: this.formData.medioAcceso,
+              especifAcceso: this.formData.especifAcceso,
+              riesgoAcceso: this.formData.riesgoAcceso,
+              discapacidad: this.formData.discapacidad,
+              tipoDiscapacidad: this.formData.tipoDiscapacidad,
+              tipoEscuela: this.formData.tipoEscuela,
+              cct: this.formData.cct,
+              nombreEscuela: this.formData.nombreEscuela,
+              escolaridad: this.formData.escolaridad,
+              semestreoanosCursados: this.formData.semestreoanosCursados,
+              tipoCurso: this.formData.tipoCurso,
+              alergia: this.formData.alergia,
+              alergiaDetalles: this.formData.alergiaDetalles,
+              respirar: this.formData.respirar,
+              respirarDetalles: this.formData.respirarDetalles,
+              tratamiento: this.formData.tratamiento,
+              tratamientoDetalles: this.formData.tratamientoDetalles,
+              solicitud: this.formData.solicitud,
+            }
           };
-          console.log(data);
-          this.pdfService
-            .generateAndUploadPdf(aspiranteId, this.formData)
-            .subscribe({
-              next: (pdfResponse) => {
-                // Si la generación del PDF es exitosa, proceder a actualizar el aspirante
-                const updatedAspirante: IRegistration = {
-                  nombresCompletos: `${this.formData.nombre} ${this.formData.primerApellido} ${this.formData.segundoApellido}`,
-                  apellidoPaterno: this.formData.primerApellido,
-                  apellidoMaterno: this.formData.segundoApellido,
-                  curp: this.formData.curp,
-                  correo: this.formData.correoElectronico,
-                  periodoinscripcion: this.formData.tipoCurso, // Ajusta según corresponda
-                  statusinscripcion: false, // O el valor correspondiente del formulario
-                };
-
-                this.updateservice
-                  .updateAspirante(aspiranteId, updatedAspirante)
-                  .subscribe({
-                    next: (response) => {
-                      if (!response.error) {
-                        Swal.fire(
-                          'Enviado',
-                          'El PDF fue generado y los datos del aspirante se actualizaron exitosamente.',
-                          'success'
-                        );
-                      } else {
-                        this.showError(response.msg);
-                      }
-                    },
-                    error: (err) => {
-                      this.showError(
-                        'Error al actualizar el aspirante: ' + err.message
-                      );
-                    },
-                  });
-              },
-              error: (pdfErr) => {
-                this.showError('Error al generar el PDF: ' + pdfErr.message);
-              },
-            });
+          this.datastudentservice.create('datastudents/', dataStudent).subscribe({
+            next: (response) => {
+              Swal.fire('Enviado', 'Los datos del estudiante se han registrado exitosamente.', 'success');
+            },
+            error: (err) => {
+              this.showError('Error al registrar los datos del estudiante: ' + err.message);
+            },
+          });
         }
       });
     } else {
