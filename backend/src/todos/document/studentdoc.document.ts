@@ -2,8 +2,7 @@ export class StudentDocDocument {
   static collectionName = 'StudentDocDocument';
   id: string;
   aspiranteId: string;
-  nombres: string;
-  firstName: string;
+  name: string;
   lastName1: string;
   lastName2: string;
   enrollmentPeriod: string;

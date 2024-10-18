@@ -12,7 +12,7 @@ export class DataStudentService extends GenericServiceService<IDataStudent> {
     super(http, 'datastudents'); // Set the API endpoint to 'calls'
   }
  
- // Método para obtener un estudiante por su aspiranteId
+
 // Método para obtener un estudiante por su aspiranteId
 getByAspiranteId(aspiranteId: string): Observable<IDataStudent | null> {
   return this.http.get<IDataStudent | null>(
