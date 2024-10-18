@@ -30,7 +30,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/jquery/dist/jquery.min.js"
             ],
-            "allowedCommonJsDependencies": ["sweetalert2"]
+            "allowedCommonJsDependencies": ["sweetalert2",  "core-js","raf",
+        "rgbcolor", "dompurify","html2canvas"]
           },
           "configurations": {
             "production": {

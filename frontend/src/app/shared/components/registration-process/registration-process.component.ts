@@ -1,20 +1,22 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
-import { DataStudentService} from 'services/api/datastudent/datastudent.service'; // Actualiza la ruta si es necesario
-import { RegistrationService } from 'services/api/registration/registration.service';
-import { IRegistration } from '../../../../models/iregistration-form.metadata';
-
+import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
+import { DataStudentService } from 'services/api/datastudent/datastudent.service'; // Actualiza la ruta si es necesario
+import { IStudentDocDocument } from 'app/shared/components/registration-process/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
+import { StudentDocument } from 'app/shared/components/registration-process/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
 @Component({
   selector: 'app-registration-process',
   templateUrl: './registration-process.component.html',
   styleUrls: ['./registration-process.component.css'],
 })
+
 export class RegistrationProcessComponent {
   currentStep: number = 1;
   progressWidth: string = '50%';
   @ViewChild('formulario', { static: false }) formulario!: ElementRef;
   formularioVisible = false;
   aspiranteId: string | null = null;
+  
   formData = {
     curp: '',
     nombre: '',
@@ -91,7 +93,7 @@ export class RegistrationProcessComponent {
   };
   constructor(
     private datastudentservice: DataStudentService, 
-    private updateservice: RegistrationService
+    private studentdocService: StudentdocService
   ) {}
 
   mostrarFormulario() {
@@ -101,6 +103,7 @@ export class RegistrationProcessComponent {
       this.formulario.nativeElement.scrollIntoView({ behavior: 'smooth' }); // Desplaza suavemente hacia el formulario
     }, 100); // Ajusta el tiempo si es necesario
   }
+  //Metodo para avanzar al siguiente Paso
   nextStep() {
     if (this.validateStep(this.currentStep)) {
       this.currentStep++;
@@ -110,12 +113,12 @@ export class RegistrationProcessComponent {
       this.showError('Por favor, llena todos los campos requeridos.');
     }
   }
-
+// Metodo para regresar al paso anterior
   previousStep() {
     this.currentStep--;
     this.updateProgressBar();
   }
-
+//Actualiza la barra de progreso
   updateProgressBar() {
     if (this.currentStep === 1) {
       this.progressWidth = '50%';
@@ -123,7 +126,7 @@ export class RegistrationProcessComponent {
       this.progressWidth = '100%';
     }
   }
-
+// Valida los pasos, ya sea para pasar al siguiente o mandar los datos  
   validateStep(step: number): boolean {
     console.log(this.formData.estadoMadre);
     console.log(this.formData.estadoPadre);
@@ -215,7 +218,7 @@ export class RegistrationProcessComponent {
 
     return false;
   }
-
+ 
   onSubmit() {
     if (this.validateStep(this.currentStep)) {
       Swal.fire({
@@ -299,6 +302,7 @@ export class RegistrationProcessComponent {
               respirar: this.formData.respirar,
               respirarDetalles: this.formData.respirarDetalles,
               tratamiento: this.formData.tratamiento,
+              especificDiscapacidad: this.formData.especifDiscapacidad,
               tratamientoDetalles: this.formData.tratamientoDetalles,
               solicitud: this.formData.solicitud,
             }
@@ -306,6 +310,33 @@ export class RegistrationProcessComponent {
           this.datastudentservice.create('datastudents/', dataStudent).subscribe({
             next: (response) => {
               Swal.fire('Enviado', 'Los datos del estudiante se han registrado exitosamente.', 'success');
+              // Realizar el POST en `StudentdocService` después del registro exitoso
+              const documentss: StudentDocument[] = [
+                {
+                  name: 'Solicitud de Ingreso',
+                  type: 'Solicitud Ingreso',
+                  link: 'Anexo1_solicitud_ingreso', // Ajusta el enlace
+                  date: new Date(),
+                  status: "pending"
+                }];
+        const studentDoc: IStudentDocDocument = {
+          aspiranteId: aspiranteId, // Usar ID recibido del primer POST
+          name:  this.formData.nombre,
+          lastName1:  this.formData.primerApellido,
+          lastName2:  this.formData.segundoApellido,
+          enrollmentPeriod: '2024-2025', // Esto se debe ajustar al recibir la convocatoria 
+          enrollmentStatus: false, // inicia en falso por que aun no esta aceptado
+          documents: documentss// Agrega los documentos si los tienes
+        };
+
+        this.studentdocService.create('studentdoc/', studentDoc).subscribe({
+          next: () => {
+            Swal.fire('Enviado', 'Los documentos del estudiante se han registrado exitosamente.', 'success');
+          },
+          error: (err) => {
+            this.showError('Error al registrar los documentos del estudiante: ' + err.message);
+          },
+        });
             },
             error: (err) => {
               this.showError('Error al registrar los datos del estudiante: ' + err.message);

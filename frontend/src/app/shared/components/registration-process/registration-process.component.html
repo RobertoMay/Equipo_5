@@ -547,14 +547,14 @@
                     name="riesgoAcceso"
                     [(ngModel)]="formData.riesgoAcceso"
                     value="Otro"
-                    (change)="formData.riesgoAcceso = 'Otro'"
+                    (change)="formData.riesgoAcceso = 'Otro1'"
                   />
                   <label class="form-check-label">Otro</label>
                 </div>
               </div>
 
               <!-- Campo para especificar el medio de acceso si se selecciona 'Otro' -->
-              <div *ngIf="formData.especifRiesgo === 'Otro'" class="question-row">
+              <div *ngIf="formData.especifRiesgo === 'Otro1'" class="question-row">
                 <label for="especifRiesgo" class="question-text">Especifique</label><br />
                 <input type="text" id="especifRiesgo" class="form-control" [(ngModel)]="formData.especifRiesgo"
                   name="especifRiesgo" required placeholder="Especifique el riesgo de acceso" />

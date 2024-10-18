@@ -48,7 +48,7 @@ export interface StudentData {
   riesgoAcceso: string;
   especifRiesgo?: string;
   discapacidad: string;
-  tipoDiscapacidad?: string;
+  tipoDiscapacidad: string;
   especifDiscapacidad?: string;
   alergia: string;
   alergiaDetalles?: string;
