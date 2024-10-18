@@ -5,9 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreModule } from 'src/firestore/firestore.module'; // Importa el módulo de Firestore
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
-
-import { HojasinscripcionModule } from './hojasinscripcion.module';
-
+import { DataStudentModule } from './data_student.module';
+import { StudentDocModule } from './studentdoc.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,7 +22,8 @@ import { HojasinscripcionModule } from './hojasinscripcion.module';
     // Importa todos los módulos necesarios
     AspiranteModule,
     ConvocatoriaModule,
-      HojasinscripcionModule,
+    DataStudentModule,
+    StudentDocModule,
   ],
   controllers: [AppController], // Controladores de la aplicación
   providers: [AppService], // Servicios de la aplicación
