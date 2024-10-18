@@ -1,0 +1,490 @@
+
+<button class="btn btn-primary btn-custom" (click)="generatePDF2()">
+    <i class="bi bi-file-earmark-pdf-fill"></i> Descargar PDF
+</button>
+
+ <div id="pdf-content">
+    <div *ngIf="aspiranteData">
+    <body>
+        
+        <div class="container">
+    
+            
+            <div class="header">
+                <div class="logo">gob.mx</div>
+            </div>
+    
+            <table>
+                <tr>
+                    <td colspan="4" class="subheader">Instituto Nacional de los Pueblos Indigenas</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="ceen"> 
+    
+                        <strong>Anexo 1.</strong>
+                        <h3>Solicitud de Ingreso a la Casa o Comedor</h3>
+                        <strong>(Solicitantes)</strong>
+                    </td>
+                </tr>
+            </table>
+    
+            <table>
+                <tr>
+                    <td colspan="1" class="subheader">Fecha de publicación del formato en el DOF</td>
+                    <td colspan="3" class="subheader">Fecha de solicitud del trámite</td>
+                </tr>
+                <tr>
+                    <td><input type="text"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+    
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td colspan="4" class="subheader">Datos generales del solicitante</td>
+    
+                </tr>
+                <tr>
+                    <td colspan="2" class="subheader">Información personal</td>
+                    <td colspan="2"> Pueblo indígena al que pertenece:</td>
+                </tr>
+                <tr>
+                    <td>CURP:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.curp }}</td>
+                    <td colspan="2" position="center">
+                        <label class="checkbox-label">
+                            <input type="checkbox" [checked]="aspiranteData.data.puebloIndigena === 'Pueblo1'"> Indígena
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" [checked]="aspiranteData.data.puebloIndigena === 'Pueblo2'"> Afromexicano
+                        </label>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>Nombre(s):</td>
+                    <td class=" txt"> {{ aspiranteData.data?.nombre }}</td>
+                    <td>Lengua indigena que habla</td>
+                    <td class=" txt"> {{ aspiranteData.data?.lenguaIndigena }}</td>
+                </tr>
+                <tr>
+                    <td>Primer apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.primerApellido }}</td>
+                    <td colspan="2" class="subheader">*Datos de la dirección donde vive</td>
+                </tr>
+                <tr>
+                    <td>Segundo apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.segundoApellido }}</td>
+                    <td>Estado:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.estado }}</td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.sexo === 'Hombre'"> Hombre</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.sexo === 'Mujer'"> Mujer</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.sexo === 'Otro'"> Otro</label>
+                    </td>
+                    <td>Municipio:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.municipio }}</td>
+                </tr>
+                <tr>
+                    <td>Telefono FIjo:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.telefonoFijo }}</td>
+                    <td>Localidad:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.localidad }}</td>
+                </tr>
+                <tr>
+                    <td>Telefono Movil:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.telefonoMovil }}</td>
+                    <td>Comunidad:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.comunidad }}</td>
+                </tr>
+                <tr>
+                    <td>Correo Electronico:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.correoElectronico }}</td>
+                    <td colspan="2"></td>
+    
+                </tr>
+    
+                <tr>
+                    <td>Fecha de Nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.fechaNacimiento }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </table>
+    
+            <table>
+                <tr>
+                    <td colspan="2" class="subheader">Datos generales de la madre</td>
+                    <td colspan="2" class="subheader">Datos generales del padre</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.estadoMadre === 'finado'"> Finado</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.estadoMadre === 'ausente'"> Ausente</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.estadoMadre === 'vivo'"> Vivo</label>
+                    </td>
+                    <td colspan="2">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.estadoPadre === 'finado'"> Finado</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.estadoPadre === 'ausente'"> Ausente</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.estadoPadre === 'vivo'"> Vivo</label>
+                    </td>
+                </tr>
+                <tr>
+                        <td>CURP:</td>
+                        <td class=" txt"> {{ aspiranteData.data?.curpMadre }}</td>
+                        <td>CURP:</td>
+                        <td class=" txt"> {{ aspiranteData.data?.curpPadre }}</td>
+                </tr>
+                <tr>
+                    <td>Nombre(s):</td>
+                    <td class=" txt"> {{ aspiranteData.data?.nombreMadre }}</td>
+                    <td>Nombre(s):</td>
+                    <td class=" txt"> {{ aspiranteData.data?.nombrePadre }}</td>
+                </tr>
+                <tr>
+                    <td>Primer apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.primerApellidoMadre }}</td>
+                    <td>Primer apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.primerApellidoPadre }}</td>
+                </tr>
+                <tr>
+                    <td>Segundo apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.segundoApellidoMadre }}</td>
+                    <td>Segundo apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.segundoApellidoPadre }}</td>
+                </tr>
+                <tr>
+                    <td>Fecha de nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.fechaNacimientoMadre }}</td>
+                    <td>Fecha de nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.fechaNacimientoPadre }}</td>
+                </tr>
+                <tr>
+                    <td>Entidad de nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.edoNacimientoMadre}}</td>
+                    <td>Entidad de nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.edoNacimientoPadre }}</td>
+                </tr>
+            </table>
+    
+            <table>
+                <tr>
+                    <td colspan="2" class="subheader">Datos generales del tutor</td>
+                    <td colspan="2" class="subheader">Datos de identificación de la Casa o Comedor</td>
+                </tr>
+                <tr>
+                    <td>Parentesco:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.parentescoTutor }}</td>
+                    <td>Comunidad: :</td>
+                    <td class=" txt"> {{ aspiranteData.data?.comunidad }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">CURP:</td>
+                    
+                    <td>Localidad:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.localidad }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"  class=" txt"> {{ aspiranteData.data?.curpTutor }}</td>
+                    <td>Centro Coordinador:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.centroCoordinador }}</td>
+                </tr>
+                <tr>
+                    <td>Nombre(S):</td>
+                    <td class=" txt"> {{ aspiranteData.data?.nombreTutor }}</td>
+                    <td colspan="2">
+                        <label class="checkbox-label">Casa: <input type="checkbox" [checked]="aspiranteData.data.tipoCasa === 'Casa'"></label>
+                        <label class="checkbox-label">Comedor:<input type="checkbox" [checked]="aspiranteData.data.tipoCasa === 'Comedor'"></label>
+                        <label class="checkbox-label">Comunitario del Estudiante:<input type="checkbox" [checked]="aspiranteData.data.tipoCasa === 'Comunitario del estudiante'"></label>
+                    </td>
+                </tr>
+                <tr>                
+                    <td>Primer apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.primerApellidoTutor }}</td>
+                    <td colspan="2">
+        
+                        <label class="checkbox-label">Escolar de la Niñez: <input type="checkbox" [checked]="aspiranteData.data.tipoCasa === 'Escolar de la niñez'"></label>
+    
+                        <label class="checkbox-label">Universitario: <input type="checkbox" [checked]="aspiranteData.data.tipoCasa === 'Universitario'"></label>
+                    
+                    </td>
+                </tr>
+                <tr>
+                    <td>Segundo apellido:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.segundoApellidoTutor }}</td>
+                    <td>Nombre de la casa Comedor:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.nombreCasa }}</td>
+                </tr>
+                <tr>
+                    <td>Fecha de nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.fechaNacimientoTutor }}</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td >Entidad de nacimiento:</td>
+                    <td class=" txt"> {{ aspiranteData.data?.edoNacimientoTutor }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </table>
+    <div> <p></p></div><div style="height: 100px;"></div>
+
+ 
+    
+    <table>
+        <tr>
+            <td colspan="2" class="subheader">Documentacion Presentada</td>
+            <td colspan="2" class="subheader">Traslado de la Casa-Comunidad de procedencia</td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="acta-checkbox"> Acta de Nacimiento</label></td>
+            <td colspan="2"> <strong>Modo de Acceso:</strong> </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="cartilla-checkbox"> Cartilla de Vacunación</label></td>
+            <td colspan="4"> 
+                <label class="checkbox-label"><input type="checkbox"  [checked]="aspiranteData.data.medioAcceso === 'A pie'"> A pie</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.medioAcceso === 'En bicicleta'"> En bicicleta</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.medioAcceso === 'En vehículo'"> En vehículo</label>
+                <label class="checkbox-label"><input type="checkbox"  [checked]="aspiranteData.data.medioAcceso === 'Otro'"> Otro, Especifique:  {{ aspiranteData.data?.especifAcceso}} </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="curp-checkbox"> CURP</label></td>
+            <td colspan="2"> 
+                <strong>Riesgo de Acceso: </strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="boleta-checkbox" > Boleta de Calificaciones</label></td>
+            <td colspan="5"> 
+                <label class="checkbox-label"><input type="checkbox"[checked]="aspiranteData.data.riesgoAcceso === 'Deslaves'">  Deslaves</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.riesgoAcceso === 'Barrancas'">Barrancas</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.riesgoAcceso === 'Rio Crecido'"> Rio crecido</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.riesgoAcceso === 'Inundación'"> Inundación </label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.riesgoAcceso === 'Otro'"> Otro, Especifique: {{ aspiranteData.data?.especifRiesgo }}</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="comprobante-checkbox">Comprobante de Domicilio </label></td>
+            <td colspan="2" class="subheader">Discapacidad</td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="ine-checkbox">Copia de identificación oficial del padre, madre o tutor </label></td>
+            <td colspan="2"> 
+                         ¿Presenta alguna discapacidad? 
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.discapacidad === 'No'">No</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.discapacidad === 'Sí'"> Si</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <label class="checkbox-label"><input type="checkbox" id="certificado-checkbox">Certificado médico (en caso de discapacidad, registrarlo en el 
+                certificado y anexar recetas, diagnósticos o indicaciones 
+                médicas) </label></td>
+            <td colspan="5"> 
+
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoDiscapacidad === 'Motriz'">Motriz</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoDiscapacidad === 'Auditivo'"> Auditivo</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoDiscapacidad === 'Visual'"> Visual</label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoDiscapacidad === 'Mental'"> Mental </label>
+                <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoDiscapacidad === 'Otro'"> Otro, Especifique: {{ aspiranteData.data?.especifDiscapacidad}}</label>
+            </td>
+        </tr>
+    
+    </table>
+            <table>
+                <tr>
+                    <td colspan="6" class="subheader">Datos académicos</td>
+                </tr>
+                <tr>
+                    <td colspan="2" >Tipo de Escuela:</td>
+                    <td colspan="2">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoEscuela === 'Pública'"> Pública</label>
+                        CCT:  {{ aspiranteData.data?.cct}}
+                    </td>
+                    <td colspan="2">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tipoEscuela === 'Comunitaria'"> Comunitaria</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">Nombre de la Escuela:</td>
+                    <td colspan="3">{{ aspiranteData.data?.nombreEscuela }}</td>
+                </tr>
+                <tr>
+                    <td colspan="1">Nivel Escolar:</td>
+                    <td colspan="1">{{ aspiranteData.data?.escolaridad }}</td>
+                    <td colspan="1">Años cursados:</td>
+                    <td colspan="1">{{ aspiranteData.data?.semestreoanosCursados }}</td>
+                    <td colspan="1">Tipo de Curso:</td>
+                    <td colspan="1">{{ aspiranteData.data?.tipoCurso}}</td>
+                </tr>
+    
+                <tr>
+                    <td colspan="6" class="subheader">Antecedentes de Salud</td>
+                </tr>
+                <tr>
+                    <td colspan="3">¿La persona solicitante es alérgica a algún alimento o medicamento? </td>
+                    <td colspan="3">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.alergia === 'No'"> No</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.alergia === 'Sí'"> Si. ¿Cuál? {{ aspiranteData.data?.alergiaDetalles}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">¿La persona solicitante presenta problemas para respirar 
+                        cotidianamente? </td>
+                    <td colspan="3">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.respirar === 'No'">  No</label>
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.respirar === 'Sí'">  Si. ¿Cuál? {{ aspiranteData.data?.respirarDetalles }} </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">¿La persona solicitante ha requerido tratamiento médico de larga 
+                        duración?</td>
+                    <td colspan="3">
+                        <label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.tratamiento === 'No'">  No</label>
+                        <label class="checkbox-label"><input type="checkbox"[checked]="aspiranteData.data.tratamiento === 'Sí'">  Si. ¿Cuál fue la razón? {{ aspiranteData.data?.tratamientoDetalles }} </label>
+                    </td>
+                </tr>
+            </table>
+    
+            <table>
+                <tr>
+                    <td colspan="6" class="subheader">Información del trámite </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        
+                        <br>Por este medio solicito a usted la inscripción del niño (a) joven o adolescente al Programa de Apoyo a la Educación Indígena, cumpliendo con los 
+                        requisitos establecidos en las reglas de operación del Instituto Nacional de los Pueblos Indígenas (INPI) y manifiesto la necesidad de recibir los 
+                        apoyos del programa.
+                    
+    
+                        <p></p><label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.solicitud === '3'">  Solicito hospedaje y 3 comidas al día, de lunes a viernes hasta la conclusión del ciclo escolar.  </label>
+                        <p></p><label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.solicitud === '2'">  Solicito 3 comidas al día, de lunes a viernes hasta la conclusión del ciclo escolar.  </label>
+                        <p></p><label class="checkbox-label"><input type="checkbox" [checked]="aspiranteData.data.solicitud === '1'">  Solicito 2 comidas al día, de lunes a viernes hasta la conclusión del ciclo escolar.  </label>
+                    </td>
+    
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td colspan="6" class="subheader">Términos y condiciones </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <br>
+                        De ser beneficiado con el apoyo que ha seleccionado, entiendo los términos y condiciones y las demás que se señalan en las reglas de operación 
+                        vigentes:  
+                                      <strong>Hospedaje y 3 comidas: </strong>  
+                        <br>Se otorga a estudiantes indígenas y afromexicanos de escasos recursos que cursan sus estudios de tipo básico, medio superior o superior, en 
+                        donde el beneficiario recibirá hospedaje de lunes a viernes en las Casas Escolares de la Niñez Indígena, Casas Comunitarias del Estudiante Indígena 
+                        o Casas Universitarias Indígenas y 3 comidas completas.  
+                                            <strong>3 comidas:  </strong> 
+                        <br>Se otorga a estudiantes indígenas y afromexicanos de escasos recursos que cursan sus estudios de tipo básico, medio superior o superior, en 
+                        donde el beneficiario recibirá 3 comidas completas de lunes a viernes en los Comedores Escolares de la Niñez Indígena o Universitarios Indígenas.  
+                        <strong>2 comidas:   </strong>
+                        <br>Se otorga a estudiantes indígenas y afromexicanos de escasos recursos que cursan sus estudios de tipo básico, medio superior o superior, en 
+                        donde el beneficiario recibirá 2 comidas completas de lunes a viernes en los Comedores Escolares de la Niñez Indígena, Comedores Comunitarios 
+                        del Estudiante Indígena o Universitarios Indígenas. 
+                    </td>
+    
+                </tr>
+                <div> <p></p></div><div style="height: 100px;"></div>
+                <tr>
+                    <td colspan="6" class="subheader">He leído y entendido los términos y condiciones  </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                       <p></p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;margin: 4">
+                            <div style="flex: 1; text-align: center; border-top: 1px solid black; margin: 30px 30px 10px 30px;"></div>
+                        
+                            <div style="flex: 1; text-align: center; border-top: 1px solid black;   margin: 30px 30px 10px 30px;"></div>
+          
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;margin: 4">
+                            <p style="margin: 0px, 60px, 5px, 60px;">Firma solicitante</p>
+                        
+                          
+                        <p style="margin: 0px, 0px, 5px, 00px; text-align: center ;">Firma del padre, madre, tutor</p>
+          
+                        </div>
+    
+                        <p style="text-align: right;">(Igual que la identificación oficial)</p>
+    
+                        <br>Manifiesto que la presente solicitud es un permiso con fines educativos para recibir el apoyo del 
+                        programa para el cual se inscribe mi hijo (a); lo anterior, no me exime como padre, madre o tutor 
+                        de dar cumplimiento a las obligaciones y deberes respecto del menor, conforme a la legislación 
+                        vigente. De igual manera doy mi consentimiento informado acerca de los servicios que recibirá mi 
+                        hijo (a) en la Casa (3 comidas calientes al día, cama, ropa de cama y material de higiene personal) 
+                        y/o Comedor (2 comidas calientes al día y material de higiene personal), así como el cuidado y 
+                        asesoría por parte del personal responsable de su cuidado, así mismo autorizo a efectos de que 
+                        en caso de detectar problemas de salud o situaciones que pongan en riesgo la estabilidad física o 
+                        psicológica, la institución gestione su atención ante las autoridades competentes.
+                    </td>
+    
+                </tr>
+            </table>
+            <div class="lock">
+    
+                <br>______________________________________________________<br>
+                <p>Nombre y firma del responsable de recibir la solicitud</p>
+            </div>
+    
+            <div class="footer">
+                <h3>AVISO DE PRIVACIDAD</h3>
+                    <br>
+                    Las Reglas Operación del Programa de Apoyo a la Educación Indígena publicadas en el Diario Oficial de la Federación (DOF) el XX 
+                    de diciembre de 2023 en el numeral 10. Transparencia establecen que: 
+                    <br>
+                    Los padrones de beneficiarios de este Programa serán públicos conforme a lo previsto y aplicable en la Ley General de Transparencia 
+                    y Acceso a la Información Pública y en, la Ley Federal de Transparencia y Acceso a la Información Pública, cumpliendo en todo momento 
+                    los principios y deberes previstos en la Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados. 
+                    <br>
+                    Para la elaboración de los padrones o listados de beneficiarios el INPI, en lo posible, identificará y/o recabará, en apego a su Aviso 
+                    de Privacidad, los siguientes datos personales: Clave Única de Registro de Población (CURP), Clave de Registro Federal de 
+                    Contribuyentes (RFC), sexo, grupo de edad, comunidad y pueblo indígena al que pertenece, entidad federativa, municipio o demarcación 
+                    territorial de la Ciudad de México. 
+                    <br>
+                    Los beneficiarios podrán conocer el Aviso de Privacidad del Instituto en la sección de Transparencia del portal http://www.gob.mx/inpi, 
+                    y podrán ejercer sus derechos de acceso, rectificación, cancelación u oposición de sus datos personales (derechos ARCO) ante la 
+                    Unidad de Transparencia del INPI, a través de la Plataforma Nacional de Transparencia en el siguiente hipervínculo: 
+                    https://www.plataformadetransparencia.org.mx/, o al correo electrónico enlaceinai.gob.mx, de conformidad con el procedimiento 
+                    previsto en la Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados. 
+                    <br>
+                    Asimismo, los datos personales que entregan los beneficiarios al Programa se clasifican como confidenciales de conformidad con 
+                    los artículos 113 fracción I y último párrafo; así como el 117 fracción V, de la Ley Federal de Transparencia y Acceso a la Información 
+                    Pública; 116 de la Ley General de Transparencia y Acceso a la Información Pública; 3, fracción IX, 16, 17 y 22, fracción II, de la Ley 
+                    General de Protección de Datos Personales  en Posesión de Sujetos Obligados; por lo tanto, las personas servidoras públicas y sujetos 
+                    obligados facultados para conocerlos, estamos obligados a (i) Asegurar la confidencialidad de los datos, (ii) Mantener su resguardo 
+                    independientemente del medio en que se entregue, (iii) Asegurar el uso de la información exclusivamente para los fines para lo que 
+                    fueron entregados. 
+                    <br>
+                    Por lo anterior se deberá observar lo siguiente: 
+                    <br>
+                    1.Los datos personales sólo podrán ser utilizados con la finalidad de realizar su registro, en el Sistema de Control del Programa 
+                    de Apoyo a la Educación Indígena (SCPAEI), en audio, fotografías (excepto menores de edad) y video, así como en la 
+                    elaboración de memorias de imágenes, acervo documental, elaboración de informes y demás actividades relacionadas con la 
+                    operación del PAEI. 
+                    <br>
+                    2.Los datos personales también podrán ser utilizados en las actividades encaminadas a la difusión y promoción de las acciones 
+                    que el PAEI lleve a cabo durante los eventos públicos. 
+                    <br>
+                    3. Los asistentes a los cursos, talleres, capacitaciones, sesiones, eventos y otros foros de naturaleza análoga vinculados con el 
+                    quehacer institucional del PAEI, que no expresen lo contrario, durante el transcurso de los mismos, aceptan tácitamente el 
+                    tratamiento de sus datos personal antes descritos.
+            </div>
+        </div>
+    </body>
+    <div class="footer2">
+        <p>Este programa es ajeno a cualquier partido político. Queda prohibido el uso para fines distintos a los establecidos en el programa.</p>
+    </div>
+    </div>
+    <div *ngIf="!aspiranteData?.data">
+        <p>Cargando datos del aspirante...</p>
+      </div>
+</div>
+

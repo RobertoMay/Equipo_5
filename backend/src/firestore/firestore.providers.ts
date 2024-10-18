@@ -1,14 +1,19 @@
+import { AspiranteDocument } from 'src/todos/document/aspirante.document';
 
-import { AspiranteDocument } from "src/todos/document/aspirante.document";
-import { TodoDocument } from "src/todos/document/todos.document"; 
-import { ConvocatoriaDocument } from "src/todos/document/convocatoria.document";
-import { HojasInscripcionDocument } from "src/todos/document/hojasinscripcion.document";
+import { TodoDocument } from 'src/todos/document/todos.document';
+import { ConvocatoriaDocument } from 'src/todos/document/convocatoria.document';
+
+import { DataStudent } from 'src/todos/document/data_student.document';
+import { StudentDocDocument } from 'src/todos/document/studentdoc.document';
 
 export const FirestoreDatabaseProvider = 'firestoredb';
 export const FirestoreOptionsProvider = 'firestoreOptions';
 export const FirestoreCollectionProviders: string[] = [
-    TodoDocument.collectionName,
-    AspiranteDocument.collectionName,
-    ConvocatoriaDocument.collectionName,
-    HojasInscripcionDocument.collectionName,
+  TodoDocument.collectionName,
+
+  AspiranteDocument.collectionName,
+  ConvocatoriaDocument.collectionName,
+
+  DataStudent.collectionName,
+  StudentDocDocument.collectionName,
 ];

@@ -11,34 +11,64 @@ export class GenericService<T> implements IGenericService<T> {
   }
 
   async findAll(): Promise<T[]> {
-    const snapshot = await this.firestore.collection(this.collectionName).get();
-    const items: T[] = [];
-    snapshot.forEach(doc => items.push(doc.data() as T));
-    return items;
+    try {
+      const snapshot = await this.firestore.collection(this.collectionName).get();
+      const items: T[] = [];
+      snapshot.forEach(doc => items.push(doc.data() as T));
+      console.log('Todos los documentos obtenidos correctamente');
+      return items;
+    } catch (error) {
+      console.error('Error al obtener los documentos:', error);
+      throw error;
+    }
   }
 
   async findById(id: string): Promise<T> {
-    const doc = await this.firestore.collection(this.collectionName).doc(id).get();
-    if (!doc.exists) {
-      throw new Error('Documento no encontrado');
+    try {
+      const doc = await this.firestore.collection(this.collectionName).doc(id).get();
+      if (!doc.exists) {
+        throw new Error('Documento no encontrado');
+      }
+      console.log(`Documento con ID ${id} obtenido correctamente`);
+      return doc.data() as T;
+    } catch (error) {
+      console.error(`Error al obtener el documento con ID ${id}:`, error);
+      throw error;
     }
-    return doc.data() as T;
   }
 
   async create(data: T): Promise<T> {
-    const docRef = this.firestore.collection(this.collectionName).doc();
-    const newItem = { ...data, id: docRef.id };
-    await docRef.set(newItem);
-    return newItem;
+    try {
+      const docRef = this.firestore.collection(this.collectionName).doc();
+      const newItem = { ...data, id: docRef.id };
+      await docRef.set(newItem);
+      console.log(`Documento creado con ID ${docRef.id}`);
+      return newItem;
+    } catch (error) {
+      console.error('Error al crear el documento:', error);
+      throw error;
+    }
   }
 
   async update(id: string, data: Partial<T>): Promise<void> {
-    const docRef = this.firestore.collection(this.collectionName).doc(id);
-    await docRef.update(data);
+    try {
+      const docRef = this.firestore.collection(this.collectionName).doc(id);
+      await docRef.update(data);
+      console.log(`Documento con ID ${id} actualizado correctamente`);
+    } catch (error) {
+      console.error(`Error al actualizar el documento con ID ${id}:`, error);
+      throw error;
+    }
   }
 
   async delete(id: string): Promise<void> {
-    const docRef = this.firestore.collection(this.collectionName).doc(id);
-    await docRef.delete();
+    try {
+      const docRef = this.firestore.collection(this.collectionName).doc(id);
+      await docRef.delete();
+      console.log(`Documento con ID ${id} eliminado correctamente`);
+    } catch (error) {
+      console.error(`Error al eliminar el documento con ID ${id}:`, error);
+      throw error;
+    }
   }
 }
