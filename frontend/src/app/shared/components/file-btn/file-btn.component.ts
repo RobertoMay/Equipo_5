@@ -19,9 +19,9 @@ export class FileBtnComponent implements OnInit {
     status: 'Pending',
   };
   @Input() isAccepted: boolean = false;
+  @Input() typeDocument: string = '';
   aspiranteId: string | null = null;
   file?: File;
-  typeDocument: string = 'Acta de nacimiento';
 
   constructor(
     private studentdocService: StudentdocService,
