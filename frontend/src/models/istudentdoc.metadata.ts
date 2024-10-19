@@ -18,7 +18,7 @@ export class IStudentDocDocument implements IBaseModel {
   lastName2!: string; // Segundo apellido
   enrollmentPeriod!: string; // Periodo de inscripción
   enrollmentStatus!: boolean; // Estado de inscripción
-  documents?: StudentDocument[]; // Array de documentos relacionados con el estudiante
+  Documents?: StudentDocument[]; // Array de documentos relacionados con el estudiante
 
   constructor(partial: Partial<IStudentDocDocument>) {
     Object.assign(this, partial);

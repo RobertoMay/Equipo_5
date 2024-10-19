@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { IConvocatoria } from './icalls.metadata';
+import { IConvocatoria } from '../../../../models/icalls.metadata';
 import { CallService } from '../../../../services/api/call/call.service'; // Verifica si esta ruta es correcta
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 

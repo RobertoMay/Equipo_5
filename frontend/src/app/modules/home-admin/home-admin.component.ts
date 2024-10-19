@@ -9,7 +9,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { IConvocatoria } from '@shared/components/calls/icalls.metadata';
+import { IConvocatoria } from 'models/icalls.metadata';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
 import { Router } from '@angular/router';

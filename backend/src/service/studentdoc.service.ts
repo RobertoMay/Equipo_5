@@ -119,7 +119,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
       throw new Error('No se pudo subir el PDF a Firebase Storage');
     }
   }
-
+  // Método para obtener los Documentos de un Aspirante
   async getDocumentsByAspiranteId(aspiranteId: string): Promise<any[]> {
     try {
       // Buscar documentos en la colección 'StudentDocDocument' que coincidan con aspiranteId
@@ -145,6 +145,29 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
     }
   }
 
+  async getStudentByAspiranteId(aspiranteId: string): Promise<any[]> {
+    try {
+      // Buscar documentos en la colección 'StudentDocDocument' que coincidan con aspiranteId
+      const snapshot = await this.firestore
+        .collection('StudentDocDocument')
+        .where('aspiranteId', '==', aspiranteId)
+        .get();
+  
+      if (snapshot.empty) {
+        throw new NotFoundException(
+          `No se encontro el aspirante con ID: ${aspiranteId}`,
+        );
+      }
+  
+      // Acceder a todos los documentos encontrados y extraer los datos
+      const aspiranteData = snapshot.docs.map(doc => doc.data());
+  
+      return aspiranteData;
+    } catch (error) {
+      console.error('Error al estudiante por aspiranteId:', error);
+      throw new Error('No se pudieron recuperar los documentos.');
+    }
+  }
   // Método para obtener estudiantes con paginación y filtrado
   async getStudents(skip: number, limit: number, name?: string): Promise<any[]> {
     try {
@@ -308,6 +331,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
       }
     }
   }
+    // Método para actualizar el estado de un aspirante 
   async updateEnrollmentStatus(
     aspiranteId: string,
     enrollmentStatus: boolean,

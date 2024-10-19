@@ -40,6 +40,31 @@ export class StudentDocController {
     return this.studentdocService.create(studentDocData);
   }
 
+ 
+  @Put('/:id')
+  @HttpCode(HttpStatus.OK)
+  async update(
+    @Param('id') id: string,
+    @Body() studentDocData: Partial<StudentDocDocument>,
+  ): Promise<void> {
+    if (!studentDocData || Object.keys(studentDocData).length === 0) {
+      throw new BadRequestException('Los datos para actualizar son requeridos');
+    }
+
+    try {
+      await this.studentdocService.update(id, studentDocData);
+    } catch (error) {
+      console.error(`Error al actualizar el documento con ID ${id}:`, error);
+
+      if (error.message.includes('not found')) {
+        throw new NotFoundException(`Documento con ID ${id} no encontrado`);
+      }
+
+      throw new InternalServerErrorException('Error al actualizar el documento.');
+    }
+  }
+
+
   @Post('/add-document')
   @UseInterceptors(FileInterceptor('file'))
   async addDocumentToAspirante(
@@ -75,6 +100,23 @@ export class StudentDocController {
       }
     }
   }
+  @Get('/student/:aspiranteId')
+  async getStudentByAspiranteId(
+    @Param('aspiranteId') aspiranteId: string,
+  ): Promise<any[]> {
+    try {
+      const studentData = await this.studentdocService.getStudentByAspiranteId(aspiranteId);
+      return studentData;
+    } catch (error) {
+      console.error('Error al obtener datos del estudiante por aspiranteId:', error);
+
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      throw new Error('Error al recuperar los datos del estudiante.');
+    }
+  }
 
   @Get('/documents/:aspiranteId')
   async getDocumentsByAspiranteId(
@@ -94,6 +136,7 @@ export class StudentDocController {
       throw new Error('Error al recuperar los documentos del aspirante.');
     }
   }
+
  //endpoint para mandar a llamar a todos los usuarios o estudiantes sin importar si están inscritos o no
   @Get('/students')
   async getStudents(
