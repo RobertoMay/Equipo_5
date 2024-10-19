@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { GenericService } from '../service/generic.service'; // Ajusta el path según tu estructura
+import { GenericService } from '../shared/generic.service'; // Ajusta el path según tu estructura
 import { DataStudent } from 'src/todos/document/data_student.document';
 
 @Injectable()

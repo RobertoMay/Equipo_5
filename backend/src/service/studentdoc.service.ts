@@ -4,7 +4,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { GenericService } from '../service/generic.service'; // Ajusta el path según tu estructura
+import { GenericService } from '../shared/generic.service'; // Ajusta el path según tu estructura
 import { StudentDocDocument } from '../todos/document/studentdoc.document';
 import { Storage } from '@google-cloud/storage';
 import { Firestore, FieldValue } from '@google-cloud/firestore'; // Asegúrate de importar FieldValue
@@ -144,6 +144,107 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
       throw new Error('No se pudieron recuperar los documentos.');
     }
   }
+
+  // Método para obtener estudiantes con paginación y filtrado
+  async getStudents(skip: number, limit: number, name?: string): Promise<any[]> {
+    try {
+      let query = this.firestore.collection('StudentDocDocument').limit(limit).offset(skip);
+
+      // Si se proporciona un nombre, agregar el filtro
+      if (name) {
+        query = query.where('name', '>=', name).where('name', '<=', name + '\uf8ff');
+      }
+
+      const snapshot = await query.get();
+
+      if (snapshot.empty) {
+        throw new NotFoundException('No se encontraron estudiantes');
+      }
+
+      // Mapear los documentos encontrados
+      const students = snapshot.docs.map((doc) => {
+        const studentData = doc.data() as StudentDocDocument;
+
+        return {
+          id: doc.id,
+          name: studentData.name,
+          lastName1: studentData.lastName1,
+          lastName2: studentData.lastName2,
+          email: studentData.email,
+          curp: studentData.curp,
+          enrollmentStatus: studentData.enrollmentStatus,
+          documents: studentData.Documents || [],
+        };
+      });
+
+      return students;
+    } catch (error) {
+      throw new Error('Error al obtener los estudiantes');
+    }
+  }
+
+   // Método para obtener los estudiantes inscritos con paginación, filtro por nombre y orden descendente
+   async getEnrolledStudents(page: number, name?: string): Promise<StudentDocDocument[]> {
+    const studentsPerPage = 20;
+    let query = this.firestore
+      .collection('StudentDocDocument')
+      .where('enrollmentStatus', '==', true)
+      .orderBy('id', 'desc')  // Ordenar de manera descendente
+      .offset((page - 1) * studentsPerPage)
+      .limit(studentsPerPage);
+      
+    // Si se proporciona un nombre, agregamos el filtro
+    if (name) {
+      query = query
+        .where('name', '>=', name)
+        .where('name', '<=', name + '\uf8ff');
+    }
+
+    const snapshot = await query.get();
+
+    if (snapshot.empty) {
+      throw new NotFoundException('No se encontraron estudiantes inscritos.');
+    }
+
+    const students: StudentDocDocument[] = [];
+    snapshot.forEach((doc) => {
+      students.push(doc.data() as StudentDocDocument);
+    });
+
+    return students;
+  }
+
+  // Método para obtener los estudiantes no inscritos con paginación, filtro por nombre y orden descendente
+  async getNotEnrolledStudents(page: number, name?: string): Promise<StudentDocDocument[]> {
+    const studentsPerPage = 20;
+    let query = this.firestore
+      .collection('StudentDocDocument')
+      .where('enrollmentStatus', '==', false)
+      .orderBy('id', 'desc')  // Ordenar de manera descendente
+      .offset((page - 1) * studentsPerPage)
+      .limit(studentsPerPage);
+
+    // Si se proporciona un nombre, agregamos el filtro
+    if (name) {
+      query = query
+        .where('name', '>=', name)
+        .where('name', '<=', name + '\uf8ff');
+    }
+
+    const snapshot = await query.get();
+
+    if (snapshot.empty) {
+      throw new NotFoundException('No se encontraron estudiantes no inscritos.');
+    }
+
+    const students: StudentDocDocument[] = [];
+    snapshot.forEach((doc) => {
+      students.push(doc.data() as StudentDocDocument);
+    });
+
+    return students;
+  }
+
 
   // Método para actualizar el estado de un documento específico de un aspirante
   async updateDocumentStatus(
