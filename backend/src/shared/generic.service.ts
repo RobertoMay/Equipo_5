@@ -3,7 +3,7 @@ import { IGenericService } from '../interfaces/generic-service.interface'; // Aj
 
 export class GenericService<T> implements IGenericService<T> {
   protected firestore: Firestore;
-  public collectionName: string;
+  protected collectionName: string;
 
   constructor(collectionName: string) {
     this.firestore = new Firestore();
