@@ -28,6 +28,7 @@ export class StudentDocController {
   constructor(private readonly studentdocService: StudenDocService) {}
 
  
+  
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() studentDocData: StudentDocDocument): Promise<StudentDocDocument> {
@@ -40,7 +41,6 @@ export class StudentDocController {
     return this.studentdocService.create(studentDocData);
   }
 
- 
   @Put('/:id')
   @HttpCode(HttpStatus.OK)
   async update(
