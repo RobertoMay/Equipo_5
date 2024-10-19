@@ -72,7 +72,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
         .collection('StudentDocDocument')
         .doc(aspiranteDoc.id);
       await aspiranteRef.update({
-        documents: FieldValue.arrayUnion(document),
+        Documents: FieldValue.arrayUnion(document),
       });
     } catch (error) {
       console.error('Error al añadir documento al aspirante:', error);
@@ -136,9 +136,9 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
 
       // Acceder al primer documento encontrado y extraer los documentos
       const aspiranteData = snapshot.docs[0].data();
-      const documents = aspiranteData.documents || [];
+      const Documents = aspiranteData.Documents || [];
 
-      return documents;
+      return Documents;
     } catch (error) {
       console.error('Error al obtener documentos por aspiranteId:', error);
       throw new Error('No se pudieron recuperar los documentos.');
