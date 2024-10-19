@@ -27,7 +27,9 @@
                 </ng-container>
 
                 <ng-template #uploadButton>
-                    <button class="btn btn-light btn-sm custom-button" (click)="uploadFile()">
+                    <input type="file" class="d-none" (change)="uploadFile($event)" #btnUpload />
+
+                    <button class="btn btn-light btn-sm custom-button" (click)="btnUpload.click()">
                         <i class="bi bi-file-earmark-arrow-up"></i> Subir Archivo
                     </button>
                 </ng-template>

@@ -11,7 +11,7 @@ import { IBaseModel } from './base-model';
 export class GenericServiceService<T extends IBaseModel> extends ApiClass {
   constructor(
     protected override http: HttpClient,
-    @Inject(String) private endpoint: string
+    @Inject(String) protected endpoint: string
   ) {
     super(http);
   }
@@ -39,14 +39,23 @@ export class GenericServiceService<T extends IBaseModel> extends ApiClass {
     );
   }
 
-  getById(id: number): Observable<T> {
+  getById(
+    id: string
+  ): Observable<{ error: boolean; msg: string; data: T | null }> {
     return this.http.get<T>(`${this.url}${this.endpoint}/${id}`).pipe(
-      map((data: T) => data),
+      map((data: T) => ({
+        error: false,
+        msg: '',
+        data: data,
+      })),
       catchError((error) => {
-        console.error('Error fetching data:', error);
-        return throwError(
-          () => new Error(error.message || 'Error del servidor')
-        );
+        const errorMessage =
+          error.error.details || 'Error al obtener el elemento.';
+        return of({
+          error: true,
+          msg: errorMessage,
+          data: null,
+        });
       })
     );
   }

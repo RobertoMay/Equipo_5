@@ -1,15 +1,16 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 import { DataStudentService } from 'services/api/datastudent/datastudent.service'; // Actualiza la ruta si es necesario
-import { IStudentDocDocument } from 'app/shared/components/registration-process/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
-import { StudentDocument } from 'app/shared/components/registration-process/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
+import { IStudentDocDocument } from 'models/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
+import { StudentDocument } from 'models/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
+import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
 @Component({
   selector: 'app-registration-process',
   templateUrl: './registration-process.component.html',
   styleUrls: ['./registration-process.component.css'],
 })
-export class RegistrationProcessComponent {
+export class RegistrationProcessComponent implements OnInit {
   currentStep: number = 1;
   progressWidth: string = '33.33%';
   @ViewChild('formulario', { static: false }) formulario!: ElementRef;
@@ -92,8 +93,14 @@ export class RegistrationProcessComponent {
   };
   constructor(
     private datastudentservice: DataStudentService,
-    private studentdocService: StudentdocService
+    private studentdocService: StudentdocService,
+    private studentEnrollmentService: StudentEnrollmentFormService
   ) {}
+  ngOnInit(): void {
+    this.aspiranteId = localStorage.getItem('aspiranteId')!;
+
+    this.getEnrollmentForm();
+  }
 
   mostrarFormulario() {
     this.formularioVisible = true; // Muestra el formulario
@@ -349,6 +356,7 @@ export class RegistrationProcessComponent {
                         'Los documentos del estudiante se han registrado exitosamente.',
                         'success'
                       );
+                      this.nextStep();
                     },
                     error: (err) => {
                       this.showError(
@@ -373,5 +381,23 @@ export class RegistrationProcessComponent {
 
   showError(message: string) {
     Swal.fire('Error', message, 'error');
+  }
+
+  getEnrollmentForm() {
+    this.studentEnrollmentService
+      .getById(`aspirante/${this.aspiranteId}`)
+      .subscribe(
+        (response) => {
+          if (!response.error) {
+            this.currentStep = 3;
+            this.updateProgressBar();
+            this.formularioVisible = false;
+          } else {
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }

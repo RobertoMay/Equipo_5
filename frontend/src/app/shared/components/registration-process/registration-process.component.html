@@ -63,13 +63,8 @@
           <div class="questions-container">
             <div class="question-row">
               <label for="curp" class="question-text">Ingresa tu CURP</label>
-              <input
-                type="text"
-                id="curp"
-                class="form-control custom-input-width"
-                [(ngModel)]="formData.curp" name="curp" 
-                placeholder="CURP"
-              />
+              <input type="text" id="curp" class="form-control custom-input-width" [(ngModel)]="formData.curp"
+                name="curp" placeholder="CURP" />
             </div>
 
             <div class="question-row">
@@ -253,16 +248,9 @@
           </h3>
           <div class="question-row">
             <div class="col-md-6"></div>
-            <label for="estadoPadre" class="question-text"
-              >Estado del padre</label
-            >
-            <select
-              id="estadoPadre"
-              class="form-control custom-input-width"
-              [(ngModel)]="formData.estadoPadre"
-              name="estadoPadre"
-              required
-            >
+            <label for="estadoPadre" class="question-text">Estado del padre</label>
+            <select id="estadoPadre" class="form-control custom-input-width" [(ngModel)]="formData.estadoPadre"
+              name="estadoPadre" required>
               <option value="" disabled selected>Seleccione una opción</option>
               <option value="finado">Finado</option>
               <option value="ausente">Ausente</option>
@@ -545,14 +533,8 @@
                   <label class="form-check-label">Inundación</label>
                 </div>
                 <div class="col-md-3 form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="riesgoAcceso"
-                    [(ngModel)]="formData.riesgoAcceso"
-                    value="Otro"
-                    (change)="formData.riesgoAcceso = 'Otro1'"
-                  />
+                  <input class="form-check-input" type="radio" name="riesgoAcceso" [(ngModel)]="formData.riesgoAcceso"
+                    value="Otro" (change)="formData.riesgoAcceso = 'Otro1'" />
                   <label class="form-check-label">Otro</label>
                 </div>
               </div>
@@ -861,32 +843,38 @@
 
             </div>
           </div>
-          
+
         </div>
         <!-- Sección 6: TIpo de Solicitud -->
         <div class="section">
           <h3 class="title">
-            <i class="fas fa-wheelchair"></i> Tipo de Solicitud 
+            <i class="fas fa-wheelchair"></i> Tipo de Solicitud
           </h3>
           <div class="questions-container">
             <div class="question-row">
               <label class="question-text">¿Que Solicita?</label><br>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud" value="3" />
-                <label class="form-check-label">Solicito hospedaje y 3 comidas al día, de lunes a viernes hasta la conclusión del ciclo escolar.</label>
+                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud"
+                  value="3" />
+                <label class="form-check-label">Solicito hospedaje y 3 comidas al día, de lunes a viernes hasta la
+                  conclusión del ciclo escolar.</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud" value="2" />
-                <label class="form-check-label"> Solicito 3 comidas al día, de lunes a viernes hasta la conclusión del ciclo escolar.</label>
+                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud"
+                  value="2" />
+                <label class="form-check-label"> Solicito 3 comidas al día, de lunes a viernes hasta la conclusión del
+                  ciclo escolar.</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud" value="1" />
-                <label class="form-check-label">Solicito 2 comidas al día, de lunes a viernes hasta la conclusión del ciclo escolar.</label>
+                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud"
+                  value="1" />
+                <label class="form-check-label">Solicito 2 comidas al día, de lunes a viernes hasta la conclusión del
+                  ciclo escolar.</label>
               </div>
             </div>
-  
+
           </div>
-          
+
         </div>
         <!-- Botones para enviar o regresar al paso anterior -->
         <div class="d-flex justify-content-between mt-4">
@@ -920,11 +908,6 @@
 
 
     <app-step-3 class="mt-2"></app-step-3>
-  </div>
-
-  <div class="button-container">
-    <button (click)="previousStep()" [disabled]="currentStep === 1">Anterior</button>
-    <button (click)="nextStep()" [disabled]="currentStep === 3">Siguiente</button>
   </div>
 
 

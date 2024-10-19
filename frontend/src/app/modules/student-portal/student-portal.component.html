@@ -2,7 +2,7 @@
 
 <body>
     <!-- Listado de convocatorias -->
-     <p></p>
+    <p></p>
     <div *ngIf="convocatorias.length > 0; else noConvocatoria">
         <div *ngFor="let convocatoria of convocatorias" class="container mb-5">
             <div class="card convocatoria-card p-4 shadow-sm rounded" *ngIf="!isRegistrationActive">
@@ -12,8 +12,10 @@
                 </h4>
                 <!-- Descripción de la convocatoria -->
                 <p class="description">
-                    En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto" ofrece la
-                    oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus estudios en
+                    En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto"
+                    ofrece la
+                    oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus
+                    estudios en
                     un entorno seguro y de apoyo.
                 </p>
                 <!-- Rango de fechas -->
@@ -22,7 +24,8 @@
                 </div>
                 <!-- Información adicional de la convocatoria -->
                 <p class="small text-muted">
-                    Esta convocatoria está abierta del {{ convocatoria.startDate }} al {{ convocatoria.endDate }}. Los estudiantes
+                    Esta convocatoria está abierta del {{ convocatoria.startDate }} al {{ convocatoria.endDate }}. Los
+                    estudiantes
                     interesados deberán realizar el proceso antes de la fecha de cierre.
                 </p>
                 <!-- Verificar si la convocatoria ha finalizado -->
@@ -38,7 +41,8 @@
             </div>
             <!-- Botón de salir que aparece cuando se activa el proceso de registro -->
             <div *ngIf="isRegistrationActive" class="text-center my-4">
-                <button class="btn btn-outline-danger px-4 py-2 d-flex align-items-center gap-2" (click)="exitRegistration()">
+                <button class="btn btn-outline-danger px-4 py-2 d-flex align-items-center gap-2"
+                    (click)="exitRegistration()">
                     <i class="bi bi-x-circle"></i> Salir
                 </button>
             </div>
@@ -52,11 +56,11 @@
     <ng-template #noConvocatoria>
         <div class="alert alert-warning text-center elegant-alert show" role="alert">
             <h4>Actualmente no hay ninguna convocatoria disponible</h4>
-            <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue. Tu
+            <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue.
+                Tu
                 participación es importante para nuestra comunidad.</p>
         </div>
     </ng-template>
-<app-button-pdf></app-button-pdf>
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </body>

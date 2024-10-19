@@ -5,6 +5,7 @@ import { CallsComponent } from './calls/calls.component';
 import { RegistrationProcessComponent } from './registration-process/registration-process.component';
 import { Step3Component } from './step-3/step-3.component';
 import { FileBtnComponent } from './file-btn/file-btn.component';
+import { ButtonPdfComponent } from './button-pdf/button-pdf.component';
 
 export const components: any = [
   CarrouselComponent,
@@ -13,6 +14,7 @@ export const components: any = [
   RegistrationProcessComponent,
   Step3Component,
   FileBtnComponent,
+  ButtonPdfComponent,
 ];
 
 // Export all components
@@ -22,3 +24,4 @@ export * from './calls/calls.component';
 export * from './registration-process/registration-process.component';
 export * from './step-3/step-3.component';
 export * from './file-btn/file-btn.component';
+export * from './button-pdf/button-pdf.component';

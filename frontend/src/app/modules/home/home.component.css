@@ -45,6 +45,7 @@
 .read-more i {
   display: inline-block;
   transition: transform 0.3s;
+  font-size: 1.1rem;
 }
 
 .read-more:hover i {
@@ -55,6 +56,10 @@
   width: 100%;
   max-height: 300px;
   object-fit: cover;
+}
+
+.text-muted {
+  font-size: 1.1rem;
 }
 
 @media (min-width: 768px) {

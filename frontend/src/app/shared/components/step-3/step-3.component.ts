@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { StudentDocument } from 'models/istudentdoc.metadata';
+import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
+import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 
 @Component({
   selector: 'app-step-3',
   templateUrl: './step-3.component.html',
   styleUrls: ['./step-3.component.css'],
 })
-export class Step3Component {
+export class Step3Component implements OnInit {
+  studentDocument!: StudentDocument;
   studentDocuments = [
     { name: 'Acta de nacimiento', status: 'Pending' },
     { name: 'Ultima boleta de calificaciones', status: 'Uploaded' },
@@ -28,6 +32,18 @@ export class Step3Component {
   user: any;
   isAccepted: boolean = false;
   comments: any[] = [];
+  aspiranteId: string | null = null;
+
+  constructor(
+    private studentdocService: StudentdocService,
+    private studentEnrollmentService: StudentEnrollmentFormService
+  ) {}
+
+  ngOnInit(): void {
+    this.aspiranteId = localStorage.getItem('aspiranteId')!;
+
+    this.getEnrollmentForm();
+  }
 
   getBadgeClass(status: string): string {
     switch (status) {
@@ -40,5 +56,22 @@ export class Step3Component {
       default:
         return 'badge-default';
     }
+  }
+
+  getEnrollmentForm() {
+    this.studentEnrollmentService
+      .getById(`aspirante/${this.aspiranteId}`)
+      .subscribe(
+        (response) => {
+          if (!response.error) {
+            console.log('En el paso 3: ');
+            console.log(response.data);
+          } else {
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }
