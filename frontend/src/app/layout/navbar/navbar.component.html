@@ -1,8 +1,16 @@
 <nav class="navbar">
   <div class="navbar-logo">
+    <a (click)="goToHome()">
+      <img src="assets/images/logoinpi.png" alt="Logo INPI">
+    </a>
+
+  <!--
     <a routerLink="/">
       <img src="assets/images/logoinpi.png" alt="Logo INPI">
     </a>
+  
+  -->
+
   </div>
 
   <!-- Ícono de menú que se muestra en móviles -->
@@ -14,24 +22,24 @@
   <ul class="navbar-menu" [ngClass]="{'active': isMenuOpen}">
 
     <!-- Navbar para promotor (administrador) -->
-    <ng-container *ngIf="isAdmin; else studentNavbar">
+    <ng-container *ngIf="isAdmin && !isHome; else studentNavbar">
       
-      <li><a routerLink="/por-inscribirse">Por inscribirse</a></li>
-      <li><a routerLink="/inscritos">Inscritos</a></li>
+      <li><a routerLink="#">Por inscribirse</a></li>
+      <li><a routerLink="#">Inscritos</a></li>
       <li><a (click)="logout()">Cerrar sesión</a></li>
 
     </ng-container>
 
     <!-- Navbar para estudiante -->
     <ng-template #studentNavbar>
-      <ng-container *ngIf="isAuthenticated && !isAdmin">
+      <ng-container *ngIf="isAuthenticated && !isAdmin &&!isHome">
         <li><a (click)="logout()">Cerrar sesión</a></li>
       </ng-container>
 
     </ng-template>
 
      <!-- Navbar general para usuario no autenticado -->
-     <ng-container *ngIf="!isAuthenticated">
+     <ng-container *ngIf="!isAuthenticated || isHome">
     <li><a routerLink="/">Inicio</a></li>
     <li><a routerLink="/about-us">Nosotros</a></li>
     <li><a routerLink="/activities">Actividades</a></li>
