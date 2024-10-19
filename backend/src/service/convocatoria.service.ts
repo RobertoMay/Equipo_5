@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { GenericService } from './generic.service';
+import { GenericService } from '../shared/generic.service';
 import { ConvocatoriaDocument } from '../todos/document/convocatoria.document';
 
 @Injectable()
