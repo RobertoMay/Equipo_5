@@ -43,12 +43,86 @@ export class FileBtnComponent implements OnInit {
     }
   }
 
-  editFile() {
-    console.log(`Editing ${this.document.name}`);
+  editFile(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.file = input.files[0];
+
+      this.loadingService.startLoading();
+
+      this.studentdocService
+        .editFile(
+          this.aspiranteId!,
+          this.typeDocument,
+          this.file.name,
+          this.file
+        )
+        .subscribe(
+          (response) => {
+            if (!response.error) {
+              this.loadingService.stopLoading();
+              setTimeout(() => {
+                Swal.fire({
+                  title: response.msg,
+                  icon: 'success',
+                  timer: 1500,
+                  showConfirmButton: false,
+                });
+              }, 750);
+            } else {
+              this.loadingService.stopLoading();
+              console.log(response.error + ' ' + response.msg);
+              setTimeout(() => {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: response.msg,
+                });
+              }, 750);
+            }
+          },
+          (error) => {
+            this.loadingService.stopLoading();
+            console.error(error);
+          }
+        );
+    }
   }
 
   deleteFile() {
-    console.log(`Deleting ${this.document.name}`);
+    this.loadingService.startLoading();
+
+    this.studentdocService
+      .deleteFile(this.aspiranteId!, this.typeDocument)
+      .subscribe(
+        (response) => {
+          if (!response.error) {
+            this.loadingService.stopLoading();
+            setTimeout(() => {
+              Swal.fire({
+                title: response.msg,
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+              });
+            }, 750);
+          } else {
+            this.loadingService.stopLoading();
+            console.log(response.error + ' ' + response.msg);
+            setTimeout(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: response.msg,
+              });
+            }, 750);
+          }
+        },
+        (error) => {
+          this.loadingService.stopLoading();
+          console.error(error);
+        }
+      );
   }
 
   uploadFile(event: Event) {

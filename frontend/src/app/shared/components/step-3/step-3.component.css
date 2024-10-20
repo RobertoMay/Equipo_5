@@ -102,4 +102,17 @@
   .card-documents {
     margin-top: 20px;
   }
+
+  .max {
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .max {
+    max-width: 200px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+  }
 }

@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StudentDocument } from 'models/istudentdoc.metadata';
 import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 import Swal from 'sweetalert2';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-step-3',
   templateUrl: './step-3.component.html',
   styleUrls: ['./step-3.component.css'],
 })
-export class Step3Component implements OnInit {
+export class Step3Component implements OnInit, OnDestroy {
   studentDocuments: StudentDocument[] = [];
   tutorDocuments: StudentDocument[] = [];
   studentDocumentsDefault: StudentDocument[] = [
@@ -108,6 +109,7 @@ export class Step3Component implements OnInit {
   studentName: string = 'Nombre Alumno';
   enrollmentPeriod: string = '';
   firstDocumentName: string = 'Documento generado';
+  subscription!: Subscription;
 
   constructor(
     private studentdocService: StudentdocService,
@@ -122,6 +124,14 @@ export class Step3Component implements OnInit {
 
     this.studentDocuments = this.studentDocumentsDefault;
     this.tutorDocuments = this.tutorDocumentsDefault;
+
+    this.subscription = this.studentdocService.refresh$.subscribe(() => {
+      this.getDocuments();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getBadgeClass(status: string): string {
@@ -196,9 +206,6 @@ export class Step3Component implements OnInit {
                 backendStudentDocs
               );
             } else {
-              console.error(
-                'No hay suficientes documentos para el estudiante.'
-              );
               this.studentDocuments = [...this.studentDocumentsDefault];
             }
 
@@ -212,14 +219,8 @@ export class Step3Component implements OnInit {
                 backendTutorDocs
               );
             } else {
-              console.error(
-                'No hay suficientes documentos para el estudiante.'
-              );
               this.studentDocuments = [...this.studentDocumentsDefault];
             }
-
-            console.log('Documentos del estudiante:', this.studentDocuments);
-            console.log('Documentos del tutor:', this.tutorDocuments);
           } else {
             console.error('Información del estudiante incompleta.');
           }

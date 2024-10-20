@@ -16,7 +16,8 @@
                     </button>
 
                     <ng-container *ngIf="!isAccepted">
-                        <button class="btn btn-light btn-sm custom-button me-2" (click)="editFile()">
+                        <input type="file" class="d-none" (change)="editFile($event)" #btnEditFile />
+                        <button class="btn btn-light btn-sm custom-button me-2" (click)="btnEditFile.click()">
                             <i class="bi bi-pen"></i>
                         </button>
                         <button class="btn btn-light btn-sm custom-button" (click)="deleteFile()">
