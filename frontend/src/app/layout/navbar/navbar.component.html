@@ -22,10 +22,12 @@
   <ul class="navbar-menu" [ngClass]="{'active': isMenuOpen}">
 
     <!-- Navbar para promotor (administrador) -->
+
     <ng-container *ngIf="isAdmin && !isHome; else studentNavbar">
       
       <li><a routerLink="#">Por inscribirse</a></li>
       <li><a routerLink="#">Inscritos</a></li>
+
       <li><a (click)="logout()">Cerrar sesión</a></li>
 
     </ng-container>
@@ -38,6 +40,7 @@
 
     </ng-template>
 
+
      <!-- Navbar general para usuario no autenticado -->
      <ng-container *ngIf="!isAuthenticated || isHome">
     <li><a routerLink="/">Inicio</a></li>
@@ -46,12 +49,13 @@
     <li><a routerLink="/registration">Inscripción</a></li>
      <li><a (click)="openLogin()">Iniciar sesión</a></li>
 
-     
-     <!--
+
+
+      <!--
          <li><a routerLink="/login">Iniciar sesión</a></li> 
      
      -->
 
-  </ng-container>
+    </ng-container>
   </ul>
 </nav>

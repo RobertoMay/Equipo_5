@@ -6,6 +6,8 @@ import Swal from 'sweetalert2'; // Importar SweetAlert2
 import { Router } from '@angular/router'; // Para manejar redirección
 import { ILogin } from 'app/modules/login/ilogin-form.metadata'; // Para manejar el modelo de login
 import { ModalLoginService } from "services/api/modalloginservice/modal-login.service";
+import { RegistrationService } from '../../../services/api/registration/registration.service'; // Importar el RegistrationService
+
 
 @Component({
   selector: 'app-login',
@@ -22,6 +24,7 @@ export class LoginComponent  implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private registrationService: RegistrationService,
     private ngxLoader: NgxUiLoaderService,
     private router: Router,
     private modalLoginService: ModalLoginService
@@ -81,6 +84,25 @@ console.log('esAdministrador:', response.esAdministrador);
  this.authService.updateAuthStatus();  // Llama al método para actualizar el navbar
 
 
+  // Obtener el ID del aspirante usando su CURP
+  this.registrationService.getAspiranteByCurp(this.form.value.curp).subscribe({
+    next: (aspiranteResponse) => {
+      // Aquí obtienes el ID del aspirante
+      console.log('ID del aspirante:', aspiranteResponse.aspiranteId);
+      // Guardar el ID del aspirante en localStorage
+      localStorage.setItem('aspiranteId', aspiranteResponse.aspiranteId);
+    },
+    error: (err) => {
+      console.error('Error obteniendo el ID del aspirante:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo obtener el ID del aspirante.',
+      });
+    },
+  });
+
+  
 
         // Mostrar mensaje de éxito con SweetAlert
         Swal.fire({

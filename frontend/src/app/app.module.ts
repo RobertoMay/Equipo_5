@@ -13,7 +13,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginModule } from "./modules/login/login.module";
+import { LoginModule } from './modules/login/login.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -41,8 +41,7 @@ const routes: Routes = [];
     RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
     NgbModule,
     ReactiveFormsModule,
-    LoginModule
-    
+    LoginModule,
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],

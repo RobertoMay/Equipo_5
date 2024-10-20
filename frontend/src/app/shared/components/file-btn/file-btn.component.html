@@ -1,0 +1,39 @@
+<ng-container *ngIf="document">
+    <div class="button-group">
+        <div class="mt-2">
+
+            <ng-container *ngIf="document.status === 'Uploaded' && isAccepted; else regularActions">
+                <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
+                    <i class="bi bi-eye"></i> Ver Archivo
+                </button>
+            </ng-container>
+
+
+            <ng-template #regularActions>
+                <ng-container *ngIf="document.status === 'Uploaded'; else uploadButton">
+                    <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
+                        <i class="bi bi-eye"></i> Ver Archivo
+                    </button>
+
+                    <ng-container *ngIf="!isAccepted">
+                        <button class="btn btn-light btn-sm custom-button me-2" (click)="editFile()">
+                            <i class="bi bi-pen"></i>
+                        </button>
+                        <button class="btn btn-light btn-sm custom-button" (click)="deleteFile()">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </ng-container>
+                </ng-container>
+
+                <ng-template #uploadButton>
+                    <input type="file" class="d-none" (change)="uploadFile($event)" #btnUpload />
+
+                    <button class="btn btn-light btn-sm custom-button" (click)="btnUpload.click()">
+                        <i class="bi bi-file-earmark-arrow-up"></i> Subir Archivo
+                    </button>
+                </ng-template>
+            </ng-template>
+        </div>
+    </div>
+</ng-container>

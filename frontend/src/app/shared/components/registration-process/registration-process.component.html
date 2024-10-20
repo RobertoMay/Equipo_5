@@ -15,6 +15,10 @@
         <span class="step-number">2</span>
         <p>Paso 2</p>
       </div>
+      <div class="step" [ngClass]="{'active': currentStep === 3}">
+        <div class="step-number">3</div>
+        <p>Paso 3</p>
+      </div>
     </div>
   </div>
 
@@ -60,7 +64,7 @@
             <div class="question-row">
               <label for="curp" class="question-text">Ingresa tu CURP</label>
               <input type="text" id="curp" class="form-control custom-input-width" [(ngModel)]="formData.curp"
-                placeholder="CURP" />
+                name="curp" placeholder="CURP" />
             </div>
 
             <div class="question-row">
@@ -191,7 +195,7 @@
               <option value="" disabled selected>Seleccione una opción</option>
               <option value="finado">Finado</option>
               <option value="ausente">Ausente</option>
-              <option value="presente">Presente</option>
+              <option value="vivo">Vivo</option>
             </select>
           </div>
           <div class="question-row">
@@ -245,12 +249,12 @@
           <div class="question-row">
             <div class="col-md-6"></div>
             <label for="estadoPadre" class="question-text">Estado del padre</label>
-            <select id="estadoMadre" class="form-control custom-input-width" [(ngModel)]="formData.estadoPadre"
+            <select id="estadoPadre" class="form-control custom-input-width" [(ngModel)]="formData.estadoPadre"
               name="estadoPadre" required>
               <option value="" disabled selected>Seleccione una opción</option>
               <option value="finado">Finado</option>
               <option value="ausente">Ausente</option>
-              <option value="presente">Presente</option>
+              <option value="vivo">Vivo</option>
             </select>
           </div>
           <div class="question-row">
@@ -529,14 +533,14 @@
                   <label class="form-check-label">Inundación</label>
                 </div>
                 <div class="col-md-3 form-check">
-                  <input class="form-check-input" type="radio" name="medioAcceso" [(ngModel)]="formData.riesgoAcceso"
-                    value="Otro" (change)="formData.riesgoAcceso = 'Otro'" />
+                  <input class="form-check-input" type="radio" name="riesgoAcceso" [(ngModel)]="formData.riesgoAcceso"
+                    value="Otro" (change)="formData.riesgoAcceso = 'Otro1'" />
                   <label class="form-check-label">Otro</label>
                 </div>
               </div>
 
               <!-- Campo para especificar el medio de acceso si se selecciona 'Otro' -->
-              <div *ngIf="formData.especifRiesgo === 'Otro'" class="question-row">
+              <div *ngIf="formData.especifRiesgo === 'Otro1'" class="question-row">
                 <label for="especifRiesgo" class="question-text">Especifique</label><br />
                 <input type="text" id="especifRiesgo" class="form-control" [(ngModel)]="formData.especifRiesgo"
                   name="especifRiesgo" required placeholder="Especifique el riesgo de acceso" />
@@ -839,8 +843,39 @@
 
             </div>
           </div>
-        </div>
 
+        </div>
+        <!-- Sección 6: TIpo de Solicitud -->
+        <div class="section">
+          <h3 class="title">
+            <i class="fas fa-wheelchair"></i> Tipo de Solicitud
+          </h3>
+          <div class="questions-container">
+            <div class="question-row">
+              <label class="question-text">¿Que Solicita?</label><br>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud"
+                  value="3" />
+                <label class="form-check-label">Solicito hospedaje y 3 comidas al día, de lunes a viernes hasta la
+                  conclusión del ciclo escolar.</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud"
+                  value="2" />
+                <label class="form-check-label"> Solicito 3 comidas al día, de lunes a viernes hasta la conclusión del
+                  ciclo escolar.</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="solicitud" [(ngModel)]="formData.solicitud"
+                  value="1" />
+                <label class="form-check-label">Solicito 2 comidas al día, de lunes a viernes hasta la conclusión del
+                  ciclo escolar.</label>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
         <!-- Botones para enviar o regresar al paso anterior -->
         <div class="d-flex justify-content-between mt-4">
           <button type="button" class="btn btn-outline-secondary" (click)="previousStep()">
@@ -853,6 +888,28 @@
       </div>
     </div>
   </form>
+
+  <div class="" *ngIf="currentStep === 3">
+    <div class="instructions">
+      <h3>
+        Bienvenido al paso 3
+      </h3>
+
+      <p class="instructions-text">
+        En esta <strong>tercera etapa</strong> te invitamos a <strong>subir todos los documentos necesarios</strong>
+        tanto
+        tuyos como de tu tutor. Este paso es crucial para concluir en tu proceso de inscripción.
+        <br /><br />
+        Todos los documentos deben ser aprobados por el promotor antes de que puedas ser finalmente inscrito.
+        ¡Así que asegúrate de que estén completos y sean legibles! 🗂️
+        <br /><br />
+      </p>
+    </div>
+
+
+    <app-step-3 class="mt-2"></app-step-3>
+  </div>
+
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </div>

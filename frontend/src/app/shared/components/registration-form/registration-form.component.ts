@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RegistrationService } from 'services/api/registration/registration.service';
-import { IRegistration } from './iregistration-form.metadata';
+import { IRegistration } from '../../../../models/iregistration-form.metadata';
 import { LoadingService } from 'services/global/loading.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
