@@ -78,6 +78,12 @@
   border-color: #a6f4c2;
 }
 
+.badge-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
 .badge-default {
   background-color: #e0e0e0;
   color: #333333;
@@ -95,5 +101,18 @@
 
   .card-documents {
     margin-top: 20px;
+  }
+
+  .max {
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .max {
+    max-width: 200px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    margin-right: 10px;
   }
 }

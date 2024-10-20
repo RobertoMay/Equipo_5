@@ -3,7 +3,7 @@
     <div *ngIf="isAccepted" class="alert alert-success d-flex align-items-center">
         <i class="bi bi-check2-circle me-3" style="font-size: 2.2rem;"></i>
         <div>
-            <h5>Felicidades, [Nombre]</h5>
+            <h5>Felicidades, {{ studentName }}</h5>
             <p>Has sido aceptado en el albergue.</p>
         </div>
     </div>
@@ -11,15 +11,15 @@
 
     <div class="card custom-card">
         <div class="card-body">
-            <h3 class="card-title">Bienvenido, [Nombre Alumno]</h3>
+            <h3 class="card-title">Bienvenido, {{ studentName }}</h3>
             <p class="card-text">
-                La hoja de inscripción generada: <strong>[Formulario_2024.pdf]</strong>
+                La hoja de inscripción generada: <strong>{{firstDocumentName}}</strong>
             </p>
             <app-button-pdf></app-button-pdf>
             <div class="info-text">
                 <p class="card-text mb-0">
                     Es necesario firmar de manera autógrafa y entregar presencialmente en las instalaciones durante el
-                    periodo de [ingresar el periodo].
+                    periodo de {{ enrollmentPeriod }}.
                 </p>
             </div>
         </div>
@@ -35,7 +35,7 @@
                             <div>
                                 <strong>Acta de nacimiento</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[0].status)">
-                                    {{ studentDocuments[0].status }}
+                                    {{ statusTranslation[studentDocuments[0].status] || studentDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
@@ -47,7 +47,7 @@
                             <div>
                                 <strong>Ultima boleta de calificaciones</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[1].status)">
-                                    {{ studentDocuments[1].status }}
+                                    {{ statusTranslation[studentDocuments[1].status] || studentDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
@@ -59,7 +59,7 @@
                             <div>
                                 <strong>Cartilla de vacunación</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[2].status)">
-                                    {{ studentDocuments[2].status }}
+                                    {{ statusTranslation[studentDocuments[2].status] || studentDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
@@ -72,7 +72,8 @@
                             <div>
                                 <strong>CURP (Actualizada)</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[3].status)">
-                                    {{ studentDocuments[3].status }}
+                                    {{ statusTranslation[studentDocuments[3].status] || studentDocuments[0].status }}
+
                                 </span>
                             </div>
                             <div>
@@ -85,7 +86,7 @@
                             <div>
                                 <strong>Comprobante de domicilio</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[4].status)">
-                                    {{ studentDocuments[4].status }}
+                                    {{ statusTranslation[studentDocuments[4].status] || studentDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
@@ -99,12 +100,12 @@
                                 <strong class="max">Constancia de identidad o escrito libre emitido por la
                                     autoridad</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[5].status)">
-                                    {{ studentDocuments[5].status }}
+                                    {{ statusTranslation[studentDocuments[5].status] || studentDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
                                 <app-file-btn [document]="studentDocuments[5]" [isAccepted]="isAccepted"
-                                    [typeDocument]="'Comprobante de identidad'"></app-file-btn>
+                                    [typeDocument]="'Constancia de identidad'"></app-file-btn>
 
                             </div>
                         </div>
@@ -112,7 +113,7 @@
                             <div>
                                 <strong>Certificado médico</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[6].status)">
-                                    {{ studentDocuments[6].status }}
+                                    {{ statusTranslation[studentDocuments[6].status] || studentDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
@@ -134,24 +135,24 @@
                             <div>
                                 <strong>CURP (Actualizada)</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[0].status)">
-                                    {{ tutorDocuments[0].status }}
+                                    {{ statusTranslation[tutorDocuments[0].status] || tutorDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
                                 <app-file-btn [document]="tutorDocuments[0]" [isAccepted]="isAccepted"
-                                    [typeDocument]="'CURP'"></app-file-btn>
+                                    [typeDocument]="'CURP_tutor'"></app-file-btn>
                             </div>
                         </div>
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <strong>Comprobante de domicilio</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[1].status)">
-                                    {{ tutorDocuments[1].status }}
+                                    {{ statusTranslation[tutorDocuments[1].status] || tutorDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
                                 <app-file-btn [document]="tutorDocuments[1]" [isAccepted]="isAccepted"
-                                    [typeDocument]="'Comprobante de domicilio'"></app-file-btn>
+                                    [typeDocument]="'Comprobante de domicilio_tutor'"></app-file-btn>
 
                             </div>
                         </div>
@@ -159,12 +160,12 @@
                             <div>
                                 <strong>Credencial del lector</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[2].status)">
-                                    {{ tutorDocuments[2].status }}
+                                    {{ statusTranslation[tutorDocuments[2].status] || tutorDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
                                 <app-file-btn [document]="tutorDocuments[2]" [isAccepted]="isAccepted"
-                                    [typeDocument]="'Credencial del lector'"></app-file-btn>
+                                    [typeDocument]="'Credencial del lector_tutor'"></app-file-btn>
 
                             </div>
                         </div>
@@ -172,12 +173,12 @@
                             <div>
                                 <strong class="max">Constancia del último grado de estudio</strong><br />
                                 <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[3].status)">
-                                    {{ tutorDocuments[3].status }}
+                                    {{ statusTranslation[tutorDocuments[3].status] || tutorDocuments[0].status }}
                                 </span>
                             </div>
                             <div>
                                 <app-file-btn [document]="tutorDocuments[3]" [isAccepted]="isAccepted"
-                                    [typeDocument]="'Constancia del último grado de estudio'"></app-file-btn>
+                                    [typeDocument]="'Constancia del último grado de estudio_tutor'"></app-file-btn>
 
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IConvocatoria } from '../../shared/components/calls/icalls.metadata';
+import { IConvocatoria } from '../../../models/icalls.metadata';
 import { CallService } from '../../../services/api/call/call.service';
 import { IStudentEnrollmentForm } from 'models/istudent-enrollment-form';
 import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
@@ -13,7 +13,6 @@ import { StudentEnrollmentFormService } from 'services/api/student-enrollment-fo
 export class StudentPortalComponent implements OnInit {
   isAdmin: boolean = false;
   convocatoria: IConvocatoria | null = null;
-  convocatorias: IConvocatoria[] = [];
   isRegistrationActive = false;
   studentEnrollment: IStudentEnrollmentForm | null = null;
   aspiranteId: string = '';
@@ -25,7 +24,6 @@ export class StudentPortalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener todas las convocatorias usando el nuevo método genérico `getAll`
     const token = localStorage.getItem('token');
 
     this.isAdmin =
@@ -58,33 +56,30 @@ export class StudentPortalComponent implements OnInit {
 
   //metodo traer convocatorias
   start(): void {
-    this.callService.getAll().subscribe(
-      (response) => {
-        if (response.error) {
-          console.error('Error al obtener las convocatorias:', response.msg);
-          this.convocatorias = [];
-        } else {
-          if (Array.isArray(response.data)) {
-            this.convocatorias = response.data.filter(
-              (conv: IConvocatoria) => conv.status === true
-            );
-          } else if (
-            response.data &&
-            (response.data as IConvocatoria).status === true
-          ) {
-            this.convocatorias = [response.data as IConvocatoria];
-          } else {
-            this.convocatorias = [];
-          }
+    this.callService.getCurrentAnnouncement().subscribe({
+      next: (convocatoria) => {
+        if (convocatoria) {
+          this.convocatoria = convocatoria;
 
-          console.log('Convocatorias obtenidas:', this.convocatorias);
+          console.log('Convocatoria actual obtenida:', this.convocatoria);
+          // Convertir las fechas al formato deseado y guardarlas en localStorage
+          const formattedStartDate = this.formatDate(
+            this.convocatoria.startDate
+          );
+          const formattedEndDate = this.formatDate(this.convocatoria.endDate);
+          const statusEnrollment = `${formattedStartDate} - ${formattedEndDate}`;
+
+          localStorage.setItem('statusenrollment', statusEnrollment);
+        } else {
+          console.warn('No se encontró ninguna convocatoria actual');
+          this.convocatoria = null;
         }
       },
-      (error) => {
-        console.error('Error al obtener las convocatorias', error);
-        this.convocatorias = [];
-      }
-    );
+      error: (error) => {
+        console.error('Error al obtener la convocatoria actual:', error);
+        this.convocatoria = null; // Asegúrate de manejar el error adecuadamente
+      },
+    });
   }
 
   // Método para iniciar el proceso de registro
@@ -95,5 +90,36 @@ export class StudentPortalComponent implements OnInit {
   // Método para salir del proceso de registro
   exitRegistration(): void {
     this.isRegistrationActive = false;
+  }
+
+  formatDate(date: string | Date): string {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+  isAnnouncementClosed(): boolean {
+    if (this.convocatoria) {
+      const endDate = new Date(this.convocatoria.endDate);
+      const today = new Date();
+      const timeDiff = endDate.getTime() - today.getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return daysDiff < 0; // Devuelve true si la convocatoria está cerrada
+    }
+    return false;
+  }
+
+  isAnnouncementClosedRecently(): boolean {
+    if (!this.convocatoria || !this.convocatoria.endDate) {
+      return false;
+    }
+
+    const today = new Date();
+    const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7));
+    const endDate = new Date(this.convocatoria.endDate);
+
+    // Si la fecha de cierre es anterior a hace 7 días, mostrar el template de no convocatoria
+    return endDate < sevenDaysAgo;
   }
 }
