@@ -88,6 +88,7 @@ export class ButtonPdfComponent implements OnInit {
   generatePDF2(): void {
     this.loadingService.startLoading();
     // Configura el documento en tamaño A4 (210mm x 297mm)
+    this.loadingService.stopLoading();
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
@@ -95,7 +96,6 @@ export class ButtonPdfComponent implements OnInit {
     });
 
     // Cargar el contenido HTML desde el archivo en la carpeta assets
-    this.loadingService.stopLoading();
     fetch('assets/pdf-page/pdf-page.component.html')
       .then((response) => {
         if (!response.ok) {

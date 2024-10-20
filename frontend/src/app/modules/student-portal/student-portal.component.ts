@@ -64,15 +64,19 @@ export class StudentPortalComponent implements OnInit {
           console.error('Error al obtener las convocatorias:', response.msg);
           this.convocatorias = [];
         } else {
+          console.log(response);
+
           if (Array.isArray(response.data)) {
             this.convocatorias = response.data.filter(
               (conv: IConvocatoria) => conv.status === true
             );
-          } else if (
-            response.data &&
-            (response.data as IConvocatoria).status === true
-          ) {
-            this.convocatorias = [response.data as IConvocatoria];
+          } else if (response.data && typeof response.data === 'object') {
+            const convocatoria = response.data as IConvocatoria;
+            if (convocatoria.status === true) {
+              this.convocatorias = [convocatoria];
+            } else {
+              this.convocatorias = [];
+            }
           } else {
             this.convocatorias = [];
           }

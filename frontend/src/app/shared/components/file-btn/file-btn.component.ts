@@ -2,11 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 import { LoadingService } from 'services/global/loading.service';
+import { StudentDocument } from 'models/istudentdoc.metadata';
 import Swal from 'sweetalert2';
-
-interface HtmlInputEvent extends Event {
-  target: HTMLInputElement & EventTarget;
-}
 
 @Component({
   selector: 'app-file-btn',
@@ -14,10 +11,7 @@ interface HtmlInputEvent extends Event {
   styleUrls: ['./file-btn.component.css'],
 })
 export class FileBtnComponent implements OnInit {
-  @Input() document: { name: string; status: string } = {
-    name: '',
-    status: 'Pending',
-  };
+  @Input() document!: StudentDocument;
   @Input() isAccepted: boolean = false;
   @Input() typeDocument: string = '';
   aspiranteId: string | null = null;
@@ -42,7 +36,11 @@ export class FileBtnComponent implements OnInit {
   }
 
   viewFile() {
-    console.log(`Viewing ${this.document.name}`);
+    if (this.document && this.document.link) {
+      window.open(this.document.link, '_blank');
+    } else {
+      console.log('Document is not available');
+    }
   }
 
   editFile() {

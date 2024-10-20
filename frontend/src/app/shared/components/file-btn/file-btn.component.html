@@ -2,7 +2,7 @@
     <div class="button-group">
         <div class="mt-2">
 
-            <ng-container *ngIf="document.status === 'Uploaded' && isAccepted; else regularActions">
+            <ng-container *ngIf="document.status === 'uploaded' && isAccepted; else regularActions">
                 <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
                     <i class="bi bi-eye"></i> Ver Archivo
                 </button>
@@ -10,7 +10,7 @@
 
 
             <ng-template #regularActions>
-                <ng-container *ngIf="document.status === 'Uploaded'; else uploadButton">
+                <ng-container *ngIf="document.status === 'uploaded'; else uploadButton">
                     <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
                         <i class="bi bi-eye"></i> Ver Archivo
                     </button>

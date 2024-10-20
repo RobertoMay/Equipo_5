@@ -3,8 +3,8 @@
 <body>
     <!-- Listado de convocatorias -->
     <p></p>
-    <!-- <div *ngIf="convocatorias.length > 0; else noConvocatoria"> -->
-    <div *ngIf="true">
+    <div *ngIf="convocatorias.length > 0; else noConvocatoria">
+        <!-- <div *ngIf="true"> -->
         <div *ngFor="let convocatoria of convocatorias" class="container mb-5">
             <div class="card convocatoria-card p-4 shadow-sm rounded" *ngIf="!isRegistrationActive">
                 <!-- Título de la convocatoria -->
@@ -41,8 +41,8 @@
                 </ng-template>
             </div>
             <!-- Botón de salir que aparece cuando se activa el proceso de registro -->
-            <!-- <div *ngIf="isRegistrationActive" class="text-center my-4"> -->
-            <div *ngIf="true" class="text-center my-4">
+            <div *ngIf="isRegistrationActive" class="text-center my-4">
+                <!-- <div *ngIf="true" class="text-center my-4"> -->
                 <button class="btn btn-outline-danger px-4 py-2 d-flex align-items-center gap-2"
                     (click)="exitRegistration()">
                     <i class="bi bi-x-circle"></i> Salir
@@ -51,8 +51,8 @@
         </div>
 
         <!-- Proceso de Registro -->
-        <!-- <app-registration-process *ngIf="isRegistrationActive"></app-registration-process> -->
-        <app-registration-process *ngIf="true"></app-registration-process>
+        <app-registration-process *ngIf="isRegistrationActive"></app-registration-process>
+        <!-- <app-registration-process *ngIf="true"></app-registration-process> -->
     </div>
 
     <!-- Mensaje cuando no hay convocatorias -->
