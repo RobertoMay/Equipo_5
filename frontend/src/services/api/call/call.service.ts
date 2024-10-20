@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IConvocatoria } from '@shared/components/calls/icalls.metadata';
+import { IConvocatoria } from 'models/icalls.metadata';
 import { GenericServiceService } from '@shared/generic.service.service';
 
 @Injectable({

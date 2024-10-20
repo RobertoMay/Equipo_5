@@ -344,18 +344,14 @@ export class RegistrationProcessComponent implements OnInit {
                   lastName2: this.formData.segundoApellido,
                   enrollmentPeriod: '2024-2025', // Esto se debe ajustar al recibir la convocatoria
                   enrollmentStatus: false, // inicia en falso por que aun no esta aceptado
-                  documents: documentss, // Agrega los documentos si los tienes
+                  Documents: documentss, // Agrega los documentos si los tienes
                 };
 
                 this.studentdocService
                   .create('studentdoc/', studentDoc)
                   .subscribe({
                     next: () => {
-                      Swal.fire(
-                        'Enviado',
-                        'Los documentos del estudiante se han registrado exitosamente.',
-                        'success'
-                      );
+                    
                       this.nextStep();
                     },
                     error: (err) => {

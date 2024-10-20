@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IConvocatoria } from '../../shared/components/calls/icalls.metadata';
+import { IConvocatoria } from '../../../models/icalls.metadata';
 import { CallService } from '../../../services/api/call/call.service';
 import { IStudentEnrollmentForm } from 'models/istudent-enrollment-form';
 import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';

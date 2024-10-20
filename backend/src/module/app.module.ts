@@ -7,7 +7,7 @@ import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
 import { DataStudentModule } from './data_student.module';
 import { StudentDocModule } from './studentdoc.module';
-import { GenericController } from 'src/controller/generic.controller';
+// import { GenericController } from 'src/controller/generic.controller';
 import { GenericService } from 'src/shared/generic.service';
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { GenericService } from 'src/shared/generic.service';
     DataStudentModule,
     StudentDocModule,
   ],
-  controllers: [AppController, GenericController], // Controladores de la aplicación
+  controllers: [], // Controladores de la aplicación
   providers: [AppService, GenericService], // Servicios de la aplicación
 })
 export class AppModule {}
