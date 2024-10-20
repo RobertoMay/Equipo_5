@@ -5,6 +5,8 @@ import {
   IDataStudent,
   StudentData,
 } from 'app/modules/student-portal/idata_student.metadata';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { LoadingService } from 'services/global/loading.service';
 import jsPDF from 'jspdf';
 
 @Component({
@@ -20,11 +22,22 @@ export class ButtonPdfComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private datastudentservice: DataStudentService
+    private datastudentservice: DataStudentService,
+    private _ngxUiLoaderService: NgxUiLoaderService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     const aspiranteId = localStorage.getItem('aspiranteId');
+
+    this.loadingService.loading$.subscribe((isLoading) => {
+      if (isLoading) {
+        this._ngxUiLoaderService.start();
+      } else {
+        this._ngxUiLoaderService.stop();
+      }
+    });
+
     if (!aspiranteId) {
       this.showError(
         'ID de aspirante no encontrado. Por favor, inténtelo de nuevo.'
@@ -73,6 +86,7 @@ export class ButtonPdfComponent implements OnInit {
   }
 
   generatePDF2(): void {
+    this.loadingService.startLoading();
     // Configura el documento en tamaño A4 (210mm x 297mm)
     const doc = new jsPDF({
       orientation: 'portrait',
@@ -81,6 +95,7 @@ export class ButtonPdfComponent implements OnInit {
     });
 
     // Cargar el contenido HTML desde el archivo en la carpeta assets
+    this.loadingService.stopLoading();
     fetch('assets/pdf-page/pdf-page.component.html')
       .then((response) => {
         if (!response.ok) {
