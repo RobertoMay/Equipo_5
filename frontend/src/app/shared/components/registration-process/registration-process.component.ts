@@ -16,7 +16,7 @@ export class RegistrationProcessComponent implements OnInit {
   @ViewChild('formulario', { static: false }) formulario!: ElementRef;
   formularioVisible = false;
   aspiranteId: string | null = null;
-
+  statusenrollment: string | null = null;
   formData = {
     curp: '',
     nombre: '',
@@ -91,6 +91,7 @@ export class RegistrationProcessComponent implements OnInit {
     //Tramite
     solicitud: '',
   };
+
   constructor(
     private datastudentservice: DataStudentService,
     private studentdocService: StudentdocService,
@@ -243,7 +244,7 @@ export class RegistrationProcessComponent implements OnInit {
         if (result.isConfirmed) {
           // Recuperar el ID del aspirante desde localStorage
           const aspiranteId = localStorage.getItem('aspiranteId');
-
+          const statusenrollment = localStorage.getItem('statusenrollment')!;
           if (!aspiranteId) {
             this.showError(
               'ID de aspirante no encontrado. Por favor, inténtelo de nuevo.'
@@ -334,7 +335,7 @@ export class RegistrationProcessComponent implements OnInit {
                     type: 'Solicitud Ingreso',
                     link: 'Anexo1_solicitud_ingreso', // Ajusta el enlace
                     date: new Date(),
-                    status: 'pending',
+                    status: 'uploaded',
                   },
                 ];
                 const studentDoc: IStudentDocDocument = {
@@ -342,7 +343,7 @@ export class RegistrationProcessComponent implements OnInit {
                   name: this.formData.nombre,
                   lastName1: this.formData.primerApellido,
                   lastName2: this.formData.segundoApellido,
-                  enrollmentPeriod: '2024-2025', // Esto se debe ajustar al recibir la convocatoria
+                  enrollmentPeriod: statusenrollment, // Esto se debe ajustar al recibir la convocatoria
                   enrollmentStatus: false, // inicia en falso por que aun no esta aceptado
                   Documents: documentss, // Agrega los documentos si los tienes
                 };

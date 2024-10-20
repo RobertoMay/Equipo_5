@@ -7,7 +7,7 @@ import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
 import { DataStudentModule } from './data_student.module';
 import { StudentDocModule } from './studentdoc.module';
-// import { GenericController } from 'src/controller/generic.controller';
+import { createGenericController } from 'src/shared/generic.controller';
 import { GenericService } from 'src/shared/generic.service';
 @Module({
   imports: [

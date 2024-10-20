@@ -3,64 +3,62 @@
 <body>
     <!-- Listado de convocatorias -->
     <p></p>
-    <div *ngIf="convocatorias.length > 0; else noConvocatoria">
-        <div *ngFor="let convocatoria of convocatorias" class="container mb-5">
-            <div class="card convocatoria-card p-4 shadow-sm rounded" *ngIf="!isRegistrationActive">
-                <!-- Título de la convocatoria -->
-                <h4 class="title">
-                    <i class="bi bi-calendar3"></i> {{ convocatoria.title }}
-                </h4>
-                <!-- Descripción de la convocatoria -->
-                <p class="description">
-                    En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto"
-                    ofrece la
-                    oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus
-                    estudios en
-                    un entorno seguro y de apoyo.
-                </p>
-                <!-- Rango de fechas -->
-                <div class="date-range mb-3">
-                    <span class="badge bg-danger">{{ convocatoria.startDate }} - {{ convocatoria.endDate }}</span>
-                </div>
-                <!-- Información adicional de la convocatoria -->
-                <p class="small text-muted">
-                    Esta convocatoria está abierta del {{ convocatoria.startDate }} al {{ convocatoria.endDate }}. Los
-                    estudiantes
-                    interesados deberán realizar el proceso antes de la fecha de cierre.
-                </p>
-                <!-- Verificar si la convocatoria ha finalizado -->
-                <div *ngIf="!isConvocatoriaExpired(convocatoria.endDate); else closedConvocatoria">
-                    <!-- Botón de registro -->
-                    <button class="btn btn-primary custom-btn" (click)="startRegistration()">
-                        <i class="bi bi-person-check"></i> Iniciar Proceso
-                    </button>
-                </div>
-                <ng-template #closedConvocatoria>
-                    <p class="text-danger">La convocatoria está cerrada porque ya ha finalizado.</p>
-                </ng-template>
-            </div>
-            <!-- Botón de salir que aparece cuando se activa el proceso de registro -->
-            <div *ngIf="isRegistrationActive" class="text-center my-4">
-                <button class="btn btn-outline-danger px-4 py-2 d-flex align-items-center gap-2"
-                    (click)="exitRegistration()">
-                    <i class="bi bi-x-circle"></i> Salir
-                </button>
-            </div>
+    <div *ngIf="convocatoria && !isAnnouncementClosedRecently() " class="container mb-5">
+        <div class="card convocatoria-card p-4 shadow-sm " *ngIf="!isRegistrationActive">
+          <!-- Título de la convocatoria -->
+          <h4 class="title">
+            <i class="bi bi-calendar3"></i> {{ convocatoria.title }}
+          </h4>
+          <!-- Descripción de la convocatoria -->
+          <p>
+            En esta convocatoria, el albergue "Casa Comunitaria del Estudiante Indígena Felipe Carrillo Puerto" ofrece la
+            oportunidad de obtener alojamiento gratuito a estudiantes indígenas que buscan continuar con sus estudios en
+            un entorno seguro y de apoyo.
+          </p>
+    
+          <!-- Información adicional de la convocatoria -->
+          <p class="small text-muted">
+            Esta convocatoria está abierta del {{ convocatoria.startDate | date: 'dd/MM/yyyy'}} - {{ convocatoria.endDate | date: 'dd/MM/yyyy' }}. Los estudiantes
+            interesados deberán cumplir con los requisitos antes de la fecha de cierre.
+          </p>
+          <div  *ngIf="convocatoria.status">
+            <!-- Botón de registro -->
+            <button class="btn btn-primary custom-btn" (click)="startRegistration()">
+                <i class="bi bi-person-check"></i> Iniciar Proceso
+            </button>
         </div>
+         <!-- Mensaje si la convocatoria está cerrada -->
+         <div *ngIf="isAnnouncementClosed()" class="alert alert-danger">
+          Esta convocatoria se cerró hace unos días.
+        </div>
+         
+        </div>
+                <!-- Proceso de Registro -->
+    <app-registration-process *ngIf="isRegistrationActive"></app-registration-process>
+      </div>
 
-        <!-- Proceso de Registro -->
-        <app-registration-process *ngIf="isRegistrationActive"></app-registration-process>
+
+    
+    <!-- Botón de salir que aparece cuando se activa el proceso de registro -->
+    <div *ngIf="isRegistrationActive" class="text-center my-4">
+        <button class="btn btn-outline-danger px-4 py-2 d-flex align-items-center gap-2"
+            (click)="exitRegistration()">
+            <i class="bi bi-x-circle"></i> Salir
+        </button>
     </div>
 
-    <!-- Mensaje cuando no hay convocatorias -->
-    <ng-template #noConvocatoria>
-        <div class="alert alert-warning text-center elegant-alert show" role="alert">
-            <h4>Actualmente no hay ninguna convocatoria disponible</h4>
-            <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue.
-                Tu
-                participación es importante para nuestra comunidad.</p>
-        </div>
-    </ng-template>
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<!-- Mensaje cuando no hay convocatorias -->
+<ng-template #noConvocatoria>
+<div class="alert alert-warning text-center elegant-alert show" role="alert">
+    <h4>Actualmente no hay ninguna convocatoria disponible</h4>
+    <p>Vuelve pronto para obtener más información sobre el proceso de inscripción y los beneficios del albergue.
+        Tu
+        participación es importante para nuestra comunidad.</p>
+</div>
+</ng-template>
+<!-- Bootstrap CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </body>
+

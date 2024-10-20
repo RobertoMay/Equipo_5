@@ -6,7 +6,7 @@ export interface StudentDocument {
   type: string;
   link: string;
   date: Date;
-  status: 'accepted' | 'rejected' | 'pending'; // Estado del documento
+  status: 'approved' | 'rejected' | 'uploaded'; // Estado del documento
 }
 
 // Definición del modelo para la colección 'StudentDocDocument' en el front-end

@@ -60,6 +60,7 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> {
 
     return convocatorias;
 }
+
 async updateConvocatoria(id: string, data: Partial<ConvocatoriaDocument>): Promise<ConvocatoriaDocument> {
   const docRef = this.firestore.collection(ConvocatoriaDocument.collectionName).doc(id);
   const currentDoc = await docRef.get();
