@@ -14,7 +14,7 @@ export class StudentDocDocument {
     type: string;
     link: string;
     date: Date;
-    status: 'accepted' | 'rejected' | 'pending';
+    status: 'approved' | 'rejected' | 'uploaded';
   }[];
   
   constructor(partial: Partial<StudentDocDocument>) {

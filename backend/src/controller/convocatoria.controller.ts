@@ -2,11 +2,15 @@ import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpSta
 import { ConvocatoriaService } from '../service/convocatoria.service';
 import { ConvocatoriaDocument } from '../todos/document/convocatoria.document';
 
-@Controller('api/calls')
+
+// Crear el controlador genérico para 'studentDocs'
+const endpoint = 'api/calls';
+
+@Controller(endpoint)
 export class ConvocatoriaController {
   constructor(private readonly convocatoriaService: ConvocatoriaService) {}
 
-  @Get('/')
+  @Get('/status/')
   async getCurrentConvocatoria() {
     try {
       const convocatoria = await this.convocatoriaService.getCurrentConvocatoria();
@@ -15,6 +19,7 @@ export class ConvocatoriaController {
       throw new HttpException({ message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
   @Get('/all')
   async getAllConvocatorias() {
     try {

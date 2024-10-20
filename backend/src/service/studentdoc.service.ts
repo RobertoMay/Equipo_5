@@ -8,7 +8,7 @@ import { GenericService } from '../shared/generic.service'; // Ajusta el path se
 import { StudentDocDocument } from '../todos/document/studentdoc.document';
 import { Storage } from '@google-cloud/storage';
 import { Firestore, FieldValue } from '@google-cloud/firestore'; // Asegúrate de importar FieldValue
-
+import * as admin from 'firebase-admin';
 @Injectable()
 export class StudenDocService extends GenericService<StudentDocDocument> {
   public firestore: Firestore; // Cambia a public o protected
@@ -64,7 +64,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
         type: documentType,
         link: link,
         date: new Date().toISOString(),
-        status: 'pending',
+        status: 'uploaded',
       };
 
       // Actualizar el documento del aspirante en Firestore
@@ -89,6 +89,180 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
       }
     }
   }
+  // Método para editar un documento de un aspirante
+  async editDocumentForAspirante(
+    aspiranteId: string,
+    documentBuffer: Buffer,
+    documentType: string,
+    documentName: string,
+  ): Promise<void> {
+    try {
+      // Validar parámetros de entrada
+      if (!aspiranteId || !documentBuffer || !documentType || !documentName) {
+        throw new BadRequestException('Faltan datos requeridos para el documento');
+      }
+  
+      // Verificar si el aspirante existe
+      const aspiranteDocs = await this.firestore
+        .collection('StudentDocDocument')
+        .where('aspiranteId', '==', aspiranteId)
+        .get();
+  
+      if (aspiranteDocs.empty) {
+        throw new NotFoundException(`No se encontró el aspirante con ID: ${aspiranteId}`);
+      }
+  
+      // Acceder al primer documento encontrado por aspiranteId
+      const aspiranteDoc = aspiranteDocs.docs[0];
+      const aspiranteData = aspiranteDoc.data();
+      const documents = aspiranteData.Documents || [];
+  
+      // Verificar si ya existe un documento del mismo tipo
+      const existingDocumentIndex = documents.findIndex(doc => doc.type === documentType);
+      if (existingDocumentIndex !== -1) {
+        // Obtener el enlace del documento existente para eliminarlo
+        const existingDocument = documents[existingDocumentIndex];
+        await this.deletePdfFromFirebase(existingDocument.link); // Lógica para eliminar el PDF de Firebase Storage
+  
+        // Reemplazar el documento existente con el nuevo
+        documents[existingDocumentIndex] = {
+          name: documentName,
+          type: documentType,
+          link: '', // Dejar el link vacío temporalmente, se actualizará después
+          date: new Date().toISOString(),
+          status: 'uploaded',
+        };
+      } else {
+        // Si no existe, agregar el nuevo documento
+        documents.push({
+          name: documentName,
+          type: documentType,
+          link: '', // Dejar el link vacío temporalmente, se actualizará después
+          date: new Date().toISOString(),
+          status: 'pending',
+        });
+      }
+  
+      // Subir el nuevo PDF a Firebase Storage
+      const link = await this.uploadPdfToFirebase(documentBuffer, aspiranteId, documentName);
+  
+      // Actualizar el enlace del nuevo documento en la colección de documentos
+      documents[existingDocumentIndex !== -1 ? existingDocumentIndex : documents.length - 1].link = link;
+  
+      // Actualizar la colección de documentos del aspirante
+      const aspiranteRef = this.firestore.collection('StudentDocDocument').doc(aspiranteDoc.id);
+      await aspiranteRef.update({
+        Documents: documents,
+      });
+    } catch (error) {
+      console.error('Error al editar el documento del aspirante:', error);
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(
+          'Error interno al intentar editar el documento. Por favor, inténtelo de nuevo más tarde.',
+        );
+      }
+    }
+  }
+
+  
+  // Servicio para eliminar un documento específico de un aspirante en Firebase Storage
+  async deleteDocumentForAspirante(
+    aspiranteId: string,
+    documentType: string,
+  ): Promise<void> {
+    try {
+      // Validar parámetros de entrada
+      if (!aspiranteId.trim() || !documentType.trim()) {
+        throw new BadRequestException('Faltan datos requeridos para eliminar el documento');
+      }
+  
+      // Verificar si el aspirante existe
+      const aspiranteDocs = await this.firestore
+        .collection('StudentDocDocument')
+        .where('aspiranteId', '==', aspiranteId)
+        .get();
+  
+      if (aspiranteDocs.empty) {
+        throw new NotFoundException(`No se encontró el aspirante con ID: ${aspiranteId}`);
+      }
+  
+      // Acceder al primer documento encontrado por aspiranteId
+      const aspiranteDoc = aspiranteDocs.docs[0];
+      const aspiranteData = aspiranteDoc.data();
+      const documents = aspiranteData.Documents || [];
+  
+      // Buscar el documento del tipo especificado
+      const documentIndex = documents.findIndex(doc => doc.type === documentType);
+      if (documentIndex === -1) {
+        throw new NotFoundException(`No se encontró un documento del tipo: ${documentType} para el aspirante con ID: ${aspiranteId}`);
+      }
+  
+      // Obtener el enlace del documento existente para eliminarlo
+      const documentToDelete = documents[documentIndex];
+      const documentLink = documentToDelete.link;
+  
+      if (documentLink) {
+        // Lógica para eliminar el PDF de Firebase Storage
+        await this.deletePdfFromFirebase(documentLink);
+  
+        // Eliminar el documento del arreglo
+        documents.splice(documentIndex, 1);
+  
+        // Actualizar la colección de documentos del aspirante
+        const aspiranteRef = this.firestore.collection('StudentDocDocument').doc(aspiranteDoc.id);
+        await aspiranteRef.update({
+          Documents: documents,
+        });
+  
+        console.log(`Documento del tipo ${documentType} eliminado correctamente para el aspirante con ID: ${aspiranteId}.`);
+      } else {
+        throw new NotFoundException('No se encontró el enlace del documento para eliminar.');
+      }
+  
+    } catch (error) {
+      console.error('Error al eliminar el documento del aspirante:', error);
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(
+          'Error interno al intentar eliminar el documento. Por favor, inténtelo de nuevo más tarde.',
+        );
+      }
+    }
+  }
+  
+// Método para eliminar un PDF de Firebase Storage utilizando la URL del documento
+private async deletePdfFromFirebase(pdfUrl: string): Promise<void> {
+  const bucketName = 'albergue-57e14.appspot.com';
+
+  try {
+    // Extraer el nombre del archivo de la URL
+    const fileName = pdfUrl.split(`https://storage.googleapis.com/${bucketName}/`)[1];
+    
+    if (!fileName) {
+      throw new Error('No se pudo extraer el nombre del archivo de la URL proporcionada');
+    }
+
+    const bucket = this.storage.bucket(bucketName);
+    const file = bucket.file(fileName);
+
+    // Eliminar el archivo del bucket
+    await file.delete();
+
+    console.log(`Archivo ${fileName} eliminado correctamente de Firebase Storage.`);
+  } catch (error) {
+    console.error('Error al eliminar el PDF de Firebase Storage:', error);
+    throw new Error('No se pudo eliminar el PDF de Firebase Storage');
+  }
+}
 
   // Método para subir un PDF a Firebase Storage
   private async uploadPdfToFirebase(
@@ -273,7 +447,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
   async updateDocumentStatus(
     aspiranteId: string,
     documentLink: string,
-    newStatus: 'accepted' | 'rejected' | 'pending',
+    newStatus: 'approved' | 'rejected' | 'uploaded',
   ): Promise<void> {
     try {
       // Validar parámetros de entrada
@@ -383,4 +557,5 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
       }
     }
   }
+
 }

@@ -28,4 +28,9 @@ export class CallService extends GenericServiceService<IConvocatoria> {
   }> {
     return this.update(id, updatedConvocatoria);
   }
+
+  getCurrentAnnouncement(): Observable<IConvocatoria> {
+    return this.http.get<IConvocatoria>(`${this.url}${this.endpoint}/status/`); // Adjust the URL as necessary
+  }
+
 }
