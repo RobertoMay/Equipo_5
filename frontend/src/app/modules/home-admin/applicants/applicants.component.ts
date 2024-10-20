@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./applicants.component.css']
 })
 export class ApplicantsComponent {
+alumno: any;
 
 }

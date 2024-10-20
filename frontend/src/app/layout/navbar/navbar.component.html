@@ -4,7 +4,7 @@
       <img src="assets/images/logoinpi.png" alt="Logo INPI">
     </a>
 
-  <!--
+    <!--
     <a routerLink="/">
       <img src="assets/images/logoinpi.png" alt="Logo INPI">
     </a>
@@ -23,12 +23,9 @@
 
     <!-- Navbar para promotor (administrador) -->
 
-    <ng-container *ngIf="isAdmin && !isHome; else studentNavbar">
-      
-      <li><a routerLink="#">Por inscribirse</a></li>
-      <li><a routerLink="#">Inscritos</a></li>
-
-      <li><a (click)="logout()">Cerrar sesión</a></li>
+    <li><a routerLink="/por-inscribirse">Por inscribirse</a></li>
+    <li><a routerLink="/inscritos">Inscritos</a></li>
+    <li><a (click)="logout()">Cerrar sesión</a></li>
 
     </ng-container>
 
@@ -41,13 +38,13 @@
     </ng-template>
 
 
-     <!-- Navbar general para usuario no autenticado -->
-     <ng-container *ngIf="!isAuthenticated || isHome">
-    <li><a routerLink="/">Inicio</a></li>
-    <li><a routerLink="/about-us">Nosotros</a></li>
-    <li><a routerLink="/activities">Actividades</a></li>
-    <li><a routerLink="/registration">Inscripción</a></li>
-     <li><a (click)="openLogin()">Iniciar sesión</a></li>
+    <!-- Navbar general para usuario no autenticado -->
+    <ng-container *ngIf="!isAuthenticated || isHome">
+      <li><a routerLink="/">Inicio</a></li>
+      <li><a routerLink="/about-us">Nosotros</a></li>
+      <li><a routerLink="/activities">Actividades</a></li>
+      <li><a routerLink="/registration">Inscripción</a></li>
+      <li><a (click)="openLogin()">Iniciar sesión</a></li>
 
 
 
