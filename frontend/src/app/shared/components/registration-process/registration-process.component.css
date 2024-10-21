@@ -5,7 +5,18 @@
   padding: 20px;
   border-radius: 8px;
 }
+.text-success {
+  color: green;
+  font-weight: bold;
+}
+.collapse {
+  transition: height 0.3s ease; /* Opcional: Añade una transición */
+  height: auto; /* Asegúrate de que la altura se pueda colapsar */
+}
 
+.custom-button-spacing {
+  width: 25%;
+}
 /* Estilos del body */
 body {
   font-family: Arial, sans-serif; /* Fuente general de la página */

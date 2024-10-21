@@ -5,16 +5,21 @@ import { DataStudentService } from 'services/api/datastudent/datastudent.service
 import { IStudentDocDocument } from 'models/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
 import { StudentDocument } from 'models/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
 import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
+
 @Component({
   selector: 'app-registration-process',
   templateUrl: './registration-process.component.html',
   styleUrls: ['./registration-process.component.css'],
 })
+
 export class RegistrationProcessComponent implements OnInit {
+  
   currentStep: number = 1;
   progressWidth: string = '33.33%';
   @ViewChild('formulario', { static: false }) formulario!: ElementRef;
   formularioVisible = false;
+  
+  formChecked = false;
   aspiranteId: string | null = null;
   statusenrollment: string | null = null;
   formData = {
@@ -91,7 +96,24 @@ export class RegistrationProcessComponent implements OnInit {
     //Tramite
     solicitud: '',
   };
-
+  seccionesForm: { 
+    [key: string]: { 
+      isComplete: boolean; 
+      isChecked: boolean; 
+    }; 
+  } = {
+    infoPersonal: { isComplete: false, isChecked: false },
+    direccion: { isComplete: false, isChecked: false },
+    madre: { isComplete: false, isChecked: false },
+    padre: { isComplete: false, isChecked: false },
+    tutor: { isComplete: false, isChecked: false },
+    casaComedor: { isComplete: false, isChecked: false },
+    traslado: { isComplete: false, isChecked: false },
+    discapacidad: { isComplete: false, isChecked: false },
+    datosAcademicos: { isComplete: false, isChecked: false },
+    salud: { isComplete: false, isChecked: false },
+    tramite: { isComplete: false, isChecked: false },
+  };
   constructor(
     private datastudentservice: DataStudentService,
     private studentdocService: StudentdocService,
@@ -343,6 +365,8 @@ export class RegistrationProcessComponent implements OnInit {
                   name: this.formData.nombre,
                   lastName1: this.formData.primerApellido,
                   lastName2: this.formData.segundoApellido,
+                  email: this.formData.correoElectronico,
+                  curp: this.formData.curp,
                   enrollmentPeriod: statusenrollment, // Esto se debe ajustar al recibir la convocatoria
                   enrollmentStatus: false, // inicia en falso por que aun no esta aceptado
                   Documents: documentss, // Agrega los documentos si los tienes
@@ -397,4 +421,76 @@ export class RegistrationProcessComponent implements OnInit {
         }
       );
   }
+
+  verificarFormulario(seccion: string) {
+    const formData = this.formData;
+    let isComplete = false;
+ 
+    switch (seccion) {
+        case 'infoPersonal':
+            isComplete = !!(formData.curp && formData.nombre && formData.primerApellido && formData.segundoApellido);
+            break;
+        case 'direccion':
+            isComplete = !!(formData.estado && formData.municipio && formData.localidad && formData.comunidad);
+            break;
+        case 'madre':
+            isComplete = !!(formData.estadoMadre && formData.curpMadre && formData.nombreMadre && formData.primerApellidoMadre);
+            break;
+        case 'padre':
+            isComplete = !!(formData.estadoPadre && formData.curpPadre && formData.nombrePadre && formData.primerApellidoPadre);
+            break;
+        case 'tutor':
+            isComplete = !!(formData.parentescoTutor && formData.curpTutor && formData.nombreTutor && formData.primerApellidoTutor);
+            break;
+        case 'casaComedor':
+            isComplete = !!(formData.comunidadCasa && formData.localidadCasa && formData.centroCoordinador && formData.tipoCasa);
+            break;
+        case 'traslado':
+            isComplete = !!(formData.medioAcceso && formData.riesgoAcceso);
+            break;
+        case 'discapacidad':
+            isComplete = !!(formData.discapacidad);
+            break;
+        case 'datosAcademicos':
+            isComplete = !!(formData.tipoEscuela && formData.nombreEscuela);
+            break;
+        case 'salud':
+            isComplete = !!(formData.alergia && formData.tratamiento && formData.respirar);
+            break;
+        case 'tramite':
+            isComplete = !!formData.solicitud;
+            break;
+        default:
+            break;
+    }
+ // Obtener la clave de la sección de forma segura
+     const sectionKey: keyof typeof this.seccionesForm = seccion as keyof typeof this.seccionesForm;
+
+ console.log(`Verificando sección: ${sectionKey}`);
+ console.log(`Estado previo isChecked: ${this.seccionesForm[sectionKey].isChecked}`);
+
+ // Actualizar el estado de la sección
+ this.seccionesForm[sectionKey].isComplete = isComplete;
+  // Actualiza isChecked según isComplete
+  this.seccionesForm[sectionKey].isChecked = isComplete;
+ 
+
+ console.log(`Estado actualizado isChecked: ${this.seccionesForm[sectionKey].isChecked}`);
+
+    const sectionId = `${seccion}Section`; // Construir el ID de la sección
+    const section = document.getElementById(sectionId); // Obtener el elemento de la sección
+    console.log( seccion);
+    console.log( this.seccionesForm[seccion as keyof typeof this.seccionesForm].isComplete);
+   console.log( this.seccionesForm[seccion as keyof typeof this.seccionesForm].isChecked);
+    if (section) {
+        const bootstrapCollapse = new (window as any).bootstrap.Collapse(section, { toggle: false });
+        if (isComplete) {
+            bootstrapCollapse.hide(); // Colapsar la sección si está completa
+        } else {
+            bootstrapCollapse.show(); // Mostrar la sección si no está completa
+     
+        }
+    }
+}
+
 }
