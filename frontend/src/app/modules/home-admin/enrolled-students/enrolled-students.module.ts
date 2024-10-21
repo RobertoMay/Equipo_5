@@ -3,7 +3,7 @@ import { SharedModule } from '@shared/shared.module';
 import { EnrolledStudentsComponent } from './enrolled-students.component';
 import { CommonModule } from '@angular/common';
 @NgModule({
-  declarations: [],
+  declarations: [EnrolledStudentsComponent],
   imports: [SharedModule, CommonModule],
 })
 export class EnrolledStudentsModule {}
