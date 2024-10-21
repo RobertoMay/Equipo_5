@@ -22,7 +22,7 @@
   <ul class="navbar-menu" [ngClass]="{'active': isMenuOpen}">
 
     <!-- Navbar para promotor (administrador) -->
-    <ng-container *ngIf="isAdmin; else studentNavbar">
+    <ng-container *ngIf="isAdmin && !isHome ; else studentNavbar">
       <li><a routerLink="/admin/applicants">Por inscribirse</a></li>
       <li><a routerLink="/admin/enrolled">Inscritos</a></li>
       <!-- <li><a routerLink="/admin/enrolled">Crear convocatoria</a></li> -->
