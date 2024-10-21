@@ -1,5 +1,7 @@
 <div class="container mt-5">
   <!-- Barra de progreso -->
+<!-- Bootstrap JavaScript (sin jQuery) -->
+<!-- En tu index.html o en angular.json -->
 
   <div class="progress-container">
     <div class="progress">
@@ -55,138 +57,211 @@
 
     <div class="container mt-5" [hidden]="!formularioVisible">
       <div #formulario>
-        <!-- Sección 1: Informacion personal -->
-        <div class="section">
-          <h3 class="title">
-            <i class="fas fa-user"></i> Información Personal
-          </h3>
-          <div class="questions-container">
-            <div class="question-row">
-              <label for="curp" class="question-text">Ingresa tu CURP</label>
-              <input type="text" id="curp" class="form-control custom-input-width" [(ngModel)]="formData.curp"
-                name="curp" placeholder="CURP" />
+  <!-- Sección 1: Información Personal -->
+  <div class="section" >
+    <h3 class="title d-flex align-items-center justify-content-between">
+      <span><i class="fas fa-user"></i> Información Personal</span>
+      <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+      aria-expanded="true" 
+      aria-controls="infoPersonalSection" 
+      (click)="verificarFormulario('infoPersonal')">
+      <!-- Mostrar el ícono normal al inicio -->
+      <ng-container *ngIf="!seccionesForm['infoPersonal'].isComplete; else sectionChecked">
+        <span class="text-danger  ms-2">Rellene los campos</span>
+        <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+        <i class="fas fa-chevron-down ms-2"></i>
+  
+      </ng-container>
+      
+      <!-- Mostrar mensajes e íconos según el estado de la sección -->
+      <ng-template #sectionChecked>
+        <!-- Si la sección está completa, mostrar mensaje de éxito -->
+        <ng-container *ngIf="seccionesForm['infoPersonal'].isComplete; ">
+          <span class="text-success ms-2">Sección completada</span>
+          <i class="fas fa-check text-success ms-2"></i>
+        </ng-container>
+        <!-- Si la sección no está completa, mostrar mensaje de error -->
+        <ng-template #incompleteSection>
+          <span class="text-danger">Rellene los campos</span>
+         
+        </ng-template>
+      </ng-template>
+    </button>
+  
+    </h3>
+  
+    <div id="infoPersonalSection" class="collapse">
+      <div class="questions-container">
+        <div class="question-row">
+          <label for="curp" class="question-text">Ingresa tu CURP</label>
+          <input type="text" id="curp" class="form-control custom-input-width" [(ngModel)]="formData.curp" name="curp" placeholder="CURP" />
+        </div>
+  
+        <div class="question-row">
+          <label for="nombre" class="question-text">Nombre(s)</label>
+          <input type="text" id="nombre" class="form-control custom-input-width" [(ngModel)]="formData.nombre" name="nombre" required placeholder="Nombre(s)" />
+        </div>
+        <div class="question-row-inline">
+          <div class="inline-question">
+            <label for="primerApellido" class="question-text">Primer apellido</label>
+            <input type="text" id="primerApellido" class="form-control custom-input-width-small" [(ngModel)]="formData.primerApellido" name="primerApellido" required placeholder="Primer apellido" />
+          </div>
+          <div class="inline-question">
+            <label for="segundoApellido" class="question-text">Segundo apellido</label>
+            <input type="text" id="segundoApellido" class="form-control custom-input-width-small" [(ngModel)]="formData.segundoApellido" name="segundoApellido" required placeholder="Segundo apellido" />
+          </div>
+        </div>
+        <div class="question-row-inline">
+          <div class="inline-question">
+            <label for="fechaNacimiento" class="question-text">Fecha de nacimiento</label>
+            <input type="date" id="fechaNacimiento" class="form-control custom-input-width-small" [(ngModel)]="formData.fechaNacimiento" name="fechaNacimiento" required />
+            <small class="form-text text-muted">Seleccione la fecha de nacimiento</small>
+          </div>
+          <div class="inline-question">
+            <label class="question-text">Sexo</label><br />
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="sexo" [(ngModel)]="formData.sexo" value="Hombre" />
+              <label class="form-check-label">Hombre</label>
             </div>
-
-            <div class="question-row">
-              <label for="nombre" class="question-text">Nombre(s)</label>
-              <input type="text" id="nombre" class="form-control custom-input-width" [(ngModel)]="formData.nombre"
-                name="nombre" required placeholder="Nombre(s)" />
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="sexo" [(ngModel)]="formData.sexo" value="Mujer" />
+              <label class="form-check-label">Mujer</label>
             </div>
-            <div class="question-row-inline">
-              <div class="inline-question">
-                <label for="primerApellido" class="question-text">Primer apellido</label>
-                <input type="text" id="primerApellido" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.primerApellido" name="primerApellido" required placeholder="Primer apellido" />
-              </div>
-              <div class="inline-question">
-                <label for="segundoApellido" class="question-text">Segundo apellido</label>
-                <input type="text" id="segundoApellido" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.segundoApellido" name="segundoApellido" required
-                  placeholder="Segundo apellido" />
-              </div>
-            </div>
-            <div class="question-row-inline">
-              <div class="inline-question">
-                <label for="fechaNacimiento" class="question-text">Fecha de nacimiento</label>
-                <input type="date" id="fechaNacimiento" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.fechaNacimiento" name="fechaNacimiento" required />
-                <small class="form-text text-muted">
-                  Seleccione la fecha de nacimiento
-                </small>
-              </div>
-              <div class="inline-question">
-                <label class="question-text">Sexo</label><br />
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sexo" [(ngModel)]="formData.sexo" value="Hombre" />
-                  <label class="form-check-label">Hombre</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sexo" [(ngModel)]="formData.sexo" value="Mujer" />
-                  <label class="form-check-label">Mujer</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sexo" [(ngModel)]="formData.sexo" value="Otro" />
-                  <label class="form-check-label">Otro</label>
-                </div>
-              </div>
-            </div>
-
-            <div class="question-row-inline">
-              <div class="inline-question">
-                <label for="telefonoFijo" class="question-text">Teléfono Fijo</label>
-                <input type="tel" id="telefonoFijo" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.telefonoFijo" name="telefonoFijo" pattern="[0-9]{10}" required
-                  placeholder="Tel. Fijo" />
-              </div>
-              <div class="inline-question">
-                <label for="telefonoMovil" class="question-text">Teléfono Móvil</label>
-                <input type="tel" id="telefonoMovil" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.telefonoMovil" name="telefonoMovil" pattern="[0-9]{10}" required
-                  placeholder="Tel. Móvil" />
-              </div>
-            </div>
-            <div class="question-row">
-              <label for="correoElectronico" class="question-text">Correo Electrónico</label>
-              <input type="email" id="correoElectronico" class="form-control custom-input-width"
-                [(ngModel)]="formData.correoElectronico" name="correoElectronico" required
-                placeholder="Correo Electrónico" />
-            </div>
-            <div class="question-row">
-              <label for="puebloIndigena" class="question-text">Pueblo Indigena al que pertenece</label>
-              <select id="puebloIndigena" class="form-control custom-input-width" [(ngModel)]="formData.puebloIndigena"
-                name="puebloIndigena" required>
-                <option value="" disabled selected>
-                  Seleccione una opción
-                </option>
-                <option value="Pueblo1">Indigena</option>
-                <option value="Pueblo2">Afroamericano</option>
-              </select>
-            </div>
-            <div class="question-row">
-              <label for="lenguaIndigena" class="question-text">Lengua indígena que habla</label>
-              <input type="text" id="lenguaIndigena" class="form-control custom-input-width"
-                [(ngModel)]="formData.lenguaIndigena" name="lenguaIndigena" required placeholder="Lengua indígena" />
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="sexo" [(ngModel)]="formData.sexo" value="Otro" />
+              <label class="form-check-label">Otro</label>
             </div>
           </div>
         </div>
-
-        <!-- Sección 2: Direccion -->
-
-        <div class="section">
-          <h3 class="title">
-            <i class="fas fa-map-marker-alt"></i> Datos de la Dirección
-          </h3>
-          <div class="questions-container">
-            <div class="question-row-inline">
-              <div class="inline-question">
-                <label for="estado" class="question-text">Estado</label>
-                <input type="text" id="estado" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.estado" name="estado" required placeholder="Estado" />
-              </div>
-              <div class="inline-question">
-                <label for="municipio" class="question-text">Municipio</label>
-                <input type="text" id="municipio" class="form-control custom-input-width-small"
-                  [(ngModel)]="formData.municipio" name="municipio" required placeholder="Municipio" />
-              </div>
-            </div>
-
-            <div class="question-row">
-              <label for="localidad" class="question-text">Localidad</label>
-              <input type="text" id="localidad" class="form-control custom-input-width" [(ngModel)]="formData.localidad"
-                name="localidad" required placeholder="Localidad" />
-            </div>
-            <div class="question-row">
-              <label for="comunidad" class="question-text">Comunidad</label>
-              <input type="text" id="comunidad" class="form-control custom-input-width" [(ngModel)]="formData.comunidad"
-                name="comunidad" required placeholder="Comunidad" />
-            </div>
+  
+        <div class="question-row-inline">
+          <div class="inline-question">
+            <label for="telefonoFijo" class="question-text">Teléfono Fijo</label>
+            <input type="tel" id="telefonoFijo" class="form-control custom-input-width-small" [(ngModel)]="formData.telefonoFijo" name="telefonoFijo" pattern="[0-9]{10}" required placeholder="Tel. Fijo" />
+          </div>
+          <div class="inline-question">
+            <label for="telefonoMovil" class="question-text">Teléfono Móvil</label>
+            <input type="tel" id="telefonoMovil" class="form-control custom-input-width-small" [(ngModel)]="formData.telefonoMovil" name="telefonoMovil" pattern="[0-9]{10}" required placeholder="Tel. Móvil" />
           </div>
         </div>
+        <div class="question-row">
+          <label for="correoElectronico" class="question-text">Correo Electrónico</label>
+          <input type="email" id="correoElectronico" class="form-control custom-input-width" [(ngModel)]="formData.correoElectronico" name="correoElectronico" required placeholder="Correo Electrónico" />
+        </div>
+        <div class="question-row">
+          <label for="puebloIndigena" class="question-text">Pueblo Indígena al que pertenece</label>
+          <select id="puebloIndigena" class="form-control custom-input-width" [(ngModel)]="formData.puebloIndigena" name="puebloIndigena" required>
+            <option value="" disabled selected>Seleccione una opción</option>
+            <option value="Pueblo1">Indígena</option>
+            <option value="Pueblo2">Afroamericano</option>
+          </select>
+        </div>
+        <div class="question-row">
+          <label for="lenguaIndigena" class="question-text">Lengua indígena que habla</label>
+          <input type="text" id="lenguaIndigena" class="form-control custom-input-width" [(ngModel)]="formData.lenguaIndigena" name="lenguaIndigena" required placeholder="Lengua indígena" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Sección 2: Dirección -->
+<div class="section">
+  <h3 class="title d-flex align-items-center justify-content-between">
+    <span><i class="fas fa-map-marker-alt"></i> Datos de la Dirección</span>
+    <button class="btn btn-link d-flex d-flex custom-button-spacing" type="button"
+            aria-expanded="false"
+            aria-controls="direccionSection"
+            (click)="verificarFormulario('direccion')"
+            >
+     <!-- Mostrar el ícono normal al inicio -->
+     <ng-container *ngIf="!seccionesForm['direccion'].isComplete && !seccionesForm['direccion'].isChecked; else sectionChecked">
+      <span class="text-danger  ms-2">Rellene los campos</span>
+      <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+      <i class="fas fa-chevron-down ms-2"></i>
+    </ng-container>
+    
+    <!-- Mostrar mensajes e íconos según el estado de la sección -->
+    <ng-template #sectionChecked>
+      
+      <!-- Si la sección está completa, mostrar mensaje de éxito -->
+      <ng-container *ngIf="seccionesForm['direccion'].isComplete;">
+        <span class="text-success ms-2">Sección completada</span>
+        <i class="fas fa-check text-success ms-2"></i>
+      </ng-container>
+      <!-- Si la sección no está completa, mostrar mensaje de error -->
+      <ng-template #incompleteSection>
+        <span class="text-danger">Rellene los campos</span>
+       
+      </ng-template>
+    </ng-template>
+    </button>
+  </h3>
+
+  <div id="direccionSection" class="collapse"> <!-- Se inicia sin la clase "show" -->
+    <div class="questions-container">
+      <div class="question-row-inline">
+        <div class="inline-question">
+          <label for="estado" class="question-text">Estado</label>
+          <input type="text" id="estado" class="form-control custom-input-width-small"
+            [(ngModel)]="formData.estado" name="estado" required placeholder="Estado" />
+        </div>
+        <div class="inline-question">
+          <label for="municipio" class="question-text">Municipio</label>
+          <input type="text" id="municipio" class="form-control custom-input-width-small"
+            [(ngModel)]="formData.municipio" name="municipio" required placeholder="Municipio" />
+        </div>
+      </div>
+
+      <div class="question-row">
+        <label for="localidad" class="question-text">Localidad</label>
+        <input type="text" id="localidad" class="form-control custom-input-width"
+          [(ngModel)]="formData.localidad" name="localidad" required placeholder="Localidad" />
+      </div>
+      <div class="question-row">
+        <label for="comunidad" class="question-text">Comunidad</label>
+        <input type="text" id="comunidad" class="form-control custom-input-width"
+          [(ngModel)]="formData.comunidad" name="comunidad" required placeholder="Comunidad" />
+      </div>
+    </div>
+  </div>
+</div>
+
+
         <!-- Sección 3: Datos de la Madre -->
         <div class="section">
-          <h3 class="title">
-            <i class="bi-person-heart"></i> Datos de la Madre
+          <h3 class="title d-flex align-items-center justify-content-between">
+              <span><i class="bi-person-heart"></i> Datos de la Madre</span> 
+            <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+            aria-expanded="true" 
+            aria-controls="madreSection" 
+            (click)="verificarFormulario('madre')">
+            <!-- Mostrar el ícono normal al inicio -->
+            <ng-container *ngIf="!seccionesForm['madre'].isComplete; else sectionChecked">
+              <span class="text-danger  ms-2">Rellene los campos</span>
+              <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+              <i class="fas fa-chevron-down ms-2"></i>
+        
+            </ng-container>
+            
+            <!-- Mostrar mensajes e íconos según el estado de la sección -->
+            <ng-template #sectionChecked>
+              <!-- Si la sección está completa, mostrar mensaje de éxito -->
+              <ng-container *ngIf="seccionesForm['madre'].isComplete; ">
+                <span class="text-success ms-2">Sección completada</span>
+                <i class="fas fa-check text-success ms-2"></i>
+              </ng-container>
+              <!-- Si la sección no está completa, mostrar mensaje de error -->
+              <ng-template #incompleteSection>
+                <span class="text-danger">Rellene los campos</span>
+               
+              </ng-template>
+            </ng-template>
+          </button>
+        
           </h3>
+        
+          <div id="madreSection" class="collapse">
+      
           <div class="question-row">
             <div class="col-md-6"></div>
             <label for="estadoMadre" class="question-text">Estado de la madre</label>
@@ -239,13 +314,43 @@
             </div>
           </div>
         </div>
+        </div>
 
         <!-- Sección 4: Datos del Padre (Mismos Campos) -->
-
         <div class="section">
-          <h3 class="title">
-            <i class="bi-person"></i> Datos del Padre
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="bi-person"></i> Datos del Padre</span>
+            <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+            aria-expanded="true" 
+            aria-controls="padreSection" 
+            (click)="verificarFormulario('padre')">
+            <!-- Mostrar el ícono normal al inicio -->
+            <ng-container *ngIf="!seccionesForm['padre'].isComplete; else sectionChecked">
+              <span class="text-danger  ms-2">Rellene los campos</span>
+              <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+              <i class="fas fa-chevron-down ms-2"></i>
+        
+            </ng-container>
+            
+            <!-- Mostrar mensajes e íconos según el estado de la sección -->
+            <ng-template #sectionChecked>
+              <!-- Si la sección está completa, mostrar mensaje de éxito -->
+              <ng-container *ngIf="seccionesForm['padre'].isComplete; ">
+                <span class="text-success ms-2">Sección completada</span>
+                <i class="fas fa-check text-success ms-2"></i>
+              </ng-container>
+              <!-- Si la sección no está completa, mostrar mensaje de error -->
+              <ng-template #incompleteSection>
+                <span class="text-danger">Rellene los campos</span>
+               
+              </ng-template>
+            </ng-template>
+          </button>
+        
           </h3>
+        
+          <div id="padreSection" class="collapse">
+      
           <div class="question-row">
             <div class="col-md-6"></div>
             <label for="estadoPadre" class="question-text">Estado del padre</label>
@@ -298,15 +403,45 @@
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Repetir los campos de la madre para el padre -->
 
         <!-- Sección 5: Datos del Tutor -->
 
         <div class="section">
-          <h3 class="title">
-            <i class="bi-person-check-fill"></i> Datos del Tutor
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="bi-person-check-fill"></i> Datos del Tutor</span>
+            <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+            aria-expanded="true" 
+            aria-controls="tutorSection" 
+            (click)="verificarFormulario('tutor')">
+            <!-- Mostrar el ícono normal al inicio -->
+            <ng-container *ngIf="!seccionesForm['tutor'].isComplete; else sectionChecked">
+              <span class="text-danger  ms-2">Rellene los campos</span>
+              <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+              <i class="fas fa-chevron-down ms-2"></i>
+        
+            </ng-container>
+            
+            <!-- Mostrar mensajes e íconos según el estado de la sección -->
+            <ng-template #sectionChecked>
+              <!-- Si la sección está completa, mostrar mensaje de éxito -->
+              <ng-container *ngIf="seccionesForm['tutor'].isComplete; else incompleteSection">
+                <span class="text-success ms-2">Sección completada</span>
+                <i class="fas fa-check text-success ms-2"></i>
+              </ng-container>
+              <!-- Si la sección no está completa, mostrar mensaje de error -->
+              <ng-template #incompleteSection>
+                <span class="text-danger">Rellene los campos</span>
+               
+              </ng-template>
+            </ng-template>
+          </button>
+        
           </h3>
+        
+          <div id="tutorSection" class="collapse">
+      
 
           <div class="question-row">
             <div class="col-md-6"></div>
@@ -364,6 +499,8 @@
           </div>
         </div>
       </div>
+    </div>
+
       <!-- Botón para avanzar al siguiente paso -->
       <div class="d-flex justify-content-between mt-4">
         <button type="button" class="btn btn-outline-secondary" (click)="nextStep()">
@@ -412,10 +549,39 @@
       <div #formulario>
         <!-- Sección 1: Datos de Identificación de la Casa o Comedor -->
         <div class="section">
-          <h3 class="title">
-            <i class="bi-house-fill"></i> Datos de Identificación de la Casa o
-            Comedor
-          </h3>
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="bi-house-fill"></i> Datos de Identificación de la Casa o
+              Comedor</span> 
+              <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+              aria-expanded="true" 
+              aria-controls="casaComedorSection" 
+              (click)="verificarFormulario('casaComedor')">
+              <!-- Mostrar el ícono normal al inicio -->
+              <ng-container *ngIf="!seccionesForm['casaComedor'].isComplete; else sectionChecked">
+                <span class="text-danger  ms-2">Rellene los campos</span>
+                <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+                <i class="fas fa-chevron-down ms-2"></i>
+          
+              </ng-container>
+              
+              <!-- Mostrar mensajes e íconos según el estado de la sección -->
+              <ng-template #sectionChecked>
+                <!-- Si la sección está completa, mostrar mensaje de éxito -->
+                <ng-container *ngIf="seccionesForm['casaComedor'].isComplete; else incompleteSection">
+                  <span class="text-success ms-2">Sección completada</span>
+                  <i class="fas fa-check text-success ms-2"></i>
+                </ng-container>
+                <!-- Si la sección no está completa, mostrar mensaje de error -->
+                <ng-template #incompleteSection>
+                  <span class="text-danger">Rellene los campos</span>
+                 
+                </ng-template>
+              </ng-template>
+            </button>
+          
+            </h3>
+          
+            <div id="casaComedorSection" class="collapse">
           <div class="questions-container">
             <div class="row">
               <div class="col-md-6 question-row">
@@ -469,13 +635,42 @@
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Sección 2: Traslado -->
         <div class="section">
-          <h3 class="title">
-            <i class="fas fa-road"></i> Traslado de la Casa-Comunidad de
-            Procedencia
-          </h3>
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="fas fa-road"></i> Traslado de la Casa-Comunidad de
+              Procedencia</span> 
+              <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+              aria-expanded="true" 
+              aria-controls="trasladoSection" 
+              (click)="verificarFormulario('traslado')">
+              <!-- Mostrar el ícono normal al inicio -->
+              <ng-container *ngIf="!seccionesForm['traslado'].isComplete; else sectionChecked">
+                <span class="text-danger  ms-2">Rellene los campos</span>
+                <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+                <i class="fas fa-chevron-down ms-2"></i>
+          
+              </ng-container>
+              
+              <!-- Mostrar mensajes e íconos según el estado de la sección -->
+              <ng-template #sectionChecked>
+                <!-- Si la sección está completa, mostrar mensaje de éxito -->
+                <ng-container *ngIf="seccionesForm['traslado'].isComplete; else incompleteSection">
+                  <span class="text-success ms-2">Sección completada</span>
+                  <i class="fas fa-check text-success ms-2"></i>
+                </ng-container>
+                <!-- Si la sección no está completa, mostrar mensaje de error -->
+                <ng-template #incompleteSection>
+                  <span class="text-danger">Rellene los campos</span>
+                 
+                </ng-template>
+              </ng-template>
+            </button>
+          
+            </h3>
+          
+            <div id="trasladoSection" class="collapse">
           <div class="questions-container">
             <div class="question-row">
               <label class="question-text">Medio de Acceso</label>
@@ -548,12 +743,41 @@
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Sección 3: Discapacidades -->
         <div class="section">
-          <h3 class="title">
-            <i class="fas fa-wheelchair"></i> Discapacidades
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="fas fa-wheelchair"></i> Discapacidades</span> 
+            <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+            aria-expanded="true" 
+            aria-controls="discapacidadSection" 
+            (click)="verificarFormulario('discapacidad')">
+            <!-- Mostrar el ícono normal al inicio -->
+            <ng-container *ngIf="!seccionesForm['discapacidad'].isComplete; else sectionChecked">
+              <span class="text-danger  ms-2">Rellene los campos</span>
+              <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+              <i class="fas fa-chevron-down ms-2"></i>
+        
+            </ng-container>
+            
+            <!-- Mostrar mensajes e íconos según el estado de la sección -->
+            <ng-template #sectionChecked>
+              <!-- Si la sección está completa, mostrar mensaje de éxito -->
+              <ng-container *ngIf="seccionesForm['discapacidad'].isComplete; else incompleteSection">
+                <span class="text-success ms-2">Sección completada</span>
+                <i class="fas fa-check text-success ms-2"></i>
+              </ng-container>
+              <!-- Si la sección no está completa, mostrar mensaje de error -->
+              <ng-template #incompleteSection>
+                <span class="text-danger">Rellene los campos</span>
+               
+              </ng-template>
+            </ng-template>
+          </button>
+        
           </h3>
+        
+          <div id="discapacidadSection" class="collapse">
           <div class="questions-container">
             <div class="question-row">
               <label class="question-text">¿Presenta alguna discapacidad?</label><br />
@@ -604,10 +828,42 @@
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Sección 4: Datos Académicos -->
         <div class="section">
-          <h3 class="title"><i class="fas fa-book"></i> Datos Académicos</h3>
+          <h3 class="title d-flex align-items-center justify-content-between">
+             <span> <i class="fas fa-book"></i> Datos Académicos</span> 
+             <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+             aria-expanded="true" 
+             aria-controls="datosAcademicosSection" 
+             (click)="verificarFormulario('datosAcademicos')">
+             <!-- Mostrar el ícono normal al inicio -->
+             <ng-container *ngIf="!seccionesForm['datosAcademicos'].isComplete; else sectionChecked">
+               <span class="text-danger  ms-2">Rellene los campos</span>
+               <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+               <i class="fas fa-chevron-down ms-2"></i>
+         
+             </ng-container>
+             
+             <!-- Mostrar mensajes e íconos según el estado de la sección -->
+             <ng-template #sectionChecked>
+               <!-- Si la sección está completa, mostrar mensaje de éxito -->
+               <ng-container *ngIf="seccionesForm['datosAcademicos'].isComplete; else incompleteSection">
+                 <span class="text-success ms-2">Sección completada</span>
+                 <i class="fas fa-check text-success ms-2"></i>
+               </ng-container>
+               <!-- Si la sección no está completa, mostrar mensaje de error -->
+               <ng-template #incompleteSection>
+                 <span class="text-danger">Rellene los campos</span>
+                
+               </ng-template>
+             </ng-template>
+           </button>
+         
+           </h3>
+         
+           <div id="datosAcademicosSection" class="collapse">
+       
           <div class="questions-container">
             <div class="question-row">
               <label for="tipoEscuela" class="question-text">Tipo de Escuela</label>
@@ -777,11 +1033,41 @@
             </div>
           </div>
         </div>
+      </div>
         <!-- Sección 5: Antecedentes de Salud -->
         <div class="section">
-          <h3 class="title">
-            <i class="fas fa-wheelchair"></i> Antecedentes de Salud
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="fas fa-wheelchair"></i> Antecedentes de Salud</span> 
+            <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+            aria-expanded="true" 
+            aria-controls="saludSection" 
+            (click)="verificarFormulario('salud')">
+            <!-- Mostrar el ícono normal al inicio -->
+            <ng-container *ngIf="!seccionesForm['salud'].isComplete; else sectionChecked">
+              <span class="text-danger  ms-2">Rellene los campos</span>
+              <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+              <i class="fas fa-chevron-down ms-2"></i>
+        
+            </ng-container>
+            
+            <!-- Mostrar mensajes e íconos según el estado de la sección -->
+            <ng-template #sectionChecked>
+              <!-- Si la sección está completa, mostrar mensaje de éxito -->
+              <ng-container *ngIf="seccionesForm['salud'].isComplete; else incompleteSection">
+                <span class="text-success ms-2">Sección completada</span>
+                <i class="fas fa-check text-success ms-2"></i>
+              </ng-container>
+              <!-- Si la sección no está completa, mostrar mensaje de error -->
+              <ng-template #incompleteSection>
+                <span class="text-danger">Rellene los campos</span>
+               
+              </ng-template>
+            </ng-template>
+          </button>
+        
           </h3>
+        
+          <div id="saludSection" class="collapse">
           <div class="questions-container">
             <div class="question-row">
               <label class="question-text">¿Es alérgico a algún alimento o medicamento?</label><br>
@@ -845,11 +1131,42 @@
           </div>
 
         </div>
+        </div>
         <!-- Sección 6: TIpo de Solicitud -->
         <div class="section">
-          <h3 class="title">
-            <i class="fas fa-wheelchair"></i> Tipo de Solicitud
+          <h3 class="title d-flex align-items-center justify-content-between">
+            <span><i class="fas fa-file-alt"></i> Tipo de Solicitud</span>
+            <button class="btn btn-link d-flex custom-button-spacing " type="button" 
+            aria-expanded="true" 
+            aria-controls="tramiteSection" 
+            (click)="verificarFormulario('tramite')">
+            <!-- Mostrar el ícono normal al inicio -->
+            <ng-container *ngIf="!seccionesForm['tramite'].isComplete; else sectionChecked">
+              <span class="text-danger  ms-2">Rellene los campos</span>
+              <i class="fas fa-exclamation-circle text-danger  ms-2"></i>
+              <i class="fas fa-chevron-down ms-2"></i>
+        
+            </ng-container>
+            
+            <!-- Mostrar mensajes e íconos según el estado de la sección -->
+            <ng-template #sectionChecked>
+              <!-- Si la sección está completa, mostrar mensaje de éxito -->
+              <ng-container *ngIf="seccionesForm['tramite'].isComplete; else incompleteSection">
+                <span class="text-success ms-2">Sección completada</span>
+                <i class="fas fa-check text-success ms-2"></i>
+              </ng-container>
+              <!-- Si la sección no está completa, mostrar mensaje de error -->
+              <ng-template #incompleteSection>
+                <span class="text-danger">Rellene los campos</span>
+               
+              </ng-template>
+            </ng-template>
+          </button>
+        
           </h3>
+        
+          <div id="tramiteSection" class="collapse">
+      
           <div class="questions-container">
             <div class="question-row">
               <label class="question-text">¿Que Solicita?</label><br>
@@ -874,7 +1191,7 @@
             </div>
 
           </div>
-
+        </div>
         </div>
         <!-- Botones para enviar o regresar al paso anterior -->
         <div class="d-flex justify-content-between mt-4">
@@ -909,7 +1226,6 @@
 
     <app-step-3 class="mt-2"></app-step-3>
   </div>
-
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </div>

@@ -16,6 +16,8 @@ export class IStudentDocDocument implements IBaseModel {
   name!: string; // Primer nombre
   lastName1!: string; // Primer apellido
   lastName2!: string; // Segundo apellido
+  email!: string;
+  curp!: string;
   enrollmentPeriod!: string; // Periodo de inscripción
   enrollmentStatus!: boolean; // Estado de inscripción
   Documents?: StudentDocument[]; // Array de documentos relacionados con el estudiante
