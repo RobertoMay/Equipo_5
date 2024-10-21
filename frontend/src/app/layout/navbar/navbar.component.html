@@ -27,8 +27,6 @@
     <li><a routerLink="/inscritos">Inscritos</a></li>
     <li><a (click)="logout()">Cerrar sesión</a></li>
 
-    </ng-container>
-
     <!-- Navbar para estudiante -->
     <ng-template #studentNavbar>
       <ng-container *ngIf="isAuthenticated && !isAdmin &&!isHome">
