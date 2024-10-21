@@ -62,12 +62,14 @@ export class StudentPortalComponent implements OnInit {
           this.convocatoria = convocatoria;
 
           console.log('Convocatoria actual obtenida:', this.convocatoria);
-           // Convertir las fechas al formato deseado y guardarlas en localStorage
-        const formattedStartDate = this.formatDate(this.convocatoria.startDate);
-        const formattedEndDate = this.formatDate(this.convocatoria.endDate);
-        const statusEnrollment = `${formattedStartDate} - ${formattedEndDate}`;
-        
-        localStorage.setItem('statusenrollment', statusEnrollment);
+          // Convertir las fechas al formato deseado y guardarlas en localStorage
+          const formattedStartDate = this.formatDate(
+            this.convocatoria.startDate
+          );
+          const formattedEndDate = this.formatDate(this.convocatoria.endDate);
+          const statusEnrollment = `${formattedStartDate} - ${formattedEndDate}`;
+
+          localStorage.setItem('statusenrollment', statusEnrollment);
         } else {
           console.warn('No se encontró ninguna convocatoria actual');
           this.convocatoria = null;
@@ -97,7 +99,7 @@ export class StudentPortalComponent implements OnInit {
     const year = d.getFullYear();
     return `${day}/${month}/${year}`;
   }
- isAnnouncementClosed(): boolean {
+  isAnnouncementClosed(): boolean {
     if (this.convocatoria) {
       const endDate = new Date(this.convocatoria.endDate);
       const today = new Date();
@@ -112,13 +114,12 @@ export class StudentPortalComponent implements OnInit {
     if (!this.convocatoria || !this.convocatoria.endDate) {
       return false;
     }
-  
+
     const today = new Date();
     const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7));
     const endDate = new Date(this.convocatoria.endDate);
-  
+
     // Si la fecha de cierre es anterior a hace 7 días, mostrar el template de no convocatoria
     return endDate < sevenDaysAgo;
   }
-  
 }

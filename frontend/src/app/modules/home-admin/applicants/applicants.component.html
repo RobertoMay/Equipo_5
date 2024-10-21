@@ -1,1 +1,46 @@
-<p>applicants works!</p>
+<div class="container mt-5">
+  <div class="search-bar mb-3">
+    <input type="text" class="form-control" placeholder="Buscar por nombre" />
+    <button class="btn btn-dark">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+  <h3 class="text-center mb-3">Alumnos por inscribirse</h3>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead class="table-header">
+        <tr>
+          <th>Nombre Completo:</th>
+          <th>Correo Electrónico:</th>
+          <th>Curp:</th>
+          <th>Estado:</th>
+          <th>Documentos: Ver...</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Ejemplo de filas, puedes reemplazarlo con *ngFor en tu proyecto -->
+        <tr *ngFor="let alumno of alumno">
+          <td>{{ alumno.nombre }}</td>
+          <td>{{ alumno.correo }}</td>
+          <td>{{ alumno.curp }}</td>
+          <td>{{ alumno.estado }}</td>
+          <td><button class="btn btn-link">Ver</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="#">
+          << </a>
+      </li>
+      <li class="page-item" *ngFor="let page of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+        <a class="page-link" href="#">{{ page }}</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">>></a></li>
+    </ul>
+  </nav>
+</div>

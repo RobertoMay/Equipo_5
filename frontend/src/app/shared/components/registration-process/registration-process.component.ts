@@ -376,7 +376,6 @@ export class RegistrationProcessComponent implements OnInit {
                   .create('studentdoc/', studentDoc)
                   .subscribe({
                     next: () => {
-                    
                       this.nextStep();
                     },
                     error: (err) => {

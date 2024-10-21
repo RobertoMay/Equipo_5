@@ -1,0 +1,43 @@
+.container {
+    max-width: 800px;
+  }
+  
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .search-bar input {
+    width: 80%;
+    border-radius: 25px;
+    border: 2px solid #cc0033;
+  }
+  
+  .search-bar button {
+    border-radius: 50%;
+    background-color: #cc0033;
+    color: white;
+  }
+  
+  .table-header {
+    background-color: #cc0033;
+    color: white;
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+    vertical-align: middle;
+    background-color: #f5f5f5;
+  }
+  
+  .pagination .page-link {
+    color: #cc0033;
+    border: none;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: #cc0033;
+    color: white;
+  }
+  

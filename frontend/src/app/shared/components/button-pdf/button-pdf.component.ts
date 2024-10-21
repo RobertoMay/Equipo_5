@@ -5,6 +5,8 @@ import {
   IDataStudent,
   StudentData,
 } from 'app/modules/student-portal/idata_student.metadata';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { LoadingService } from 'services/global/loading.service';
 import jsPDF from 'jspdf';
 
 @Component({
@@ -20,11 +22,22 @@ export class ButtonPdfComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private datastudentservice: DataStudentService
+    private datastudentservice: DataStudentService,
+    private _ngxUiLoaderService: NgxUiLoaderService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     const aspiranteId = localStorage.getItem('aspiranteId');
+
+    this.loadingService.loading$.subscribe((isLoading) => {
+      if (isLoading) {
+        this._ngxUiLoaderService.start();
+      } else {
+        this._ngxUiLoaderService.stop();
+      }
+    });
+
     if (!aspiranteId) {
       this.showError(
         'ID de aspirante no encontrado. Por favor, inténtelo de nuevo.'
@@ -72,27 +85,29 @@ export class ButtonPdfComponent implements OnInit {
     );
   }
 
-  generatePDF(): void {
+  generatePDF2(): void {
+    this.loadingService.startLoading();
     // Configura el documento en tamaño A4 (210mm x 297mm)
+    this.loadingService.stopLoading();
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
       format: 'a4',
     });
-  
+
     // Cargar el contenido HTML desde el archivo en la carpeta assets
     fetch('assets/pdf-page/pdf-page.component.html')
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.text();
       })
-      .then(htmlContent => {
+      .then((htmlContent) => {
         // Crear un contenedor temporal para insertar el HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlContent;
-  
+
         // Obtener y aplicar los estilos del CSS del componente
         const styleElement = document.createElement('style');
         const styles = `
@@ -180,10 +195,10 @@ export class ButtonPdfComponent implements OnInit {
         `;
         styleElement.innerHTML = styles;
         tempDiv.appendChild(styleElement);
-  
+
         // Sustituir datos en el HTML
         this.replacePlaceholders(tempDiv);
-  
+
         // Utiliza el contenedor temporal para generar el PDF directamente
         doc.html(tempDiv, {
           callback: (doc) => {
@@ -198,30 +213,34 @@ export class ButtonPdfComponent implements OnInit {
                 doc.internal.pageSize.getHeight() - 5 // Posición del pie de página
               );
             }
-  
-           // Generar el PDF como un Blob
-  const pdfBlob = doc.output('blob');
 
-  // Crear una URL para el Blob y abrirla en una nueva pestaña
-  const pdfUrl = URL.createObjectURL(pdfBlob);
-  
-  // Intenta abrir en una nueva pestaña; si es bloqueado, sugiere al usuario permitir ventanas emergentes
-  const newWindow = window.open(pdfUrl, '_blank');
-  if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-    alert('Por favor, habilita las ventanas emergentes para ver el PDF.');
-  }
+            // Generar el PDF como un Blob
+            const pdfBlob = doc.output('blob');
+
+            // Crear una URL para el Blob y abrirla en una nueva pestaña
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+
+            // Intenta abrir en una nueva pestaña; si es bloqueado, sugiere al usuario permitir ventanas emergentes
+            const newWindow = window.open(pdfUrl, '_blank');
+            if (
+              !newWindow ||
+              newWindow.closed ||
+              typeof newWindow.closed == 'undefined'
+            ) {
+              alert(
+                'Por favor, habilita las ventanas emergentes para ver el PDF.'
+              );
+            }
           },
-         
+
           margin: [15, 10, 19, 10],
           width: 190, // Ancho máximo del contenido
           windowWidth: 770, // Ancho simulado de la ventana del navegador
-          autoPaging: true
+          autoPaging: true,
         });
       })
-      .catch(err => console.error('Error al cargar el contenido HTML:', err));
+      .catch((err) => console.error('Error al cargar el contenido HTML:', err));
   }
-  
-
 
   private replacePlaceholders(tempDiv: HTMLDivElement): void {
     // Aquí reemplazas los marcadores de posición en el HTML con los datos del estudiante

@@ -24,4 +24,3 @@ export * from './calls/calls.component';
 export * from './registration-process/registration-process.component';
 export * from './step-3/step-3.component';
 export * from './file-btn/file-btn.component';
-export * from './button-pdf/button-pdf.component';

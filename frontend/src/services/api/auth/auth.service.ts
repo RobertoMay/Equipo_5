@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ILogin } from 'app/modules/login/ilogin-form.metadata';
 import { ILoginResponse } from 'app/modules/login/ilogin-response.metadata'; 
 import { Token } from '@angular/compiler';
+import { GenericServiceService } from '@shared/generic.service.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -47,6 +48,7 @@ export class AuthService {
 
  // Actualizar el estado de autenticación y rol
  updateAuthStatus() {
+  console.log('Updating Auth Status');
   this.isAuthenticatedSubject.next(this.isAuthenticated());
   this.isAdminSubject.next(this.isAdmin());
 }
@@ -57,7 +59,8 @@ export class AuthService {
     // Eliminar el token y el rol de administrador del almacenamiento local
     localStorage.removeItem('token');
     localStorage.removeItem('esAdministrador');
-    
+    localStorage.removeItem('idUsuario');
+    localStorage.removeItem('aspiranteId');
 // Emitir (enviar) el nuevo estado: no autenticado y no admin
 this.isAuthenticatedSubject.next(false);  // El usuario ya no está autenticado
 this.isAdminSubject.next(false);          // Ya no es admin
