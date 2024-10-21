@@ -82,6 +82,7 @@ export class LoginComponent  implements OnInit {
 // Guardar el token y esAdministrador
 localStorage.setItem('token', response.token || '');
 localStorage.setItem('esAdministrador', response.esAdministrador ? 'true' : 'false');
+localStorage.setItem('idUsuario', response.id || '');
 console.log('token:', response.token);
 console.log('esAdministrador:', response.esAdministrador);
  // Actualizar el estado de autenticación y rol

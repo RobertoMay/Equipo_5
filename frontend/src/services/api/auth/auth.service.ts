@@ -57,7 +57,8 @@ export class AuthService {
     // Eliminar el token y el rol de administrador del almacenamiento local
     localStorage.removeItem('token');
     localStorage.removeItem('esAdministrador');
-    
+    localStorage.removeItem('idUsuario');
+    localStorage.removeItem('aspiranteId');
 // Emitir (enviar) el nuevo estado: no autenticado y no admin
 this.isAuthenticatedSubject.next(false);  // El usuario ya no está autenticado
 this.isAdminSubject.next(false);          // Ya no es admin
