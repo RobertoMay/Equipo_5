@@ -72,7 +72,14 @@ export class StudentdocService extends GenericServiceService<IStudentDocDocument
         catchError((error) => {
           const errorMessage =
             error.error.details || 'Error al obtener los estudiantes.';
-
+          return of({
+            error: true,
+            msg: errorMessage,
+            data: null,
+          });
+        })
+      );
+  }
   editFile(
     aspiranteId: string,
     documentType: string,
