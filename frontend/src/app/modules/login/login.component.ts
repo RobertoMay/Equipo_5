@@ -74,10 +74,6 @@ export class LoginComponent  implements OnInit {
           return;
         }
 
-        // Guardar el token
-       //localStorage.setItem('token', response.token || '');
-     //  console.log('token:' + response.token );
-
 
 // Guardar el token y esAdministrador
 localStorage.setItem('token', response.token || '');
@@ -125,7 +121,7 @@ console.log('esAdministrador:', response.esAdministrador);
   // Ocultar el modal de login
   this.modalLoginService.closeLogin();
   
-        //this.showLogin = false; // Oculta el pop-up después de iniciar sesión
+      
       },
       error: (err) => {
         this.ngxLoader.stop(); // Detener el cargador
@@ -139,14 +135,10 @@ console.log('esAdministrador:', response.esAdministrador);
     });
   }
 
- /* closeLogin() {
-    this.showLogin = false; // Cierra el pop-up al hacer clic en el botón de cerrar
-    this.router.navigate(['/']);
-  }*/
-  
+ 
 
     ngOnInit() {
-      // Suscríbete a las actualizaciones del estado de `showLogin`
+      // Suscribe a las actualizaciones del estado de `showLogin`
       this.modalLoginService.showLogin$.subscribe(show => {
         this.showLogin = show;
         console.log('LoginComponent: showLogin is', show);
@@ -162,7 +154,7 @@ console.log('esAdministrador:', response.esAdministrador);
     }
   
     closeLogin() {
-      this.form.reset(); // Esto limpiará el formulario
+      this.form.reset(); // Limpia el formulario
       this.modalLoginService.closeLogin(); // Cierra el modal usando el servicio
     }
   
