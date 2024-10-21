@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { IStudentDocDocument } from 'models/istudentdoc.metadata';
 import { catchError, map, Observable, of, Subject } from 'rxjs';
 import { GenericServiceService } from '@shared/generic.service.service';
@@ -53,6 +53,33 @@ export class StudentdocService extends GenericServiceService<IStudentDocDocument
       );
   }
 
+
+   // Método para obtener los estudiantes inscritos con paginación y filtro opcional por nombre
+   getEnrolledStudents(page: number = 1, name?: string): Observable<{ error: boolean; msg: string; data: any | null }> {
+    let params = new HttpParams().set('page', page.toString());
+    if (name) {
+      params = params.set('name', name);
+    }
+
+    return this.http
+      .get<any>(`${this.url}${this.endpoint}/enrolled`, { params })
+      .pipe(
+        map((response) => ({
+          error: false,
+          msg: 'Estudiantes obtenidos con éxito',
+          data: response,
+        })),
+        catchError((error) => {
+          const errorMessage =
+            error.error.details || 'Error al obtener los estudiantes.';
+          return of({
+            error: true,
+            msg: errorMessage,
+            data: null,
+          });
+        })
+      );
+  }
   editFile(
     aspiranteId: string,
     documentType: string,
@@ -111,6 +138,7 @@ export class StudentdocService extends GenericServiceService<IStudentDocDocument
         catchError((error) => {
           const errorMessage =
             error.error.details || 'Error al eliminar el documento.';
+
           return of({
             error: true,
             msg: errorMessage,

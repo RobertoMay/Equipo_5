@@ -6,7 +6,7 @@ export class StudentDocDocument {
   lastName1: string;
   lastName2: string;
   email: string; // Asegúrate de tener esta propiedad
-  curp: string;  // Asegúrate de tener esta propiedad
+  curp: string; // Asegúrate de tener esta propiedad
   enrollmentPeriod: string;
   enrollmentStatus: boolean;
   Documents: {
@@ -16,7 +16,7 @@ export class StudentDocDocument {
     date: Date;
     status: 'approved' | 'rejected' | 'uploaded';
   }[];
-  
+
   constructor(partial: Partial<StudentDocDocument>) {
     Object.assign(this, partial);
   }

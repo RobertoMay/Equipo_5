@@ -7,8 +7,9 @@ import { CreateCallModule } from './create-call/create-call.module';
 import { ApplicantsModule } from './applicants/applicants.module';
 import { EnrolledStudentsModule } from './enrolled-students/enrolled-students.module';
 
+
 @NgModule({
-  declarations: [HomeAdminComponent],
+  declarations: [HomeAdminComponent, ],
 
   imports: [
     SharedModule,
