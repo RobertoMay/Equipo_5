@@ -20,6 +20,114 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
     this.storage = new Storage();
   }
 
+  //Este método añadirá un comentario dentro del array comments en el documento StudentDocDocument.
+  async addCommentToAspirante(
+    aspiranteId: string,
+    commentText: string,
+    createdBy: string
+  ): Promise<void> {
+    try {
+      // Verificar si el aspirante existe
+      const snapshot = await this.firestore
+        .collection('StudentDocDocument')
+        .where('aspiranteId', '==', aspiranteId)
+        .get();
+  
+      if (snapshot.empty) {
+        throw new NotFoundException(`No se encontró el aspirante con ID: ${aspiranteId}`);
+      }
+  
+      // Acceder al primer documento encontrado por aspiranteId
+      const aspiranteDoc = snapshot.docs[0];
+      const aspiranteData = aspiranteDoc.data();
+      const comments = aspiranteData.comments || [];
+  
+      // Verificar que el texto del comentario no sea undefined
+      if (!commentText || commentText.trim() === '') {
+        throw new BadRequestException('El texto del comentario no puede estar vacío.');
+      }
+  
+      // Crear un nuevo comentario con valores definidos
+      const newComment = {
+        id: this.firestore.collection('comments').doc().id,  // Generar un ID único para el comentario
+        comment: commentText,
+        createdAt: new Date().toISOString(),  // Convertir a string para evitar problemas con Firestore
+        createdBy: createdBy || 'Admin',  // Si el campo creado por está vacío, usar "Anónimo"
+      };
+  
+      // Añadir el comentario a la lista de comentarios
+      comments.push(newComment);
+  
+      // Actualizar el documento del aspirante en Firestore con el nuevo comentario
+      const aspiranteRef = this.firestore
+        .collection('StudentDocDocument')
+        .doc(aspiranteDoc.id);
+      await aspiranteRef.update({ comments: comments });
+  
+      console.log(`Comentario agregado correctamente para aspiranteId: ${aspiranteId}`);
+    } catch (error) {
+      console.error('Error al agregar comentario:', error);
+      throw new InternalServerErrorException(
+        'Error al intentar agregar el comentario. Por favor, inténtelo de nuevo más tarde.'
+      );
+    }
+  }
+  
+
+  //Método para obtener los comentarios de un estudiante:
+  async getCommentsByStudent(aspiranteId: string): Promise<any[]> {
+    try {
+      const studentDocSnapshot = await this.firestore
+        .collection('StudentDocDocument')
+        .where('aspiranteId', '==', aspiranteId)
+        .get();
+  
+      if (studentDocSnapshot.empty) {
+        throw new NotFoundException(`No se encontraron comentarios para el estudiante con ID: ${aspiranteId}`);
+      }
+  
+      const studentData = studentDocSnapshot.docs[0].data();
+      return studentData.comments || [];
+    } catch (error) {
+      console.error('Error al obtener los comentarios:', error);
+      throw new InternalServerErrorException('Error al obtener los comentarios. Intenta de nuevo más tarde.');
+    }
+  }
+ //Método para eliminar un comentario
+  async deleteCommentFromStudent(aspiranteId: string, commentId: string): Promise<void> {
+    try {
+      const studentDocSnapshot = await this.firestore
+        .collection('StudentDocDocument')
+        .where('aspiranteId', '==', aspiranteId)
+        .get();
+  
+      if (studentDocSnapshot.empty) {
+        throw new NotFoundException(`No se encontró el estudiante con ID: ${aspiranteId}`);
+      }
+  
+      const studentDoc = studentDocSnapshot.docs[0];
+      const studentData = studentDoc.data();
+      const comments = studentData.comments || [];
+  
+      // Buscar el índice del comentario que se desea eliminar
+      const commentIndex = comments.findIndex((comment) => comment.id === commentId);
+      if (commentIndex === -1) {
+        throw new NotFoundException(`No se encontró el comentario con ID: ${commentId}`);
+      }
+  
+      // Eliminar el comentario del array
+      comments.splice(commentIndex, 1);
+  
+      // Actualizar el documento del estudiante
+      await studentDoc.ref.update({ comments });
+  
+      console.log(`Comentario con ID: ${commentId} eliminado correctamente.`);
+    } catch (error) {
+      console.error('Error al eliminar el comentario:', error);
+      throw new InternalServerErrorException('Error al eliminar el comentario. Intenta de nuevo más tarde.');
+    }
+  }
+
   // Método para añadir un documento a un aspirante
   async addDocumentToAspirante(
     aspiranteId: string,
@@ -442,120 +550,77 @@ private async deletePdfFromFirebase(pdfUrl: string): Promise<void> {
     return students;
   }
 
+// Método para actualizar el estado de un documento específico de un aspirante
+async updateDocumentStatus(
+  aspiranteId: string,
+  documentLink: string,
+  newStatus: 'approved' | 'rejected' | 'uploaded',
+): Promise<void> {
+  try {
+    // Validar parámetros de entrada
+    if (!aspiranteId || !documentLink || !newStatus) {
+      throw new BadRequestException('Datos requeridos faltantes.');
+    }
 
-  // Método para actualizar el estado de un documento específico de un aspirante
-  async updateDocumentStatus(
-    aspiranteId: string,
-    documentLink: string,
-    newStatus: 'approved' | 'rejected' | 'uploaded',
-  ): Promise<void> {
-    try {
-      // Validar parámetros de entrada
-      if (!aspiranteId || !documentLink || !newStatus) {
-        throw new BadRequestException('Datos requeridos faltantes.');
-      }
+    // Verificar si el aspirante existe
+    const snapshot = await this.firestore
+      .collection('StudentDocDocument')
+      .where('aspiranteId', '==', aspiranteId)
+      .get();
 
-      // Verificar si el aspirante existe
-      const snapshot = await this.firestore
-        .collection('StudentDocDocument')
-        .where('aspiranteId', '==', aspiranteId)
-        .get();
-
-      if (snapshot.empty) {
-        throw new NotFoundException(
-          `No se encontraron documentos para el aspirante con ID: ${aspiranteId}`,
-        );
-      }
-
-      // Acceder al primer documento encontrado por aspiranteId
-      const aspiranteDoc = snapshot.docs[0];
-      const aspiranteData = aspiranteDoc.data();
-      const documents = aspiranteData.Documents || [];
-
-      // Buscar el documento por el link
-      const documentIndex = documents.findIndex(
-        (doc: any) => doc.link === documentLink,
+    if (snapshot.empty) {
+      throw new NotFoundException(
+        `No se encontraron documentos para el aspirante con ID: ${aspiranteId}`,
       );
+    }
 
-      if (documentIndex === -1) {
-        throw new NotFoundException(
-          `No se encontró el documento con el link proporcionado para el aspirante con ID: ${aspiranteId}`,
-        );
-      }
+    // Acceder al primer documento encontrado por aspiranteId
+    const aspiranteDoc = snapshot.docs[0];
+    const aspiranteData = aspiranteDoc.data();
+    const documents = aspiranteData.Documents || [];
 
-      // Actualizar el estado del documento
-      documents[documentIndex].status = newStatus;
+    // Buscar el documento por el link
+    const documentIndex = documents.findIndex(
+      (doc: any) => doc.link === documentLink,
+    );
 
-      // Actualizar el documento en Firestore
-      const aspiranteRef = this.firestore
-        .collection('StudentDocDocument')
-        .doc(aspiranteDoc.id);
-      await aspiranteRef.update({ Documents: documents });
-    } catch (error) {
-      console.error('Error al actualizar el estado del documento:', error);
-      if (
-        error instanceof NotFoundException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      } else {
-        throw new InternalServerErrorException(
-          'Error interno al intentar actualizar el estado del documento. Por favor, inténtelo de nuevo más tarde.',
-        );
-      }
+    if (documentIndex === -1) {
+      throw new NotFoundException(
+        `No se encontró el documento con el link proporcionado para el aspirante con ID: ${aspiranteId}`,
+      );
+    }
+
+    // Actualizar el estado del documento
+    documents[documentIndex].status = newStatus;
+
+    // Actualizar el documento en Firestore
+    const aspiranteRef = this.firestore
+      .collection('StudentDocDocument')
+      .doc(aspiranteDoc.id);
+    await aspiranteRef.update({ Documents: documents });
+
+    // Verificar si todos los documentos del aspirante están aprobados
+    const allApproved = documents.every(doc => doc.status === 'approved');
+
+    // Si todos los documentos están aprobados, cambiar el estado de inscripción a "inscrito"
+    if (allApproved) {
+      const aspiranteRef = this.firestore.collection('StudentDocDocument').doc(aspiranteId);
+      await aspiranteRef.update({ enrollmentStatus: true });
+      console.log(`Estado de inscripción actualizado automáticamente para aspiranteId: ${aspiranteId}`);
+    }
+
+  } catch (error) {
+    console.error('Error al actualizar el estado del documento:', error);
+    if (
+      error instanceof NotFoundException ||
+      error instanceof BadRequestException
+    ) {
+      throw error;
+    } else {
+      throw new InternalServerErrorException(
+        'Error interno al intentar actualizar el estado del documento. Por favor, inténtelo de nuevo más tarde.',
+      );
     }
   }
-    // Método para actualizar el estado de un aspirante 
-  async updateEnrollmentStatus(
-    aspiranteId: string,
-    enrollmentStatus: boolean,
-  ): Promise<void> {
-    try {
-      // Validar parámetros de entrada
-      if (aspiranteId === undefined || enrollmentStatus === undefined) {
-        throw new BadRequestException(
-          'Faltan datos requeridos para actualizar el estado de inscripción',
-        );
-      }
-
-      // Verificar si el aspirante existe
-      const aspiranteDocs = await this.firestore
-        .collection('StudentDocDocument')
-        .where('aspiranteId', '==', aspiranteId)
-        .get();
-
-      if (aspiranteDocs.empty) {
-        throw new NotFoundException(
-          `No se encontró el aspirante con ID: ${aspiranteId}`,
-        );
-      }
-
-      // Acceder al primer documento encontrado
-      const aspiranteDoc = aspiranteDocs.docs[0];
-      const aspiranteRef = this.firestore
-        .collection('StudentDocDocument')
-        .doc(aspiranteDoc.id);
-
-      // Actualizar el estado de inscripción en el documento del aspirante
-      await aspiranteRef.update({ enrollmentStatus: enrollmentStatus });
-
-      console.log(
-        `Estado de inscripción actualizado para aspiranteId: ${aspiranteId}`,
-      );
-    } catch (error) {
-      console.error('Error al actualizar el estado de inscripción:', error);
-
-      if (
-        error instanceof NotFoundException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      } else {
-        throw new InternalServerErrorException(
-          'Error interno al intentar actualizar el estado de inscripción. Por favor, inténtelo de nuevo más tarde.',
-        );
-      }
-    }
-  }
-
+}
 }
