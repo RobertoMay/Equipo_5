@@ -599,22 +599,18 @@ async updateDocumentStatus(
       .doc(aspiranteDoc.id);
     await aspiranteRef.update({ Documents: documents });
 
-    // Verificar si todos los documentos del aspirante están aprobados
-    const allApproved = documents.every(doc => doc.status === 'approved');
+    // **Verificar si todos los documentos están aprobados**
+    const allApproved = documents.every((doc: any) => doc.status === 'approved');
 
-    // Si todos los documentos están aprobados, cambiar el estado de inscripción a "inscrito"
     if (allApproved) {
-      const aspiranteRef = this.firestore.collection('StudentDocDocument').doc(aspiranteId);
+      // Si todos los documentos están aprobados, cambiar el estado de inscripción a "inscrito"
       await aspiranteRef.update({ enrollmentStatus: true });
       console.log(`Estado de inscripción actualizado automáticamente para aspiranteId: ${aspiranteId}`);
     }
 
   } catch (error) {
     console.error('Error al actualizar el estado del documento:', error);
-    if (
-      error instanceof NotFoundException ||
-      error instanceof BadRequestException
-    ) {
+    if (error instanceof NotFoundException || error instanceof BadRequestException) {
       throw error;
     } else {
       throw new InternalServerErrorException(
@@ -623,4 +619,5 @@ async updateDocumentStatus(
     }
   }
 }
+
 }
