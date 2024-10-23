@@ -2,39 +2,44 @@
     <div class="button-group">
         <div class="mt-2">
 
-            <ng-container *ngIf="document.status === 'uploaded' && isAccepted; else regularActions">
+            <!-- Mostrar el botón de ver archivo cuando el documento está aprobado -->
+            <ng-container *ngIf="document.status === 'approved'; else regularActions">
                 <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
                     <i class="bi bi-eye"></i> Ver Archivo
                 </button>
             </ng-container>
 
-
+            <!-- Mostrar el botón de subir archivo cuando el documento está rechazado o pendiente -->
             <ng-template #regularActions>
-                <ng-container *ngIf="document.status === 'uploaded'; else uploadButton">
-                    <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
-                        <i class="bi bi-eye"></i> Ver Archivo
-                    </button>
-
-                    <ng-container *ngIf="!isAccepted">
-                        <input type="file" class="d-none" (change)="editFile($event)" #btnEditFile />
-                        <button class="btn btn-light btn-sm custom-button me-2" (click)="btnEditFile.click()">
-                            <i class="bi bi-pen"></i>
-                        </button>
-                        <button class="btn btn-light btn-sm custom-button" (click)="deleteFile()">
-                            <i class="bi bi-trash"></i>
-                        </button>
-
-                    </ng-container>
-                </ng-container>
-
-                <ng-template #uploadButton>
+                <ng-container
+                    *ngIf="document.status === 'rejected' || document.status === 'pending'; else otherActions">
                     <input type="file" class="d-none" (change)="uploadFile($event)" #btnUpload />
-
                     <button class="btn btn-light btn-sm custom-button" (click)="btnUpload.click()">
                         <i class="bi bi-file-earmark-arrow-up"></i> Subir Archivo
                     </button>
+                </ng-container>
+
+                <!-- Acciones regulares cuando el documento está subido (uploaded) y no ha sido aprobado/rechazado/pendiente -->
+                <ng-template #otherActions>
+                    <ng-container *ngIf="document.status === 'uploaded'">
+                        <button class="btn btn-light btn-sm custom-button me-2" (click)="viewFile()">
+                            <i class="bi bi-eye"></i> Ver Archivo
+                        </button>
+
+                        <!-- Mostrar los botones de editar y eliminar solo si el alumno no está inscrito -->
+                        <ng-container *ngIf="!isAccepted">
+                            <input type="file" class="d-none" (change)="editFile($event)" #btnEditFile />
+                            <button class="btn btn-light btn-sm custom-button me-2" (click)="btnEditFile.click()">
+                                <i class="bi bi-pen"></i>
+                            </button>
+                            <button class="btn btn-light btn-sm custom-button" (click)="deleteFile()">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </ng-container>
+                    </ng-container>
                 </ng-template>
             </ng-template>
+
         </div>
     </div>
 </ng-container>

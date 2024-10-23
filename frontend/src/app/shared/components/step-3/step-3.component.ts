@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { StudentDocument } from 'models/istudentdoc.metadata';
 import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
@@ -6,6 +12,7 @@ import Swal from 'sweetalert2';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
 import { Subscription } from 'rxjs';
+import { IComments } from 'models/icomments.data';
 
 @Component({
   selector: 'app-step-3',
@@ -103,8 +110,10 @@ export class Step3Component implements OnInit, OnDestroy {
     rejected: 'Rechazado',
   };
   user: any;
+  @Output() enrollmentStatusChange = new EventEmitter<boolean>();
+  @Output() enrollmentPeriodChange = new EventEmitter<string>();
   isAccepted: boolean = false;
-  comments: any[] = [];
+  comments: IComments[] = [];
   aspiranteId: string | null = null;
   studentName: string = 'Nombre Alumno';
   enrollmentPeriod: string = '';
@@ -128,6 +137,8 @@ export class Step3Component implements OnInit, OnDestroy {
     this.subscription = this.studentdocService.refresh$.subscribe(() => {
       this.getDocuments();
     });
+
+    this.getComments();
   }
 
   ngOnDestroy(): void {
@@ -170,6 +181,38 @@ export class Step3Component implements OnInit, OnDestroy {
     });
   }
 
+  getComments() {
+    this.loadingService.startLoading();
+    this.studentdocService.getById('comments/' + this.aspiranteId).subscribe(
+      (response) => {
+        if (
+          !response.error &&
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length > 0
+        ) {
+          this.loadingService.stopLoading();
+
+          this.comments = response.data;
+        } else {
+          this.loadingService.stopLoading();
+          console.log(response.error + ' ' + response.msg);
+          setTimeout(() => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.msg,
+            });
+          }, 750);
+        }
+      },
+      (error) => {
+        this.loadingService.stopLoading();
+        console.error(error);
+      }
+    );
+  }
+
   getDocuments() {
     this.loadingService.startLoading();
     this.studentdocService.getById('student/' + this.aspiranteId).subscribe(
@@ -187,7 +230,9 @@ export class Step3Component implements OnInit, OnDestroy {
           if (student!.name && student!.enrollmentPeriod) {
             this.studentName = `${student!.name}`;
             this.enrollmentPeriod = student!.enrollmentPeriod;
+            this.enrollmentPeriodChange.emit(this.enrollmentPeriod);
             this.isAccepted = student!.enrollmentStatus;
+            this.enrollmentStatusChange.emit(this.isAccepted);
 
             if (student.Documents && student.Documents.length > 0) {
               this.firstDocumentName = student.Documents[0].name;
