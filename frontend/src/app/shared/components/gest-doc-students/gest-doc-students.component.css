@@ -15,7 +15,7 @@
 }
 
 .modal-dialog {
-  width: 90%;
+  width: 60%;
   max-width: 900px;
 }
 
@@ -122,4 +122,8 @@
   background-color: #e0e0e0;
   color: #333333;
   border-color: #cccccc;
+}
+
+textarea {
+  resize: none;
 }
