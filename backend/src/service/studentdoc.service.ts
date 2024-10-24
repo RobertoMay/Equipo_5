@@ -247,7 +247,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
           type: documentType,
           link: '', // Dejar el link vacío temporalmente, se actualizará después
           date: new Date().toISOString(),
-          status: 'pending',
+          status: 'uploaded',
         });
       }
   
