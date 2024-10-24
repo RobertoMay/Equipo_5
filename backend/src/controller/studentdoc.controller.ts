@@ -275,7 +275,7 @@ console.log('documentType:', documentType);
         );
       }
     }
-  
+  // Endpoint para obtener los estudiantes no inscritos con paginación
     @Get('/not-enrolled')
     async getNotEnrolledStudents(
       @Query('page') page: number = 1,

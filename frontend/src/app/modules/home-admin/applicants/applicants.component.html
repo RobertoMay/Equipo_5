@@ -5,8 +5,8 @@
       <i class="bi bi-search"></i>
     </button>
   </div>
-
   <h3 class="text-center mb-3">Alumnos por inscribirse</h3>
+
 
   <div class="table-responsive">
     <table class="table table-bordered text-center">
@@ -16,17 +16,17 @@
           <th>Correo Electrónico:</th>
           <th>Curp:</th>
           <th>Estado:</th>
-          <th>Documentos: Ver...</th>
+          <th>Documentos</th>
         </tr>
       </thead>
       <tbody>
         <!-- Ejemplo de filas, puedes reemplazarlo con *ngFor en tu proyecto -->
-        <tr >
-          <td></td>
-          <td></td>
-          <td>odasodoaspdasps</td>
-          <td>alumno</td>
-          <td><button class="btn btn-link">Ver</button></td>
+        <tr *ngFor="let estudiante of students">
+          <td>{{ estudiante.name }}</td>
+          <td>{{ estudiante.email }}</td>
+          <td>{{ estudiante.curp }}</td>
+          <td>{{ estudiante.enrollmentStatus ? 'Inscrito' : 'No Inscrito' }}</td>
+          <td><button class="btn btn-link"><app-btn-ver-documentos-adm></app-btn-ver-documentos-adm></button></td>
         </tr>
       </tbody>
     </table>
