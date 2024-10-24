@@ -45,6 +45,10 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
+.instructions-success {
+  border-left: 4px solid #28a745;
+}
+
 /* Título de las instrucciones */
 .instructions-title {
   font-family: "Playfair Display", serif; /* Fuente elegante */

@@ -1205,7 +1205,7 @@
   </form>
 
   <div class="" *ngIf="currentStep === 3">
-    <div class="instructions">
+    <div class="instructions" [ngClass]="{ 'instructions-success': isAccepted }">
       <h3>
         Bienvenido, {{ studentName }}
       </h3>
