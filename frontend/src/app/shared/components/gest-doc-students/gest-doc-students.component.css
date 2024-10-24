@@ -1,33 +1,129 @@
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-dialog {
+  width: 60%;
+  max-width: 900px;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.btn-close {
+  background-color:#f70a0a ;
+  border: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.7rem; /* Ajusta el tamaño del icono */
+  cursor: pointer;
+ /* color: #fff;*/
+}
+
+.btn-close i {
+  font-size: 2rem; /* Tamaño del icono */
+  font-weight: bold;
+  color: #fff;
+
+}
+
+
+
+.badge-custom {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.btn-view {
   
-  .modal.show {
-    display: flex;
-  }
-  
-  .modal-dialog {
-    width: 80%;
-    max-width: 700px;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .btn-close {
-    background: none;
-    border: none;
-  }
-  
+
+  padding: 5px 10px; /* Reducir el padding para hacer el botón más bajo */
+  font-size: 14px; /* Ajustar el tamaño de fuente si es necesario */
+  line-height: 1.2; /* Ajustar la altura de línea */
+}
+
+.btn-success, .btn-danger {
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.d-flex {
+  align-items: center;
+  gap: 5px;
+}
+
+.list-group-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+}
+
+
+/* Botón de grupo */
+.button-group {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px; /* Espacio entre botones */
+}
+
+.btn-outline-primary {
+  display: inline-flex;
+  align-items: center;
+}
+
+.list-group-item {
+  padding-bottom: 10px; /* Espacio adicional para evitar que los botones se vean apretados */
+}
+
+.btn-outline-danger {
+  border: none;
+  background-color: transparent;
+  color: #dc3545; /* Color rojo para el icono de eliminación */
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-outline-danger:hover {
+  color: #a71d2a; /* Color más oscuro cuando se pasa el ratón */
+}
+
+.badge-approved {
+  background-color: #dcfce7;
+  color: #297854;
+  border-color: #a6f4c2;
+}
+
+.badge-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.badge-default {
+  background-color: #e0e0e0;
+  color: #333333;
+  border-color: #cccccc;
+}
+
+textarea {
+  resize: none;
+}

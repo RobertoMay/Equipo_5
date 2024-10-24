@@ -7,66 +7,109 @@ import { Component } from '@angular/core';
 })
 export class GestDocStudentsComponent {
 
+  isModalOpen = true;
+  studentName = 'Angela Chin';
 
-  isModalOpen = false;
-  studentName = 'Angela Chin';  // Esto es solo un ejemplo
-
-/*
-  isAccepted: boolean = false; // Controla si se ha aceptado un documento
-  studentDocuments: any[] = []; // Lista de documentos de estudiantes
-  tutorDocuments: any[] = []; // Lista de documentos de tutores
-  documentNames: string[] = []; // Nombres de los documentos de estudiantes
-  tutorDocumentNames: string[] = []; // Nombres de los documentos de tutores
-  statusTranslation: { [key: string]: string } = {}; // Traducción de los estados de documentos
-  comments: string[] = []; // Comentarios
-  */
-
-
-
-  isAccepted: boolean = false; // Controla si se ha aceptado un documento
+  isAccepted: boolean = false;
 
   studentDocuments = [
-    { status: 'approved' },
-    { status: 'pending' }
+    { status: 'approved', iconStatus: '' },
+    { status: 'pending', iconStatus: '' },
+    { status: 'rejected', iconStatus: '' },
+    { status: 'pending', iconStatus: '' },
+  { status: 'approved', iconStatus: '' },
+  { status: 'rejected', iconStatus: '' },
+  { status: 'rejected', iconStatus: '' },
+  { status: 'pending', iconStatus: '' } // Documento generado
   ];
 
   tutorDocuments = [
-    { status: 'rejected' },
-    { status: 'approved' }
+    { status: 'rejected', iconStatus: '' },
+    { status: 'approved', iconStatus: '' },
+    { status: 'rejected', iconStatus: '' },
+    { status: 'approved', iconStatus: '' },
   ];
 
-  documentNames = ['Documento de Identidad', 'Acta de Nacimiento'];
-  tutorDocumentNames = ['Identificación del Tutor', 'Comprobante de Domicilio'];
+  documentNames = [
+  'Acta de Nacimiento',
+  'Ultima Boleta de Estudios',
+  'Cartilla de vacunacion',
+  'CURP (Actualizada)',
+  'Comprobante de domicilio',
+  'Constancia de identidad o escrito libre emitido por la autoridad',
+  'Certificado medico',
+  
+  'Documento generado'];
+  tutorDocumentNames = [ 'Identificación del Tutor',
+    'Comprobante de Domicilio',
+    'Carta de No Antecedentes Penales',
+    'Comprobante de Ingresos'];
 
   statusTranslation: { [key: string]: string } = {
     approved: 'Aprobado',
     rejected: 'Rechazado',
     pending: 'Pendiente'
   };
-  
+
   comments = ['Falta corregir el acta de nacimiento.', 'Todo está en orden.'];
 
-
-  // Método para obtener la clase de estado (puedes adaptar esta función según necesites)
   getBadgeClass(status: string): string {
     switch (status) {
       case 'approved':
-        return 'badge-success';
+        return 'badge-approved';
       case 'rejected':
-        return 'badge-danger';
+        return 'badge-rejected';
       case 'pending':
-        return 'badge-warning';
+        return 'badge-default';
       default:
-        return 'badge-secondary';
+        return 'badge-default';
     }
   }
 
-
-
-  // Método para abrir/cerrar el modal
   toggleModal() {
     this.isModalOpen = !this.isModalOpen;
   }
 
+  newComment: string = '';
 
+  acceptDocument(index: number, isTutor: boolean = false) {
+    if (isTutor) {
+      this.tutorDocuments[index].status = 'approved';
+      this.tutorDocuments[index].iconStatus = 'approved';
+    } else {
+      this.studentDocuments[index].status = 'approved';
+      this.studentDocuments[index].iconStatus = 'approved';
+    }
+  }
+
+  rejectDocument(index: number, isTutor: boolean = false) {
+    if (isTutor) {
+      this.tutorDocuments[index].status = 'rejected';
+      this.tutorDocuments[index].iconStatus = 'rejected';
+    } else {
+      this.studentDocuments[index].status = 'rejected';
+      this.studentDocuments[index].iconStatus = 'rejected';
+    }
+  }
+
+  addComment() {
+    if (this.newComment) {
+      this.comments.push(this.newComment);
+      this.newComment = '';
+    }
+  }
+
+  deleteComment(index: number): void {
+    this.comments.splice(index, 1);
+  }
+
+  acceptAll(): void {
+    this.studentDocuments.forEach((document, index) => this.acceptDocument(index));
+    this.tutorDocuments.forEach((document, index) => this.acceptDocument(index, true));
+  }
+
+  rejectAll(): void {
+    this.studentDocuments.forEach((document, index) => this.rejectDocument(index));
+    this.tutorDocuments.forEach((document, index) => this.rejectDocument(index, true));
+  }
 }
