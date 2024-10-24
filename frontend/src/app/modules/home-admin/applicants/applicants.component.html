@@ -22,7 +22,9 @@
           <td>{{ estudiante.name }}</td>
           <td>{{ estudiante.email }}</td>
           <td>{{ estudiante.curp }}</td>
-          <td>{{ estudiante.enrollmentStatus ? 'Inscrito' : 'No Inscrito' }}</td>
+          <td>  <span class="badge" [ngClass]="{'bg-success': estudiante.enrollmentStatus, 'bg-gold': !estudiante.enrollmentStatus}">
+            {{ estudiante.enrollmentStatus ? 'Inscrito' : 'No inscrito' }}
+          </span></td>
           <td><app-btn-ver-documentos-adm></app-btn-ver-documentos-adm></td>
         </tr>
       </tbody>

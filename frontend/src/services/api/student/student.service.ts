@@ -22,7 +22,7 @@ export class StudentService extends GenericServiceService<IStudentDocDocument> {
       params = params.set('name', name);
     }
 
-    return this.http.get<any>(`${this.url}${this.endpoint}`, { params }).pipe(
+    return this.http.get<any>(`${this.url}${this.endpoint}/not-enrolled`, { params }).pipe(
       map((response) => ({
         error: false,
         msg: 'Estudiantes no inscritos obtenidos con éxito',

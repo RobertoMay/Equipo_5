@@ -84,7 +84,10 @@
   .table-bordered tbody tr:last-child td {
     border-bottom: none;
   }
-
+  .bg-gold {
+    background-color: #bca521 !important; /* Color dorado */
+    color: #ffffff; /* Color de texto para asegurar buena visibilidad */
+}
   
   .pagination .page-link {
     color: #cc0033;
