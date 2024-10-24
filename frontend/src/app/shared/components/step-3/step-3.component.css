@@ -1,4 +1,4 @@
-.list-group-item {
+/* .list-group-item {
   border: 1px solid #ddd;
   border-radius: 0.25rem;
 }
@@ -23,10 +23,6 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-.btn-custom {
-  font-size: 1.1rem;
-}
-
 .list-group-item {
   border: none;
 }
@@ -39,12 +35,32 @@
   border: 0.5px solid #d5d5d5;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
+  */
 
 .max {
   max-width: 300px;
   display: inline-block;
   text-overflow: ellipsis;
   margin-right: 10px;
+}
+
+/*Nuevo diseño */
+.card-documents,
+.card-comments {
+  border: 2px solid #b41e46;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+  padding: 1rem;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+.list-group-item:hover {
+  background-color: rgba(204, 80, 113, 0.1);
+  border-radius: 9px;
 }
 
 .i-color {

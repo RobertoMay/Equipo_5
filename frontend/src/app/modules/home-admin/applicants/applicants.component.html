@@ -21,12 +21,21 @@
       </thead>
       <tbody>
         <!-- Ejemplo de filas, puedes reemplazarlo con *ngFor en tu proyecto -->
+<<<<<<< HEAD
         <tr *ngFor="let estudiante of students">
           <td>{{ estudiante.name }}</td>
           <td>{{ estudiante.email }}</td>
           <td>{{ estudiante.curp }}</td>
           <td>{{ estudiante.enrollmentStatus ? 'Inscrito' : 'No Inscrito' }}</td>
           <td><button class="btn btn-link"><app-btn-ver-documentos-adm></app-btn-ver-documentos-adm></button></td>
+=======
+        <tr >
+          <td></td>
+          <td></td>
+          <td>odasodoaspdasps</td>
+          <td>alumno</td>
+          <td><button class="btn btn-link">Ver</button></td>
+>>>>>>> 90c877e27ef9aee4f98286fc9d7fd4db60bb73cc
         </tr>
       </tbody>
     </table>
@@ -35,7 +44,7 @@
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       <li class="page-item"><a class="page-link" href="#">
-          << </a>
+           </a>
       </li>
       <li class="page-item" *ngFor="let page of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
         <a class="page-link" href="#">{{ page }}</a>
