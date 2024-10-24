@@ -25,10 +25,10 @@ export class EnrolledStudentsComponent {
   loadStudents() {
     this.studentdocService.getEnrolledStudents(this.currentPage, this.searchName)
       .subscribe(response => {
-        console.log('Response from service:', response); // Verifica la respuesta completa
+        console.log('Response from service:', response); 
         if (!response.error) {
-          this.students = response.data; // Asegúrate de que esta asignación es correcta
-          console.log('Students loaded:', this.students); // Verifica que los estudiantes estén cargados
+          this.students = response.data; 
+          console.log('Students loaded:', this.students); 
 
         } else {
           console.error(response.msg);
