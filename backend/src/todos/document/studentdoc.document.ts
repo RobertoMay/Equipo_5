@@ -16,7 +16,12 @@ export class StudentDocDocument {
     date: Date;
     status: 'approved' | 'rejected' | 'uploaded';
   }[];
-
+  comments?: {
+    id: string;
+    comment: string;
+    createdAt: Date;
+    createdBy: string;
+  }[];  // Aquí se define un array que puede contener varios comentarios
   constructor(partial: Partial<StudentDocDocument>) {
     Object.assign(this, partial);
   }

@@ -11,17 +11,21 @@ import { StudentEnrollmentFormService } from 'services/api/student-enrollment-fo
   templateUrl: './registration-process.component.html',
   styleUrls: ['./registration-process.component.css'],
 })
-
 export class RegistrationProcessComponent implements OnInit {
-  
+  isAccepted: boolean = false;
   currentStep: number = 1;
   progressWidth: string = '33.33%';
   @ViewChild('formulario', { static: false }) formulario!: ElementRef;
   formularioVisible = false;
-  
+  studentName: string = '';
   formChecked = false;
   aspiranteId: string | null = null;
   statusenrollment: string | null = null;
+  currentEnrollmentPeriod: string = '';
+
+  updateEnrollmentPeriod(enrollmentPeriod: string) {
+    this.currentEnrollmentPeriod = enrollmentPeriod;
+  }
   formData = {
     curp: '',
     nombre: '',
@@ -96,11 +100,11 @@ export class RegistrationProcessComponent implements OnInit {
     //Tramite
     solicitud: '',
   };
-  seccionesForm: { 
-    [key: string]: { 
-      isComplete: boolean; 
-      isChecked: boolean; 
-    }; 
+  seccionesForm: {
+    [key: string]: {
+      isComplete: boolean;
+      isChecked: boolean;
+    };
   } = {
     infoPersonal: { isComplete: false, isChecked: false },
     direccion: { isComplete: false, isChecked: false },
@@ -123,6 +127,10 @@ export class RegistrationProcessComponent implements OnInit {
     this.aspiranteId = localStorage.getItem('aspiranteId')!;
 
     this.getEnrollmentForm();
+  }
+
+  updateEnrollmentStatus(status: boolean) {
+    this.isAccepted = status;
   }
 
   mostrarFormulario() {
@@ -409,6 +417,7 @@ export class RegistrationProcessComponent implements OnInit {
       .subscribe(
         (response) => {
           if (!response.error) {
+            this.studentName = response.data?.data.nombre;
             this.currentStep = 3;
             this.updateProgressBar();
             this.formularioVisible = false;
@@ -424,72 +433,115 @@ export class RegistrationProcessComponent implements OnInit {
   verificarFormulario(seccion: string) {
     const formData = this.formData;
     let isComplete = false;
- 
+
     switch (seccion) {
-        case 'infoPersonal':
-            isComplete = !!(formData.curp && formData.nombre && formData.primerApellido && formData.segundoApellido);
-            break;
-        case 'direccion':
-            isComplete = !!(formData.estado && formData.municipio && formData.localidad && formData.comunidad);
-            break;
-        case 'madre':
-            isComplete = !!(formData.estadoMadre && formData.curpMadre && formData.nombreMadre && formData.primerApellidoMadre);
-            break;
-        case 'padre':
-            isComplete = !!(formData.estadoPadre && formData.curpPadre && formData.nombrePadre && formData.primerApellidoPadre);
-            break;
-        case 'tutor':
-            isComplete = !!(formData.parentescoTutor && formData.curpTutor && formData.nombreTutor && formData.primerApellidoTutor);
-            break;
-        case 'casaComedor':
-            isComplete = !!(formData.comunidadCasa && formData.localidadCasa && formData.centroCoordinador && formData.tipoCasa);
-            break;
-        case 'traslado':
-            isComplete = !!(formData.medioAcceso && formData.riesgoAcceso);
-            break;
-        case 'discapacidad':
-            isComplete = !!(formData.discapacidad);
-            break;
-        case 'datosAcademicos':
-            isComplete = !!(formData.tipoEscuela && formData.nombreEscuela);
-            break;
-        case 'salud':
-            isComplete = !!(formData.alergia && formData.tratamiento && formData.respirar);
-            break;
-        case 'tramite':
-            isComplete = !!formData.solicitud;
-            break;
-        default:
-            break;
+      case 'infoPersonal':
+        isComplete = !!(
+          formData.curp &&
+          formData.nombre &&
+          formData.primerApellido &&
+          formData.segundoApellido
+        );
+        break;
+      case 'direccion':
+        isComplete = !!(
+          formData.estado &&
+          formData.municipio &&
+          formData.localidad &&
+          formData.comunidad
+        );
+        break;
+      case 'madre':
+        isComplete = !!(
+          formData.estadoMadre &&
+          formData.curpMadre &&
+          formData.nombreMadre &&
+          formData.primerApellidoMadre
+        );
+        break;
+      case 'padre':
+        isComplete = !!(
+          formData.estadoPadre &&
+          formData.curpPadre &&
+          formData.nombrePadre &&
+          formData.primerApellidoPadre
+        );
+        break;
+      case 'tutor':
+        isComplete = !!(
+          formData.parentescoTutor &&
+          formData.curpTutor &&
+          formData.nombreTutor &&
+          formData.primerApellidoTutor
+        );
+        break;
+      case 'casaComedor':
+        isComplete = !!(
+          formData.comunidadCasa &&
+          formData.localidadCasa &&
+          formData.centroCoordinador &&
+          formData.tipoCasa
+        );
+        break;
+      case 'traslado':
+        isComplete = !!(formData.medioAcceso && formData.riesgoAcceso);
+        break;
+      case 'discapacidad':
+        isComplete = !!formData.discapacidad;
+        break;
+      case 'datosAcademicos':
+        isComplete = !!(formData.tipoEscuela && formData.nombreEscuela);
+        break;
+      case 'salud':
+        isComplete = !!(
+          formData.alergia &&
+          formData.tratamiento &&
+          formData.respirar
+        );
+        break;
+      case 'tramite':
+        isComplete = !!formData.solicitud;
+        break;
+      default:
+        break;
     }
- // Obtener la clave de la sección de forma segura
-     const sectionKey: keyof typeof this.seccionesForm = seccion as keyof typeof this.seccionesForm;
+    // Obtener la clave de la sección de forma segura
+    const sectionKey: keyof typeof this.seccionesForm =
+      seccion as keyof typeof this.seccionesForm;
 
- console.log(`Verificando sección: ${sectionKey}`);
- console.log(`Estado previo isChecked: ${this.seccionesForm[sectionKey].isChecked}`);
+    console.log(`Verificando sección: ${sectionKey}`);
+    console.log(
+      `Estado previo isChecked: ${this.seccionesForm[sectionKey].isChecked}`
+    );
 
- // Actualizar el estado de la sección
- this.seccionesForm[sectionKey].isComplete = isComplete;
-  // Actualiza isChecked según isComplete
-  this.seccionesForm[sectionKey].isChecked = isComplete;
- 
+    // Actualizar el estado de la sección
+    this.seccionesForm[sectionKey].isComplete = isComplete;
+    // Actualiza isChecked según isComplete
+    this.seccionesForm[sectionKey].isChecked = isComplete;
 
- console.log(`Estado actualizado isChecked: ${this.seccionesForm[sectionKey].isChecked}`);
+    console.log(
+      `Estado actualizado isChecked: ${this.seccionesForm[sectionKey].isChecked}`
+    );
 
     const sectionId = `${seccion}Section`; // Construir el ID de la sección
     const section = document.getElementById(sectionId); // Obtener el elemento de la sección
-    console.log( seccion);
-    console.log( this.seccionesForm[seccion as keyof typeof this.seccionesForm].isComplete);
-   console.log( this.seccionesForm[seccion as keyof typeof this.seccionesForm].isChecked);
+    console.log(seccion);
+    console.log(
+      this.seccionesForm[seccion as keyof typeof this.seccionesForm].isComplete
+    );
+    console.log(
+      this.seccionesForm[seccion as keyof typeof this.seccionesForm].isChecked
+    );
     if (section) {
-        const bootstrapCollapse = new (window as any).bootstrap.Collapse(section, { toggle: false });
-        if (isComplete) {
-            bootstrapCollapse.hide(); // Colapsar la sección si está completa
-        } else {
-            bootstrapCollapse.show(); // Mostrar la sección si no está completa
-     
-        }
+      const bootstrapCollapse = new (window as any).bootstrap.Collapse(
+        section,
+        { toggle: false }
+      );
+      if (isComplete) {
+        bootstrapCollapse.hide(); // Colapsar la sección si está completa
+      } else {
+        bootstrapCollapse.show(); // Mostrar la sección si no está completa
+      }
     }
-}
-
+  }
 }
