@@ -1,100 +1,209 @@
-<div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" [ngStyle]="{'display': isModalOpen ? 'block' : 'none'}">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Documentos de {{ studentName }}</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="toggleModal()"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container mt-4 mb-1">
-            <!-- Documentos del estudiante y tutor -->
-            <div class="container mt-4 mb-1">
-  
-              <div *ngIf="isAccepted" class="alert alert-success d-flex align-items-center">
-                <i class="bi bi-check2-circle me-3" style="font-size: 2.2rem;"></i>
-                <div>
-                  <h5>Felicidades, {{ studentName }}</h5>
-                  <p>Has sido aceptado en el albergue.</p>
-                </div>
-              </div>
-  
-              <div class="row mb-4 mt-5">
-                <!-- Documentos del Alumno -->
-                <div class="col-12 col-md-6">
-                  <div class="card card-documents">
-                    <div class="card-body">
-                      <h4 class="card-title">Documentos del Alumno</h4>
-                      <div class="list-group mt-4">
-                        <div class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let document of studentDocuments; let i = index">
-                          <div>
-                            <strong>{{ documentNames[i] }}</strong><br />
-                            <span class="badge-custom" [ngClass]="getBadgeClass(document.status)">
-                              {{ statusTranslation[document.status] || document.status }}
-                            </span>
-                          </div>
-                          <div>
-                            <!--
-                            <app-file-btn [document]="document" [isAccepted]="isAccepted"
-                              [typeDocument]="documentNames[i]"></app-file-btn>
-                            -->
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-  
-                <!-- Documentos del Tutor -->
-                <div class="col-12 col-md-6 mt-3 mt-md-0">
-                  <div class="card card-documents">
-                    <div class="card-body">
-                      <h4 class="card-title">Documentos del Tutor</h4>
-                      <div class="list-group mt-4">
-                        <div class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let document of tutorDocuments; let i = index">
-                          <div>
-                            <strong>{{ tutorDocumentNames[i] }}</strong><br />
-                            <span class="badge-custom" [ngClass]="getBadgeClass(document.status)">
-                              {{ statusTranslation[document.status] || document.status }}
-                            </span>
-                          </div>
-                          <div>
-                         <!--
-                            
-                         <app-file-btn [document]="document" [isAccepted]="isAccepted"
-                              [typeDocument]="tutorDocumentNames[i]"></app-file-btn>
-                         -->   
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <!-- Comentarios del promotor -->
-              <div *ngIf="comments.length > 0" class="row mt-4">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Comentarios del Promotor</h5>
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item" *ngFor="let comment of comments">
-                          <p> <i class="bi bi-chat-left i-color me-1"></i> {{ comment }}</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
+<div
+  class="modal"
+  tabindex="-1"
+  [ngClass]="{ show: isModalOpen }"
+  [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Documentos de {{ studentName }}</h5>
+         <!-- Botón de cerrar "X" en la esquina superior derecha -->
+  <button type="button" class="btn-close" aria-label="Close" (click)="toggleModal()">
+   
+  </button>
+       <!--
+  <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="toggleModal()"
+        ></button>
+
+       --> 
+      </div>
+      <div class="modal-body">
+        <div class="container mt-4 mb-1">
+          <div
+            *ngIf="isAccepted"
+            class="alert alert-success d-flex align-items-center"
+          >
+            <i class="bi bi-check2-circle me-3" style="font-size: 2.2rem"></i>
+            <div>
+              <h5>Felicidades, {{ studentName }}</h5>
+              <p>Has sido aceptado en el albergue.</p>
             </div>
           </div>
+
+          <div class="row mb-4 mt-5">
+            <div class="col-12 col-md-6">
+              <div class="card card-documents">
+                <div class="card-body">
+                  <h4 class="card-title">Documentos del Alumno</h4>
+                  <div class="list-group mt-4">
+                    <div
+                      class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                      *ngFor="let document of studentDocuments; let i = index"
+                    >
+                      <div class="d-flex align-items-center">
+                        <!-- Icono de estado -->
+                        <i
+                          *ngIf="document.iconStatus === 'approved'"
+                          class="bi bi-check-circle me-2 text-success"
+                        ></i>
+                        <i
+                          *ngIf="document.iconStatus === 'rejected'"
+                          class="bi bi-x-circle me-2 text-danger"
+                        ></i>
+                        <strong>{{ documentNames[i] }}</strong>
+                        <!-- Texto de aprobado/rechazado con estilos -->
+    <span class="badge-custom" [ngClass]="getBadgeClass(document.status)">
+      {{ statusTranslation[document.status] || document.status }}
+    </span>
+                      </div>
+                      <div
+                        class="button-group d-flex justify-content-start mt-2"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary btn-view me-3"
+                        >
+                          <i class="bi bi-eye"></i> Ver Documento
+                        </button>
+                        <div class="d-flex">
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            (click)="acceptDocument(i)"
+                          >
+                            Aceptar
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            (click)="rejectDocument(i)"
+                          >
+                            Rechazar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 mt-3 mt-md-0">
+              <div class="card card-documents">
+                <div class="card-body">
+                  <h4 class="card-title">Documentos del Tutor</h4>
+                  <div class="list-group mt-4">
+                    <div
+                      class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                      *ngFor="let document of tutorDocuments; let i = index"
+                    >
+                      <div class="d-flex flex-column">
+                        <strong>{{ tutorDocumentNames[i] }}</strong>
+                        <span
+                          class="badge-custom"
+                          [ngClass]="getBadgeClass(document.status)"
+                        >
+                          {{
+                            statusTranslation[document.status] ||
+                              document.status
+                          }}
+                        </span>
+                      </div>
+
+                      <div
+                        class="button-group d-flex justify-content-start mt-2"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary btn-view me-3"
+                        >
+                          <i class="bi bi-eye"></i> Ver Documento
+                        </button>
+                        <div class="d-flex">
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            (click)="acceptDocument(i, true)"
+                          >
+                            Aceptar
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            (click)="rejectDocument(i, true)"
+                          >
+                            Rechazar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Botón de Aceptar Todo -->
+            <button class="btn btn-success me-2" (click)="acceptAll()">Aceptar Todo</button>
+            <!-- Botón de Rechazar Todo -->
+            <button class="btn btn-danger" (click)="rejectAll()">Rechazar Todo</button>
+          </div>
+          
+
+
+          <div *ngIf="comments.length > 0" class="row mt-4">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Comentarios del Promotor</h5>
+                  <ul class="list-group list-group-flush">
+                    <li
+                      class="list-group-item"
+                      *ngFor="let comment of comments; let i = index"
+                    >
+                      <p>
+                        <i class="bi bi-chat-left i-color me-1"></i>
+                        {{ comment }}
+                      </p>
+ <!-- Icono para eliminar comentario -->
+ <button class="btn btn-outline-danger btn-sm" (click)="deleteComment(i)" title="Eliminar comentario">
+  <i class="bi bi-trash"></i> <!-- Usar icono de papelera de Bootstrap -->
+</button>
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <h5>Añadir un comentario:</h5>
+            <textarea
+              [(ngModel)]="newComment"
+              rows="3"
+              maxlength="150"
+              class="form-control"
+              placeholder="Escribe tu comentario aquí..."
+            ></textarea>
+            <button
+              class="btn btn-primary mt-2"
+              (click)="addComment()"
+              [disabled]="!newComment"
+            >
+              Agregar Comentario
+            </button>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="toggleModal()">Cerrar</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="toggleModal()">
+          Cerrar
+        </button>
       </div>
     </div>
   </div>
-  
+</div>

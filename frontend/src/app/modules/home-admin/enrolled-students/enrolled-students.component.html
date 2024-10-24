@@ -26,6 +26,15 @@
     </div>
     <h2 class="text-center mb-4">Alumnos que terminaron su proceso de inscripción</h2>
 
+<!-- Lugar de prueba para manipular el boton de ver documentos -->
+<div class="btn-container">
+  <!-- Componente del botón personalizado -->
+  <app-btn-ver-documentos-adm (click)="gestDoc.toggleModal()"></app-btn-ver-documentos-adm>
+</div>
+<!-- Componente del modal -->
+<app-gest-doc-students #gestDoc></app-gest-doc-students>
+
+
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead class="table-dark">
