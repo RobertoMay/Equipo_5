@@ -1,3 +1,11 @@
 .btn-custom {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  background-color: #b52249;
+  color: white;
+  border: none;
+}
+
+.btn-custom:hover {
+  background-color: #911b31;
+  color: white;
 }

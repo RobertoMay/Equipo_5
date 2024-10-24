@@ -13,7 +13,8 @@ import {
   HttpException,
   HttpStatus,
   HttpCode,
-  Query
+  Query,
+  Delete
 
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -35,7 +36,57 @@ export class StudentDocController extends GenericStudentDocController {
   constructor(private readonly studentdocService: StudenDocService) {
     super(); // Llama al constructor del controlador genérico
   }
+//Agregar un comentario
+  @Post('/add-comment')
+  async addCommentToAspirante(
+    @Body('aspiranteId') aspiranteId: string,
+    @Body('text') text: string,
+    @Body('createdBy') createdBy: string,
+  ) {
+    try {
+      await this.studentdocService.addCommentToAspirante(aspiranteId, text, createdBy);
+      return { message: 'Comentario agregado correctamente' };
+    } catch (error) {
+      console.error('Error al agregar el comentario:', error);
+      throw new HttpException(
+        { message: 'Error al agregar el comentario', details: error.message },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+//Obtener comentarios
+  @Get('/comments/:aspiranteId')
+async getCommentsByStudent(@Param('aspiranteId') aspiranteId: string) {
+  try {
+    const comments = await this.studentdocService.getCommentsByStudent(aspiranteId);
+    return comments;
+  } catch (error) {
+    console.error('Error al obtener los comentarios:', error);
+    throw new HttpException(
+      { message: 'Error al obtener los comentarios', details: error.message },
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
+//Eliminar un comentario
+@Delete('/delete-comment/:commentId')
+async deleteCommentFromStudent(
+  @Param('commentId') commentId: string,
+  @Body('aspiranteId') aspiranteId: string,
+) {
+  try {
+    await this.studentdocService.deleteCommentFromStudent(aspiranteId, commentId);
+    return { message: 'Comentario eliminado correctamente' };
+  } catch (error) {
+    console.error('Error al eliminar el comentario:', error);
+    throw new HttpException(
+      { message: 'Error al eliminar el comentario', details: error.message },
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
 
+  
 // Endpoint para agregar un documento a un aspirante existente  
   @Post('/add-document')
   @UseInterceptors(FileInterceptor('file'))
@@ -243,7 +294,7 @@ console.log('documentType:', documentType);
       }
     }
 
-    // Endpoint actualizar el status de un documentoa sociado a un aspirante
+    // Endpoint actualizar el status de un documento asociado a un aspirante
   @Put('/update-status/:aspiranteId')
   async updateDocumentStatus(
     @Param('aspiranteId') aspiranteId: string,
@@ -264,22 +315,6 @@ console.log('documentType:', documentType);
         error instanceof HttpException
           ? error.getStatus()
           : HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-      // Endpoint actualizar el status del aspirante
-  @Put('/enrollment-status/:aspiranteId')
-  async updateEnrollmentStatus(
-    @Param('aspiranteId') aspiranteId: string,
-    @Body('enrollmentStatus') enrollmentStatus: boolean,
-  ) {
-    try {
-      await this.studentdocService.updateEnrollmentStatus(aspiranteId, enrollmentStatus);
-      return { message: 'Status del Aspirante actualizado correctamente' };
-    } catch (error) {
-      throw new HttpException(
-        { message: error.message },
-        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
