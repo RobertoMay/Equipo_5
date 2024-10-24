@@ -1,8 +1,19 @@
-
-
 .container {
   max-width: 1000px;
   margin: 0 auto;
+}.table-responsive {
+  border: .5px solid #c6c5c5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.table {
+  margin-bottom: 0; /* Remove default margin */
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed; /* Added for consistent column widths */
 }
 
 .search-bar {
@@ -21,22 +32,6 @@
   border-radius: 50%;
   background-color: #cc0033;
   color: white;
-}
-
-/* Updated table styles */
-.table-responsive {
-  border: .5px solid #c6c5c5;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-
-.table {
-  margin-bottom: 0; /* Remove default margin */
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: fixed; /* Added for consistent column widths */
 }
 
 
