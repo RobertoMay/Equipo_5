@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class GestDocStudentsComponent {
 
-  isModalOpen = true;
+  isModalOpen = false;
   studentName = 'Angela Chin';
 
   isAccepted: boolean = false;
