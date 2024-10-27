@@ -29,8 +29,26 @@
             </span>
           </td>
           <td>
-            <app-btn-ver-documentos-adm></app-btn-ver-documentos-adm>
+            <app-btn-ver-documentos-adm [aspiranteId]="student.aspiranteId" (click)="viewDocuments(student.id!)" 
+            (openModalEvent)="openModal()"
+            (aspiranteIdEvent)="onAspiranteIdReceived($event)"
+            
+            >
+            </app-btn-ver-documentos-adm>
+        
           </td>
+
+<app-gest-doc-students>
+
+  
+  
+
+ <!--
+  [aspiranteId]="student.id!" (click)="viewDocuments(student.id!)
+  --> 
+
+</app-gest-doc-students>
+
         </tr>
       </tbody>
     </table>

@@ -2,52 +2,63 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators'; // Asegúrate de importar catchError
-import { IComments } from 'models/icomments.data'; // Ajusta la ruta según tu estructura
-import { IStudentDocDocument } from 'models/istudentdoc.metadata'; // Ajusta la ruta según tu estructura
+import { IGestComment } from 'models/igest-comments.data';
+import { IGestStudentDocument } from 'models/igest-student-doc.metadata';
+import { GenericServiceService } from '@shared/generic.service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GestDocumentsService {
-  private baseUrl = 'http://localhost:3000/api/studentdoc'; // Asegúrate de que esta URL sea correcta.
+export class GestDocumentsService extends GenericServiceService<IGestStudentDocument> {
 
-  constructor(private http: HttpClient) {}
-
-  // Método para manejar errores
-  private handleError(error: HttpErrorResponse) {
-    // Aquí puedes manejar el error, mostrar un mensaje, etc.
-    console.error('An error occurred:', error); // Log de error
-    return throwError('Something bad happened; please try again later.'); // Mensaje amigable
+  constructor(protected override http: HttpClient) {  
+    super(http, 'studentdoc');
   }
 
-  // Método para obtener documentos de un aspirante
-  getDocumentsByAspiranteId(aspiranteId: string): Observable<IStudentDocDocument[]> {
-    return this.http.get<IStudentDocDocument[]>(`${this.baseUrl}/documents/${aspiranteId}`)
-      .pipe(catchError(this.handleError)); // Agrega el manejo de errores
+
+  // 1. Obtener documentos del aspirante
+  getDocumentsByAspiranteId(aspiranteId: string): Observable<IGestStudentDocument[]> {
+    return this.http.get<IGestStudentDocument[]>(`${this.url}${this.endpoint}/documents/${aspiranteId}`)
+      .pipe(catchError(this.handleError));
   }
 
-  // Método para obtener comentarios de un aspirante
-  getCommentsByAspiranteId(aspiranteId: string): Observable<IComments[]> {
-    return this.http.get<IComments[]>(`${this.baseUrl}/comments/${aspiranteId}`)
-      .pipe(catchError(this.handleError)); // Agrega el manejo de errores
+  // 2. Actualizar estado del documento
+  updateDocumentStatus(aspiranteId: string, link: string, status: 'approved' | 'rejected'): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(`${this.url}${this.endpoint}/update-status/${aspiranteId}`, { link, status })
+      .pipe(catchError(this.handleError));
   }
 
-  // Método para agregar un comentario
-  addComment(aspiranteId: string, text: string, createdBy: string): Observable<IComments> {
-    return this.http.post<IComments>(`${this.baseUrl}/add-comment`, { aspiranteId, text, createdBy })
-      .pipe(catchError(this.handleError)); // Agrega el manejo de errores
+  // 3. Obtener comentarios de un aspirante
+  getCommentsByAspiranteId(aspiranteId: string): Observable<IGestComment[]> {
+    return this.http.get<IGestComment[]>(`${this.url}${this.endpoint}/comments/${aspiranteId}`)
+      .pipe(catchError(this.handleError));
   }
 
-  // Método para eliminar un comentario
-  deleteComment(commentId: string, aspiranteId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete-comment/${commentId}`, { body: { aspiranteId } })
-      .pipe(catchError(this.handleError)); // Agrega el manejo de errores
+  // 4. Agregar comentario a un aspirante
+  addCommentToAspirante(aspiranteId: string, text: string, createdBy: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.url}${this.endpoint}/add-comment`, { aspiranteId, text, createdBy })
+      .pipe(catchError(this.handleError));
   }
 
-  // Método para actualizar el estado de un documento
-  updateDocumentStatus(aspiranteId: string, link: string, status: string): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/update-status/${aspiranteId}`, { link, status })
-      .pipe(catchError(this.handleError)); // Agrega el manejo de errores
+  // 5. Eliminar un comentario de un aspirante
+  deleteComment(commentId: string, aspiranteId: string): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.url}${this.endpoint}/delete-comment/${commentId}`, { body: { aspiranteId } })
+      .pipe(catchError(this.handleError));
   }
+
+  // Método de manejo de errores
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'Ocurrió un error';
+    if (error.error instanceof ErrorEvent) {
+      // Error del cliente
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Error del servidor
+      errorMessage = `Error código: ${error.status}, mensaje: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+
   
 }

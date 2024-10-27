@@ -6,7 +6,7 @@ import { EditCallModule } from './edit-call/edit-call.module';
 import { CreateCallModule } from './create-call/create-call.module';
 import { ApplicantsModule } from './applicants/applicants.module';
 import { EnrolledStudentsModule } from './enrolled-students/enrolled-students.module';
-
+import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/gest-doc-students.component';
 
 @NgModule({
   declarations: [HomeAdminComponent, ],
@@ -18,6 +18,7 @@ import { EnrolledStudentsModule } from './enrolled-students/enrolled-students.mo
     CreateCallModule,
     ApplicantsModule,
     EnrolledStudentsModule,
+    
   ],
 })
 export class HomeAdminModule {}
