@@ -1,3 +1,6 @@
+<app-btn-ver-documentos-adm></app-btn-ver-documentos-adm>
+
+
 <div
   class="modal"
   tabindex="-1"
@@ -7,8 +10,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Documentos de {{ studentName }}</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="toggleModal()"></button>
+        <h5 class="modal-title">Documentos de {{ studentName }} - Estado: {{ studentStatus }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
       </div>
       <div class="modal-body">
         <div class="container mt-4 mb-1">
@@ -21,20 +24,20 @@
                   <div class="list-group mt-4">
                     <div
                       class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-                      *ngFor="let document of studentDocuments; let i = index"
+                      *ngFor="let document of studentDocuments "
                     >
                       <div class="d-flex align-items-center">
                         <i
-                          *ngIf="document.iconStatus === 'approved'"
+                          *ngIf="document.status === 'approved'"
                           class="bi bi-check-circle me-2 text-success"
                         ></i>
                         <i
                           *ngIf="document.iconStatus === 'rejected'"
                           class="bi bi-x-circle me-2 text-danger"
                         ></i>
-                        <strong>{{ documentNames[i] }}</strong>
+                        <strong>{{ document.name }}</strong>
                         <span class="badge-custom" [ngClass]="getBadgeClass(document.status)">
-                          {{ statusTranslation[document.status] || document.status }}
+                          {{ document.status }}
                         </span>
                       </div>
                       <div class="button-group d-flex justify-content-start mt-2">
@@ -42,8 +45,8 @@
                           <i class="bi bi-eye"></i> Ver Documento
                         </button>
                         <div class="d-flex">
-                          <button class="btn btn-success btn-sm mx-1" (click)="acceptDocument(i)">Aceptar</button>
-                          <button class="btn btn-danger btn-sm mx-1" (click)="rejectDocument(i)">Rechazar</button>
+                          <button class="btn btn-success btn-sm mx-1" (click)="approveDocument(document)">Aceptar</button>
+                          <button class="btn btn-danger btn-sm mx-1" (click)="rejectDocument(document)">Rechazar</button>
                         </div>
                       </div>
                     </div>
@@ -59,20 +62,20 @@
                   <div class="list-group mt-4">
                     <div
                       class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-                      *ngFor="let document of tutorDocuments; let i = index"
+                      *ngFor="let document of tutorDocuments"
                     >
                       <div class="d-flex align-items-center">
                         <i
-                          *ngIf="document.iconStatus === 'approved'"
+                          *ngIf="document.status === 'approved'"
                           class="bi bi-check-circle me-2 text-success"
                         ></i>
                         <i
-                          *ngIf="document.iconStatus === 'rejected'"
+                          *ngIf="document.status === 'rejected'"
                           class="bi bi-x-circle me-2 text-danger"
                         ></i>
-                        <strong>{{ tutorDocumentNames[i] }}</strong>
+                        <strong>{{ document.name}}</strong>
                         <span class="badge-custom" [ngClass]="getBadgeClass(document.status)">
-                          {{ statusTranslation[document.status] || document.status }}
+                          {{ document.status }}
                         </span>
                       </div>
                       <div class="button-group d-flex justify-content-start mt-2">
@@ -80,8 +83,8 @@
                           <i class="bi bi-eye"></i> Ver Documento
                         </button>
                         <div class="d-flex">
-                          <button class="btn btn-success btn-sm mx-1" (click)="acceptDocument(i, true)">Aceptar</button>
-                          <button class="btn btn-danger btn-sm mx-1" (click)="rejectDocument(i, true)">Rechazar</button>
+                          <button class="btn btn-success btn-sm mx-1" (click)="approveDocument(document)">Aceptar</button>
+                          <button class="btn btn-danger btn-sm mx-1" (click)="rejectDocument(document)">Rechazar</button>
                         </div>
                       </div>
                     </div>
@@ -91,9 +94,14 @@
             </div>
           </div>
 
+        <!--
           <div class="d-flex justify-content-end mt-3">
             <button class="btn btn-success me-2" (click)="acceptAll()">Aceptar Todo</button>
             <button class="btn btn-danger" (click)="rejectAll()">Rechazar Todo</button>
+          </div>
+        --><div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-success me-2" >Aceptar Todo</button>
+            <button class="btn btn-danger" >Rechazar Todo</button>
           </div>
           
           <!-- Comentarios -->
@@ -103,11 +111,11 @@
                 <div class="card-body">
                   <h5 class="card-title">Comentarios del Promotor</h5>
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item" *ngFor="let comment of comments; let i = index">
+                    <li class="list-group-item" *ngFor="let comment of comments">
                       <p>
-                        <i class="bi bi-chat-left i-color me-1"></i> {{ comment }}
+                        <i class="bi bi-chat-left i-color me-1"></i> {{ comment.text }}
                       </p>
-                      <button class="btn btn-outline-danger btn-sm" (click)="deleteComment(i)" title="Eliminar comentario">
+                      <button class="btn btn-outline-danger btn-sm" (click)="deleteComment(comment.id)" title="Eliminar comentario">
                         <i class="bi bi-trash"></i>
                       </button>
                     </li>
@@ -132,7 +140,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="toggleModal()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
       </div>
     </div>
   </div>
