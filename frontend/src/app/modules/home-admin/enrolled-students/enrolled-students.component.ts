@@ -1,13 +1,39 @@
-import { Component } from '@angular/core';
+import { Component , ViewChild  } from '@angular/core';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 import { IStudentDocDocument } from 'models/istudentdoc.metadata';
-
+import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/gest-doc-students.component';
 @Component({
   selector: 'app-enrolled-students',
   templateUrl: './enrolled-students.component.html',
   styleUrls: ['./enrolled-students.component.css']
 })
 export class EnrolledStudentsComponent {
+
+
+  
+  @ViewChild(GestDocStudentsComponent) gestDocModal!: GestDocStudentsComponent;
+
+  openModal() {
+    this.gestDocModal.openModal();
+    
+
+  }
+
+  viewDocuments(aspiranteId: string) {
+    console.log("Ver documentos de aspirante con ID:", aspiranteId);
+    // Lógica adicional para manejar la visualización de documentos
+    
+  }
+
+
+  selectedAspiranteId!: string;
+
+  onAspiranteIdReceived(aspiranteId: string) {  // Aquí se define correctamente el parámetro
+    this.selectedAspiranteId = aspiranteId;
+    console.log("ID recibido en EnrolledStudentsComponent:", this.selectedAspiranteId); // Verificar aquí
+    this.gestDocModal.aspiranteId = this.selectedAspiranteId; // Asigna el ID al modal
+    this.gestDocModal.openModal(); // Abre el modal aquí
+  }
   students: IStudentDocDocument[] = [];
   filteredStudents: IStudentDocDocument[] = []; // Array para almacenar los resultados filtrados
   currentPage = 1;
@@ -17,6 +43,9 @@ export class EnrolledStudentsComponent {
 
   constructor(private studentdocService: StudentdocService) {}
 
+
+
+  
   ngOnInit() {
     this.loadStudents(); // Cargar los estudiantes al inicio
   }
@@ -26,6 +55,8 @@ export class EnrolledStudentsComponent {
       .subscribe(response => {
         if (!response.error) {
           this.students = response.data;
+          console.log("Respuesta de estudiantes:", response.data);
+
           this.filteredStudents = this.students; // Inicialmente muestra todos los estudiantes
           this.totalPages = response.data.totalPages; // Ajustar para obtener el total de páginas
           this.noMoreStudents = this.students.length === 0; // Actualiza la bandera
@@ -36,6 +67,7 @@ export class EnrolledStudentsComponent {
         console.error('Error fetching students:', error);
         this.noMoreStudents = true; // Mostrar el mensaje si hay un error
       });
+      
   }
 
   onSearchInput(event: Event) {

@@ -54,6 +54,7 @@ export class StudentdocService extends GenericServiceService<IStudentDocDocument
   }
 
 
+  
    // Método para obtener los estudiantes inscritos con paginación y filtro opcional por nombre
    getEnrolledStudents(page: number = 1, name?: string): Observable<{ error: boolean; msg: string; data: any | null }> {
     let params = new HttpParams().set('page', page.toString());
