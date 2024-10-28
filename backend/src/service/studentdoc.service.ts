@@ -108,6 +108,8 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
     aspiranteId: string,
   ): Promise<void> {
     try {
+      console.log(commentId);
+      console.log(aspiranteId);
       const studentDocSnapshot = await this.firestore
         .collection('StudentDocDocument')
         .where('aspiranteId', '==', aspiranteId)

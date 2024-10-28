@@ -345,27 +345,27 @@ export class GestDocStudentsComponent {
 
   deleteComment(commentId: string): void {
     console.log('Esto estamos enviando', commentId, this.aspiranteId);
+    
     this.gestDocumentsService
-      .deleteComment(commentId, this.aspiranteId)
+      .deleteComment( commentId,this.aspiranteId)
       .subscribe(
         () => {
-          this.comments = this.comments.filter(
-            (comment) => comment.id !== commentId
-          );
+          // Remueve el comentario de la lista local
+          this.comments = this.comments.filter((comment) => comment.id !== commentId);
+          Swal.fire('Comentario Eliminado con éxito', )
         },
         (error) => {
-          console.log('Esto estamos enviando', commentId, this.aspiranteId);
-          console.log(error + ' ' + error.error);
-          setTimeout(() => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error al borrar comentario',
-              text: error,
-            });
-          }, 750);
+          console.error('Error al eliminar el comentario:', error);
+          // Mostrar mensaje de error usando SweetAlert
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al borrar comentario',
+            text: error?.error?.message || 'Ocurrió un error inesperado.',
+          });
         }
       );
   }
+  
 
   updateAllStatus(status: 'approved' | 'rejected'): void {
     this.gestDocumentsService

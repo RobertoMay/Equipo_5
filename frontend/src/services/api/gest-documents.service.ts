@@ -70,20 +70,18 @@ export class GestDocumentsService extends GenericServiceService<IGestStudentDocu
   }
 
   // 5. Eliminar un comentario de un aspirante
-  // Eliminar un comentario de un aspirante
-  deleteComment(
-    commentId: string,
-    aspiranteId: string
-  ): Observable<{ message: string }> {
-    return this.http
-      .delete<{ message: string }>(
-        `${this.url}${this.endpoint}/delete-comment/${commentId}`,
-        {
-          body: aspiranteId,
-        }
-      )
-      .pipe(catchError(this.handleError));
-  }
+ // Service para eliminar un comentario de un aspirante
+deleteComment(
+  aspiranteId: string,
+  commentId: string
+): Observable<{ message: string }> {
+  return this.http
+    .delete<{ message: string }>(`${this.url}${this.endpoint}/delete-comment/${commentId}`, {
+      body: { aspiranteId },
+    })
+    .pipe(catchError(this.handleError));
+}
+
 
   // Aprovar o rechazar todos los documentos del aspirante
   updateAllDocumentsStatus(
