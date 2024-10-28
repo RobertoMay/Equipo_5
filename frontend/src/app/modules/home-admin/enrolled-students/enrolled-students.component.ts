@@ -1,36 +1,54 @@
-import { Component , ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 import { IStudentDocDocument } from 'models/istudentdoc.metadata';
 import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/gest-doc-students.component';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { LoadingService } from 'services/global/loading.service';
+
 @Component({
   selector: 'app-enrolled-students',
   templateUrl: './enrolled-students.component.html',
-  styleUrls: ['./enrolled-students.component.css']
+  styleUrls: ['./enrolled-students.component.css'],
 })
-export class EnrolledStudentsComponent {
-
-
-  
+export class EnrolledStudentsComponent implements OnInit {
   @ViewChild(GestDocStudentsComponent) gestDocModal!: GestDocStudentsComponent;
+
+  constructor(
+    private studentdocService: StudentdocService,
+    private _ngxUiLoaderService: NgxUiLoaderService,
+    private loadingService: LoadingService
+  ) {}
+
+  ngOnInit() {
+    this.loadStudents();
+
+    this.loadingService.loading$.subscribe((isLoading) => {
+      if (isLoading) {
+        this._ngxUiLoaderService.start();
+      } else {
+        this._ngxUiLoaderService.stop();
+      }
+    });
+  }
 
   openModal() {
     this.gestDocModal.openModal();
-    
-
   }
 
   viewDocuments(aspiranteId: string) {
-    console.log("Ver documentos de aspirante con ID:", aspiranteId);
+    console.log('Ver documentos de aspirante con ID:', aspiranteId);
     // Lógica adicional para manejar la visualización de documentos
-    
   }
-
 
   selectedAspiranteId!: string;
 
-  onAspiranteIdReceived(aspiranteId: string) {  // Aquí se define correctamente el parámetro
+  onAspiranteIdReceived(aspiranteId: string) {
+    // Aquí se define correctamente el parámetro
     this.selectedAspiranteId = aspiranteId;
-    console.log("ID recibido en EnrolledStudentsComponent:", this.selectedAspiranteId); // Verificar aquí
+    console.log(
+      'ID recibido en EnrolledStudentsComponent:',
+      this.selectedAspiranteId
+    ); // Verificar aquí
     this.gestDocModal.aspiranteId = this.selectedAspiranteId; // Asigna el ID al modal
     this.gestDocModal.openModal(); // Abre el modal aquí
   }
@@ -41,33 +59,31 @@ export class EnrolledStudentsComponent {
   searchNameInput = '';
   noMoreStudents = false; // Bandera para mostrar el mensaje de "no hay más estudiantes"
 
-  constructor(private studentdocService: StudentdocService) {}
-
-
-
-  
-  ngOnInit() {
-    this.loadStudents(); // Cargar los estudiantes al inicio
-  }
-
   loadStudents() {
-    this.studentdocService.getEnrolledStudents(this.currentPage, this.searchNameInput)
-      .subscribe(response => {
-        if (!response.error) {
-          this.students = response.data;
-          console.log("Respuesta de estudiantes:", response.data);
+    this.loadingService.startLoading();
+    this.studentdocService
+      .getEnrolledStudents(this.currentPage, this.searchNameInput)
+      .subscribe(
+        (response) => {
+          if (!response.error) {
+            this.loadingService.stopLoading();
+            this.students = response.data;
+            console.log('Respuesta de estudiantes:', response.data);
 
-          this.filteredStudents = this.students; // Inicialmente muestra todos los estudiantes
-          this.totalPages = response.data.totalPages; // Ajustar para obtener el total de páginas
-          this.noMoreStudents = this.students.length === 0; // Actualiza la bandera
-        } else {
-          console.error(response.msg);
+            this.filteredStudents = this.students; // Inicialmente muestra todos los estudiantes
+            this.totalPages = response.data.totalPages; // Ajustar para obtener el total de páginas
+            this.noMoreStudents = this.students.length === 0; // Actualiza la bandera
+          } else {
+            this.loadingService.stopLoading();
+            console.error(response.msg);
+          }
+        },
+        (error) => {
+          this.loadingService.stopLoading();
+          console.error('Error fetching students:', error);
+          this.noMoreStudents = true; // Mostrar el mensaje si hay un error
         }
-      }, error => {
-        console.error('Error fetching students:', error);
-        this.noMoreStudents = true; // Mostrar el mensaje si hay un error
-      });
-      
+      );
   }
 
   onSearchInput(event: Event) {
@@ -77,19 +93,21 @@ export class EnrolledStudentsComponent {
   }
 
   filterStudents() {
-    this.filteredStudents = this.students.filter(student => {
+    this.filteredStudents = this.students.filter((student) => {
       const name = student.name?.toLowerCase() || ''; // Manejar undefined
       const lastName1 = student.lastName1?.toLowerCase() || ''; // Manejar undefined
       const lastName2 = student.lastName2?.toLowerCase() || ''; // Manejar undefined
-      return name.includes(this.searchNameInput) || 
-             lastName1.includes(this.searchNameInput) || 
-             lastName2.includes(this.searchNameInput);
+      return (
+        name.includes(this.searchNameInput) ||
+        lastName1.includes(this.searchNameInput) ||
+        lastName2.includes(this.searchNameInput)
+      );
     });
 
     // Actualiza la bandera de no más estudiantes
     this.noMoreStudents = this.filteredStudents.length === 0;
   }
-  
+
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
@@ -98,8 +116,8 @@ export class EnrolledStudentsComponent {
   }
 
   getPagesArray(): number[] {
-    return Array(this.totalPages).fill(0).map((_, i) => i + 1);
+    return Array(this.totalPages)
+      .fill(0)
+      .map((_, i) => i + 1);
   }
-
-  
 }

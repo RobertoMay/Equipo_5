@@ -26,42 +26,76 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
 .btn-close {
-  background-color:#f70a0a ;
+  background-color: #f70a0a;
   border: none;
   position: absolute;
   top: 15px;
   right: 15px;
   font-size: 1.7rem; /* Ajusta el tamaño del icono */
   cursor: pointer;
- /* color: #fff;*/
+  /* color: #fff;*/
 }
 
 .btn-close i {
   font-size: 2rem; /* Tamaño del icono */
   font-weight: bold;
   color: #fff;
-
 }
 
+.max {
+  max-width: 300px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+}
 
+.bg-gold {
+  background-color: #bca521 !important; /* Color dorado */
+  color: #ffffff; /* Color de texto para asegurar buena visibilidad */
+}
 
 .badge-custom {
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.85rem;
+  display: inline-block;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.badge-approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-uploaded {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.badge-default {
+  background-color: #e2e3e5;
+  color: #383d41;
 }
 
 .btn-view {
-  
-
   padding: 5px 10px; /* Reducir el padding para hacer el botón más bajo */
   font-size: 14px; /* Ajustar el tamaño de fuente si es necesario */
   line-height: 1.2; /* Ajustar la altura de línea */
 }
 
-.btn-success, .btn-danger {
+.btn-success,
+.btn-danger {
   padding: 5px 10px;
   margin-left: 10px;
 }
@@ -77,6 +111,9 @@
   border: 1px solid #ddd;
 }
 
+.list-group-item button {
+  margin-left: auto;
+}
 
 /* Botón de grupo */
 .button-group {

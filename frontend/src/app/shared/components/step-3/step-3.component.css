@@ -52,6 +52,10 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.border-success {
+  border-color: #28a745 !important;
+}
+
 .list-group-item {
   padding: 1rem;
   transition: background-color 0.3s;

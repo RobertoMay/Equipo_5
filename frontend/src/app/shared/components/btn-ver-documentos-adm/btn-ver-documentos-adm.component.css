@@ -17,30 +17,50 @@
     margin-top: 8px;
     font-size: 28px;
   }*/
-  
 
-  .start-btn {
-    background-color: #b1285c;
-    border-color: #b1285c;
-    display: flex; /* Añadido para usar flexbox */
-    flex-direction: row; /* Cambiado a 'row' para colocar el icono a la derecha */
-    align-items: center; /* Centra verticalmente el contenido */
-    padding: 5px 10px; /* Opcional: para darle más espacio interno al botón */
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+.start-btn {
+  background-color: #b1285c;
+  border-color: #b1285c;
+  display: flex; /* Añadido para usar flexbox */
+  flex-direction: row; /* Cambiado a 'row' para colocar el icono a la derecha */
+  align-items: center; /* Centra verticalmente el contenido */
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .start-btn i {
-    margin-left: 8px; /* Añadido: espacio entre el texto y el icono */
-    font-size: 18px;
+  margin-left: 8px; /* Añadido: espacio entre el texto y el icono */
+  font-size: 18px;
 }
 
 .start-btn:hover {
-    background-color: #ff6b9a; /* Magenta más claro */
-    border-color: #ff6b9a;
+  background-color: #ff6b9a; /* Magenta más claro */
+  border-color: #ff6b9a;
 }
 
- 
+@media (max-width: 965px) {
+  .start-btn {
+    font-size: 11px;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .start-btn {
+    font-size: 11px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .btn-text {
+    display: none;
+  }
+
+  .start-btn i {
+    font-size: 20px;
+    margin-left: 0;
+  }
+}
