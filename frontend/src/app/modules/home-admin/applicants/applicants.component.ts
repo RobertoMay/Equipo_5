@@ -9,13 +9,13 @@ import { StudentService } from 'services/api/student/student.service';
 })
 export class ApplicantsComponent implements OnInit{
   students: IStudentDocDocument[] = [];
-  filteredStudents: IStudentDocDocument[] = [];
-  currentPage = 1;
+  filteredStudents: IStudentDocDocument[] = []; // Para filtrar todo lo que tenga la Barra de busqueda
+  currentPage = 1; //para la paginacion 
   totalPages = 1;
-  searchName = '';
+  searchName = ''; //Para que la barra de busqueda no tenga nada
   searchNameInput = '';
   noMoreStudents = false; // Bandera para mostrar el mensaje de "no hay más estudiantes"
-  alumno: any;
+  alumno: any; 
 
   constructor(private studentService: StudentService) {}
 
@@ -27,9 +27,9 @@ export class ApplicantsComponent implements OnInit{
     this.studentService.getNotEnrolledStudents(this.currentPage, this.searchName).subscribe(response => {
       if (!response.error) {
         console.log(response);
-        this.students = response.data; // Asegúrate de que esta asignación es correcta
-        this.filteredStudents = this.students;
-        this.totalPages = response.data.totalPages;
+        this.students = response.data; // Informacion de la variable students
+        this.filteredStudents = this.students; //Para buscar a los estudiantes de acuerdo a lo que escribamos en el buscador
+        this.totalPages = response.data.totalPages; //Guardamos el total de paginas que tiene la lista de los estudiantes
       } else {
         console.error(response.msg);
       }
@@ -41,9 +41,10 @@ export class ApplicantsComponent implements OnInit{
   onSearchInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.searchNameInput = inputElement.value.toLowerCase();
-    this.filterStudents(); // Llama al método de filtrado cuando se escribe en el input
+    this.filterStudents(); // Llama al método de filtrado cuando se escribe en el buscador
   }
 
+  //Es el metodo para buscar el nombre de los estudiantes dependiendo de lo que se escriba en el buscador
   filterStudents() {
     this.filteredStudents = this.students.filter(student => {
       const name = student.name?.toLowerCase() || ''; // Manejar undefined
@@ -58,6 +59,7 @@ export class ApplicantsComponent implements OnInit{
     this.noMoreStudents = this.filteredStudents.length === 0;
   }
 
+  //Para la paginacion (Cambiar de pagina)
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;

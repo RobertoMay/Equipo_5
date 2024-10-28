@@ -14,7 +14,7 @@ export class StudentService extends GenericServiceService<IStudentDocDocument> {
   }
 
   getNotEnrolledStudents(
-    page: number = 1,
+    page: number = 1, 
     name?: string
   ): Observable<{ error: boolean; msg: string; data: any | null }> {
     let params = new HttpParams().set('page', page.toString());
@@ -22,6 +22,7 @@ export class StudentService extends GenericServiceService<IStudentDocDocument> {
       params = params.set('name', name);
     }
 
+    //Para devolver lo que trae el Observable
     return this.http.get<any>(`${this.url}${this.endpoint}/not-enrolled`, { params }).pipe(
       map((response) => ({
         error: false,
