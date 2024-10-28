@@ -1,7 +1,7 @@
 import { IBaseModel } from '@shared/base-model';
 
 export interface IComments extends IBaseModel {
-  text: string;
+  comment: string;
   createdAt: string;
   createdBy: string;
 }

@@ -27,7 +27,7 @@
 
     <div class="row mb-4 mt-5">
         <div class="col-12 col-md-6">
-            <div class=" card card-documents">
+            <div class=" card card-documents" [ngClass]="{'border-success': isAccepted}">
                 <div class="card-body">
                     <h4 class="card-title">Documentos del Alumno</h4>
                     <div class="list-group mt-4">
@@ -127,7 +127,7 @@
             </div>
         </div>
         <div class="col-12 col-md-6 mt-3 mt-md-0">
-            <div class="card card-documents">
+            <div class="card card-documents" [ngClass]="{'border-success': isAccepted}">
                 <div class="card-body">
                     <h4 class="card-title">Documentos del Tutor</h4>
                     <div class="list-group mt-4">
@@ -190,13 +190,13 @@
 
     <div *ngIf="comments.length > 0" class="row mt-4">
         <div class="col-12">
-            <div class="card card-comments">
+            <div class="card card-comments" [ngClass]="{'border-success': isAccepted}">
                 <div class="card-body">
                     <h5 class="card-title">Comentarios del Promotor</h5>
                     <ul class="list-group list-group-flush">
 
                         <li class="list-group-item" *ngFor="let comment of comments">
-                            <p> <i class="bi bi-chat-left i-color me-1"></i> {{ comment.text }}</p>
+                            <p> <i class="bi bi-chat-left i-color me-1"></i> {{ comment.comment }}</p>
                         </li>
                     </ul>
                 </div>

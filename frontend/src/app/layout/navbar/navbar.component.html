@@ -23,11 +23,56 @@
 
     <!-- Navbar para promotor (administrador) -->
     <ng-container *ngIf="isAdmin && !isHome ; else studentNavbar">
-      <li><a routerLink="/admin/applicants">Por inscribirse</a></li>
-      <li><a routerLink="/admin/enrolled">Inscritos</a></li>
-      <!-- <li><a routerLink="/admin/enrolled">Crear convocatoria</a></li> -->
-      <li><a routerLink="/admin/edit-call">Editar convocatoria</a></li>
+      <!--
+      
+    
+    -->
+      <li><a routerLink="/admin">Inicio</a></li>
+
+
+      <!-- Opción desplegable Generales -->
+      <!-- <li class="dropdown"
+    (mouseenter)="!isMobile &&showDropdown('generales')" 
+    (mouseleave)=" !isMobile &&hideDropdown('generales')"
+    (click)="isMobile && toggleDropdown('generales')"
+    > -->
+      <li>
+        <a routerLink="/#">Generales</a>
+        <!-- <ul [ngClass]="{'dropdown-menu': true, 'show': dropdowns.generales}">
+    
+        <li><a routerLink="/">Inicio</a></li>
+        <li><a routerLink="/about-us">Nosotros</a></li>
+        <li><a routerLink="/activities">Actividades</a></li>
+        <li><a routerLink="/registration">Inscripción</a></li>
+
+      </ul> -->
+      </li>
+
+      <!-- Opción desplegable Alumnos -->
+      <li class="dropdown" (mouseenter)="!isMobile &&showDropdown('alumnos')"
+        (mouseleave)="!isMobile && hideDropdown('alumnos')" (click)="isMobile && toggleDropdown('alumnos')">
+
+
+        <a class="dropdown-toggle">Alumnos</a>
+        <ul [ngClass]="{'dropdown-menu': true, 'show': dropdowns.alumnos}">
+          <li><a routerLink="/admin/applicants">Por inscribirse</a></li>
+          <li><a routerLink="/admin/enrolled">Inscritos</a></li>
+        </ul>
+      </li>
+
+
+      <!-- Opción desplegable Convocatoria -->
+      <li class="dropdown" (mouseenter)=" !isMobile && showDropdown('convocatoria')"
+        (mouseleave)="!isMobile && hideDropdown('convocatoria')" (click)="isMobile && toggleDropdown('convocatoria')">
+        <a class="dropdown-toggle">Convocatoria</a>
+        <ul [ngClass]="{'dropdown-menu': true, 'show': dropdowns.convocatoria}">
+          <li><a routerLink="/admin/create-call">Crear</a></li>
+          <li><a routerLink="/admin/edit-call">Editar</a></li>
+        </ul>
+      </li>
+
       <li><a (click)="logout()">Cerrar sesión</a></li>
+
 
     </ng-container>
 

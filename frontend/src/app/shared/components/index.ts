@@ -6,6 +6,8 @@ import { RegistrationProcessComponent } from './registration-process/registratio
 import { Step3Component } from './step-3/step-3.component';
 import { FileBtnComponent } from './file-btn/file-btn.component';
 import { ButtonPdfComponent } from './button-pdf/button-pdf.component';
+import { BtnVerDocumentosAdmComponent } from './btn-ver-documentos-adm/btn-ver-documentos-adm.component';
+import { GestDocStudentsComponent } from './gest-doc-students/gest-doc-students.component';
 
 export const components: any = [
   CarrouselComponent,
@@ -15,6 +17,8 @@ export const components: any = [
   Step3Component,
   FileBtnComponent,
   ButtonPdfComponent,
+  BtnVerDocumentosAdmComponent,
+  GestDocStudentsComponent,
 ];
 
 // Export all components
@@ -24,3 +28,5 @@ export * from './calls/calls.component';
 export * from './registration-process/registration-process.component';
 export * from './step-3/step-3.component';
 export * from './file-btn/file-btn.component';
+export * from './btn-ver-documentos-adm/btn-ver-documentos-adm.component';
+export * from './gest-doc-students/gest-doc-students.component';

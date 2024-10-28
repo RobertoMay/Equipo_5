@@ -19,7 +19,7 @@
                     </button>
 
                     <!-- Mostrar botones de editar y eliminar -->
-                    <input type="file" class="d-none" (change)="editFile($event)" #btnEditFile />
+                    <input type="file" class="d-none" (change)="editFile($event)" accept=".pdf" #btnEditFile />
                     <button class="btn btn-light btn-sm custom-button me-2" (click)="btnEditFile.click()">
                         <i class="bi bi-pen"></i>
                     </button>
@@ -31,7 +31,7 @@
                 <!-- Mostrar solo el botón de subir archivo cuando está en pending -->
                 <ng-template #pendingActions>
                     <ng-container *ngIf="document.status === 'pending'">
-                        <input type="file" class="d-none" (change)="uploadFile($event)" #btnUpload />
+                        <input type="file" class="d-none" (change)="uploadFile($event)" accept=".pdf" #btnUpload />
                         <button class="btn btn-light btn-sm custom-button" (click)="btnUpload.click()">
                             <i class="bi bi-file-earmark-arrow-up"></i> Subir Archivo
                         </button>

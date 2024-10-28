@@ -122,8 +122,88 @@
   
 }
 
+
+
+/* Menú dropdown en móvil */
+.dropdown-menu {
+  position: relative; /* Permitir que se alinee al padre */
+  top: 18px;
+  left: 0;
+  width: 90%;
+  opacity: 1;
+  transform: none;
+  box-shadow: #ec4967;
+  
 }
 
+/* Mostrar/ocultar submenús en móvil como acordeón */
+.dropdown-menu.show {
+  display: block;
+  max-height: 250px;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+}
+
+}
+
+/* Estilos para el dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block; /* Asegura que el dropdown ocupe el espacio del botón */
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #b41e46;
+  border-radius: 6px;
+  padding: 4px 15;
+  margin-top: 8px;
+  list-style: none;
+  z-index: 11;
+  opacity: 0;
+  min-width: 100%; /* Establece el ancho mínimo igual al botón */
+  transition: opacity 0.3s ease , transform 0.3s ease;
+  left: 0; /* Alinea el menú con el borde izquierdo del botón */
+
+  transform: translateY(10px); /* Inicia unos px más arriba */
+  box-shadow: 0 4px 8px rgba(20, 20, 20, 0.15); /* Sombra suave */
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  text-align: center;
+  width: 100%; /* Asegura que los elementos internos ocupen todo el ancho */
+  padding: 4px 15px; /* Reduce padding vertical en el menú desplegable */
+  margin: 0;
+}
+
+.dropdown-menu li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  display: block; /* Hace que el enlace ocupe todo el ancho del menú */
+
+}
+
+.dropdown-menu li a:hover {
+  background-color: #ec4967;
+  
+}
+
+.dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0); /* Transición hacia su posición */
+}
 
 
 

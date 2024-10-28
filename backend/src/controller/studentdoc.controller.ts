@@ -14,8 +14,7 @@ import {
   HttpStatus,
   HttpCode,
   Query,
-  Delete
-
+  Delete,
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -29,15 +28,17 @@ import * as crypto from 'crypto';
 const endpoint = 'api/studentdoc';
 
 // Crear el controlador genérico para 'studentDocs'
-const GenericStudentDocController = createGenericController<StudentDocDocument>(StudentDocDocument.collectionName, endpoint);
-
+const GenericStudentDocController = createGenericController<StudentDocDocument>(
+  StudentDocDocument.collectionName,
+  endpoint,
+);
 
 @Controller(endpoint)
 export class StudentDocController extends GenericStudentDocController {
   constructor(private readonly studentdocService: StudenDocService) {
     super(); // Llama al constructor del controlador genérico
   }
-//Agregar un comentario
+  //Agregar un comentario
   @Post('/add-comment')
   async addCommentToAspirante(
     @Body('aspiranteId') aspiranteId: string,
@@ -45,7 +46,11 @@ export class StudentDocController extends GenericStudentDocController {
     @Body('createdBy') createdBy: string,
   ) {
     try {
-      await this.studentdocService.addCommentToAspirante(aspiranteId, text, createdBy);
+      await this.studentdocService.addCommentToAspirante(
+        aspiranteId,
+        text,
+        createdBy,
+      );
       return { message: 'Comentario agregado correctamente' };
     } catch (error) {
       console.error('Error al agregar el comentario:', error);
@@ -55,40 +60,43 @@ export class StudentDocController extends GenericStudentDocController {
       );
     }
   }
-//Obtener comentarios
+  //Obtener comentarios
   @Get('/comments/:aspiranteId')
-async getCommentsByStudent(@Param('aspiranteId') aspiranteId: string) {
-  try {
-    const comments = await this.studentdocService.getCommentsByStudent(aspiranteId);
-    return comments;
-  } catch (error) {
-    console.error('Error al obtener los comentarios:', error);
-    throw new HttpException(
-      { message: 'Error al obtener los comentarios', details: error.message },
-      HttpStatus.INTERNAL_SERVER_ERROR,
-    );
+  async getCommentsByStudent(@Param('aspiranteId') aspiranteId: string) {
+    try {
+      const comments =
+        await this.studentdocService.getCommentsByStudent(aspiranteId);
+      return comments;
+    } catch (error) {
+      console.error('Error al obtener los comentarios:', error);
+      throw new HttpException(
+        { message: 'Error al obtener los comentarios', details: error.message },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
-}
-//Eliminar un comentario
-@Delete('/delete-comment/:commentId')
-async deleteCommentFromStudent(
-  @Param('commentId') commentId: string,
-  @Body('aspiranteId') aspiranteId: string,
-) {
-  try {
-    await this.studentdocService.deleteCommentFromStudent(aspiranteId, commentId);
-    return { message: 'Comentario eliminado correctamente' };
-  } catch (error) {
-    console.error('Error al eliminar el comentario:', error);
-    throw new HttpException(
-      { message: 'Error al eliminar el comentario', details: error.message },
-      HttpStatus.INTERNAL_SERVER_ERROR,
-    );
+  //Eliminar un comentario
+  @Delete('/delete-comment/:commentId')
+  async deleteCommentFromStudent(
+    @Param('commentId') commentId: string,
+    @Body() body: { aspiranteId: string },
+  ) {
+    try {
+      await this.studentdocService.deleteCommentFromStudent(
+        body.aspiranteId,
+        commentId,
+      );
+      return { message: 'Comentario eliminado correctamente' };
+    } catch (error) {
+      console.error('Error al eliminar el comentario:', error);
+      throw new HttpException(
+        { message: 'Error al eliminar el comentario', details: error.message },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
-}
 
-  
-// Endpoint para agregar un documento a un aspirante existente  
+  // Endpoint para agregar un documento a un aspirante existente
   @Post('/add-document')
   @UseInterceptors(FileInterceptor('file'))
   async addDocumentToAspirante(
@@ -124,78 +132,90 @@ async deleteCommentFromStudent(
       }
     }
   }
- // Endpoint para editar un documento de un aspirante
- @Post('/edit-document')
- @UseInterceptors(FileInterceptor('document'))
- async editDocument(
-   @Body('aspiranteId') aspiranteId: string,
-   @Body('documentType') documentType: string,
-   @Body('documentName') documentName: string,
-   @UploadedFile() document: Express.Multer.File,
- ): Promise<void> {
-   try {
-     if (!document) {
-       throw new BadRequestException('El archivo del documento es requerido');
-     }
+  // Endpoint para editar un documento de un aspirante
+  @Post('/edit-document')
+  @UseInterceptors(FileInterceptor('document'))
+  async editDocument(
+    @Body('aspiranteId') aspiranteId: string,
+    @Body('documentType') documentType: string,
+    @Body('documentName') documentName: string,
+    @UploadedFile() document: Express.Multer.File,
+  ): Promise<void> {
+    try {
+      if (!document) {
+        throw new BadRequestException('El archivo del documento es requerido');
+      }
 
-     const documentBuffer = document.buffer;
+      const documentBuffer = document.buffer;
 
-     // Llamar al servicio para editar el documento del aspirante
-     await this.studentdocService.editDocumentForAspirante(
-       aspiranteId,
-       documentBuffer,
-       documentType,
-       documentName,
-     );
-   } catch (error) {
-     console.error('Error en el controlador al editar el documento del aspirante:', error);
-     if (error instanceof BadRequestException) {
-       throw error;
-     } else {
-       throw new InternalServerErrorException(
-         'Error al intentar editar el documento del aspirante.',
-       );
-     }
-   }
- }
+      // Llamar al servicio para editar el documento del aspirante
+      await this.studentdocService.editDocumentForAspirante(
+        aspiranteId,
+        documentBuffer,
+        documentType,
+        documentName,
+      );
+    } catch (error) {
+      console.error(
+        'Error en el controlador al editar el documento del aspirante:',
+        error,
+      );
+      if (error instanceof BadRequestException) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(
+          'Error al intentar editar el documento del aspirante.',
+        );
+      }
+    }
+  }
 
- // Endpoint para eliminar un documento de un aspirante
- @Post('/delete-document')
- async deleteDocument(
-   @Body('aspiranteId') aspiranteId: string,
-   @Body('documentType') documentType: string,
- ): Promise<void> {
-   try {
-     if (!aspiranteId || !documentType) {
-      console.log('aspiranteId:', aspiranteId);
-console.log('documentType:', documentType);
+  // Endpoint para eliminar un documento de un aspirante
+  @Post('/delete-document')
+  async deleteDocument(
+    @Body('aspiranteId') aspiranteId: string,
+    @Body('documentType') documentType: string,
+  ): Promise<void> {
+    try {
+      if (!aspiranteId || !documentType) {
+        console.log('aspiranteId:', aspiranteId);
+        console.log('documentType:', documentType);
 
-       throw new BadRequestException('Faltan datos requeridos para eliminar el documento');
-     }
- 
-     // Llamar al servicio para eliminar el documento del aspirante
-     await this.studentdocService.deleteDocumentForAspirante(aspiranteId, documentType);
-   } catch (error) {
-     console.error('Error al eliminar el documento del aspirante:', error);
-     if (error instanceof BadRequestException) {
-       throw error;
-     } else {
-       throw new InternalServerErrorException(
-         'Error interno al intentar eliminar el documento. Por favor, inténtelo de nuevo más tarde.',
-       );
-     }
-   }
- }
+        throw new BadRequestException(
+          'Faltan datos requeridos para eliminar el documento',
+        );
+      }
+
+      // Llamar al servicio para eliminar el documento del aspirante
+      await this.studentdocService.deleteDocumentForAspirante(
+        aspiranteId,
+        documentType,
+      );
+    } catch (error) {
+      console.error('Error al eliminar el documento del aspirante:', error);
+      if (error instanceof BadRequestException) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(
+          'Error interno al intentar eliminar el documento. Por favor, inténtelo de nuevo más tarde.',
+        );
+      }
+    }
+  }
   // Endpoint que regresa los datos de un aspirante
   @Get('/student/:aspiranteId')
   async getStudentByAspiranteId(
     @Param('aspiranteId') aspiranteId: string,
   ): Promise<any[]> {
     try {
-      const studentData = await this.studentdocService.getStudentByAspiranteId(aspiranteId);
+      const studentData =
+        await this.studentdocService.getStudentByAspiranteId(aspiranteId);
       return studentData;
     } catch (error) {
-      console.error('Error al obtener datos del estudiante por aspiranteId:', error);
+      console.error(
+        'Error al obtener datos del estudiante por aspiranteId:',
+        error,
+      );
 
       if (error instanceof NotFoundException) {
         throw error;
@@ -225,7 +245,7 @@ console.log('documentType:', documentType);
     }
   }
 
- //Endpoint para mandar a llamar a todos los usuarios o estudiantes sin importar si están inscritos o no
+  //Endpoint para mandar a llamar a todos los usuarios o estudiantes sin importar si están inscritos o no
   @Get('/students')
   async getStudents(
     @Query('page') page: number = 1, // Página solicitada
@@ -258,48 +278,55 @@ console.log('documentType:', documentType);
     }
   }
 
-    // Endpoint para obtener los estudiantes inscritos con paginación
-    @Get('/enrolled')
-    async getEnrolledStudents(
-      @Query('page') page: number = 1,
-      @Query('name') name?: string,
-    ) {
-      try {
-        const students = await this.studentdocService.getEnrolledStudents(page, name);
-        return students;
-      } catch (error) {
-        throw new HttpException(
-          { message: error.message },
-          error instanceof HttpException
-            ? error.getStatus()
-            : HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
+  // Endpoint para obtener los estudiantes inscritos con paginación
+  @Get('/enrolled')
+  async getEnrolledStudents(
+    @Query('page') page: number = 1,
+    @Query('name') name?: string,
+  ) {
+    try {
+      const students = await this.studentdocService.getEnrolledStudents(
+        page,
+        name,
+      );
+      return students;
+    } catch (error) {
+      throw new HttpException(
+        { message: error.message },
+        error instanceof HttpException
+          ? error.getStatus()
+          : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
   // Endpoint para obtener los estudiantes no inscritos con paginación
-    @Get('/not-enrolled')
-    async getNotEnrolledStudents(
-      @Query('page') page: number = 1,
-      @Query('name') name?: string,
-    ) {
-      try {
-        const students = await this.studentdocService.getNotEnrolledStudents(page, name);
-        return students;
-      } catch (error) {
-        throw new HttpException(
-          { message: error.message },
-          error instanceof HttpException
-            ? error.getStatus()
-            : HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
+  @Get('/not-enrolled')
+  async getNotEnrolledStudents(
+    @Query('page') page: number = 1,
+    @Query('name') name?: string,
+  ) {
+    try {
+      const students = await this.studentdocService.getNotEnrolledStudents(
+        page,
+        name,
+      );
+      return students;
+    } catch (error) {
+      throw new HttpException(
+        { message: error.message },
+        error instanceof HttpException
+          ? error.getStatus()
+          : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    // Endpoint actualizar el status de un documento asociado a un aspirante
+  // Endpoint actualizar el status de un documento asociado a un aspirante
   @Put('/update-status/:aspiranteId')
   async updateDocumentStatus(
     @Param('aspiranteId') aspiranteId: string,
-    @Body() body: { link: string; status: 'approved' | 'rejected' | 'uploaded' },
+    @Body()
+    body: { link: string; status: 'approved' | 'rejected' | 'uploaded' },
   ) {
     const { link, status } = body;
 
@@ -309,7 +336,35 @@ console.log('documentType:', documentType);
         link,
         status,
       );
-      return { message: 'Se ha actualizado correctamente el Status del Documento' };
+      return {
+        message: 'Se ha actualizado correctamente el Status del Documento',
+      };
+    } catch (error) {
+      throw new HttpException(
+        { message: error.message },
+        error instanceof HttpException
+          ? error.getStatus()
+          : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // Endpoint para actualizar el estado de todos los documentos de un aspirante
+  @Put('/update-all-status/:aspiranteId')
+  async updateAllDocumentsStatus(
+    @Param('aspiranteId') aspiranteId: string,
+    @Body() body: { status: 'approved' | 'rejected' | 'uploaded' },
+  ) {
+    const { status } = body;
+
+    try {
+      await this.studentdocService.updateAllDocumentsStatus(
+        aspiranteId,
+        status,
+      );
+      return {
+        message: 'Se han actualizado todos los documentos correctamente.',
+      };
     } catch (error) {
       throw new HttpException(
         { message: error.message },

@@ -14,6 +14,8 @@ import { PlatformLocation } from '@angular/common';
 export class NavbarComponent implements OnInit {
   //@ViewChild(LoginComponent) loginComponent!: LoginComponent;
   isMenuOpen = false;
+  isMobile: boolean = false;
+
   isAuthenticated: boolean = false; // Estado de autenticación
   isAdmin: boolean = false; // Estado del rol de usuario
   isHome: boolean = true;
@@ -29,7 +31,7 @@ export class NavbarComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         // Cerrar el menú cuando la navegación finalice
         this.isMenuOpen = false;
-
+        this.updateHomeState(event.urlAfterRedirects);
         this.checkAuthStatus();
 
         this.cdr.detectChanges(); // Asegura que se refresque la vista
@@ -41,6 +43,15 @@ export class NavbarComponent implements OnInit {
     // this.handleBackNavigation();
     //});
   }
+
+
+
+  updateHomeState(currentUrl: string): void {
+    // Cuando la URL es '/', es la página de inicio; de lo contrario, no es inicio
+    this.isHome = currentUrl === '/';
+    console.log('updateHomeState:', 'isHome:', this.isHome);
+  }
+  
 
   // Método para manejar la navegación al hacer "Atrás"
   /*handleBackNavigation() {
@@ -129,6 +140,12 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     // this.isAuthenticated = this.authService.isAuthenticated();
     // this.isAdmin = this.authService.isAdmin();
+    this.isMobile = window.innerWidth <= 768;
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth <= 768;
+    });
+
+
     this.checkAuthStatus(); // Verifica el estado de autenticación inicial
     this.cdr.detectChanges(); // Forzar la actualización del DOM al iniciar
   }
@@ -164,6 +181,25 @@ export class NavbarComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+
+  showDropdown(menu: 'alumnos' | 'convocatoria' | 'generales') {
+    this.dropdowns[menu] = true;
+  }
+  
+  hideDropdown(menu: 'alumnos' | 'convocatoria' | 'generales') {
+    this.dropdowns[menu] = false;
+  }
+
+  dropdowns = {
+    alumnos: false,
+    convocatoria: false,
+    generales: false, 
+  };
+  
+  toggleDropdown(menu: 'alumnos' | 'convocatoria' | 'generales') {
+    this.dropdowns[menu] = !this.dropdowns[menu];
   }
 
   logout() {
