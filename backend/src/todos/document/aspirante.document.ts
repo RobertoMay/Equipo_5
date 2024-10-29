@@ -10,6 +10,7 @@ export class AspiranteDocument {
   esAdministrador?: boolean; 
   periodoinscripcion?: string;
   statusinscripcion?: boolean;
+  convocatoriaId: string; 
 
   constructor(partial: Partial<AspiranteDocument>) {
     Object.assign(this, partial);

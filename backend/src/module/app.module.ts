@@ -9,6 +9,7 @@ import { DataStudentModule } from './data_student.module';
 import { StudentDocModule } from './studentdoc.module';
 import { createGenericController } from 'src/shared/generic.controller';
 import { GenericService } from 'src/shared/generic.service';
+import { AboutModule } from '../module/about.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +27,7 @@ import { GenericService } from 'src/shared/generic.service';
     ConvocatoriaModule,
     DataStudentModule,
     StudentDocModule,
+    AboutModule
   ],
   controllers: [], // Controladores de la aplicación
   providers: [AppService, GenericService], // Servicios de la aplicación

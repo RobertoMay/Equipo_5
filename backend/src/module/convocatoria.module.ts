@@ -7,5 +7,6 @@ import { ConvocatoriaController } from 'src/controller/convocatoria.controller';
   imports: [FirestoreModule],
   providers: [ConvocatoriaService],
   controllers: [ConvocatoriaController],
+  exports: [ConvocatoriaService],
 })
 export class ConvocatoriaModule {}
