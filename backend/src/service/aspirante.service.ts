@@ -3,14 +3,20 @@ import { Firestore, QuerySnapshot } from '@google-cloud/firestore';
 import { AspiranteDocument } from '../todos/document/aspirante.document';
 import * as jwt from 'jsonwebtoken';
 import { AuthResult } from 'src/module/auth-result.interface';
+import { ConvocatoriaDocument } from 'src/todos/document/convocatoria.document';
+import { ConvocatoriaService } from './convocatoria.service';
 
 @Injectable()
 export class AspiranteService {
   private firestore: Firestore;
 
-  constructor() {
+  constructor(
+    private readonly convocatoriaService: ConvocatoriaService // Inyecta el servicio de convocatoria
+  ) {
+    
     this.firestore = new Firestore();
   }
+  
   
 
   
@@ -23,38 +29,58 @@ export class AspiranteService {
 
     return !snapshot.empty;
   }
+ 
+// Crear un nuevo aspirante con verificación de cupos disponibles y actualización de cupos ocupados
+async createAspirante(aspirante: AspiranteDocument): Promise<AspiranteDocument> {
+  try {
+    const aspirantesCollection = this.firestore.collection(AspiranteDocument.collectionName);
 
-  // Crear un nuevo aspirante
-  async createAspirante(aspirante: AspiranteDocument): Promise<AspiranteDocument> {
-    try {
-      const aspirantesCollection = this.firestore.collection(AspiranteDocument.collectionName);
-
-      // Verifica si el CURP ya existe
-      const existingCurpQuerySnapshot: QuerySnapshot = await aspirantesCollection.where('curp', '==', aspirante.curp).get();
-      if (!existingCurpQuerySnapshot.empty) {
-        throw new ConflictException('El CURP ya está registrado.');
-      }
-
-      // Verifica si el correo ya existe
-      const existingCorreoQuerySnapshot: QuerySnapshot = await aspirantesCollection.where('correo', '==', aspirante.correo).get();
-      if (!existingCorreoQuerySnapshot.empty) {
-        throw new ConflictException('El correo electrónico ya está registrado.');
-      }
-
-      // Crea el nuevo aspirante
-      const docRef = await aspirantesCollection.doc();
-      const id = docRef.id;
-      const newAspirante = {
-        ...aspirante,
-        id,
-      };
-
-      await docRef.set(newAspirante);
-      return newAspirante;
-    } catch (error) {
-      throw error; // Re-lanza el error para que el controlador pueda manejarlo
+    // Verificación de duplicados en CURP y correo
+    const existingCurpQuerySnapshot: QuerySnapshot = await aspirantesCollection.where('curp', '==', aspirante.curp).get();
+    if (!existingCurpQuerySnapshot.empty) {
+      throw new ConflictException('El CURP ya está registrado.');
     }
+
+    const existingCorreoQuerySnapshot: QuerySnapshot = await aspirantesCollection.where('correo', '==', aspirante.correo).get();
+    if (!existingCorreoQuerySnapshot.empty) {
+      throw new ConflictException('El correo electrónico ya está registrado.');
+    }
+
+    // Obtener convocatoria abierta actual
+    const convocatoriaAbierta = await this.convocatoriaService.getCurrentConvocatoria();
+
+    // Verificar que haya cupos disponibles
+    if (convocatoriaAbierta.availableCupo <= 0) {
+      throw new HttpException('No quedan cupos disponibles en la convocatoria.', HttpStatus.BAD_REQUEST);
+    }
+
+    // Crear el aspirante y asignar el ID de la convocatoria abierta
+    const docRef = aspirantesCollection.doc();
+    const id = docRef.id;
+    const newAspirante = {
+      ...aspirante,
+      id,
+      convocatoriaId: convocatoriaAbierta.id,
+    };
+
+    await docRef.set(newAspirante);
+
+    // Reducir el availableCupo, el cupo total, y aumentar el occupiedCupo
+    await this.convocatoriaService.updateCuposOnInscription(
+      convocatoriaAbierta.id,
+      convocatoriaAbierta.cupo - 1,
+      convocatoriaAbierta.availableCupo - 1,
+      (convocatoriaAbierta.occupiedCupo || 0) + 1
+    );
+
+    return newAspirante;
+  } catch (error) {
+    console.error('Error al crear el aspirante:', error.message);
+    throw error; // Re-lanza el error para el controlador
   }
+}
+
+
   // Autenticar al usuario y generar un token
   async authenticate(correo: string, curp: string): Promise<AuthResult & { id: string }> {
     const snapshot = await this.firestore.collection('Aspirantes')
@@ -112,17 +138,36 @@ export class AspiranteService {
     await docRef.update(aspiranteDto);
   }
 
-  // Eliminar un aspirante por ID
-  async deleteAspirante(id: string): Promise<void> {
-    const docRef = this.firestore.collection('aspirantes').doc(id);
+ // Eliminar un aspirante por ID y actualizar los cupos en la convocatoria
+async deleteAspirante(id: string): Promise<void> {
+  const docRef = this.firestore.collection('Aspirantes').doc(id);
 
-    const doc = await docRef.get();
-    if (!doc.exists) {
-      throw new HttpException('Aspirante no encontrado', HttpStatus.NOT_FOUND);
-    }
-
-    await docRef.delete();
+  // Verificar si el aspirante existe
+  const doc = await docRef.get();
+  if (!doc.exists) {
+    throw new HttpException('Aspirante no encontrado', HttpStatus.NOT_FOUND);
   }
+
+  // Obtener los datos del aspirante, incluyendo el ID de la convocatoria
+  const aspirante = doc.data() as AspiranteDocument;
+  const convocatoriaId = aspirante.convocatoriaId;
+
+  // Eliminar el aspirante
+  await docRef.delete();
+
+  // Verificar y actualizar los cupos en la convocatoria correspondiente
+  const convocatoria = await this.convocatoriaService.getById(convocatoriaId);
+
+  if (convocatoria) {
+    // Incrementar el availableCupo y cupo en 1, y reducir occupiedCupo en 1
+    const newAvailableCupo = convocatoria.availableCupo + 1;
+    const newCupo = convocatoria.cupo + 1;
+    const newOccupiedCupo = Math.max((convocatoria.occupiedCupo || 0) - 1, 0);
+
+    await this.convocatoriaService.updateCuposOnDeletion(convocatoriaId, newCupo, newAvailableCupo, newOccupiedCupo);
+  }
+}
+
 
   // Obtener un aspirante por CURP
 async getAspiranteByCurp(curp: string): Promise<string> {
