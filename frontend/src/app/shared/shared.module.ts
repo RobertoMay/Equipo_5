@@ -6,6 +6,7 @@ import * as fromComponents from './components';
 import { Step3Component } from './components/step-3/step-3.component';
 import { FileBtnComponent } from './components/file-btn/file-btn.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { AvisoPrivComponent } from './components/aviso-priv/aviso-priv.component';
 
 @NgModule({
   imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule],
@@ -13,6 +14,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ...fromComponents.components,
     Step3Component,
     FileBtnComponent,
+    AvisoPrivComponent,
+  
   ],
   exports: [
     FormsModule,

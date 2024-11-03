@@ -8,7 +8,8 @@ import { FileBtnComponent } from './file-btn/file-btn.component';
 import { ButtonPdfComponent } from './button-pdf/button-pdf.component';
 import { BtnVerDocumentosAdmComponent } from './btn-ver-documentos-adm/btn-ver-documentos-adm.component';
 import { GestDocStudentsComponent } from './gest-doc-students/gest-doc-students.component';
-
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
+import { AvisoPrivComponent } from './aviso-priv/aviso-priv.component';
 export const components: any = [
   CarrouselComponent,
   RegistrationFormComponent,
@@ -19,6 +20,8 @@ export const components: any = [
   ButtonPdfComponent,
   BtnVerDocumentosAdmComponent,
   GestDocStudentsComponent,
+  TerminosCondicionesComponent,
+  AvisoPrivComponent
 ];
 
 // Export all components
