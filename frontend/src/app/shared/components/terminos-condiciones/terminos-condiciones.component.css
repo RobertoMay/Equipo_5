@@ -1,0 +1,47 @@
+/* Estilo para el enlace */
+.terms-link {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms-link:hover {
+    color: #004080;
+    text-decoration: underline;
+}
+
+/* Estilo para el modal */
+.modal-header {
+    background-color: #b41e46;
+    color: #fff;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body h6 {
+    font-size: 1.1rem;
+    color: #b41e46;
+}
+
+.modal-body p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.modal-footer .btn-primary {
+    background-color: #b41e46;
+    border-color: #b41e46;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #9e1a3c;
+    border-color: #9e1a3c;
+}
+
+/* Estilo para la casilla de verificación */
+.form-check-label {
+    font-size: 1rem;
+    color: #000000;
+}

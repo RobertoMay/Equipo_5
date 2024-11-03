@@ -1,7 +1,4 @@
 <div class="container mt-5">
-  <!-- Barra de progreso -->
-  <!-- Bootstrap JavaScript (sin jQuery) -->
-  <!-- En tu index.html o en angular.json -->
 
   <div class="progress-container">
     <div class="progress">
@@ -46,13 +43,30 @@
         Si todo está en orden, ¡estás a un paso más cerca de completar tu
         solicitud! ✅
       </p>
-      <div class="button-container">
-        <button type="button" class="btn btn-primary start-btn" (click)="mostrarFormulario()">
-          Comenzar Paso 1 <br />
-          <i class="bi bi-arrow-right-circle"></i>
-          <!-- Icono en una nueva línea -->
-        </button>
-      </div>
+      <app-aviso-priv></app-aviso-priv>
+      <app-terminos-condiciones></app-terminos-condiciones>
+ <!-- Casilla de verificación -->
+ <div class="form-check mt-3">
+  <input 
+    class="form-check-input" 
+    type="checkbox" 
+    id="terminosCheck" 
+    [(ngModel)]="termsAccepted" 
+    (change)="onTermsAccepted()" 
+    name="terminosCheck">
+  <label class="form-check-label" for="terminosCheck">
+    He leído y acepto los Términos y Condiciones
+  </label>
+</div>
+       <!-- Botón de inicio, habilitado o deshabilitado según termsAccepted -->
+    <div class="button-container mt-3">
+      <button type="button" class="btn btn-primary start-btn" 
+              (click)="mostrarFormulario()" 
+              [disabled]="!termsAccepted">
+        Comenzar Paso 1 <br />
+        <i class="bi bi-arrow-right-circle"></i>
+      </button>
+    </div>
     </div>
 
     <div class="container mt-5" [hidden]="!formularioVisible">

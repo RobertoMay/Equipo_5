@@ -1,0 +1,41 @@
+/* Estilo para el enlace */
+.privacy-link {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.privacy-link:hover {
+    color: #004080;
+    text-decoration: underline;
+}
+
+/* Estilo para el modal */
+.modal-header {
+    background-color: #b41e46;
+    color: #fff;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body p, .modal-body ul {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.modal-body ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.modal-footer .btn-primary {
+    background-color: #b41e46;
+    border-color: #b41e46;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #9e1a3c;
+    border-color: #9e1a3c;
+}

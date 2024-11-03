@@ -22,7 +22,13 @@ export class RegistrationProcessComponent implements OnInit {
   aspiranteId: string | null = null;
   statusenrollment: string | null = null;
   currentEnrollmentPeriod: string = '';
+  termsAccepted: boolean = false; // Variable para habilitar o deshabilitar el botón
 
+  // Método que se ejecuta cuando se acepta los términos
+  onTermsAccepted() {
+    this.termsAccepted = true;
+    console.log(this.termsAccepted);
+  }
   updateEnrollmentPeriod(enrollmentPeriod: string) {
     this.currentEnrollmentPeriod = enrollmentPeriod;
   }
