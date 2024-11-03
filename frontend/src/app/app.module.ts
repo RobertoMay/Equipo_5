@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginModule } from './modules/login/login.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ExamplecomponentComponent } from './layout/examplecomponent/examplecomponent.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#9d2449',
@@ -30,7 +31,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const routes: Routes = [];
 
 @NgModule({
-  declarations: [AppComponent, SkeletonComponent, NavbarComponent],
+  declarations: [AppComponent, SkeletonComponent, NavbarComponent, ExamplecomponentComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

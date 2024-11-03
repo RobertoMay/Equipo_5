@@ -1,2 +1,92 @@
 
 
+.welcome-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; /* Centrado vertical */
+  height: 30px; /* Ajusta la altura según necesites */
+  margin-top: 9px;
+  margin-left: 17px;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* Estilos para centrar el título y el total dentro de la tarjeta */
+.chart-header {
+  text-align: center;
+  margin-bottom: 10px; /* Espacio entre el título y el gráfico */
+}
+
+.chart-header h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0; /* Elimina márgenes extra */
+}
+
+.chart-header p {
+  font-size: 14px;
+  color: #666; /* Color más claro para el texto de total */
+  margin: 0;
+}
+
+/* Centrado de la leyenda y gráficos */
+
+.charts-container {
+  display: flex;
+  justify-content: space-around; /* Distribuye las tarjetas horizontalmente */
+  flex-wrap: nowrap; /* Permite que las tarjetas se envuelvan */
+   /* Espacio entre tarjetas */
+  margin-top: 1.5rem; /* Espacio superior */
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background-color: #f6eeca; /* Fondo suave */
+  border: 1px solid #be7777; /* Marco gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29); /* Sombra */
+  padding: 8px; /* Espacio interno */
+  flex: 1 1 20%; /* Ocupa el mismo espacio */
+  margin: 0 10px; /* Espacio lateral entre tarjetas */
+  transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+  height: 420px; /* Ajusta la altura de la tarjeta */
+  max-width: 430px;
+}
+
+
+
+
+.chart-card:hover {
+  transform: translateY(-7px); /* Eleva la tarjeta al pasar el cursor */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}
+
+/* Ajusta el tamaño del gráfico para que sea uniforme en todas las tarjetas */
+
+
+/* Consulta de medios para pantallas pequeñas */
+@media (max-width: 780px) {
+  .charts-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chart-card {
+    width: 90%;
+    margin: 15px 0; /* Espacio entre tarjetas en modo vertical */
+  }
+}
