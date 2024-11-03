@@ -8,8 +8,9 @@ import { ApplicantsModule } from './applicants/applicants.module';
 import { EnrolledStudentsModule } from './enrolled-students/enrolled-students.module';
 import { GeneralModule } from './general/general.module';
 
+
 @NgModule({
-  declarations: [HomeAdminComponent],
+  declarations: [HomeAdminComponent,],
 
   imports: [
     SharedModule,
