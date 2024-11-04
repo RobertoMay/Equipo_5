@@ -1,0 +1,58 @@
+.form-container {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+textarea,
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+textarea{
+  height: 170px;
+}
+
+/* Evitar que el textarea se pueda redimensionar */
+textarea {
+  resize: none;
+}
+
+.btn-guardar {
+  display: block; /* Permite que el botón se comporte como un bloque */
+  width: 150px; /* Ancho más pequeño */
+  padding: 10px; /* Espaciado interno */
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 20px; /* Bordes redondeados */
+  cursor: pointer;
+  font-size: 14px; /* Tamaño de fuente más pequeño */
+  margin: 10px auto; /* Centrado horizontal */
+  text-align: center;
+  transition: background-color 0.3s ease; /* Efecto suave al pasar el mouse */
+}
+
+.btn-guardar:hover {
+  background-color: #45a049;
+}

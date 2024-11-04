@@ -1,1 +1,37 @@
-<p>general works!</p>
+<div class="form-container">
+  <h2>Editar Información General</h2>
+
+  <form (ngSubmit)="guardarCambios()">
+    <div class="form-group">
+      <label for="mision">Misión:</label>
+      <textarea 
+        id="mision"
+        [(ngModel)]="mision"
+        name="mision"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="vision">Visión:</label>
+      <textarea 
+        id="vision"
+        [(ngModel)]="vision"
+        name="vision"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="nombreDirector">Nombre del Director(a):</label>
+      <input 
+        id="nombreDirector"
+        type="text"
+        [(ngModel)]="nombreDirector"
+        name="nombreDirector"
+      />
+    </div>
+
+    <button type="submit" class="btn-guardar">Guardar</button>
+  </form>
+</div>
