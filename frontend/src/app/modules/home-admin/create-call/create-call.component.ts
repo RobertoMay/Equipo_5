@@ -1,58 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-// import { CallService } from '../services/call.service';
+import { CallService } from 'services/api/call/call.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { IConvocatoria } from 'models/icalls.metadata';
 
 @Component({
   selector: 'app-create-call',
   templateUrl: './create-call.component.html',
   styleUrls: ['./create-call.component.css']
 })
-export class CreateCallComponent {
-  callForm: FormGroup;
-  callsHistory: any[] = [];
+export class CreateCallComponent implements OnInit {
+
+  callForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    // private callService: CallService,
+    private callService: CallService,
     private ngxLoader: NgxUiLoaderService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.callForm = this.fb.group({
       title: ['', Validators.required],
+      cupo: ['', [Validators.required, Validators.min(1)]],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      quota: ['', [Validators.required, Validators.min(1)]]
-    });
+    }, { validators: this.dateRangeValidator });
+
   }
 
+  // Validador personalizado para verificar que startDate no sea mayor a endDate
+  dateRangeValidator(formGroup: FormGroup) {
+    const startDate = formGroup.get('startDate')?.value;
+    const endDate = formGroup.get('endDate')?.value;
 
-
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+      return { dateRangeInvalid: true };
+    }
+    return null;
+  }
 
   createCall(): void {
     if (this.callForm.invalid) {
       Swal.fire('Warning', 'Please fill all required fields correctly', 'warning');
       return;
     }
-
+  
     const { startDate, endDate } = this.callForm.value;
+  
+    // Construct the data object to match IConvocatoria
+    const dataToSend: IConvocatoria = {
+      id: "", // or generate a new ID as needed
+      status: true, // or whatever the default status should be
+      title: this.callForm.value.title,
+      cupo: this.callForm.value.cupo,
+      startDate: startDate,
+      endDate: endDate
+    };
+  
     if (new Date(startDate) > new Date(endDate)) {
       Swal.fire('Warning', 'Start date cannot be later than end date', 'warning');
       return;
     }
-
   
-    // this.callService.createCall(this.callForm.value).subscribe({
-    //   next: () => {
-    //     Swal.fire('Success', 'Call created successfully!', 'success');
-    //     this.callForm.reset();
-    //     this.loadCalls();
-    //     this.ngxLoader.stop();
-    //   },
-    //   error: () => {
-    //     Swal.fire('Error', 'Failed to create call', 'error');
-    //     this.ngxLoader.stop();
-    //   }
-    // });
+    this.callService.addAnnouncement(dataToSend).subscribe({
+      next: () => {
+        Swal.fire('Creado correctamente', 'La convocatoria ha sido creada exitosamente', 'success');
+        this.callForm.reset();
+        this.ngxLoader.stop();
+        // Emitir evento para notificar que la convocatoria fue creada
+        this.callService.notifyCallCreated();
+      },
+      error: () => {
+        Swal.fire('Error', 'Failed to create call', 'error');
+        this.ngxLoader.stop();
+      }
+    });
   }
+  
 }

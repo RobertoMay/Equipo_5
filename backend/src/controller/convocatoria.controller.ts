@@ -48,7 +48,7 @@ export class ConvocatoriaController {
    * Crear una nueva convocatoria
    * @param data - Datos para crear la convocatoria (titulo, fecha de inicio, fecha de cierre, cupo)
    */
-  @Post('/')
+  @Post('/create')
   async saveConvocatoria(@Body() data: Partial<ConvocatoriaDocument>) {
     try {
       const convocatoria = await this.convocatoriaService.saveConvocatoria(data);
