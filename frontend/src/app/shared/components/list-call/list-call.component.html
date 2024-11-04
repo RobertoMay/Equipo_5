@@ -1,0 +1,62 @@
+
+
+<div class="convocatorias-container">
+   
+    <div class="admin-header">
+        <h2 class="convocatorias-title">Historial de Convocatorias</h2>
+    </div>
+ 
+    <div class="convocatorias-list">
+      <div class="convocatoria-card" *ngFor="let call of callsHistory">
+        <div class="card-content">
+          <!-- Columna Izquierda -->
+          <div class="card-left-column">
+            <div class="card-header">
+              <h3 class="card-title">{{ call.title }}</h3>
+              <span class="status-badge" [class.status-open]="call.status" [class.status-closed]="!call.status">
+                {{ call.status ? 'Abierta' : 'Cerrada' }}
+              </span>
+            </div>
+            
+            <div class="dates-container">
+              <div class="date-item">
+                <span class="date-label">Inicio:</span>
+                <span class="date-value">{{ call.startDate | date:'dd MMM yyyy' }}</span>
+              </div>
+              <div class="date-item">
+                <span class="date-label">Fin:</span>
+                <span class="date-value">{{ call.endDate | date:'dd MMM yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Columna Derecha -->
+          <div class="card-right-column">
+            <div class="cupos-container">
+              <div class="progress-header">
+                <span class="progress-label">Ocupación de cupos</span>
+                <span class="progress-value">{{ call.occupiedCupo }} / {{ call.cupo }}</span>
+              </div>
+              
+              <div class="progress-bar-container">
+                <div class="progress-bar" 
+                     [style.width.%]="(call.occupiedCupo / call.cupo) * 100">
+                </div>
+              </div>
+              
+              <div class="cupos-stats">
+                <div class="stat-item">
+                  <p class="stat-label">Cupos Disponibles</p>
+                  <p class="stat-value stat-available">{{ call.availableCupo }}</p>
+                </div>
+                <div class="stat-item">
+                  <p class="stat-label">Cupos Ocupados</p>
+                  <p class="stat-value stat-occupied">{{ call.occupiedCupo }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

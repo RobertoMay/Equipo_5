@@ -5,5 +5,6 @@ export class IConvocatoria implements IBaseModel {
   title!: string;
   startDate!: Date;
   endDate!: Date;
+  cupo!: number; // Cupo total
   status!: boolean;
 }

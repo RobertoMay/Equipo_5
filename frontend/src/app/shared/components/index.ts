@@ -9,6 +9,7 @@ import { ButtonPdfComponent } from './button-pdf/button-pdf.component';
 import { BtnVerDocumentosAdmComponent } from './btn-ver-documentos-adm/btn-ver-documentos-adm.component';
 import { GestDocStudentsComponent } from './gest-doc-students/gest-doc-students.component';
 import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
+import { ListCallComponent } from './list-call/list-call.component';
 import { AvisoPrivComponent } from './aviso-priv/aviso-priv.component';
 export const components: any = [
   CarrouselComponent,
@@ -21,7 +22,8 @@ export const components: any = [
   BtnVerDocumentosAdmComponent,
   GestDocStudentsComponent,
   TerminosCondicionesComponent,
-  AvisoPrivComponent
+  AvisoPrivComponent, 
+  ListCallComponent
 ];
 
 // Export all components
