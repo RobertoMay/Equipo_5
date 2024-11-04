@@ -53,6 +53,20 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> im
       throw new HttpException('Start date, end date, and cupo are required', HttpStatus.BAD_REQUEST);
     }
   
+    // Verificar si ya existe una convocatoria activa
+    const activeConvocatoriaSnapshot = await this.firestore
+      .collection(ConvocatoriaDocument.collectionName)
+      .where('status', '==', true)
+      .limit(1)
+      .get();
+  
+    if (!activeConvocatoriaSnapshot.empty) {
+      throw new HttpException(
+        'No se puede crear una nueva convocatoria mientras haya una convocatoria activa.',
+        HttpStatus.CONFLICT,
+      );
+    }
+  
     // Crear el documento con los valores iniciales y el campo availableCupo
     const convocatoria = {
       ...data,
@@ -69,6 +83,7 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> im
   
     return convocatoria;
   }
+  
   
   // Obtener todas las convocatorias
   async getAllConvocatorias(): Promise<ConvocatoriaDocument[]> {
