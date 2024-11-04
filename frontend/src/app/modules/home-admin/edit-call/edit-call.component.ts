@@ -9,7 +9,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { IConvocatoria } from 'models/icalls.metadata';
+import { IConvocatoria, IConvocatoriaResponse } from 'models/icalls.metadata';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
 import { Router } from '@angular/router';
@@ -73,7 +73,7 @@ export class EditCallComponent implements OnInit {
 
         this.loadingService.startLoading();
         this.setForm();
-        this.callService.getById('all').subscribe(
+        this.callService.getById('status').subscribe(
           (response) => {
             if (response.error) {
               this.loadingService.stopLoading();
@@ -91,23 +91,15 @@ export class EditCallComponent implements OnInit {
             } else {
               const data = response.data;
               if (data) {
-                if (Array.isArray(data)) {
-                  this.form.patchValue({
-                    id: (data[0] as IConvocatoria).id,
-                    title: (data[0] as IConvocatoria).title,
-                    startDate: (data[0] as IConvocatoria).startDate,
-                    endDate: (data[0] as IConvocatoria).endDate,
-                    status: (data[0] as IConvocatoria).status,
-                  });
-                } else {
-                  this.form.patchValue({
-                    id: (data as IConvocatoria).id,
-                    title: (data as IConvocatoria).title,
-                    startDate: (data as IConvocatoria).startDate,
-                    endDate: (data as IConvocatoria).endDate,
-                    status: (data as IConvocatoria).status,
-                  });
-                }
+                const convocatoria = (data as unknown as IConvocatoriaResponse)
+                  .convocatoria;
+                this.form.patchValue({
+                  id: convocatoria.id,
+                  title: convocatoria.title,
+                  startDate: convocatoria.startDate,
+                  endDate: convocatoria.endDate,
+                  status: convocatoria.status,
+                });
 
                 this.loadingService.stopLoading();
               } else {

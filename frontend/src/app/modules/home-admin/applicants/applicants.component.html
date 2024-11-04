@@ -6,7 +6,7 @@
 
 
   <div class="table-responsive">
-    <div *ngIf="filteredStudents.length === 0" class="text-center mt-3">
+    <div *ngIf="!isLoading && filteredStudents.length === 0" class="text-center mt-3">
       <p>No hay estudiantes disponibles.</p>
     </div>
     <table class="table table-bordered table-striped text-center" *ngIf="filteredStudents.length > 0;">

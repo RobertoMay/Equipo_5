@@ -4,6 +4,7 @@ import { StudentService } from 'services/api/student/student.service';
 import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/gest-doc-students.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-applicants',
@@ -13,7 +14,7 @@ import { LoadingService } from 'services/global/loading.service';
 export class ApplicantsComponent implements OnInit {
   students: IStudentDocDocument[] = [];
   filteredStudents: IStudentDocDocument[] = []; // Para filtrar todo lo que tenga la Barra de busqueda
-  currentPage = 1; //para la paginacion 
+  currentPage = 1; //para la paginacion
   totalPages = 1;
   searchName = ''; //Para que la barra de busqueda no tenga nada
   searchNameInput = '';
@@ -21,15 +22,30 @@ export class ApplicantsComponent implements OnInit {
   alumno: any;
   @ViewChild(GestDocStudentsComponent) gestDocModal!: GestDocStudentsComponent;
   selectedAspiranteId!: string;
+  isLoading: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private studentService: StudentService,
     private _ngxUiLoaderService: NgxUiLoaderService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.loadStudents();
+    const token = localStorage.getItem('token');
+    this.isAdmin =
+      localStorage.getItem('esAdministrador') === 'true' ? true : false;
+
+    if (token) {
+      if (this.isAdmin) {
+        this.loadStudents();
+      } else {
+        this.logout();
+      }
+    } else {
+      this.logout();
+    }
 
     this.loadingService.loading$.subscribe((isLoading) => {
       if (isLoading) {
@@ -40,7 +56,15 @@ export class ApplicantsComponent implements OnInit {
     });
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('esAdministrador');
+    this.isAdmin = false;
+    this.router.navigate(['/']);
+  }
+
   loadStudents() {
+    this.isLoading = true;
     this.loadingService.startLoading();
     this.studentService
       .getNotEnrolledStudents(this.currentPage, this.searchName)
@@ -48,15 +72,19 @@ export class ApplicantsComponent implements OnInit {
         (response) => {
           if (!response.error) {
             this.loadingService.stopLoading();
+            this.isLoading = false;
             this.students = response.data; // Asegúrate de que esta asignación es correcta
             this.filteredStudents = this.students;
             this.totalPages = response.data.totalPages;
           } else {
+            this.loadingService.stopLoading();
+            this.isLoading = false;
             console.error(response.msg);
           }
         },
         (error) => {
           this.loadingService.stopLoading();
+          this.isLoading = false;
           console.error('Error fetching students:', error);
         }
       );

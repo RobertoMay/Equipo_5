@@ -4,6 +4,7 @@ import { IStudentDocDocument } from 'models/istudentdoc.metadata';
 import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/gest-doc-students.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-enrolled-students',
@@ -12,23 +13,45 @@ import { LoadingService } from 'services/global/loading.service';
 })
 export class EnrolledStudentsComponent implements OnInit {
   @ViewChild(GestDocStudentsComponent) gestDocModal!: GestDocStudentsComponent;
+  isLoading: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private studentdocService: StudentdocService,
     private _ngxUiLoaderService: NgxUiLoaderService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.loadStudents();
+    const token = localStorage.getItem('token');
+    this.isAdmin =
+      localStorage.getItem('esAdministrador') === 'true' ? true : false;
 
-    this.loadingService.loading$.subscribe((isLoading) => {
-      if (isLoading) {
-        this._ngxUiLoaderService.start();
+    if (token) {
+      if (this.isAdmin) {
+        this.loadStudents();
+
+        this.loadingService.loading$.subscribe((isLoading) => {
+          if (isLoading) {
+            this._ngxUiLoaderService.start();
+          } else {
+            this._ngxUiLoaderService.stop();
+          }
+        });
       } else {
-        this._ngxUiLoaderService.stop();
+        this.logout();
       }
-    });
+    } else {
+      this.logout();
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('esAdministrador');
+    this.isAdmin = false;
+    this.router.navigate(['/']);
   }
 
   openModal() {
@@ -60,6 +83,7 @@ export class EnrolledStudentsComponent implements OnInit {
   noMoreStudents = false; // Bandera para mostrar el mensaje de "no hay más estudiantes"
 
   loadStudents() {
+    this.isLoading = true;
     this.loadingService.startLoading();
     this.studentdocService
       .getEnrolledStudents(this.currentPage, this.searchNameInput)
@@ -67,6 +91,7 @@ export class EnrolledStudentsComponent implements OnInit {
         (response) => {
           if (!response.error) {
             this.loadingService.stopLoading();
+            this.isLoading = false;
             this.students = response.data;
             console.log('Respuesta de estudiantes:', response.data);
 
@@ -75,11 +100,13 @@ export class EnrolledStudentsComponent implements OnInit {
             this.noMoreStudents = this.students.length === 0; // Actualiza la bandera
           } else {
             this.loadingService.stopLoading();
+            this.isLoading = false;
             console.error(response.msg);
           }
         },
         (error) => {
           this.loadingService.stopLoading();
+          this.isLoading = false;
           console.error('Error fetching students:', error);
           this.noMoreStudents = true; // Mostrar el mensaje si hay un error
         }

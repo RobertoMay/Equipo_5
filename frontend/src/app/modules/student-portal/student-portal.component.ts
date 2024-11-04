@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IConvocatoria } from '../../../models/icalls.metadata';
+import {
+  IConvocatoria,
+  IConvocatoriaResponse,
+} from '../../../models/icalls.metadata';
 import { CallService } from '../../../services/api/call/call.service';
 import { IStudentEnrollmentForm } from 'models/istudent-enrollment-form';
 import { StudentEnrollmentFormService } from 'services/api/student-enrollment-form/student-enrollment-form.service';
@@ -59,9 +62,10 @@ export class StudentPortalComponent implements OnInit {
     this.callService.getCurrentAnnouncement().subscribe({
       next: (convocatoria) => {
         if (convocatoria) {
-          this.convocatoria = convocatoria;
+          this.convocatoria = (
+            convocatoria as unknown as IConvocatoriaResponse
+          ).convocatoria;
 
-          console.log('Convocatoria actual obtenida:', this.convocatoria);
           // Convertir las fechas al formato deseado y guardarlas en localStorage
           const formattedStartDate = this.formatDate(
             this.convocatoria.startDate

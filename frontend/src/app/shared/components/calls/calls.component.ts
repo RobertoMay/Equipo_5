@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { IConvocatoria } from '../../../../models/icalls.metadata';
+import {
+  IConvocatoria,
+  IConvocatoriaResponse,
+} from '../../../../models/icalls.metadata';
 import { CallService } from '../../../../services/api/call/call.service'; // Verifica si esta ruta es correcta
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -11,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class CallsComponent implements OnInit {
   @ViewChild('myModal') myModal!: TemplateRef<any>;
   convocatoria: IConvocatoria | null = null;
-  
+
   showForm: boolean = false; // Variable para controlar la visualización del formulario
 
   constructor(
@@ -23,8 +26,9 @@ export class CallsComponent implements OnInit {
     this.callService.getCurrentAnnouncement().subscribe({
       next: (convocatoria) => {
         if (convocatoria) {
-          this.convocatoria = convocatoria;
-          console.log('Convocatoria actual obtenida:', this.convocatoria);
+          this.convocatoria = (
+            convocatoria as unknown as IConvocatoriaResponse
+          ).convocatoria;
         } else {
           console.warn('No se encontró ninguna convocatoria actual');
           this.convocatoria = null;
@@ -35,8 +39,6 @@ export class CallsComponent implements OnInit {
         this.convocatoria = null; // Asegúrate de manejar el error adecuadamente
       },
     });
-  
-
   }
 
   formatDate(date: string | Date): string {
@@ -66,11 +68,11 @@ export class CallsComponent implements OnInit {
     if (!this.convocatoria || !this.convocatoria.endDate) {
       return false;
     }
-  
+
     const today = new Date();
     const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7));
     const endDate = new Date(this.convocatoria.endDate);
-  
+
     // Si la fecha de cierre es anterior a hace 7 días, mostrar el template de no convocatoria
     return endDate < sevenDaysAgo;
   }

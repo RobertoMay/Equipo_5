@@ -29,7 +29,7 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-textarea{
+textarea {
   height: 170px;
 }
 
@@ -45,14 +45,22 @@ textarea {
   background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 20px; /* Bordes redondeados */
   cursor: pointer;
   font-size: 14px; /* Tamaño de fuente más pequeño */
   margin: 10px auto; /* Centrado horizontal */
   text-align: center;
-  transition: background-color 0.3s ease; /* Efecto suave al pasar el mouse */
+  transition: all 0.3s ease;
+  border-radius: 0px;
 }
 
 .btn-guardar:hover {
-  background-color: #45a049;
+  background-color: #52b055;
+  border-radius: 50px;
+  color: white;
+  transform: scale(1.05);
+}
+
+.btn-guardar:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

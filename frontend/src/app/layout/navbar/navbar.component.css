@@ -1,25 +1,22 @@
 /* Estilos del navbar */
 .navbar {
   display: flex;
-  
+
   justify-content: space-between;
   align-items: center;
   background-color: #b41e46; /* Color de fondo */
   padding: 15px 20px;
- 
-  
+
   width: 100%;
- 
+
   position: relative;
-  
 }
 /*
 /* Logo del navbar */
 .navbar-logo img {
   height: 70px; /* Altura del logo */
- padding-top: 5px;
- padding-bottom: 5px;
-  
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .navbar-logo {
@@ -30,7 +27,7 @@
 .navbar-menu {
   list-style-type: none;
   margin: 0;
-  padding: 0 ;
+  padding: 0;
   display: flex;
   gap: 15px; /* Espacio entre elementos */
 }
@@ -38,43 +35,37 @@
 /* Estilos para los enlaces del menú */
 .navbar-menu li a {
   color: white; /* Color del texto */
-  text-decoration: none; 
-  font-size: 19px; 
+  text-decoration: none;
+  font-size: 19px;
   font-weight: bold;
   padding: 15px 15px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  
 }
 
 /* Efecto hover en los enlaces */
 .navbar-menu li a:hover {
   background-color: #ec4967; /* Fondo al pasar el cursor */
-
 }
-
 
 /* Estilos para pantallas grandes (desktop) */
 .navbar-toggler {
   display: none; /* Ocultar el botón de menú en pantallas grandes */
 }
 
-
-
 /* Estilos responsive: para pantallas pequeñas (móviles) */
 
 @media (max-width: 768px) {
-
   .navbar {
     justify-content: space-between;
   }
-  
+
   .navbar-menu {
     display: none; /* Ocultar el menú por defecto en móviles */
     flex-direction: column; /* Menú vertical */
     position: absolute;
     top: 100px;
-  
+
     right: 0;
     background-color: #b41e46; /* Color de fondo */
     width: 100%;
@@ -89,65 +80,57 @@
     padding-bottom: 20px;
   }
 
-  
- /* Estilos del ícono de menú (hamburguesa) */
- .navbar-toggler {
-  display: block; /* Mostrar el botón del menú en móviles */
-  background: none;
-  border: none;
-  font-size: 30px;
-  cursor: pointer;
-  color: white;
-}
+  /* Estilos del ícono de menú (hamburguesa) */
+  .navbar-toggler {
+    display: block; /* Mostrar el botón del menú en móviles */
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+  }
 
- /* Mostrar el menú cuando esté activo */
- .navbar-menu.active {
-  display: flex; /* Mostrar el menú cuando el botón sea presionado */
-  max-height: 300px; /* Altura máxima para el menú desplegable */
-}
+  /* Mostrar el menú cuando esté activo */
+  .navbar-menu.active {
+    display: flex; /* Mostrar el menú cuando el botón sea presionado */
+    max-height: 300px; /* Altura máxima para el menú desplegable */
+  }
 
-.navbar-menu li{
-  width: 100%; 
-  border-bottom: 1px solid rgb(153, 144, 144); /* Línea de separación */
-  padding: 2px;
-}
+  .navbar-menu li {
+    width: 100%;
+    border-bottom: 1px solid rgb(153, 144, 144); /* Línea de separación */
+    padding: 2px;
+  }
 
+  .navbar-menu li a {
+    display: block; /* El enlace se comporta como un bloque, ocupando todo el ancho */
+    text-align: center; /* Alinacion  del texto al centro */
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
 
-.navbar-menu li a {
- 
-  display: block; /* El enlace se comporta como un bloque, ocupando todo el ancho */
-  text-align: center; /* Alinacion  del texto al centro */
-  padding-top: 3px;
-  padding-bottom: 3px;
-  
-}
+  /* Menú dropdown en móvil */
+  .dropdown-menu {
+    position: relative; /* Permitir que se alinee al padre */
+    top: 18px;
+    left: 0;
+    width: 90%;
+    opacity: 1;
+    transform: none;
+    box-shadow: #ec4967;
+  }
 
+  /* Mostrar/ocultar submenús en móvil como acordeón */
+  .dropdown-menu.show {
+    display: block;
+    max-height: 250px;
+    transition: max-height 0.3s ease-in-out;
+  }
 
-
-/* Menú dropdown en móvil */
-.dropdown-menu {
-  position: relative; /* Permitir que se alinee al padre */
-  top: 18px;
-  left: 0;
-  width: 90%;
-  opacity: 1;
-  transform: none;
-  box-shadow: #ec4967;
-  
-}
-
-/* Mostrar/ocultar submenús en móvil como acordeón */
-.dropdown-menu.show {
-  display: block;
-  max-height: 250px;
-  transition: max-height 0.3s ease-in-out;
-}
-
-.dropdown-menu {
-  max-height: 0;
-  overflow: hidden;
-}
-
+  .dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+  }
 }
 
 /* Estilos para el dropdown */
@@ -171,7 +154,7 @@
   z-index: 11;
   opacity: 0;
   min-width: 100%; /* Establece el ancho mínimo igual al botón */
-  transition: opacity 0.3s ease , transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   left: 0; /* Alinea el menú con el borde izquierdo del botón */
 
   transform: translateY(10px); /* Inicia unos px más arriba */
@@ -191,12 +174,10 @@
   text-decoration: none;
   font-size: 16px;
   display: block; /* Hace que el enlace ocupe todo el ancho del menú */
-
 }
 
 .dropdown-menu li a:hover {
   background-color: #ec4967;
-  
 }
 
 .dropdown-menu.show {
@@ -205,5 +186,6 @@
   transform: translateY(0); /* Transición hacia su posición */
 }
 
-
-
+.navbar-menu li a {
+  cursor: pointer !important;
+}
