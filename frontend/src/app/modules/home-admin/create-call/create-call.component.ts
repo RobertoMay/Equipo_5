@@ -73,19 +73,18 @@ export class CreateCallComponent implements OnInit {
       );
       return;
     }
-
+  
     const { startDate, endDate } = this.callForm.value;
-
-    // Construct the data object to match IConvocatoria
+  
     const dataToSend: IConvocatoria = {
-      id: '', // or generate a new ID as needed
-      status: true, // or whatever the default status should be
+      id: '',
+      status: true,
       title: this.callForm.value.title,
       cupo: this.callForm.value.cupo,
       startDate: startDate,
       endDate: endDate,
     };
-
+  
     if (new Date(startDate) > new Date(endDate)) {
       Swal.fire(
         'Warning',
@@ -94,18 +93,21 @@ export class CreateCallComponent implements OnInit {
       );
       return;
     }
-
+  
     this.callService.addAnnouncement(dataToSend).subscribe({
-      next: () => {
-        Swal.fire(
-          'Creado correctamente',
-          'La convocatoria ha sido creada exitosamente',
-          'success'
-        );
-        this.callForm.reset();
-        this.ngxLoader.stop();
-        // Emitir evento para notificar que la convocatoria fue creada
-        this.callService.notifyCallCreated();
+      next: (response) => {
+        if (response.error) {
+          Swal.fire('Error', response.msg, 'error'); // Mostrará el mensaje específico del backend
+        } else {
+          Swal.fire(
+            'Creado correctamente',
+            response.msg,
+            'success'
+          );
+          this.callForm.reset();
+          this.ngxLoader.stop();
+          this.callService.notifyCallCreated();
+        }
       },
       error: () => {
         Swal.fire('Error', 'Failed to create call', 'error');
@@ -113,4 +115,6 @@ export class CreateCallComponent implements OnInit {
       },
     });
   }
+  
+  
 }

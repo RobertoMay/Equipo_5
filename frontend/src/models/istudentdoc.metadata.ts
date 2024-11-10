@@ -20,6 +20,7 @@ export class IStudentDocDocument implements IBaseModel {
   curp!: string;
   enrollmentPeriod!: string; // Periodo de inscripción
   enrollmentStatus!: boolean; // Estado de inscripción
+  convocatoriaId!: string;
   Documents?: StudentDocument[]; // Array de documentos relacionados con el estudiante
 
   constructor(partial: Partial<IStudentDocDocument>) {

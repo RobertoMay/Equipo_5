@@ -63,7 +63,6 @@ export class ConvocatoriaController {
       );
     }
   }
-
   /**
    * Actualizar una convocatoria por ID
    * @param id - ID de la convocatoria a actualizar

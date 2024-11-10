@@ -1,10 +1,28 @@
 <div class="container mt-5">
+   <!-- Barra de progreso de ocupación de cupos -->
+   <div class="progress-bar-container">
+    <div class="progress-bar" 
+         [style.width.%]="calculateOccupiedPercentage(call?.occupiedCupo, call?.availableCupo)">
+    </div>
+  </div>
+  
+  <!-- Estadísticas de cupos -->
+  <div class="cupos-stats">
+    <div class="stat-item">
+      <p class="stat-label">Cupos Disponibles</p>
+      <p class="stat-value stat-available">{{ call?.availableCupo }}</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-label">Cupos Ocupados</p>
+      <p class="stat-value stat-occupied">{{ call?.occupiedCupo }}</p>
+    </div>
+  </div>
+
   <h3 class="text-center mb-3">Alumnos por inscribirse</h3>
   <div class="search-bar mb-3">
     <input type="text" class="form-control" placeholder="Buscar por nombre" (input)="onSearchInput($event)" />
   </div>
-
-
+ 
   <div class="table-responsive">
     <div *ngIf="!isLoading && filteredStudents.length === 0" class="text-center mt-3">
       <p>No hay estudiantes disponibles.</p>
@@ -22,7 +40,7 @@
       <tbody>
         <!-- Ejemplo de filas, puedes reemplazarlo con *ngFor en tu proyecto -->
         <tr *ngFor="let estudiante of filteredStudents">
-          <td>{{ estudiante.name }}</td>
+          <td>{{ estudiante.name }} {{ estudiante.lastName1 }} {{ estudiante.lastName2 }}</td>
           <td>{{ estudiante.email }}</td>
           <td>{{ estudiante.curp }}</td>
           <td> <span class="badge"

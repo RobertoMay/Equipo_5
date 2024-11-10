@@ -11,6 +11,7 @@ import { createGenericController } from 'src/shared/generic.controller';
 import { GenericService } from 'src/shared/generic.service';
 import { AboutModule } from '../module/about.module';
 import { AdminModule } from './admin.module';
+import { ExpiredCallModule } from '../module/expiredCall.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,7 +30,8 @@ import { AdminModule } from './admin.module';
     DataStudentModule,
     StudentDocModule,
     AboutModule,
-    AdminModule
+    AdminModule,
+    ExpiredCallModule,
   ],
   controllers: [], // Controladores de la aplicación
   providers: [AppService, GenericService], // Servicios de la aplicación

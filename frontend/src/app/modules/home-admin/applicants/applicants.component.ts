@@ -5,7 +5,11 @@ import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/g
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoadingService } from 'services/global/loading.service';
 import { Router } from '@angular/router';
-
+import {
+  IConvocatoria,
+  IConvocatoriaResponse,
+} from '../../../../models/icalls.metadata';
+import { CallService } from '../../../../services/api/call/call.service'; // Verifica si esta ruta es correcta
 @Component({
   selector: 'app-applicants',
   templateUrl: './applicants.component.html',
@@ -13,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class ApplicantsComponent implements OnInit {
   students: IStudentDocDocument[] = [];
+  call: IConvocatoria | null = null;
   filteredStudents: IStudentDocDocument[] = []; // Para filtrar todo lo que tenga la Barra de busqueda
   currentPage = 1; //para la paginacion
   totalPages = 1;
@@ -26,6 +31,7 @@ export class ApplicantsComponent implements OnInit {
   isAdmin: boolean = false;
 
   constructor(
+    private callService: CallService,
     private studentService: StudentService,
     private _ngxUiLoaderService: NgxUiLoaderService,
     private loadingService: LoadingService,
@@ -33,6 +39,7 @@ export class ApplicantsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadcall();
     const token = localStorage.getItem('token');
     this.isAdmin =
       localStorage.getItem('esAdministrador') === 'true' ? true : false;
@@ -55,6 +62,31 @@ export class ApplicantsComponent implements OnInit {
       }
     });
   }
+
+loadcall(){
+  this.callService.getCurrentAnnouncement().subscribe({
+    next: (convocatoria) => {
+      if (convocatoria) {
+        this.call = (
+          convocatoria as unknown as IConvocatoriaResponse
+        ).convocatoria;
+      } else {
+        console.warn('No se encontró ninguna convocatoria actual');
+        this.call = null;
+      }
+    },
+    error: (error) => {
+      console.error('Error al obtener la convocatoria actual:', error);
+      this.call = null; // Asegúrate de manejar el error adecuadamente
+    },
+  });
+}
+
+calculateOccupiedPercentage(occupiedCupo?: number, availableCupo?: number): number {
+  if (!occupiedCupo || !availableCupo) return 0;
+  const totalCupo = occupiedCupo + availableCupo;
+  return (occupiedCupo / totalCupo) * 100;
+}
 
   logout() {
     localStorage.removeItem('token');

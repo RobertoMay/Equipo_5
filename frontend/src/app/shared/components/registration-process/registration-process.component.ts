@@ -281,6 +281,8 @@ export class RegistrationProcessComponent implements OnInit {
           // Recuperar el ID del aspirante desde localStorage
           const aspiranteId = localStorage.getItem('aspiranteId');
           const statusenrollment = localStorage.getItem('statusenrollment')!;
+          const idenrollment = localStorage.getItem('idenrollment')!;
+   
           if (!aspiranteId) {
             this.showError(
               'ID de aspirante no encontrado. Por favor, inténtelo de nuevo.'
@@ -382,6 +384,7 @@ export class RegistrationProcessComponent implements OnInit {
                   email: this.formData.correoElectronico,
                   curp: this.formData.curp,
                   enrollmentPeriod: statusenrollment, // Esto se debe ajustar al recibir la convocatoria
+                  convocatoriaId: idenrollment,
                   enrollmentStatus: false, // inicia en falso por que aun no esta aceptado
                   Documents: documentss, // Agrega los documentos si los tienes
                 };

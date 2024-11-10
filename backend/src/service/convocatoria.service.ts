@@ -4,8 +4,6 @@ import { ConvocatoriaDocument } from '../todos/document/convocatoria.document';
 import { Firestore } from '@google-cloud/firestore';
 
 @Injectable()
-
-
 export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> implements OnModuleInit {
   private readonly logger = new Logger(ConvocatoriaService.name);
   constructor() {
@@ -62,8 +60,10 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> im
   
     if (!activeConvocatoriaSnapshot.empty) {
       throw new HttpException(
-        'No se puede crear una nueva convocatoria mientras haya una convocatoria activa.',
-        HttpStatus.CONFLICT,
+        {
+          message: 'No se puede crear una nueva convocatoria mientras haya una convocatoria activa.'
+        },
+        HttpStatus.CONFLICT
       );
     }
   
