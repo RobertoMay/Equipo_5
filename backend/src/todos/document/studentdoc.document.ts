@@ -9,6 +9,7 @@ export class StudentDocDocument {
   curp: string; // Asegúrate de tener esta propiedad
   enrollmentPeriod: string;
   enrollmentStatus: boolean;
+  convocatoriaId: string;
   Documents: {
     name: string;
     type: string;

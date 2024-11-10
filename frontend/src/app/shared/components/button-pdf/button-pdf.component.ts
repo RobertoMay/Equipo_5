@@ -130,10 +130,31 @@ export class ButtonPdfComponent implements OnInit {
             font-size: 10px;
             padding: 10px 0;
           }
+        
           .lock {
             justify-content: center; 
             text-align: center;
           }
+          .footer {
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+          line-height: 1.6;
+          color: #333; /* Color de texto para el pie de página */
+           margin-top: 20px;
+}
+
+.avi {
+  font-weight: bold;
+  font-size: 18px; /* Aumentar el tamaño de la fuente */
+  color: #000; /* Color similar al de tu navbar */
+  margin-bottom: 10px; /* Espacio debajo del texto */
+  text-align: center; /* Centrar el aviso de privacidad */
+}
+
+.footer br {
+  margin-bottom: 10px; /* Espaciado entre las líneas de texto */
+  text-align: justify;
+}
           txt {
             font-size: 14px;
             font-family: Arial, Helvetica, sans-serif;

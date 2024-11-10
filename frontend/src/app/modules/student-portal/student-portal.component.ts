@@ -61,19 +61,26 @@ export class StudentPortalComponent implements OnInit {
   start(): void {
     this.callService.getCurrentAnnouncement().subscribe({
       next: (convocatoria) => {
+     
         if (convocatoria) {
           this.convocatoria = (
+            
             convocatoria as unknown as IConvocatoriaResponse
           ).convocatoria;
 
           // Convertir las fechas al formato deseado y guardarlas en localStorage
+          const idenrollement = 
+            this.convocatoria.id;
+          
           const formattedStartDate = this.formatDate(
             this.convocatoria.startDate
           );
           const formattedEndDate = this.formatDate(this.convocatoria.endDate);
           const statusEnrollment = `${formattedStartDate} - ${formattedEndDate}`;
-
+          
+          console.log('id', idenrollement);
           localStorage.setItem('statusenrollment', statusEnrollment);
+          localStorage.setItem('idenrollment', idenrollement);
         } else {
           console.warn('No se encontró ninguna convocatoria actual');
           this.convocatoria = null;

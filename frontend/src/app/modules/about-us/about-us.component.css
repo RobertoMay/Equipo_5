@@ -1,4 +1,14 @@
 /* Contenedor de la sección principal */
+/* Animación de Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out; /* Clase para aplicar la animación de entrada */
+}
+
 .contenedor {
   width: 80%;
   margin: 20px auto;
@@ -8,21 +18,43 @@
   background-color: #ffffff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
-.encabezado {
-  width: 100%;
-  min-height: 240px; /* Altura ajustada para el icono */
-  background: linear-gradient(to right, #b41e46, #d65d7c); /* Degradado que combina con la navbar */
+.banner {
   position: relative;
-  text-align: center;
+  background: linear-gradient(to right, rgba(134, 134, 134, 0.7), rgba(51, 50, 50, 0.5)), url('assets/images/2.jpg') no-repeat center center;
+  background-size: cover; /* Imagen de fondo del banner */
+  height: 300px;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 20px;
-  color: #fff; /* Color del texto */
-  border-bottom: 5px solid #fff; /* Borde inferior para destacar */
+  color: white;
+  text-align: right;
+  padding-right: 50px;
+  overflow: hidden; /* Oculta el desbordamiento del contenido */
+}
+.banner::before {
+  content: ''; /* Capa oscura sobre la imagen de fondo */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1; /* Asegura que esté por encima de la imagen de fondo */
 }
 
+.banner i {
+  font-size: 5rem; /* Tamaño del icono */
+  color: #ffffff; /* Color del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+.banner h1 {
+  position: relative;
+  font-size: 3.5rem; /* Tamaño de fuente del título del banner */
+  margin-left: 6%;
+  z-index: 2; /* Asegura que el texto esté por encima de la capa oscura */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Sombra del texto para mejor legibilidad */
+  white-space: pre-line; /* Mantiene los saltos de línea en el texto */
+}
 h1 {
   font-size: 2.8em; /* Aumentar tamaño */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -30,9 +62,10 @@ h1 {
 }
 
 .subtitulo {
-  font-size: 1.5em; /* Tamaño aumentado */
+  font-size: .8em; /* Tamaño aumentado */
   margin-top: 10px; /* Espacio entre el título y el subtítulo */
   line-height: 1.4; /* Espaciado entre líneas para mejor legibilidad */
+  color: #ffc7c7;
 }
 
 /* Icono en el encabezado */
