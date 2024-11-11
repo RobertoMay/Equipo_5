@@ -1,11 +1,10 @@
 <div class="container mt-5">
-   <!-- Barra de progreso de ocupación de cupos -->
-   <div class="progress-bar-container">
-    <div class="progress-bar" 
-         [style.width.%]="calculateOccupiedPercentage(call?.occupiedCupo, call?.availableCupo)">
+  <!-- Barra de progreso de ocupación de cupos -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="calculateOccupiedPercentage(call?.occupiedCupo, call?.availableCupo)">
     </div>
   </div>
-  
+
   <!-- Estadísticas de cupos -->
   <div class="cupos-stats">
     <div class="stat-item">
@@ -22,7 +21,7 @@
   <div class="search-bar mb-3">
     <input type="text" class="form-control" placeholder="Buscar por nombre" (input)="onSearchInput($event)" />
   </div>
- 
+
   <div class="table-responsive">
     <div *ngIf="!isLoading && filteredStudents.length === 0" class="text-center mt-3">
       <p>No hay estudiantes disponibles.</p>
@@ -57,6 +56,11 @@
 
     <app-gest-doc-students>
     </app-gest-doc-students>
+  </div>
+
+  <div *ngIf="isExpired && expired.length > 0" class="alert alert-warning mt-3 text-center rounded p-3">
+    <strong>Atención:</strong> Los alumnos no inscritos serán eliminados en
+    <strong class="text-danger">{{ expired[0].daysUntilDelete }}</strong> días.
   </div>
 
   <nav aria-label="Page navigation">
