@@ -8,6 +8,6 @@ import { GenericServiceService } from '@shared/generic.service.service';
 })
 export class InfoGeneralService extends GenericServiceService<IInfoGeneral> {
   constructor(protected override http: HttpClient) {
-    super(http, 'expired-students');
+    super(http, 'about');
   }
 }

@@ -135,6 +135,11 @@ body {
   background-color: #28a745;
 }
 
+.instructions-default {
+  background-color: #f8d7da;
+  border: 1px solid #b41e46;
+}
+
 /* Pasos de la barra de progreso */
 .progress-steps {
   display: flex;

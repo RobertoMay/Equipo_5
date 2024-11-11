@@ -194,7 +194,6 @@ export class Step3Component implements OnInit, OnDestroy {
           this.loadingService.stopLoading();
 
           this.comments = response.data;
-          console.log('Imprimiendo comentarios', this.comments);
         } else {
           this.loadingService.stopLoading();
           console.log(response.error + ' ' + response.msg);

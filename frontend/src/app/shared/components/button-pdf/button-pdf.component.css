@@ -9,3 +9,13 @@
   background-color: #911b31;
   color: white;
 }
+
+.btn-success {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #1a7f31;
+  color: white;
+}
