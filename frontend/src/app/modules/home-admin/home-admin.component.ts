@@ -8,6 +8,7 @@ import {
   ApexResponsive,
   ApexNonAxisChartSeries,
   ApexLegend,
+  ApexDataLabels
 } from 'ng-apexcharts';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -17,12 +18,22 @@ import { AdminDashboardService } from 'services/api/admin-dashboard/admin-dashbo
 import { Router } from '@angular/router';
 
 export type ChartOptions = {
-  series: ApexNonAxisChartSeries;
+  /*series: ApexNonAxisChartSeries;
   chart: ApexChart;
   responsive: ApexResponsive[];
   labels: string[];
   legend: ApexLegend;
-  total: ApexNonAxisChartSeries;
+  total: ApexNonAxisChartSeries;*/
+  series: ApexNonAxisChartSeries | ApexAxisChartSeries;
+  chart: ApexChart;
+  responsive?: ApexResponsive[];
+  labels?: string[];
+  legend?: ApexLegend;
+  total?: ApexNonAxisChartSeries;
+  xaxis?: ApexXAxis; // Agregar propiedad xaxis
+  dataLabels?: ApexDataLabels; // Para etiquetas
+
+
 };
 
 @Component({
@@ -39,6 +50,8 @@ export class HomeAdminComponent implements OnInit {
   public inscritosOptions: Partial<ChartOptions> | undefined;
   public documentosOptions: Partial<ChartOptions> | undefined;
   public albergueOptions: Partial<ChartOptions> | undefined;
+  public generoOptions: Partial<ChartOptions> | undefined;
+
   isAdmin: boolean = false;
 
   constructor(
@@ -78,6 +91,7 @@ export class HomeAdminComponent implements OnInit {
   }
 
   private setChartOptions(data: AdminDashboardData): void {
+    // Gráfica de inscritos
     this.inscritosOptions = {
       series: [data.alumnos.inscritos, data.alumnos.porInscribirse],
       chart: { type: 'pie', height: 330 },
@@ -91,7 +105,7 @@ export class HomeAdminComponent implements OnInit {
       },
       total: [data.alumnos.total], // Total de alumnos
     };
-
+// Gráfica de documentos
     this.documentosOptions = {
       series: [data.documentos.completos, data.documentos.pendientes],
       chart: { type: 'pie', height: 330 },
@@ -104,7 +118,7 @@ export class HomeAdminComponent implements OnInit {
       },
       total: [data.documentos.porInscribirse], // Total de documentos por inscribirse
     };
-
+// Gráfica de albergue
     this.albergueOptions = {
       series: [data.albergue.plazasOcupadas, data.albergue.plazasDisponibles],
       chart: { type: 'pie', height: 330 },
@@ -116,6 +130,57 @@ export class HomeAdminComponent implements OnInit {
       },
       total: [data.albergue.cupoTotal], // Cupo total del albergue
     };
+     
+     // Gráfica de albergue
+  this.albergueOptions = {
+    series: [data.albergue.plazasOcupadas, data.albergue.plazasDisponibles],
+    chart: { type: 'pie', height: 330 },
+    labels: ['Ocupadas', 'Disponibles'],
+    legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '16px' },
+    total: [data.albergue.cupoTotal],
+  };
+
+  // Gráfica de género
+  this.generoOptions = {
+    series: [
+      {
+        name: 'Cantidad de estudiantes', // Nombre de la serie
+        data: [
+          data.distribucionGenero.hombresInscritos,
+          data.distribucionGenero.mujeresInscritos,
+          data.distribucionGenero.otrosInscritos,
+        ],
+      },
+    ],
+    chart: { type: 'bar', height: 350 },
+    labels: ['Hombres', 'Mujeres', 'Otro'],
+    xaxis: {
+      categories: ['Hombres', 'Mujeres', 'Otro'],
+      title: { text: 'Género' },
+    },
+    legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '16px' },
+    dataLabels: {
+      enabled: true,
+      formatter: (val: number, opts: any) => {
+        // Calcular el porcentaje
+        const total = data.distribucionGenero.hombresInscritos +
+                      data.distribucionGenero.mujeresInscritos +
+                      data.distribucionGenero.otrosInscritos;
+        const percentage = ((val / total) * 100).toFixed(1);
+        return `${percentage}%`; // Mostrar el porcentaje
+      },
+      style: {
+        colors: ['#000'], // Color del texto 
+      },
+    
+   
+    },
+
+  
+
+
+  };
+    
   }
 
   private showError() {

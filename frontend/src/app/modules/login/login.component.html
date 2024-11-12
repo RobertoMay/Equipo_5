@@ -36,21 +36,30 @@
 
     <div class="input-group mt-1">
       <div class="input-group-text icon-background">
-        <i class="bi bi-person-badge-fill"></i>
+        <i class="bi bi-lock-fill"></i>
       </div>
       <input
+      #passwordInput
         class="form-control bg-light"
-        type="text"
-        placeholder="CURP"
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="Contraseña"
         name="curp"
         formControlName="curp"
         required
         [ngClass]="{ 'is-invalid': fm['curp'].invalid && (fm['curp'].dirty || fm['curp'].touched || submitted) }"
       />
+      <button 
+      class="input-group-text icon-background border-start-0" 
+      type="button"
+      (click)="togglePasswordVisibility(passwordInput)"
+    >
+      <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+    </button>
+
     </div>
     <div *ngIf="fm['curp'].invalid && (fm['curp'].dirty || fm['curp'].touched || submitted)" class="text-danger mt-1">
-      <small *ngIf="fm['curp'].errors?.['required']">La CURP es requerida</small>
-      <small *ngIf="fm['curp'].errors?.['minlength']">Ingresa una CURP válida</small>
+      <small *ngIf="fm['curp'].errors?.['required']">La contraseña es requerida</small>
+      <small *ngIf="fm['curp'].errors?.['minlength']">Ingresa una contraseña válida</small>
     </div>
 
     <button type="submit" class="btn text-white w-100 mt-4 fw-semibold shadow-sm">Iniciar sesión</button>
