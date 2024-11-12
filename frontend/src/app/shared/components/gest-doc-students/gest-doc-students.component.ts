@@ -22,8 +22,15 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class GestDocStudentsComponent {
   @Input() aspiranteId!: string;
 
+  // Propiedad para manejar el estado del acordeón
+  isAccordionOpen = false;
   studentDocuments: StudentDocument[] = [];
   tutorDocuments: StudentDocument[] = [];
+
+  // Método para alternar el estado del acordeón
+  toggleAccordion(): void {
+    this.isAccordionOpen = !this.isAccordionOpen;
+  }
 
   studentDocumentsDefault: StudentDocument[] = [
     {
@@ -401,12 +408,15 @@ export class GestDocStudentsComponent {
   // Método que se llamará al recibir el evento del botón
   openModal() {
     this.isModalOpen = true;
+// Asegurarse de que el acordeón esté cerrado al abrir el modal
+this.isAccordionOpen = false;
 
     this.loadComments();
 
     this.getDocuments();
   }
 
+  
   ngOnChanges(changes: SimpleChanges) {
     if (changes['aspiranteId'] && changes['aspiranteId'].currentValue) {
       console.log('Cambio en aspiranteId:', this.aspiranteId);

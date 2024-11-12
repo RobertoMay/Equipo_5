@@ -1,5 +1,13 @@
 
 
+
+/* Contenedor principal con margen a los lados */
+.main-container {
+  padding: 0 0; /* Espacio de 30px en los lados */
+  max-width: 1200px; /* Limita el ancho para mantener un diseño limpio */
+  margin: 0 20px; /* Centra el contenido horizontalmente */
+}
+
 .welcome-container {
   display: flex;
   justify-content: flex-start;
@@ -52,6 +60,8 @@
    /* Espacio entre tarjetas */
   margin-top: 1.5rem; /* Espacio superior */
   margin-bottom: 2rem;
+  margin-left: 12px;
+  margin-right: 12px;
 }
 
 .chart-card {
@@ -61,7 +71,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29); /* Sombra */
   padding: 8px; /* Espacio interno */
   flex: 1 1 20%; /* Ocupa el mismo espacio */
-  margin: 0 10px; /* Espacio lateral entre tarjetas */
+  margin: 0 8px; /* Espacio lateral entre tarjetas */
   transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
   height: 420px; /* Ajusta la altura de la tarjeta */
   max-width: 430px;

@@ -1,6 +1,6 @@
 <div class="modal" tabindex="-1" [ngClass]="{ show: isModalOpen }"
   [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Documentos de {{ studentName }} - Estado: <span class="badge"
@@ -10,7 +10,23 @@
         </h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-scrollable">
+
+        <!-- Cabecera del acordeón -->
+  <div class="accordion-header" (click)="toggleAccordion()">
+    <div class="d-flex justify-content-between align-items-center p-3 bg-light border">
+      <h4 class="mb-0">Documentos del Estudiante y Tutor</h4>
+      <i class="bi" [ngClass]="isAccordionOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+    </div>
+  </div>
+
+ <!-- Contenido del acordeón -->
+ <div class="accordion-content" 
+ [ngClass]="{'accordion-active': isAccordionOpen}"
+       [ngStyle]="{
+         'max-height': isAccordionOpen ? '2000px' : '0',
+         'opacity': isAccordionOpen ? '1' : '0'
+       }">
         <div class="container mt-4 mb-1">
           <!-- Documentos del Alumno -->
           <div class="row mb-4">
@@ -375,6 +391,11 @@
             <button class="btn btn-primary mt-2" (click)="addComment()" [disabled]="!newComment">Agregar
               Comentario</button>
           </div>
+        </div>
+
+        <!--
+        aqui
+        -->
         </div>
       </div>
       <div class="modal-footer">

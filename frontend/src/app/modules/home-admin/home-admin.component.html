@@ -3,6 +3,12 @@
     <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!" [xaxis]="chartOptions.xaxis!"
         [title]="chartOptions.title!"></apx-chart>
 </div> -->
+
+
+
+
+
+
 <div class="welcome-container">
 <h4 *ngIf="dataLoaded" [ngClass]="{'fade-in': dataLoaded}">
   Bienvenido, {{ promotorName }}
@@ -47,7 +53,7 @@
 
   <div *ngIf="albergueOptions" class="chart-card">
     <div class="chart-header">
-          <h5>Ocupación del albergue</h5>
+          <h5>Disponibilidad de cupos</h5>
     <p>(Plazas totales: {{ albergueOptions.total }})</p>
     </div>
 
@@ -58,4 +64,25 @@
       [legend]="albergueOptions.legend"
     ></apx-chart>
   </div>
+
+  <div *ngIf="generoOptions" class="chart-card">
+    <div class="chart-header">
+      <h5>Distribución de Género</h5>
+      <!--
+        <p>(Total de alumnos: {{ inscritosOptions?.total }})</p>
+      -->
+    
+    </div>
+    <apx-chart
+      [series]="generoOptions.series"
+      [chart]="generoOptions.chart"
+      [xaxis]="generoOptions.xaxis"
+      [legend]="generoOptions.legend"
+      [dataLabels]="generoOptions.dataLabels"
+    ></apx-chart>
+  </div>
+ 
 </div>
+
+
+
