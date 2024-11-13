@@ -1,405 +1,739 @@
-<div class="modal" tabindex="-1" [ngClass]="{ show: isModalOpen }"
-  [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }">
+<div
+  class="modal"
+  tabindex="-1"
+  [ngClass]="{ show: isModalOpen }"
+  [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }"
+>
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Documentos de {{ studentName }} - Estado: <span class="badge"
-            [ngClass]="{'bg-success': studentStatus, 'bg-gold': !studentStatus}">
-            {{ studentStatus ? 'Inscrito' : 'No inscrito' }}
+        <h5 class="modal-title">
+          Documentos de {{ studentName }} - Estado:
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-success': studentStatus,
+              'bg-gold': !studentStatus
+            }"
+          >
+            {{ studentStatus ? "Inscrito" : "No inscrito" }}
           </span>
         </h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
       </div>
       <div class="modal-body modal-body-scrollable">
-
         <!-- Cabecera del acordeón -->
-  <div class="accordion-header" (click)="toggleAccordion()">
-    <div class="d-flex justify-content-between align-items-center p-3 bg-light border">
-      <h4 class="mb-0">Documentos del Estudiante y Tutor</h4>
-      <i class="bi" [ngClass]="isAccordionOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-    </div>
-  </div>
-
- <!-- Contenido del acordeón -->
- <div class="accordion-content" 
- [ngClass]="{'accordion-active': isAccordionOpen}"
-       [ngStyle]="{
-         'max-height': isAccordionOpen ? '2000px' : '0',
-         'opacity': isAccordionOpen ? '1' : '0'
-       }">
-        <div class="container mt-4 mb-1">
-          <!-- Documentos del Alumno -->
-          <div class="row mb-4">
-            <div class="col-12">
-              <div class="card card-documents">
-                <div class="card-body">
-                  <h4 class="card-title">Documentos del Alumno</h4>
-                  <div class="list-group mt-4">
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Solicitud de ingreso</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[0].status)">
-                          {{ statusTranslation[studentDocuments[0].status] || studentDocuments[0].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[0].status === 'pending' || studentDocuments[0].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[0])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[0].status === 'pending' || studentDocuments[0].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[0])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Acta de nacimiento</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[1].status)">
-                          {{ statusTranslation[studentDocuments[1].status] || studentDocuments[1].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[1].status === 'pending'"
-                          (click)="openDocument(studentDocuments[1])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[1].status === 'pending' || studentDocuments[1].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[1])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[1].status === 'pending' || studentDocuments[1].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[1])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Ultima boleta de calificaciones</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[2].status)">
-                          {{ statusTranslation[studentDocuments[2].status] || studentDocuments[2].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[2].status === 'pending'"
-                          (click)="openDocument(studentDocuments[2])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[2].status === 'pending' || studentDocuments[2].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[2])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[2].status === 'pending' || studentDocuments[2].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[2])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Cartilla de vacunación</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[3].status)">
-                          {{ statusTranslation[studentDocuments[3].status] || studentDocuments[3].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[3].status === 'pending'"
-                          (click)="openDocument(studentDocuments[3])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[3].status === 'pending' || studentDocuments[3].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[3])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[3].status === 'pending' || studentDocuments[3].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[3])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>CURP (Actualizada)</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[4].status)">
-                          {{ statusTranslation[studentDocuments[4].status] || studentDocuments[4].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[4].status === 'pending'"
-                          (click)="openDocument(studentDocuments[4])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[4].status === 'pending' || studentDocuments[4].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[4])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[4].status === 'pending' || studentDocuments[4].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[4])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Comprobante de domicilio</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[5].status)">
-                          {{ statusTranslation[studentDocuments[5].status] || studentDocuments[5].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[5].status === 'pending'"
-                          (click)="openDocument(studentDocuments[5])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[5].status === 'pending' || studentDocuments[5].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[5])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[5].status === 'pending' || studentDocuments[5].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[5])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong class="max">Constancia de identidad o escrito libre emitido por la
-                          autoridad</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[6].status)">
-                          {{ statusTranslation[studentDocuments[6].status] || studentDocuments[6].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[6].status === 'pending'"
-                          (click)="openDocument(studentDocuments[6])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[6].status === 'pending' || studentDocuments[6].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[6])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[6].status === 'pending' || studentDocuments[6].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[6])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Certificado médico</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(studentDocuments[7].status)">
-                          {{ statusTranslation[studentDocuments[7].status] || studentDocuments[7].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="studentDocuments[7].status === 'pending'"
-                          (click)="openDocument(studentDocuments[7])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="studentDocuments[7].status === 'pending' || studentDocuments[7].status === 'approved'"
-                          (click)="approveDocument(studentDocuments[7])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="studentDocuments[7].status === 'pending' || studentDocuments[7].status === 'rejected'"
-                          (click)="rejectDocument(studentDocuments[7])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Documentos del Tutor -->
-          <div class="row mb-4">
-            <div class="col-12">
-              <div class="card card-documents">
-                <div class="card-body">
-                  <h4 class="card-title">Documentos del Tutor</h4>
-                  <div class="list-group mt-4">
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>CURP (Actualizada)</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[0].status)">
-                          {{ statusTranslation[tutorDocuments[0].status] || tutorDocuments[0].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="tutorDocuments[0].status === 'pending'"
-                          (click)="openDocument(tutorDocuments[0])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="tutorDocuments[0].status === 'pending' || tutorDocuments[0].status === 'approved'"
-                          (click)="approveDocument(tutorDocuments[0])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="tutorDocuments[0].status === 'pending' || tutorDocuments[0].status === 'rejected'"
-                          (click)="rejectDocument(tutorDocuments[0])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Comprobante de domicilio</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[1].status)">
-                          {{ statusTranslation[tutorDocuments[1].status] || tutorDocuments[1].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="tutorDocuments[1].status === 'pending'"
-                          (click)="openDocument(tutorDocuments[1])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="tutorDocuments[1].status === 'pending' || tutorDocuments[1].status === 'approved'"
-                          (click)="approveDocument(tutorDocuments[1])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="tutorDocuments[1].status === 'pending' || tutorDocuments[1].status === 'rejected'"
-                          (click)="rejectDocument(tutorDocuments[1])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>Credencial del lector</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[2].status)">
-                          {{ statusTranslation[tutorDocuments[2].status] || tutorDocuments[2].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="tutorDocuments[2].status === 'pending'"
-                          (click)="openDocument(tutorDocuments[2])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="tutorDocuments[2].status === 'pending' || tutorDocuments[2].status === 'approved'"
-                          (click)="approveDocument(tutorDocuments[2])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="tutorDocuments[2].status === 'pending' || tutorDocuments[2].status === 'rejected'"
-                          (click)="rejectDocument(tutorDocuments[2])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong class="max">Constancia del último grado de estudio</strong><br />
-                        <span class="badge-custom" [ngClass]="getBadgeClass(tutorDocuments[3].status)">
-                          {{ statusTranslation[tutorDocuments[3].status] || tutorDocuments[3].status }}
-                        </span>
-                      </div>
-                      <div>
-                        <button class="btn btn-info btn-sm mx-1" [disabled]="tutorDocuments[3].status === 'pending'"
-                          (click)="openDocument(tutorDocuments[3])">
-                          <i class="bi bi-eye"></i> Ver Archivo
-                        </button>
-                        <button class="btn btn-success btn-sm mx-1"
-                          [disabled]="tutorDocuments[3].status === 'pending' || tutorDocuments[3].status === 'approved'"
-                          (click)="approveDocument(tutorDocuments[3])">
-                          <i class="bi bi-check-lg"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm mx-1"
-                          [disabled]="tutorDocuments[3].status === 'pending' || tutorDocuments[3].status === 'rejected'"
-                          (click)="rejectDocument(tutorDocuments[3])">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </div>
-                    </div>
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Botones para <i class="bi bi-check-lg"></i>/<i class="bi bi-x"></i> todos los documentos -->
-          <div class="d-flex justify-content-end mt-3">
-            <button class="btn btn-success me-2" (click)="updateAllStatus('approved')"><i class=" bi bi-check-lg"></i>
-              Todo</button>
-            <button class="btn btn-danger" (click)="updateAllStatus('rejected')"><i class="bi bi-x"></i> Todo</button>
-          </div>
-
-          <!-- Comentarios -->
-          <div *ngIf="comments.length > 0" class="row mt-4">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Comentarios</h5>
-                  <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center"
-                      *ngFor="let comment of comments">
-                      <p class="mb-0">
-                        <i class="bi bi-chat-left i-color me-1"></i> {{ comment.comment }}
-                      </p>
-                      <button class="btn btn-outline-danger btn-sm" (click)="deleteComment(comment.id)"
-                        title="Eliminar comentario">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Agregar un nuevo comentario -->
-          <div class="mt-4">
-            <h5>Añadir un comentario:</h5>
-            <textarea [(ngModel)]="newComment" rows="3" maxlength="150" class="form-control"
-              placeholder="Escribe tu comentario aquí..."></textarea>
-            <button class="btn btn-primary mt-2" (click)="addComment()" [disabled]="!newComment">Agregar
-              Comentario</button>
+        <div class="accordion-header" (click)="toggleAccordion()">
+          <div
+            class="d-flex justify-content-between align-items-center p-3 bg-light border"
+          >
+            <h4 class="mb-0">Documentos del Estudiante y Tutor</h4>
+            <i
+              class="bi"
+              [ngClass]="isAccordionOpen ? 'bi-chevron-up' : 'bi-chevron-down'"
+            ></i>
           </div>
         </div>
 
-        <!--
+        <!-- Contenido del acordeón -->
+        <div
+          class="accordion-content"
+          [ngClass]="{ 'accordion-active': isAccordionOpen }"
+          [ngStyle]="{
+            'max-height': isAccordionOpen ? '2000px' : '0',
+            opacity: isAccordionOpen ? '1' : '0'
+          }"
+        >
+          <div class="container mt-4 mb-1">
+            <!-- Documentos del Alumno -->
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="card card-documents">
+                  <div class="card-body">
+                    <h4 class="card-title">Documentos del Alumno</h4>
+                    <div class="list-group mt-4">
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Solicitud de ingreso</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[0].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[0].status] ||
+                                studentDocuments[0].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[0].status === 'pending' ||
+                              studentDocuments[0].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[0])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[0].status === 'pending' ||
+                              studentDocuments[0].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[0])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Acta de nacimiento</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[1].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[1].status] ||
+                                studentDocuments[1].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[1].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[1])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[1].status === 'pending' ||
+                              studentDocuments[1].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[1])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[1].status === 'pending' ||
+                              studentDocuments[1].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[1])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Ultima boleta de calificaciones</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[2].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[2].status] ||
+                                studentDocuments[2].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[2].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[2])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[2].status === 'pending' ||
+                              studentDocuments[2].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[2])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[2].status === 'pending' ||
+                              studentDocuments[2].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[2])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Cartilla de vacunación</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[3].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[3].status] ||
+                                studentDocuments[3].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[3].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[3])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[3].status === 'pending' ||
+                              studentDocuments[3].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[3])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[3].status === 'pending' ||
+                              studentDocuments[3].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[3])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>CURP (Actualizada)</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[4].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[4].status] ||
+                                studentDocuments[4].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[4].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[4])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[4].status === 'pending' ||
+                              studentDocuments[4].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[4])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[4].status === 'pending' ||
+                              studentDocuments[4].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[4])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Comprobante de domicilio</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[5].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[5].status] ||
+                                studentDocuments[5].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[5].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[5])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[5].status === 'pending' ||
+                              studentDocuments[5].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[5])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[5].status === 'pending' ||
+                              studentDocuments[5].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[5])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong class="max"
+                            >Constancia de identidad o escrito libre emitido por
+                            la autoridad</strong
+                          ><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[6].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[6].status] ||
+                                studentDocuments[6].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[6].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[6])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[6].status === 'pending' ||
+                              studentDocuments[6].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[6])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[6].status === 'pending' ||
+                              studentDocuments[6].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[6])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Certificado médico</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="
+                              getBadgeClass(studentDocuments[7].status)
+                            "
+                          >
+                            {{
+                              statusTranslation[studentDocuments[7].status] ||
+                                studentDocuments[7].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[7].status === 'pending'
+                            "
+                            (click)="openDocument(studentDocuments[7])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[7].status === 'pending' ||
+                              studentDocuments[7].status === 'approved'
+                            "
+                            (click)="approveDocument(studentDocuments[7])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              studentDocuments[7].status === 'pending' ||
+                              studentDocuments[7].status === 'rejected'
+                            "
+                            (click)="rejectDocument(studentDocuments[7])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Documentos del Tutor -->
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="card card-documents">
+                  <div class="card-body">
+                    <h4 class="card-title">Documentos del Tutor</h4>
+                    <div class="list-group mt-4">
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>CURP (Actualizada)</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="getBadgeClass(tutorDocuments[0].status)"
+                          >
+                            {{
+                              statusTranslation[tutorDocuments[0].status] ||
+                                tutorDocuments[0].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="tutorDocuments[0].status === 'pending'"
+                            (click)="openDocument(tutorDocuments[0])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[0].status === 'pending' ||
+                              tutorDocuments[0].status === 'approved'
+                            "
+                            (click)="approveDocument(tutorDocuments[0])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[0].status === 'pending' ||
+                              tutorDocuments[0].status === 'rejected'
+                            "
+                            (click)="rejectDocument(tutorDocuments[0])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Comprobante de domicilio</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="getBadgeClass(tutorDocuments[1].status)"
+                          >
+                            {{
+                              statusTranslation[tutorDocuments[1].status] ||
+                                tutorDocuments[1].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="tutorDocuments[1].status === 'pending'"
+                            (click)="openDocument(tutorDocuments[1])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[1].status === 'pending' ||
+                              tutorDocuments[1].status === 'approved'
+                            "
+                            (click)="approveDocument(tutorDocuments[1])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[1].status === 'pending' ||
+                              tutorDocuments[1].status === 'rejected'
+                            "
+                            (click)="rejectDocument(tutorDocuments[1])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong>Credencial del lector</strong><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="getBadgeClass(tutorDocuments[2].status)"
+                          >
+                            {{
+                              statusTranslation[tutorDocuments[2].status] ||
+                                tutorDocuments[2].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="tutorDocuments[2].status === 'pending'"
+                            (click)="openDocument(tutorDocuments[2])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[2].status === 'pending' ||
+                              tutorDocuments[2].status === 'approved'
+                            "
+                            (click)="approveDocument(tutorDocuments[2])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[2].status === 'pending' ||
+                              tutorDocuments[2].status === 'rejected'
+                            "
+                            (click)="rejectDocument(tutorDocuments[2])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <div>
+                          <strong class="max"
+                            >Constancia del último grado de estudio</strong
+                          ><br />
+                          <span
+                            class="badge-custom"
+                            [ngClass]="getBadgeClass(tutorDocuments[3].status)"
+                          >
+                            {{
+                              statusTranslation[tutorDocuments[3].status] ||
+                                tutorDocuments[3].status
+                            }}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-info btn-sm mx-1"
+                            [disabled]="tutorDocuments[3].status === 'pending'"
+                            (click)="openDocument(tutorDocuments[3])"
+                          >
+                            <i class="bi bi-eye"></i> Ver Archivo
+                          </button>
+                          <button
+                            class="btn btn-success btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[3].status === 'pending' ||
+                              tutorDocuments[3].status === 'approved'
+                            "
+                            (click)="approveDocument(tutorDocuments[3])"
+                          >
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm mx-1"
+                            [disabled]="
+                              tutorDocuments[3].status === 'pending' ||
+                              tutorDocuments[3].status === 'rejected'
+                            "
+                            (click)="rejectDocument(tutorDocuments[3])"
+                          >
+                            <i class="bi bi-x"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones para <i class="bi bi-check-lg"></i>/<i class="bi bi-x"></i> todos los documentos -->
+            <div class="d-flex justify-content-end mt-3">
+              <button
+                class="btn btn-success me-2"
+                (click)="updateAllStatus('approved')"
+              >
+                <i class="bi bi-check-lg"></i> Todo
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="updateAllStatus('rejected')"
+              >
+                <i class="bi bi-x"></i> Todo
+              </button>
+            </div>
+
+            <!-- Comentarios -->
+            <div *ngIf="comments.length > 0" class="row mt-4">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Comentarios</h5>
+                    <ul class="list-group">
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                        *ngFor="let comment of comments"
+                      >
+                        <p class="mb-0">
+                          <i class="bi bi-chat-left i-color me-1"></i>
+                          {{ comment.comment }}
+                        </p>
+                        <div class="d-flex align-items-center">
+                          <span class="comment-date"
+                            >Creado el
+                            {{ comment.createdAt | date : "dd/MM/yyyy" }}</span
+                          >
+
+                          <button
+                            class="btn btn-outline-danger btn-sm"
+                            (click)="deleteComment(comment.id)"
+                            title="Eliminar comentario"
+                          >
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Agregar un nuevo comentario -->
+            <div class="mt-4">
+              <h5>Añadir un comentario:</h5>
+              <textarea
+                [(ngModel)]="newComment"
+                rows="3"
+                maxlength="150"
+                class="form-control"
+                placeholder="Escribe tu comentario aquí..."
+              ></textarea>
+              <button
+                class="btn btn-primary mt-2"
+                (click)="addComment()"
+                [disabled]="!newComment"
+              >
+                Agregar Comentario
+              </button>
+            </div>
+          </div>
+
+          <!--
         aqui
-        -->
-        </div>
+        --></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Cerrar
+        </button>
       </div>
     </div>
   </div>

@@ -107,6 +107,7 @@
   line-height: 1.2; /* Ajustar la altura de línea */
 }
 
+
 .btn-success,
 .btn-danger {
   padding: 5px 10px;
@@ -211,4 +212,10 @@ textarea {
 .bi-chevron-down {
   transform: rotate(0deg);
   transition: transform 0.3s ease;
+}
+
+.comment-date {
+  margin-right: 10px;
+  font-size: 0.7em;
+  color: #666;
 }
