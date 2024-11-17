@@ -24,12 +24,20 @@ export class GestDocStudentsComponent {
 
   // Propiedad para manejar el estado del acordeón
   isAccordionOpen = false;
+  isAccordionStudentsOpen = false;
+  isAccordionTutorOpen = false;
   studentDocuments: StudentDocument[] = [];
   tutorDocuments: StudentDocument[] = [];
 
   // Método para alternar el estado del acordeón
   toggleAccordion(): void {
     this.isAccordionOpen = !this.isAccordionOpen;
+  }
+  toggleAccordionStudents(): void {
+    this.isAccordionStudentsOpen = !this.isAccordionStudentsOpen;
+  }
+  toggleAccordionTutor(): void {
+    this.isAccordionTutorOpen = !this.isAccordionTutorOpen;
   }
 
   studentDocumentsDefault: StudentDocument[] = [
@@ -180,12 +188,19 @@ export class GestDocStudentsComponent {
   }
 
   loadComments(): void {
+
+    if (!this.aspiranteId) {
+      console.error("No se ha recibido el aspiranteId");
+      return;
+  }
+
     this.gestDocumentsService
       .getCommentsByAspiranteId(this.aspiranteId)
       .subscribe(
         (comments) => {
           this.comments = comments;
           console.log('Imprimiendo comentarios', this.comments);
+          this.cdRef.detectChanges();
         },
         (error) =>
           Swal.fire('Error', 'Error al cargar los comentarios', 'error')
@@ -351,6 +366,17 @@ export class GestDocStudentsComponent {
   }
 
   deleteComment(commentId: string): void {
+    if (!this.aspiranteId) {
+      console.error("No se ha recibido el aspiranteId al intentar eliminar el comentario");
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se puede eliminar el comentario sin un aspiranteId válido.',
+      });
+      return;
+  }
+
+
     console.log('Esto estamos enviando', commentId, this.aspiranteId);
     
     this.gestDocumentsService
@@ -410,6 +436,8 @@ export class GestDocStudentsComponent {
     this.isModalOpen = true;
 // Asegurarse de que el acordeón esté cerrado al abrir el modal
 this.isAccordionOpen = false;
+this.isAccordionStudentsOpen = false;
+this.isAccordionTutorOpen= false;
 
     this.loadComments();
 
