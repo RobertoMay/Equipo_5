@@ -20,9 +20,22 @@
   
 
 <div class="charts-container">
+
+
+<!-- Card: Total de Alumnos Inscritos -->
+<div *ngIf="inscritosOptions" class="chart-card total-inscritos-card">
+  <div class="chart-header">
+  <h5>Total de Alumnos Inscritos</h5>  
+  </div>
+  <div class="chart-content center-number">
+    <h2>{{ inscritosOptions.totalInscritos || 0 }}</h2>
+
+  </div>
+</div>
+
   <div *ngIf="inscritosOptions" class="chart-card">
     <div class="chart-header">
-       <h5>Alumnos inscritos y por inscribirse</h5>
+       <h5 >Alumnos inscritos y por inscribirse</h5>
     <p>(Total de alumnos: {{ inscritosOptions.total }})</p>   
     </div>
 

@@ -30,6 +30,7 @@ export type ChartOptions = {
   labels?: string[];
   legend?: ApexLegend;
   total?: ApexNonAxisChartSeries;
+  totalInscritos?: number; // Nuevo campo para total de inscritos
   xaxis?: ApexXAxis; // Agregar propiedad xaxis
   dataLabels?: ApexDataLabels; // Para etiquetas
 
@@ -104,6 +105,7 @@ export class HomeAdminComponent implements OnInit {
         fontSize: '16px',
       },
       total: [data.alumnos.total], // Total de alumnos
+      totalInscritos: data.alumnos.inscritos, // Total de alumnos inscritos
     };
 // Gráfica de documentos
     this.documentosOptions = {
