@@ -39,19 +39,19 @@ textarea {
   display: block;
   width: 150px;
   padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
   border-radius: 20px;
   cursor: pointer;
   font-size: 14px;
   margin: 10px auto;
   text-align: center;
   transition: background-color 0.3s ease;
+  background-color: #b41e46;
+  color: white;
+  border: none;
 }
 
 .btn-guardar:hover {
-  background-color: #45a049;
+  background-color: #9f1137;
 }
 
 /* Media Query para pantallas pequeñas */

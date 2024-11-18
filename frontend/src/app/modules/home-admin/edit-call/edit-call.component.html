@@ -1,5 +1,5 @@
 <div class="container mt-5 mb-5">
-    <h2>El periodo de inscripción queda comprendido:</h2>
+    <h2 class="admin-title">El periodo de inscripción queda comprendido:</h2>
 
     <form [formGroup]="form" (ngSubmit)="updateDate()">
         <div *ngIf="form.errors?.dateRangeInvalid && (fm.startDate.dirty || fm.endDate.dirty || submitted)">

@@ -1,8 +1,5 @@
 <body>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <div class="admin-container">
     <div class="admin-header">
       <h2 class="admin-title">Gestión de Convocatorias</h2>
@@ -13,13 +10,8 @@
       <div class="form-grid">
         <div class="form-group">
           <label for="title" class="required-field">Título de la convocatoria</label>
-          <input
-            type="text"
-            id="title"
-            formControlName="title"
-            class="form-control"
-            placeholder="Ingrese el título de la convocatoria"
-          />
+          <input type="text" id="title" formControlName="title" class="form-control"
+            placeholder="Ingrese el título de la convocatoria" />
           <div class="validation-error" *ngIf="callForm.get('title')?.touched && callForm.get('title')?.invalid">
             El título es requerido
           </div>
@@ -27,14 +19,8 @@
 
         <div class="form-group">
           <label for="cupo" class="required-field">Cupo disponible</label>
-          <input
-            type="number"
-            id="cupo"
-            formControlName="cupo"
-            class="form-control"
-            min="1"
-            placeholder="Ingrese el número de cupos"
-          />
+          <input type="number" id="cupo" formControlName="cupo" class="form-control" min="1"
+            placeholder="Ingrese el número de cupos" />
           <div class="validation-error" *ngIf="callForm.get('cupo')?.touched && callForm.get('cupo')?.invalid">
             El cupo debe ser mayor a 0
           </div>
@@ -42,34 +28,25 @@
 
         <div class="form-group">
           <label for="startDate" class="required-field">Fecha de inicio</label>
-          <input
-            type="date"
-            id="startDate"
-            formControlName="startDate"
-            class="form-control"
-          />
-          <div class="validation-error" *ngIf="callForm.get('startDate')?.touched && callForm.get('startDate')?.invalid">
+          <input type="date" id="startDate" formControlName="startDate" class="form-control" />
+          <div class="validation-error"
+            *ngIf="callForm.get('startDate')?.touched && callForm.get('startDate')?.invalid">
             La fecha de inicio es requerida
           </div>
         </div>
 
         <div class="form-group">
           <label for="endDate" class="required-field">Fecha de cierre</label>
-          <input
-            type="date"
-            id="endDate"
-            formControlName="endDate"
-            class="form-control"
-          />
+          <input type="date" id="endDate" formControlName="endDate" class="form-control" />
           <div class="validation-error" *ngIf="callForm.get('endDate')?.touched && callForm.get('endDate')?.invalid">
-              La fecha de cierre es requerida
+            La fecha de cierre es requerida
           </div>
         </div>
       </div>
 
       <!-- Mensaje de error para fechas no válidas -->
       <div class="validation-error" *ngIf="callForm?.errors?.['dateRangeInvalid']">
-          La fecha de inicio no puede ser mayor a la fecha de cierre
+        La fecha de inicio no puede ser mayor a la fecha de cierre
       </div>
 
       <div class="form-footer">
@@ -79,11 +56,11 @@
         </button>
       </div>
     </form>
- 
+
   </div>
   <div class="admin-container">
-  
+
     <app-list-call></app-list-call>
-    
-</div>
+
+  </div>
 </body>
