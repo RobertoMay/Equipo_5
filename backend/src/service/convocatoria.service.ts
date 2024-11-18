@@ -106,17 +106,21 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> im
   // Actualizar el cupo disponible en el campo de la convocatoria
   private async updateAvailableCupoField(convocatoria: ConvocatoriaDocument): Promise<ConvocatoriaDocument> {
     const aspirantesSnapshot = await this.firestore
-      .collection('Aspirantes')
+      .collection('StudentDocDocument')
       .where('convocatoriaId', '==', convocatoria.id)
-      .where('statusinscripcion', '==', true)
+      .where('enrollmentStatus', '==', true)
       .get();
-
+    const cup = convocatoria.cupo;
+    console.log(cup);
     const aspirantesInscritos = aspirantesSnapshot.size;
-    convocatoria.availableCupo = convocatoria.cupo - aspirantesInscritos;
-
+    console.log(aspirantesInscritos);
+    convocatoria.occupiedCupo = aspirantesInscritos;
+    convocatoria.availableCupo = cup - aspirantesInscritos;
+    console.log(convocatoria.availableCupo);
     // Actualizar en Firestore
     await this.firestore.collection(ConvocatoriaDocument.collectionName).doc(convocatoria.id).update({
       availableCupo: convocatoria.availableCupo,
+      occupiedCupo:convocatoria.occupiedCupo,
     });
 
     return convocatoria;
@@ -150,9 +154,9 @@ export class ConvocatoriaService extends GenericService<ConvocatoriaDocument> im
 // Método auxiliar para contar aspirantes inscritos en una convocatoria específica
 private async getAspirantesInscritos(convocatoriaId: string): Promise<number> {
   const aspirantesSnapshot = await this.firestore
-    .collection('Aspirantes')
+    .collection('StudentDocDocument')
     .where('convocatoriaId', '==', convocatoriaId)
-    .where('statusinscripcion', '==', true)
+    .where('enrollmentStatus', '==', true)
     .get();
     
   return aspirantesSnapshot.size;

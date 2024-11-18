@@ -39,9 +39,15 @@ export class AdminService {
   
       // 3. Consultar los documentos de todos los aspirantes en StudentDocDocument
       const studentDocsSnapshot = await this.firestore.collection('StudentDocDocument').get();
+      const AspirantesSnapshot = await this.firestore.collection('Aspirantes').get();
       const aspirantes = studentDocsSnapshot.docs;
+
+      const proceso = AspirantesSnapshot.docs;
+      // 4. Filtrar y contar los aspirantes según su estado de inscripción y documentos
+
   
       // 4. Variables para contar aspirantes y documentos
+
       let totalAspirantes = 0;
       let aspirantesInscritos = 0;
       let aspirantesNoInscritos = 0;
@@ -92,8 +98,9 @@ export class AdminService {
           }
         }
       }
+
       
-  
+ 
       // 5. Calcular ocupación del albergue
       const plazasOcupadas = convocatoria.occupiedCupo || 0;
       const plazasDisponibles = convocatoria.availableCupo || 0;
