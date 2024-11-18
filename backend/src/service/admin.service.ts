@@ -64,7 +64,7 @@ export class AdminService {
       
         // Excluir administradores
         if (!data.esAdministrador || data.esAdministrador === false) {
-          totalAspirantes++;
+          
       
           if (data.enrollmentStatus === true) {
             aspirantesInscritos++;
@@ -99,12 +99,25 @@ export class AdminService {
         }
       }
 
+      for (const doc of proceso) {
+        const data = doc.data();
       
+        // Excluir administradores
+        if (!data.esAdministrador || data.esAdministrador === false) {
+          
+      
+          if (data.convocatoriaId === convocatoria.id) {
+            totalAspirantes++;
+ 
+        }
+      } 
+    }
  
       // 5. Calcular ocupación del albergue
       const plazasOcupadas = convocatoria.occupiedCupo || 0;
       const plazasDisponibles = convocatoria.availableCupo || 0;
       const cupoTotal = plazasOcupadas + plazasDisponibles;
+      const enproceso = totalAspirantes - aspirantesInscritos;
   
       // 6. Retornar los datos procesados
       return {
@@ -112,7 +125,7 @@ export class AdminService {
         alumnos: {
           total: totalAspirantes,
           inscritos: aspirantesInscritos,
-          porInscribirse: aspirantesNoInscritos,
+          porInscribirse: enproceso,
         },
         documentos: {
           porInscribirse: aspirantesNoInscritos,
