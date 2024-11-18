@@ -19,6 +19,19 @@
   max-width: 900px;
 }
 
+.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 1rem);
+}
+
+.modal-body-scrollable {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
+
 .modal-content {
   background-color: #fff;
   border-radius: 10px;
@@ -94,6 +107,7 @@
   line-height: 1.2; /* Ajustar la altura de línea */
 }
 
+
 .btn-success,
 .btn-danger {
   padding: 5px 10px;
@@ -163,4 +177,45 @@
 
 textarea {
   resize: none;
+}
+
+.accordion-content {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
+
+.accordion-content.accordion-active {
+  overflow: hidden;
+  max-height: 110vh; /* Ajusta este valor según el contenido */
+  opacity: 1;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animación para el ícono */
+.accordion-header i {
+  transition: transform 0.3s ease;
+}
+
+.accordion-header:hover {
+  background-color: rgba(0,0,0,0.05);
+  transition: background-color 0.3s ease;
+}
+
+/* Opcional: Animación más suave para el ícono */
+.bi-chevron-up {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.bi-chevron-down {
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.comment-date {
+  margin-right: 10px;
+  font-size: 0.7em;
+  color: #666;
 }

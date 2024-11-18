@@ -3,6 +3,7 @@ import { Firestore } from '@google-cloud/firestore';
 import { ConvocatoriaService } from './convocatoria.service';
 import { StudenDocService } from '../service/studentdoc.service';
 import { AspiranteService } from './aspirante.service';
+import { DataStudentService } from './data_student.service';
 
 @Injectable()
 export class AdminService {
@@ -11,7 +12,8 @@ export class AdminService {
   constructor(
     private readonly convocatoriaService: ConvocatoriaService,
     private readonly aspiranteService: AspiranteService,
-    private readonly studentDocService: StudenDocService
+    private readonly studentDocService: StudenDocService,
+    private readonly dataStudentService: DataStudentService
   ) {
     this.firestore = new Firestore();
   }
@@ -39,26 +41,51 @@ export class AdminService {
       const studentDocsSnapshot = await this.firestore.collection('StudentDocDocument').get();
       const AspirantesSnapshot = await this.firestore.collection('Aspirantes').get();
       const aspirantes = studentDocsSnapshot.docs;
+
       const proceso = AspirantesSnapshot.docs;
       // 4. Filtrar y contar los aspirantes según su estado de inscripción y documentos
+
+  
+      // 4. Variables para contar aspirantes y documentos
+
       let totalAspirantes = 0;
       let aspirantesInscritos = 0;
       let aspirantesNoInscritos = 0;
       let aspirantesConDocumentosCompletos = 0;
       let aspirantesConDocumentosPendientes = 0;
   
+      // Variables para la distribución de género
+      let hombresInscritos = 0;
+      let mujeresInscritos = 0;
+      let otrosInscritos = 0;
+  
       for (const doc of aspirantes) {
         const data = doc.data();
-        
-        // Solo contar si el aspirante no es administrador
+      
+        // Excluir administradores
         if (!data.esAdministrador || data.esAdministrador === false) {
           totalAspirantes++;
-          
+      
           if (data.enrollmentStatus === true) {
-            // Aspirantes inscritos
             aspirantesInscritos++;
-            
-            // Contar documentos completos si todos los documentos están aprobados
+      
+            // Consultar el género desde DataStudent
+            const dataStudent = await this.dataStudentService.findByAspiranteId(data.aspiranteId);
+            const genero = dataStudent.data.sexo.toLowerCase().trim(); // Normalizar a minúsculas y eliminar espacios
+      
+            // Log para verificar qué valores de género se están obteniendo
+           // console.log(`Género encontrado para aspirante ${data.aspiranteId}: ${genero}`);
+      
+            // Clasificar según el género
+            if (genero === 'hombre' || genero === 'masculino') {
+              hombresInscritos++;
+            } else if (genero === 'mujer' || genero === 'femenino') {
+              mujeresInscritos++;
+            } else {
+              otrosInscritos++;
+            }
+      
+            // Verificar si tienen documentos completos
             const documentos = data.Documents || [];
             const allApproved = documentos.length === 12 && documentos.every(d => d.status === 'approved');
             if (allApproved) {
@@ -67,36 +94,13 @@ export class AdminService {
               aspirantesConDocumentosPendientes++;
             }
           } else {
-            // Aspirantes por inscribirse
             aspirantesNoInscritos++;
           }
         }
       }
-      for (const doc of proceso) {
-        const data = doc.data();
-        
-        // Solo contar si el aspirante no es administrador
-        if (!data.esAdministrador || data.esAdministrador === false) {
-          totalAspirantes++;
-          
-          if (data.enrollmentStatus === true) {
-            // Aspirantes inscritos
-            aspirantesInscritos++;
-            
-            // Contar documentos completos si todos los documentos están aprobados
-            const documentos = data.Documents || [];
-            const allApproved = documentos.length === 12 && documentos.every(d => d.status === 'approved');
-            if (allApproved) {
-              aspirantesConDocumentosCompletos++;
-            } else {
-              aspirantesConDocumentosPendientes++;
-            }
-          } else {
-            // Aspirantes por inscribirse
-            aspirantesNoInscritos++;
-          }
-        }
-      }
+
+      
+ 
       // 5. Calcular ocupación del albergue
       const plazasOcupadas = convocatoria.occupiedCupo || 0;
       const plazasDisponibles = convocatoria.availableCupo || 0;
@@ -120,6 +124,11 @@ export class AdminService {
           plazasOcupadas,
           plazasDisponibles,
         },
+        distribucionGenero: {
+          hombresInscritos,
+          mujeresInscritos,
+          otrosInscritos,
+        },
       };
   
     } catch (error) {
@@ -130,5 +139,7 @@ export class AdminService {
       );
     }
   }
+  
+  
   
 }

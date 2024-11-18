@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   showLogin: boolean = true; // Controla si el pop-up se muestra
+  showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -149,5 +150,21 @@ export class LoginComponent implements OnInit {
   closeLogin() {
     this.form.reset(); // Limpia el formulario
     this.modalLoginService.closeLogin(); // Cierra el modal usando el servicio
+  }
+
+  togglePasswordVisibility(passwordInput: HTMLInputElement) {
+    // Guardar la posición actual del cursor
+    const selectionStart = passwordInput.selectionStart;
+    const selectionEnd = passwordInput.selectionEnd;
+
+    this.showPassword = !this.showPassword;
+    
+ // Usamos setTimeout para asegurar que la operación ocurra después del cambio de tipo
+ setTimeout(() => {
+  passwordInput.focus();
+  // Restauramos la posición del cursor
+  passwordInput.setSelectionRange(selectionStart, selectionEnd);
+}, 0);
+
   }
 }

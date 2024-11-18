@@ -9,7 +9,9 @@ import {
   IConvocatoria,
   IConvocatoriaResponse,
 } from '../../../../models/icalls.metadata';
-import { CallService } from '../../../../services/api/call/call.service'; // Verifica si esta ruta es correcta
+import { CallService } from '../../../../services/api/call/call.service';
+import { ExpiredService } from 'services/api/expired/expired.service';
+import { IExpired } from 'models/iexpired.data';
 @Component({
   selector: 'app-applicants',
   templateUrl: './applicants.component.html',
@@ -29,13 +31,16 @@ export class ApplicantsComponent implements OnInit {
   selectedAspiranteId!: string;
   isLoading: boolean = false;
   isAdmin: boolean = false;
+  expired!: IExpired[];
+  isExpired: boolean = false;
 
   constructor(
     private callService: CallService,
     private studentService: StudentService,
     private _ngxUiLoaderService: NgxUiLoaderService,
     private loadingService: LoadingService,
-    private router: Router
+    private router: Router,
+    private expiredService: ExpiredService
   ) {}
 
   ngOnInit() {
@@ -47,6 +52,7 @@ export class ApplicantsComponent implements OnInit {
     if (token) {
       if (this.isAdmin) {
         this.loadStudents();
+        this.callExpired();
       } else {
         this.logout();
       }
@@ -63,30 +69,33 @@ export class ApplicantsComponent implements OnInit {
     });
   }
 
-loadcall(){
-  this.callService.getCurrentAnnouncement().subscribe({
-    next: (convocatoria) => {
-      if (convocatoria) {
-        this.call = (
-          convocatoria as unknown as IConvocatoriaResponse
-        ).convocatoria;
-      } else {
-        console.warn('No se encontró ninguna convocatoria actual');
-        this.call = null;
-      }
-    },
-    error: (error) => {
-      console.error('Error al obtener la convocatoria actual:', error);
-      this.call = null; // Asegúrate de manejar el error adecuadamente
-    },
-  });
-}
+  loadcall() {
+    this.callService.getCurrentAnnouncement().subscribe({
+      next: (convocatoria) => {
+        if (convocatoria) {
+          this.call = (
+            convocatoria as unknown as IConvocatoriaResponse
+          ).convocatoria;
+        } else {
+          console.warn('No se encontró ninguna convocatoria actual');
+          this.call = null;
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener la convocatoria actual:', error);
+        this.call = null; // Asegúrate de manejar el error adecuadamente
+      },
+    });
+  }
 
-calculateOccupiedPercentage(occupiedCupo?: number, availableCupo?: number): number {
-  if (!occupiedCupo || !availableCupo) return 0;
-  const totalCupo = occupiedCupo + availableCupo;
-  return (occupiedCupo / totalCupo) * 100;
-}
+  calculateOccupiedPercentage(
+    occupiedCupo?: number,
+    availableCupo?: number
+  ): number {
+    if (!occupiedCupo || !availableCupo) return 0;
+    const totalCupo = occupiedCupo + availableCupo;
+    return (occupiedCupo / totalCupo) * 100;
+  }
 
   logout() {
     localStorage.removeItem('token');
@@ -120,6 +129,29 @@ calculateOccupiedPercentage(occupiedCupo?: number, availableCupo?: number): numb
           console.error('Error fetching students:', error);
         }
       );
+  }
+
+  callExpired() {
+    this.expiredService.getById('days-until-delete/').subscribe(
+      (response) => {
+        if (
+          !response.error &&
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length > 0
+        ) {
+          this.isExpired = true;
+          this.expired = response.data;
+        } else {
+          console.log(response.error + ' ' + response.msg);
+          this.expired = [];
+          this.isExpired = false;
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   onSearchInput(event: Event) {

@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ExpiredStudentService } from 'src/service/expiredCall.service';
 
-@Controller('expired-students')
+@Controller('api/expired-students')
 export class ExpiredStudentController {
   constructor(private readonly expiredStudentService: ExpiredStudentService) {}
 

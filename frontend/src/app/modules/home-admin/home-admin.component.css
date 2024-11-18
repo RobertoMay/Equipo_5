@@ -1,5 +1,13 @@
 
 
+
+/* Contenedor principal con margen a los lados */
+.main-container {
+  padding: 0 0; /* Espacio de 30px en los lados */
+  max-width: 1200px; /* Limita el ancho para mantener un diseño limpio */
+  margin: 0 20px; /* Centra el contenido horizontalmente */
+}
+
 .welcome-container {
   display: flex;
   justify-content: flex-start;
@@ -46,13 +54,12 @@
 /* Centrado de la leyenda y gráficos */
 
 .charts-container {
-  display: flex;
-  justify-content: space-around; /* Distribuye las tarjetas horizontalmente */
-  flex-wrap: nowrap; /* Permite que las tarjetas se envuelvan */
-   /* Espacio entre tarjetas */
-  margin-top: 1.5rem; /* Espacio superior */
-  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px; /* Espacio entre tarjetas */
+  margin: 1.5rem 12px 2rem 12px; /* Margen alrededor del contenedor */
 }
+
 
 .chart-card {
   background-color: #f6eeca; /* Fondo suave */
@@ -61,7 +68,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29); /* Sombra */
   padding: 8px; /* Espacio interno */
   flex: 1 1 20%; /* Ocupa el mismo espacio */
-  margin: 0 10px; /* Espacio lateral entre tarjetas */
+  margin: 0 8px; /* Espacio lateral entre tarjetas */
   transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
   height: 420px; /* Ajusta la altura de la tarjeta */
   max-width: 430px;
@@ -78,11 +85,31 @@
 /* Ajusta el tamaño del gráfico para que sea uniforme en todas las tarjetas */
 
 
+/* Estilo para centrar el número total de alumnos inscritos */
+.center-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ocupar todo el espacio disponible */
+}
+
+/* Ajuste adicional para asegurar que el texto esté bien centrado */
+.total-inscritos-card .chart-content h2 {
+  font-size: 5rem; /* Tamaño del texto */
+  font-weight: bold; /* Negrita para resaltar */
+  color: #333; /* Color del texto */
+  margin: 0; /* Eliminar márgenes */
+}
+
+
+
 /* Consulta de medios para pantallas pequeñas */
 @media (max-width: 780px) {
   .charts-container {
-    flex-direction: column;
-    align-items: center;
+   /* flex-direction: column;
+    align-items: center;*/
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    gap: 15px;
   }
 
   .chart-card {

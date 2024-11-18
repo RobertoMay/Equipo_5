@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataStudentService } from 'services/api/datastudent/datastudent.service';
 import {
@@ -19,6 +19,7 @@ export class ButtonPdfComponent implements OnInit {
   aspiranteData: IDataStudent | null = null;
   datos: StudentData | null = null;
   nombre: string | null = null;
+  @Input() colorClass: string = '';
 
   constructor(
     private route: ActivatedRoute,

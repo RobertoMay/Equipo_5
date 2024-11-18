@@ -29,38 +29,44 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
 textarea {
   height: 170px;
-}
-
-/* Evitar que el textarea se pueda redimensionar */
-textarea {
-  resize: none;
+  resize: none; /* Evitar que el textarea se pueda redimensionar */
 }
 
 .btn-guardar {
-  display: block; /* Permite que el botón se comporte como un bloque */
-  width: 150px; /* Ancho más pequeño */
-  padding: 10px; /* Espaciado interno */
+  display: block;
+  width: 150px;
+  padding: 10px;
   background-color: #4caf50;
   color: white;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 14px; /* Tamaño de fuente más pequeño */
-  margin: 10px auto; /* Centrado horizontal */
+  font-size: 14px;
+  margin: 10px auto;
   text-align: center;
-  transition: all 0.3s ease;
-  border-radius: 0px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-guardar:hover {
-  background-color: #52b055;
-  border-radius: 50px;
-  color: white;
-  transform: scale(1.05);
+  background-color: #45a049;
 }
 
-.btn-guardar:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+/* Media Query para pantallas pequeñas */
+@media (max-width: 600px) {
+  .form-container {
+    max-width: 90%;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .btn-guardar {
+    width: 100%;
+    font-size: 16px;
+  }
 }

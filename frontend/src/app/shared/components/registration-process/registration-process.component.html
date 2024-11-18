@@ -25,7 +25,7 @@
   <form *ngIf="currentStep === 1">
     <div class="instructions">
       <h4 class="instructions-title">
-        ¡Bienvenido al Proceso de Solicitud! 
+        ¡Bienvenido al Proceso de Solicitud!
       </h4>
       <p class="instructions-text">
         Este proceso se divide en <strong>tres sencillos pasos</strong> para
@@ -34,39 +34,33 @@
         Asegúrate de tener a mano todos los datos personales y familiares que te
         solicitaremos. Recuerda que los detalles que proporciones serán
         utilizados para generar tu documento de solicitud, ¡así que cada dato
-        cuenta! 
+        cuenta!
         <br /><br />
         <strong>Importante:</strong> Todos los campos son obligatorios. No
         podrás avanzar al Paso 2 hasta que hayas completado todo correctamente.
         Antes de continuar, tómate un momento para verificar que la información
         sea precisa y completa. 🔍 <br /><br />
         Si todo está en orden, ¡estás a un paso más cerca de completar tu
-        solicitud! 
+        solicitud!
       </p>
       <app-aviso-priv></app-aviso-priv>
       <app-terminos-condiciones></app-terminos-condiciones>
- <!-- Casilla de verificación -->
- <div class="form-check mt-3">
-  <input 
-    class="form-check-input" 
-    type="checkbox" 
-    id="terminosCheck" 
-    [(ngModel)]="termsAccepted" 
-    (change)="onTermsAccepted()" 
-    name="terminosCheck">
-  <label class="form-check-label" for="terminosCheck">
-    He leído y acepto los Términos y Condiciones
-  </label>
-</div>
-       <!-- Botón de inicio, habilitado o deshabilitado según termsAccepted -->
-    <div class="button-container mt-3">
-      <button type="button" class="btn btn-primary start-btn" 
-              (click)="mostrarFormulario()" 
-              [disabled]="!termsAccepted">
-        Comenzar Paso 1 <br />
-        <i class="bi bi-arrow-right-circle"></i>
-      </button>
-    </div>
+      <!-- Casilla de verificación -->
+      <div class="form-check mt-3">
+        <input class="form-check-input" type="checkbox" id="terminosCheck" [(ngModel)]="termsAccepted"
+          (change)="onTermsAccepted()" name="terminosCheck">
+        <label class="form-check-label" for="terminosCheck">
+          He leído y acepto los Términos y Condiciones
+        </label>
+      </div>
+      <!-- Botón de inicio, habilitado o deshabilitado según termsAccepted -->
+      <div class="button-container mt-3">
+        <button type="button" class="btn btn-primary start-btn" (click)="mostrarFormulario()"
+          [disabled]="!termsAccepted">
+          Comenzar Paso 1 <br />
+          <i class="bi bi-arrow-right-circle"></i>
+        </button>
+      </div>
     </div>
 
     <div class="container mt-5" [hidden]="!formularioVisible">
@@ -1220,23 +1214,24 @@
 
   <div class="" *ngIf="currentStep === 3">
     <div class="instructions" [ngClass]="{ 'instructions-success': isAccepted }">
-      <h3>
+      <h3 [ngClass]="{ 'text-success': isAccepted }">
         Bienvenido, {{ studentName }}
       </h3>
 
       <p class="instructions-text">
-        En esta <strong>tercera etapa</strong> te invitamos a <strong>subir todos los documentos necesarios</strong>
+        En esta <strong [ngClass]="{ 'text-success': isAccepted }">tercera etapa</strong> te invitamos a
+        <strong [ngClass]="{ 'text-success': isAccepted }">subir todos los documentos necesarios</strong>
         tanto
         tuyos como de tu tutor. Este paso es crucial para concluir en tu proceso de inscripción.
         <br /><br />
         Todos los documentos deben ser aprobados por el promotor antes de que puedas ser finalmente inscrito.
-        ¡Así que asegúrate de que estén completos y sean legibles! 🗂️
+        ¡Así que asegúrate de que estén completos y sean legibles!
         <br /><br />
         La solicitud de ingreso es necesario firmarla de manera autógrafa y entregar presencialmente en las
         instalaciones durante el
-        periodo de {{currentEnrollmentPeriod}}. ✍️
+        periodo de {{currentEnrollmentPeriod}}.
         <br />
-        <app-button-pdf></app-button-pdf>
+        <app-button-pdf [colorClass]="isAccepted ? 'btn-success' : ''"></app-button-pdf>
       </p>
     </div>
 

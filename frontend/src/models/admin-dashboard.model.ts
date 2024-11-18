@@ -15,5 +15,11 @@ export interface AdminDashboardData {
       plazasOcupadas: number;
       plazasDisponibles: number;
     };
+
+    distribucionGenero: {
+      hombresInscritos: number;
+      mujeresInscritos: number;
+      otrosInscritos: number;
+    };
   }
   
