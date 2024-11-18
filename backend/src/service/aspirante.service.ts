@@ -65,13 +65,7 @@ async createAspirante(aspirante: AspiranteDocument): Promise<AspiranteDocument> 
 
     await docRef.set(newAspirante);
 
-    // Reducir el availableCupo, el cupo total, y aumentar el occupiedCupo
-    await this.convocatoriaService.updateCuposOnInscription(
-      convocatoriaAbierta.id,
-      convocatoriaAbierta.cupo - 1,
-      convocatoriaAbierta.availableCupo - 1,
-      (convocatoriaAbierta.occupiedCupo || 0) + 1
-    );
+  
 
     return newAspirante;
   } catch (error) {
