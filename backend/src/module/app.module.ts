@@ -5,13 +5,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreModule } from 'src/firestore/firestore.module'; // Importa el módulo de Firestore
 import { ConvocatoriaModule } from './convocatoria.module';
 import { AspiranteModule } from './aspirante.module';
-import { DataStudentModule } from './data_student.module';
 import { StudentDocModule } from './studentdoc.module';
-import { createGenericController } from 'src/shared/generic.controller';
 import { GenericService } from 'src/shared/generic.service';
 import { AboutModule } from '../module/about.module';
 import { AdminModule } from './admin.module';
 import { ExpiredCallModule } from '../module/expiredCall.module';
+import { DataStudentModule } from './data_student.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
