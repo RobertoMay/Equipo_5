@@ -72,7 +72,7 @@ export class HomeAdminComponent implements OnInit {
 
         this.dashboardService.getDashboardData().subscribe(
           (data: AdminDashboardData) => {
-            console.log('Datos del backend:', data); // Verificar datos aquí
+          
             this.promotorName = data.adminName;
             this.setChartOptions(data);
             this.dataLoaded = true;

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private modalLoginService: ModalLoginService
   ) {
-    console.log('LoginComponent initialized');
+    
     this.form = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       curp: ['', [Validators.required, Validators.minLength(18)]],
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   sendData() {
-    console.log(this.form.value);
+   
     this.submitted = true; // Marca como enviado
 
     // Si el formulario no es válido, detener la ejecución
@@ -54,9 +54,7 @@ export class LoginComponent implements OnInit {
     this.authService.auth(this.form.value).subscribe({
       next: (response) => {
         this.ngxLoader.stop(); // Detener el cargador
-        console.log(response);
-
-        console.log(response.nombresCompletos); // Verifica específicamente 'nombresCompletos'
+        
 
         if (response.message !== 'Inicio de sesión exitoso') {
           // Mostrar mensaje de error con SweetAlert
@@ -75,8 +73,7 @@ export class LoginComponent implements OnInit {
           response.esAdministrador ? 'true' : 'false'
         );
         localStorage.setItem('idUsuario', response.id || '');
-        console.log('token:', response.token);
-        console.log('esAdministrador:', response.esAdministrador);
+    
         // Actualizar el estado de autenticación y rol
         this.authService.updateAuthStatus(); // Llama al método para actualizar el navbar
 
@@ -85,8 +82,7 @@ export class LoginComponent implements OnInit {
           .getAspiranteByCurp(this.form.value.curp)
           .subscribe({
             next: (aspiranteResponse) => {
-              // Aquí obtienes el ID del aspirante
-              console.log('ID del aspirante:', aspiranteResponse.aspiranteId);
+              
               // Guardar el ID del aspirante en localStorage
               localStorage.setItem(
                 'aspiranteId',
@@ -137,7 +133,7 @@ export class LoginComponent implements OnInit {
     // Suscribe a las actualizaciones del estado de `showLogin`
     this.modalLoginService.showLogin$.subscribe((show) => {
       this.showLogin = show;
-      console.log('LoginComponent: showLogin is', show);
+
 
       if (show) {
         // Resetea el formulario cada vez que se abre el login

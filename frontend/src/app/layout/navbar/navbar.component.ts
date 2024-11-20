@@ -49,32 +49,9 @@ export class NavbarComponent implements OnInit {
   updateHomeState(currentUrl: string): void {
     // Cuando la URL es '/', es la página de inicio; de lo contrario, no es inicio
     this.isHome = currentUrl === '/';
-    console.log('updateHomeState:', 'isHome:', this.isHome);
+    
   }
   
-
-  // Método para manejar la navegación al hacer "Atrás"
-  /*handleBackNavigation() {
-  const currentUrl = this.router.url;
-
-  // Si ya estás en la página principal y el navbar está en estado general
-  if (currentUrl === '/' && this.isHome) {
-    console.log('Ya estás en la página principal, no se realiza ningún cambio.');
-    return; // No realizar ningún cambio si ya está en el estado general
-  }
-
-  // Si navegas a la página principal, establecer isHome a true
-  if (currentUrl === '/') {
-    this.isHome = true;
-    console.log('Navegación hacia atrás detectada: isHome = true');
-  } else {
-    this.isHome = false;
-    console.log('Navegación hacia atrás detectada: isHome = false');
-  }
-
-  this.checkAuthStatus();
-  this.cdr.detectChanges();  // Forzar actualización de la vista
-}*/
 
   openLogin() {
     // Verificar si el usuario ya tiene una sesión activa
@@ -82,26 +59,20 @@ export class NavbarComponent implements OnInit {
       this.isHome = false;
       if (this.authService.isAdmin()) {
         // Si es administrador, redirigir al portal admin
-        console.log(
-          'Usuario autenticado como administrador, redirigiendo a /admin'
-        );
+      
         this.router.navigate(['/admin']);
         this.checkAuthStatus(); // Verifica el estado de autenticación de nuevo
         this.cdr.detectChanges(); // Forzar detección de cambios
       } else {
         // Si es estudiante, redirigir al portal student
-        console.log(
-          'Usuario autenticado como estudiante, redirigiendo a /student'
-        );
+      
         this.router.navigate(['/student']);
         this.checkAuthStatus(); // Verifica el estado de autenticación de nuevo
         this.cdr.detectChanges(); // Forzar detección de cambios
       }
     } else {
       // Si no hay sesión activa, abrir el modal de login
-      console.log(
-        'No hay sesión activa, abriendo el modal de inicio de sesión'
-      );
+    
       this.isHome = false;
       this.modalService.openLogin();
     }
@@ -112,25 +83,16 @@ export class NavbarComponent implements OnInit {
     this.isAuthenticated = this.authService.isAuthenticated();
     this.isAdmin = this.authService.isAdmin();
     this.cdr.detectChanges(); // Forzar la actualización del DOM para reflejar el estado actualizado
-    console.log(
-      'Estado actualizado: isAuthenticated:',
-      this.isAuthenticated,
-      'isAdmin:',
-      this.isAdmin
-    );
+    
   }
 
   goToHome(): void {
-    console.log(
-      'Redirigiendo a la página principal: Navbar general (sin sesión activa)'
-    );
+   
 
     // Navegamos a la página principal
     this.isHome = true;
 
-    console.log('goToHome: isAuthenticated:', this.isAuthenticated);
-    console.log('goToHome: isAdmin:', this.isAdmin);
-    console.log('goToHome: isHome:', this.isHome);
+    
 
     // Forzar la actualización del DOM para reflejar los cambios
     this.cdr.detectChanges();
@@ -172,9 +134,7 @@ export class NavbarComponent implements OnInit {
       this.isAdmin = false;
     }
 
-    console.log('checkAuthStatus: isAuthenticated:', this.isAuthenticated);
-    console.log('checkAuthStatus: isAdmin:', this.isAdmin);
-    console.log('checkAuthStatus: isHome:', this.isHome);
+    
     // this.isHome = false; // Asegurarnos que no estamos en la página de inicio al verificar autenticación
     this.cdr.detectChanges(); // Forzar la actualización del DOM
   }
@@ -211,9 +171,7 @@ export class NavbarComponent implements OnInit {
     this.isAdmin = false;
     this.isHome = true; // Restablecemos a estado de homepage después del logout
 
-    console.log('logout: isAuthenticated:', this.isAuthenticated);
-    console.log('logout: isAdmin:', this.isAdmin);
-    console.log('logout: isHome:', this.isHome);
+  
 
     // Forzar la actualización del DOM
     this.cdr.detectChanges();

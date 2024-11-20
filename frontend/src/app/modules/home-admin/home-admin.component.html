@@ -1,101 +1,79 @@
-
-<!-- <div style="text-align:center">
-    <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!" [xaxis]="chartOptions.xaxis!"
-        [title]="chartOptions.title!"></apx-chart>
-</div> -->
-
-
-
-
-
-
 <div class="welcome-container">
-<h4 *ngIf="dataLoaded" [ngClass]="{'fade-in': dataLoaded}">
-  Bienvenido, {{ promotorName }}
-</h4>
+  <h4 *ngIf="dataLoaded" [ngClass]="{'fade-in': dataLoaded}">
+    Bienvenido, {{ promotorName }}
+  </h4>
 </div>
 
-
-
-  
-
+<!-- Contenedor principal de las gráficas -->
 <div class="charts-container">
-
-
-<!-- Card: Total de Alumnos Inscritos -->
-<div *ngIf="inscritosOptions" class="chart-card total-inscritos-card">
-  <div class="chart-header">
-  <h5>Total de Alumnos Inscritos</h5>  
+  
+  <!-- Card: Total de Alumnos Inscritos (arriba) -->
+  <div *ngIf="inscritosOptions" class="chart-card total-inscritos-card">
+    <div class="chart-header">
+      <h5>Total de Alumnos Inscritos</h5>  
+    </div>
+    <div class="chart-content center-number">
+      <h2>{{ inscritosOptions.totalInscritos || 0 }}</h2>
+    </div>
   </div>
-  <div class="chart-content center-number">
-    <h2>{{ inscritosOptions.totalInscritos || 0 }}</h2>
 
+  <!-- Contenedor de las 4 tarjetas horizontales -->
+  <div class="cards-row">
+    <!-- Card: Alumnos inscritos y por inscribirse (pie chart) -->
+    <div *ngIf="inscritosOptions" class="chart-card">
+      <div class="chart-header">
+        <h5>Alumnos inscritos y por inscribirse</h5>
+        <p>(Total de alumnos: {{ inscritosOptions.total }})</p>   
+      </div>
+      <apx-chart
+        [series]="inscritosOptions.series"
+        [chart]="inscritosOptions.chart"
+        [labels]="inscritosOptions.labels"
+        [legend]="inscritosOptions.legend">
+      </apx-chart>
+    </div>
+
+    <!-- Card: Documentos de alumnos por inscribirse (pie chart) -->
+    <div *ngIf="documentosOptions" class="chart-card">
+      <div class="chart-header">
+        <h5>Documentación de alumnos por inscribirse</h5>
+        <p>(Total de alumnos por inscribirse: {{ documentosOptions.total }})</p>
+      </div>
+      <apx-chart
+        [series]="documentosOptions.series"
+        [chart]="documentosOptions.chart"
+        [labels]="documentosOptions.labels"
+        [legend]="documentosOptions.legend">
+      </apx-chart>
+    </div>
+
+    <!-- Card: Disponibilidad de cupos (pie chart) -->
+    <div *ngIf="albergueOptions" class="chart-card">
+      <div class="chart-header">
+        <h5>Disponibilidad de cupos</h5>
+        <p>(Plazas totales: {{ albergueOptions.total }})</p>
+      </div>
+      <apx-chart
+        [series]="albergueOptions.series"
+        [chart]="albergueOptions.chart"
+        [labels]="albergueOptions.labels"
+        [legend]="albergueOptions.legend">
+      </apx-chart>
+    </div>
+
+    <!-- Card: Distribución de género (bar chart) -->
+    <div *ngIf="generoOptions" class="chart-card">
+      <div class="chart-header">
+        <h5>Distribución de Género</h5>
+      </div>
+      <apx-chart
+        [series]="generoOptions.series"
+        [chart]="generoOptions.chart"
+        [xaxis]="generoOptions.xaxis"
+        [legend]="generoOptions.legend"
+        [dataLabels]="generoOptions.dataLabels">
+      </apx-chart>
+    </div>
   </div>
+
 </div>
-
-  <div *ngIf="inscritosOptions" class="chart-card">
-    <div class="chart-header">
-       <h5 >Alumnos inscritos y por inscribirse</h5>
-    <p>(Total de alumnos: {{ inscritosOptions.total }})</p>   
-    </div>
-
-    <apx-chart
-    div 
-      [series]="inscritosOptions.series"
-      [chart]="inscritosOptions.chart"
-      [labels]="inscritosOptions.labels"
-      [legend]="inscritosOptions.legend"
-    >
-  </apx-chart>
-  </div>
-
-  <div *ngIf="documentosOptions" class="chart-card">
-    <div class="chart-header">
-
-          <h5>Documentación de alumnos por inscribirse</h5>
-    <p>(Total de alumnos por inscribirse: {{ documentosOptions.total }})</p>
-    </div>
-
-    <apx-chart
-      [series]="documentosOptions.series"
-      [chart]="documentosOptions.chart"
-      [labels]="documentosOptions.labels"
-      [legend]="documentosOptions.legend"
-    ></apx-chart>
-  </div>
-
-  <div *ngIf="albergueOptions" class="chart-card">
-    <div class="chart-header">
-          <h5>Disponibilidad de cupos</h5>
-    <p>(Plazas totales: {{ albergueOptions.total }})</p>
-    </div>
-
-    <apx-chart
-      [series]="albergueOptions.series"
-      [chart]="albergueOptions.chart"
-      [labels]="albergueOptions.labels"
-      [legend]="albergueOptions.legend"
-    ></apx-chart>
-  </div>
-
-  <div *ngIf="generoOptions" class="chart-card">
-    <div class="chart-header">
-      <h5>Distribución de Género</h5>
-      <!--
-        <p>(Total de alumnos: {{ inscritosOptions?.total }})</p>
-      -->
-    
-    </div>
-    <apx-chart
-      [series]="generoOptions.series"
-      [chart]="generoOptions.chart"
-      [xaxis]="generoOptions.xaxis"
-      [legend]="generoOptions.legend"
-      [dataLabels]="generoOptions.dataLabels"
-    ></apx-chart>
-  </div>
- 
-</div>
-
-
-
