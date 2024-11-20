@@ -28,7 +28,6 @@ export class ListCallComponent implements OnInit {
     this.callService.getAllAnnouncements().subscribe({
       next: (data) => {
         this.callsHistory = data.convocatorias; // Access the convocatorias array
-        console.log('Convocatorias recibidas:', this.callsHistory); // Imprimir los datos en consola
         this.callsHistory.sort((a, b) => {
           if (a.status&& !b.status) return -1;
           if (!a.status && b.status) return 1;

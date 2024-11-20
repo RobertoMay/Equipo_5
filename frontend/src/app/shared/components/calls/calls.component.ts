@@ -35,7 +35,6 @@ export class CallsComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error al obtener la convocatoria actual:', error);
         this.convocatoria = null; // Asegúrate de manejar el error adecuadamente
       },
     });

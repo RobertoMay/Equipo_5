@@ -59,7 +59,7 @@ export class EnrolledStudentsComponent implements OnInit {
   }
 
   viewDocuments(aspiranteId: string) {
-    console.log('Ver documentos de aspirante con ID:', aspiranteId);
+   
     // Lógica adicional para manejar la visualización de documentos
   }
 
@@ -68,10 +68,6 @@ export class EnrolledStudentsComponent implements OnInit {
   onAspiranteIdReceived(aspiranteId: string) {
     // Aquí se define correctamente el parámetro
     this.selectedAspiranteId = aspiranteId;
-    console.log(
-      'ID recibido en EnrolledStudentsComponent:',
-      this.selectedAspiranteId
-    ); // Verificar aquí
     this.gestDocModal.aspiranteId = this.selectedAspiranteId; // Asigna el ID al modal
     this.gestDocModal.openModal(); // Abre el modal aquí
   }
@@ -93,21 +89,17 @@ export class EnrolledStudentsComponent implements OnInit {
             this.loadingService.stopLoading();
             this.isLoading = false;
             this.students = response.data;
-            console.log('Respuesta de estudiantes:', response.data);
-
             this.filteredStudents = this.students; // Inicialmente muestra todos los estudiantes
             this.totalPages = response.data.totalPages; // Ajustar para obtener el total de páginas
             this.noMoreStudents = this.students.length === 0; // Actualiza la bandera
           } else {
             this.loadingService.stopLoading();
             this.isLoading = false;
-            console.error(response.msg);
           }
         },
         (error) => {
           this.loadingService.stopLoading();
           this.isLoading = false;
-          console.error('Error fetching students:', error);
           this.noMoreStudents = true; // Mostrar el mensaje si hay un error
         }
       );
