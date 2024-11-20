@@ -1,18 +1,16 @@
-
-
-
 /* Contenedor principal con margen a los lados */
 .main-container {
-  padding: 0 0; /* Espacio de 30px en los lados */
-  max-width: 1200px; /* Limita el ancho para mantener un diseño limpio */
-  margin: 0 20px; /* Centra el contenido horizontalmente */
+  padding: 0 0;
+  max-width: 1200px;
+  margin: 0 20px;
 }
 
+/* Bienvenida */
 .welcome-container {
   display: flex;
   justify-content: flex-start;
-  align-items: center; /* Centrado vertical */
-  height: 30px; /* Ajusta la altura según necesites */
+  align-items: center;
+  height: 30px;
   margin-top: 9px;
   margin-left: 17px;
 }
@@ -20,7 +18,6 @@
 .fade-in {
   opacity: 0;
   animation: fadeIn 1.5s forwards;
-  
 }
 
 @keyframes fadeIn {
@@ -32,37 +29,43 @@
   }
 }
 
-
-/* Estilos para centrar el título y el total dentro de la tarjeta */
-.chart-header {
-  text-align: center;
-  margin-bottom: 10px; /* Espacio entre el título y el gráfico */
-}
-
-.chart-header h5 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0; /* Elimina márgenes extra */
-}
-
-.chart-header p {
-  font-size: 14px;
-  color: #666; /* Color más claro para el texto de total */
-  margin: 0;
-}
-
-/* Centrado de la leyenda y gráficos */
-
+/* Contenedor de las tarjetas de gráficos */
 .charts-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px; /* Espacio entre tarjetas */
-  margin: 1.5rem 12px 2rem 12px; /* Margen alrededor del contenedor */
+  display: flex;
+  flex-direction: column; /* Las tarjetas se apilan verticalmente */
+  align-items: center;
+  margin: 1.5rem 12px 2rem 12px;
 }
 
+/* Fila de las 4 tarjetas horizontales */
+.cards-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Espacio entre tarjetas */
+  flex-wrap: wrap; /* Para asegurar que no se desborden en pantallas pequeñas */
+  margin-top: 20px; /* Espacio entre la tarjeta de total inscritos y las otras */
+}
 
+/* Estilos para las tarjetas de gráficos */
 .chart-card {
-  background-color: #f6eeca; /* Fondo suave */
+  background-color: #f6eeca;
+  border: 1px solid #be7777;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29);
+  padding: 8px;
+  margin: 0 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 420px;
+  max-width: 430px;
+}
+
+/* Card para el total de alumnos inscritos (más pequeña) */
+.total-inscritos-card {
+  background-color: #f9f9f9;
+  max-width: 300px; /* Más pequeña que las otras tarjetas */
+  height: 180px; /* Más pequeña en altura */
+  margin-bottom: 20px;
+  background-color: #f6eeca; /* El mismo color de fondo que las demás cards */
   border: 1px solid #be7777; /* Marco gris claro */
   border-radius: 8px; /* Bordes redondeados */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29); /* Sombra */
@@ -70,50 +73,60 @@
   flex: 1 1 20%; /* Ocupa el mismo espacio */
   margin: 0 8px; /* Espacio lateral entre tarjetas */
   transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
-  height: 420px; /* Ajusta la altura de la tarjeta */
-  max-width: 430px;
+  height: 200px; /* Altura más pequeña que los otros cards */
+  max-width: 430px; /* Mantiene el mismo ancho */
 }
 
-
-
-
+/* Estilo al pasar el cursor sobre las tarjetas */
 .chart-card:hover {
-  transform: translateY(-7px); /* Eleva la tarjeta al pasar el cursor */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+  transform: translateY(-7px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Ajusta el tamaño del gráfico para que sea uniforme en todas las tarjetas */
+/* Centrado de la leyenda y gráficos */
+.chart-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
+.chart-header h5 {
+  font-size: 18px;
+  font-weight: bold;
+}
 
-/* Estilo para centrar el número total de alumnos inscritos */
+.chart-header p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilo para el número total de alumnos inscritos */
 .center-number {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Ocupar todo el espacio disponible */
+  height: 100%;
 }
 
-/* Ajuste adicional para asegurar que el texto esté bien centrado */
 .total-inscritos-card .chart-content h2 {
-  font-size: 5rem; /* Tamaño del texto */
-  font-weight: bold; /* Negrita para resaltar */
-  color: #333; /* Color del texto */
-  margin: 0; /* Eliminar márgenes */
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
 }
 
-
-
-/* Consulta de medios para pantallas pequeñas */
+/* Consultas para pantallas pequeñas */
 @media (max-width: 780px) {
-  .charts-container {
-   /* flex-direction: column;
-    align-items: center;*/
-    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+  .cards-row {
+    flex-direction: column; /* Apilar las tarjetas en dispositivos pequeños */
     gap: 15px;
   }
 
   .chart-card {
-    width: 90%;
-    margin: 15px 0; /* Espacio entre tarjetas en modo vertical */
+    width: 90%; /* Establecer un tamaño de tarjeta más pequeño en móviles */
+    margin: 15px 0;
+  }
+
+  .total-inscritos-card {
+    max-width: 100%;
   }
 }

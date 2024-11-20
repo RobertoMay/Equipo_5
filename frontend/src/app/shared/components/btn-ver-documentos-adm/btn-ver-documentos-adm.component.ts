@@ -20,14 +20,14 @@ export class BtnVerDocumentosAdmComponent {
   @Output() aspiranteIdEvent = new EventEmitter<string>();
 
   viewDocuments() {
-  console.log('Ver documentos de aspirante con ID:', this.aspiranteId); // Imprimir el ID en la consola
+
     this.aspiranteIdEvent.emit(this.aspiranteId); // Emitir el ID del aspirante al componente padre
     this.openModalEvent.emit(); // Emitir el evento para abrir el modal
   }
 
 
   handleButtonClick() {
-    console.log('Ver documentos de aspirante con ID:', this.aspiranteId);
+
     this.aspiranteIdEvent.emit(this.aspiranteId); // Emitir el ID
     this.openModalEvent.emit(); // Abrir el modal
 }

@@ -199,7 +199,7 @@ export class GestDocStudentsComponent {
       .subscribe(
         (comments) => {
           this.comments = comments;
-          console.log('Imprimiendo comentarios', this.comments);
+    
           this.cdRef.detectChanges();
         },
         (error) =>
@@ -294,7 +294,7 @@ export class GestDocStudentsComponent {
           this.studentName = student.name; // Actualiza el nombre del estudiante
           this.studentStatus = student.enrollmentStatus; // Actualiza el estado de inscripción
 
-          console.log('Trayendo documentos del alumno ', student);
+          
 
           // Manejo de documentos
           if (student.Documents && student.Documents.length > 0) {
@@ -322,14 +322,7 @@ export class GestDocStudentsComponent {
           }
         } else {
           this.loadingService.stopLoading();
-          console.log(response.error + ' ' + response.msg);
-          // setTimeout(() => {
-          //   Swal.fire({
-          //     icon: 'error',
-          //     title: 'Error',
-          //     text: response.msg,
-          //   });
-          // }, 750);
+         
         }
       },
       (error) => {
@@ -377,7 +370,7 @@ export class GestDocStudentsComponent {
   }
 
 
-    console.log('Esto estamos enviando', commentId, this.aspiranteId);
+   
     
     this.gestDocumentsService
       .deleteComment( commentId,this.aspiranteId)
@@ -447,7 +440,7 @@ this.isAccordionTutorOpen= false;
   
   ngOnChanges(changes: SimpleChanges) {
     if (changes['aspiranteId'] && changes['aspiranteId'].currentValue) {
-      console.log('Cambio en aspiranteId:', this.aspiranteId);
+      
 
       this.cdRef.detectChanges(); // Forzar la detección de cambios
     }
