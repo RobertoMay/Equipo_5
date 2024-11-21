@@ -109,33 +109,33 @@ export class ApplicantsComponent implements OnInit {
   loadStudents() {
     this.isLoading = true;
     this.loadingService.startLoading();
-    this.studentService.getNotEnrolledStudents(this.currentPage, this.searchNameInput).subscribe(
-      (response) => {
-        if (!response.error) {
-          this.students = response.data || [];
-          this.filteredStudents = this.students; // Inicializa los estudiantes filtrados
-          this.noMoreStudents = this.students.length === 0;
-          console.log(this.students); // Verifica que los estudiantes se están cargando correctamente
-        } else {
-          Swal.fire(
-            'Aviso',
-            'Actualmente no hay más estudiantes no inscritos disponibles.',
-            'warning'
-          );
-          this.currentPage = this.currentPage -1;
-          
+    this.studentService
+      .getNotEnrolledStudents(this.currentPage, this.searchNameInput)
+      .subscribe(
+        (response) => {
+          if (!response.error) {
+            this.students = response.data || [];
+            this.filteredStudents = this.students; // Inicializa los estudiantes filtrados
+            this.noMoreStudents = this.students.length === 0;
+          } else {
+            Swal.fire(
+              'Aviso',
+              'Actualmente no hay más estudiantes no inscritos disponibles.',
+              'warning'
+            );
+            this.currentPage = this.currentPage - 1;
+          }
+          this.isLoading = false;
+          this.loadingService.stopLoading();
+        },
+        (error) => {
+          console.error('Error fetching students:', error);
+          this.isLoading = false;
+          this.loadingService.stopLoading();
         }
-        this.isLoading = false;
-        this.loadingService.stopLoading();
-      },
-      (error) => {
-        console.error('Error fetching students:', error);
-        this.isLoading = false;
-        this.loadingService.stopLoading();
-      }
-    );
+      );
   }
-  
+
   callExpired() {
     this.expiredService.getById('days-until-delete/').subscribe(
       (response) => {
@@ -165,7 +165,7 @@ export class ApplicantsComponent implements OnInit {
     this.currentPage = 1; // Reinicia la página a 1 cuando el filtro cambie
     this.filterStudents(); // Filtra los estudiantes localmente
   }
-  
+
   filterStudents() {
     this.filteredStudents = this.students.filter((student) => {
       const name = student.name?.toLowerCase() || ''; // Manejar undefined
@@ -177,7 +177,7 @@ export class ApplicantsComponent implements OnInit {
         lastName2.includes(this.searchNameInput)
       );
     });
-  
+
     // Actualiza la bandera de no más estudiantes
     this.noMoreStudents = this.filteredStudents.length === 0;
   }

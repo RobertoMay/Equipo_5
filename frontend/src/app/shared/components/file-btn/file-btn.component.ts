@@ -45,8 +45,20 @@ export class FileBtnComponent implements OnInit {
 
   editFile(event: Event) {
     const input = event.target as HTMLInputElement;
+
     if (input.files && input.files.length > 0) {
       this.file = input.files[0];
+
+      // Validación del tamaño del archivo (5MB)
+      const maxFileSize = 5 * 1024 * 1024; // 5MB en bytes
+      if (this.file.size > maxFileSize) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Archivo demasiado grande',
+          text: 'El archivo debe ser menor a 5MB.',
+        });
+        return; // Salir del método si el archivo es demasiado grande
+      }
 
       this.loadingService.startLoading();
 
@@ -127,8 +139,20 @@ export class FileBtnComponent implements OnInit {
 
   uploadFile(event: Event) {
     const input = event.target as HTMLInputElement;
+
     if (input.files && input.files.length > 0) {
       this.file = input.files[0];
+
+      // Validación del tamaño del archivo (5MB)
+      const maxFileSize = 5 * 1024 * 1024; // 5MB en bytes
+      if (this.file.size > maxFileSize) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Archivo demasiado grande',
+          text: 'El archivo debe ser menor a 5MB.',
+        });
+        return; // Salir del método si el archivo es demasiado grande
+      }
 
       this.loadingService.startLoading();
 

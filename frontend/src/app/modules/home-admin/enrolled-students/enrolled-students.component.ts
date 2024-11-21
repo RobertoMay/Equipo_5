@@ -66,7 +66,6 @@ export class EnrolledStudentsComponent implements OnInit {
   }
 
   viewDocuments(aspiranteId: string) {
-   
     // Lógica adicional para manejar la visualización de documentos
   }
 
@@ -78,34 +77,35 @@ export class EnrolledStudentsComponent implements OnInit {
     this.gestDocModal.aspiranteId = this.selectedAspiranteId; // Asigna el ID al modal
     this.gestDocModal.openModal(); // Abre el modal aquí
   }
- 
+
   loadStudents() {
     this.isLoading = true;
     this.loadingService.startLoading();
-    this.studentService.getEnrolledStudents(this.currentPage, this.searchNameInput).subscribe(
-      (response) => {
-        if (!response.error) {
-          this.students = response.data || [];
-          this.filteredStudents = this.students; // Inicializa los estudiantes filtrados
-          this.noMoreStudents = this.students.length === 0;
-          console.log(this.students); // Verifica que los estudiantes se están cargando correctamente
-        } else {
-          Swal.fire(
-            'Aviso',
-            'Actualmente no hay más estudiantes inscritos disponibles.',
-            'warning'
-          );
-          this.currentPage = this.currentPage -1;
+    this.studentService
+      .getEnrolledStudents(this.currentPage, this.searchNameInput)
+      .subscribe(
+        (response) => {
+          if (!response.error) {
+            this.students = response.data || [];
+            this.filteredStudents = this.students; // Inicializa los estudiantes filtrados
+            this.noMoreStudents = this.students.length === 0;
+          } else {
+            Swal.fire(
+              'Aviso',
+              'Actualmente no hay más estudiantes inscritos disponibles.',
+              'warning'
+            );
+            this.currentPage = this.currentPage - 1;
+          }
+          this.isLoading = false;
+          this.loadingService.stopLoading();
+        },
+        (error) => {
+          console.error('Error fetching students:', error);
+          this.isLoading = false;
+          this.loadingService.stopLoading();
         }
-        this.isLoading = false;
-        this.loadingService.stopLoading();
-      },
-      (error) => {
-        console.error('Error fetching students:', error);
-        this.isLoading = false;
-        this.loadingService.stopLoading();
-      }
-    );
+      );
   }
 
   onSearchInput(event: Event) {
@@ -114,7 +114,7 @@ export class EnrolledStudentsComponent implements OnInit {
     this.currentPage = 1; // Reinicia la página a 1 cuando el filtro cambie
     this.filterStudents(); // Filtra los estudiantes localmente
   }
-  
+
   filterStudents() {
     this.filteredStudents = this.students.filter((student) => {
       const name = student.name?.toLowerCase() || ''; // Manejar undefined
@@ -126,11 +126,10 @@ export class EnrolledStudentsComponent implements OnInit {
         lastName2.includes(this.searchNameInput)
       );
     });
-  
+
     // Actualiza la bandera de no más estudiantes
     this.noMoreStudents = this.filteredStudents.length === 0;
   }
-
 
   //Para la paginacion (Cambiar de pagina)
   changePage(page: number) {
@@ -139,13 +138,10 @@ export class EnrolledStudentsComponent implements OnInit {
       this.loadStudents(); // Llama a la función para cargar estudiantes de la nueva página
     }
   }
-  
 
   getPagesArray(): number[] {
-    console.log(this.totalPages)
-    return Array(this.totalPages+1)
+    return Array(this.totalPages + 1)
       .fill(0)
       .map((_, i) => i + 1);
   }
-
 }

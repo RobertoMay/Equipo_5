@@ -7,7 +7,8 @@ import { AdminDashboardData } from 'models/admin-dashboard.model';
   providedIn: 'root',
 })
 export class AdminDashboardService {
-  private apiUrl = 'http://localhost:3000/api/admin/dashboard';
+  private apiUrl =
+    'https://albergue-57e14.uc.r.appspot.com/api/admin/dashboard';
 
   constructor(private http: HttpClient) {}
 
