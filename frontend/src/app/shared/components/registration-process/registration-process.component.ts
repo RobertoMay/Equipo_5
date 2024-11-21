@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentdocService } from 'services/api/studentdoc/studentdoc.service';
 import { DataStudentService } from 'services/api/datastudent/datastudent.service'; // Actualiza la ruta si es necesario
 import { IStudentDocDocument } from 'models/istudentdoc.metadata'; // Ajusta la ruta según sea necesario
@@ -13,12 +14,23 @@ import { StudentEnrollmentFormService } from 'services/api/student-enrollment-fo
 })
 export class RegistrationProcessComponent implements OnInit {
   isAccepted: boolean = false;
+  isCollapsed: boolean = true;
+  isAddressCollapsed: boolean = true;
+  madreCollapsed: boolean = true;
+  padreCollapsed: boolean = true;
+  tutorCollapsed: boolean = true;
+  casaCollapsed: boolean = true;
+  trasladoCollapsed: boolean = true;
+  discapacidadCollapsed: boolean = true;
+  academicoCollapsed: boolean = true;
+  saludCollapsed: boolean = true;
+  inscripcionCollapsed: boolean = true;
+
   currentStep: number = 1;
   progressWidth: string = '33.33%';
   @ViewChild('formulario', { static: false }) formulario!: ElementRef;
   formularioVisible = false;
   studentName: string = '';
-  formChecked = false;
   aspiranteId: string | null = null;
   statusenrollment: string | null = null;
   currentEnrollmentPeriod: string = '';
@@ -27,11 +39,47 @@ export class RegistrationProcessComponent implements OnInit {
   // Método que se ejecuta cuando se acepta los términos
   onTermsAccepted() {
     this.termsAccepted = true;
-    console.log(this.termsAccepted);
+
   }
   updateEnrollmentPeriod(enrollmentPeriod: string) {
     this.currentEnrollmentPeriod = enrollmentPeriod;
   }
+  toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
+  }
+  toggleAddressCollapse(): void {
+    this.isAddressCollapsed = !this.isAddressCollapsed;
+  }
+   togglemadreCollapse(): void {
+    this.madreCollapsed = !this.madreCollapsed;
+  }
+  togglepadreCollapse(): void {
+    this.padreCollapsed = !this.padreCollapsed;
+  }
+  toggletutorCollapse(): void {
+    this.tutorCollapsed = !this.tutorCollapsed;
+  }
+  togglecasaCollapse(): void {
+    this.casaCollapsed = !this.casaCollapsed;
+  } 
+
+  toggletrasladoCollapse(): void {
+    this.trasladoCollapsed = !this.trasladoCollapsed;
+  }
+
+  togglediscapacidadCollapse(): void {
+    this.discapacidadCollapsed = !this.discapacidadCollapsed;
+  } 
+
+  toggleacademicoCollapse(): void {
+    this.academicoCollapsed= !this.academicoCollapsed;
+  } 
+  
+  togglesaludCollapse(): void {
+    this.saludCollapsed= !this.saludCollapsed;
+  }
+
+
   formData = {
     curp: '',
     nombre: '',
@@ -106,35 +154,25 @@ export class RegistrationProcessComponent implements OnInit {
     //Tramite
     solicitud: '',
   };
-  seccionesForm: {
-    [key: string]: {
-      isComplete: boolean;
-      isChecked: boolean;
-    };
-  } = {
-    infoPersonal: { isComplete: false, isChecked: false },
-    direccion: { isComplete: false, isChecked: false },
-    madre: { isComplete: false, isChecked: false },
-    padre: { isComplete: false, isChecked: false },
-    tutor: { isComplete: false, isChecked: false },
-    casaComedor: { isComplete: false, isChecked: false },
-    traslado: { isComplete: false, isChecked: false },
-    discapacidad: { isComplete: false, isChecked: false },
-    datosAcademicos: { isComplete: false, isChecked: false },
-    salud: { isComplete: false, isChecked: false },
-    tramite: { isComplete: false, isChecked: false },
-  };
+  
   constructor(
+    private fb: FormBuilder,
     private datastudentservice: DataStudentService,
     private studentdocService: StudentdocService,
     private studentEnrollmentService: StudentEnrollmentFormService
   ) {}
+  
   ngOnInit(): void {
     this.aspiranteId = localStorage.getItem('aspiranteId')!;
 
     this.getEnrollmentForm();
-  }
+  
+  
 
+  }
+  toggleinscripcionCollapse(): void {
+    this.inscripcionCollapsed = !this.inscripcionCollapsed;
+  }
   updateEnrollmentStatus(status: boolean) {
     this.isAccepted = status;
   }
@@ -148,22 +186,17 @@ export class RegistrationProcessComponent implements OnInit {
   }
   //Metodo para avanzar al siguiente Paso
   nextStep() {
-    // if (this.validateStep(this.currentStep)) {
-    //   this.currentStep++;
-    //   this.updateProgressBar();
-    //   this.formularioVisible = false;
-    // } else {
-    //   this.showError('Por favor, llena todos los campos requeridos.');
-    // }
-
-    if (true) {
-      this.currentStep++;
-      this.updateProgressBar();
-      this.formularioVisible = false;
+    if (this.validateStep(1)) {
+      this.currentStep++; // Incrementar el paso actual
+      this.updateProgressBar(); // Actualizar la barra de progreso
+      this.formularioVisible = false; // Ocultar el formulario si es necesario
     } else {
       this.showError('Por favor, llena todos los campos requeridos.');
     }
+      
   }
+  
+
   // Metodo para regresar al paso anterior
   previousStep() {
     this.currentStep--;
@@ -176,8 +209,10 @@ export class RegistrationProcessComponent implements OnInit {
   // Valida los pasos, ya sea para pasar al siguiente o mandar los datos
   validateStep(step: number): boolean {
     console.log(this.formData.estadoMadre);
-    console.log(this.formData.estadoPadre);
+    const missingFields: string[] = [];
     if (step === 1) {
+      
+      
       // Validar todos los campos de formData en el paso 1
       return (
         this.formData.curp.trim() !== '' &&
@@ -222,24 +257,7 @@ export class RegistrationProcessComponent implements OnInit {
       );
     } else if (step === 2) {
       // Validar todos los campos de formData en el paso 2
-      console.log(this.formData.comunidadCasa);
-      console.log(this.formData.localidadCasa);
-      console.log(this.formData.centroCoordinador);
-      console.log(this.formData.tipoCasa);
-      console.log(this.formData.nombreCasa);
-      console.log(this.formData.medioAcceso);
-      console.log(this.formData.riesgoAcceso);
-      console.log(this.formData.discapacidad);
-      console.log(this.formData.tipoEscuela);
-      console.log(this.formData.nombreEscuela);
-      console.log(this.formData.escolaridad);
-      console.log(this.formData.semestreoanosCursados);
-      console.log(this.formData.tipoCurso);
-      console.log(this.formData.alergia);
-      console.log(this.formData.alergia);
-      console.log(this.formData.respirar);
-      console.log(this.formData.respirarDetalles);
-      console.log(this.formData.tratamiento);
+    
       return (
         this.formData.comunidadCasa.trim() !== '' &&
         this.formData.localidadCasa.trim() !== '' &&
@@ -439,118 +457,5 @@ export class RegistrationProcessComponent implements OnInit {
       );
   }
 
-  verificarFormulario(seccion: string) {
-    const formData = this.formData;
-    let isComplete = false;
-
-    switch (seccion) {
-      case 'infoPersonal':
-        isComplete = !!(
-          formData.curp &&
-          formData.nombre &&
-          formData.primerApellido &&
-          formData.segundoApellido
-        );
-        break;
-      case 'direccion':
-        isComplete = !!(
-          formData.estado &&
-          formData.municipio &&
-          formData.localidad &&
-          formData.comunidad
-        );
-        break;
-      case 'madre':
-        isComplete = !!(
-          formData.estadoMadre &&
-          formData.curpMadre &&
-          formData.nombreMadre &&
-          formData.primerApellidoMadre
-        );
-        break;
-      case 'padre':
-        isComplete = !!(
-          formData.estadoPadre &&
-          formData.curpPadre &&
-          formData.nombrePadre &&
-          formData.primerApellidoPadre
-        );
-        break;
-      case 'tutor':
-        isComplete = !!(
-          formData.parentescoTutor &&
-          formData.curpTutor &&
-          formData.nombreTutor &&
-          formData.primerApellidoTutor
-        );
-        break;
-      case 'casaComedor':
-        isComplete = !!(
-          formData.comunidadCasa &&
-          formData.localidadCasa &&
-          formData.centroCoordinador &&
-          formData.tipoCasa
-        );
-        break;
-      case 'traslado':
-        isComplete = !!(formData.medioAcceso && formData.riesgoAcceso);
-        break;
-      case 'discapacidad':
-        isComplete = !!formData.discapacidad;
-        break;
-      case 'datosAcademicos':
-        isComplete = !!(formData.tipoEscuela && formData.nombreEscuela);
-        break;
-      case 'salud':
-        isComplete = !!(
-          formData.alergia &&
-          formData.tratamiento &&
-          formData.respirar
-        );
-        break;
-      case 'tramite':
-        isComplete = !!formData.solicitud;
-        break;
-      default:
-        break;
-    }
-    // Obtener la clave de la sección de forma segura
-    const sectionKey: keyof typeof this.seccionesForm =
-      seccion as keyof typeof this.seccionesForm;
-
-    console.log(`Verificando sección: ${sectionKey}`);
-    console.log(
-      `Estado previo isChecked: ${this.seccionesForm[sectionKey].isChecked}`
-    );
-
-    // Actualizar el estado de la sección
-    this.seccionesForm[sectionKey].isComplete = isComplete;
-    // Actualiza isChecked según isComplete
-    this.seccionesForm[sectionKey].isChecked = isComplete;
-
-    console.log(
-      `Estado actualizado isChecked: ${this.seccionesForm[sectionKey].isChecked}`
-    );
-
-    const sectionId = `${seccion}Section`; // Construir el ID de la sección
-    const section = document.getElementById(sectionId); // Obtener el elemento de la sección
-    console.log(seccion);
-    console.log(
-      this.seccionesForm[seccion as keyof typeof this.seccionesForm].isComplete
-    );
-    console.log(
-      this.seccionesForm[seccion as keyof typeof this.seccionesForm].isChecked
-    );
-    if (section) {
-      const bootstrapCollapse = new (window as any).bootstrap.Collapse(
-        section,
-        { toggle: false }
-      );
-      if (isComplete) {
-        bootstrapCollapse.hide(); // Colapsar la sección si está completa
-      } else {
-        bootstrapCollapse.show(); // Mostrar la sección si no está completa
-      }
-    }
-  }
+  
 }

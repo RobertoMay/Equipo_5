@@ -12,7 +12,9 @@
 body {
   font-family: Arial, sans-serif; /* Fuente general de la página */
 }
-
+.fase-text {
+  margin-left: 40px; /* Añadir tabulación o sangría */
+}
 /* Estilos del Banner */
 .banner {
   position: relative;

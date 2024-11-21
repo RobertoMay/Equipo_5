@@ -46,7 +46,7 @@ export class ButtonPdfComponent implements OnInit {
       return;
     }
     this.getAspiranteData();
-    // console.log('Datos del aspirante:', aspiranteId);
+
   }
 
   getAspiranteData(): void {
@@ -66,15 +66,7 @@ export class ButtonPdfComponent implements OnInit {
             data: response.data,
           } as IDataStudent;
 
-          if (this.aspiranteData) {
-            console.log('Datos del aspirante:', this.aspiranteData);
-            console.log(
-              'Nombre del aspirante:',
-              this.aspiranteData.data.nombre
-            );
-          } else {
-            console.log('No se encontraron datos para el aspirante.');
-          }
+          
         }
       },
       (error) => {

@@ -5,13 +5,10 @@
   padding: 20px;
   border-radius: 8px;
 }
-.text-success {
-  color: green;
-  font-weight: bold;
-}
-.collapse {
-  transition: height 0.3s ease; /* Opcional: Añade una transición */
-  height: auto; /* Asegúrate de que la altura se pueda colapsar */
+.validation-error {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
 .custom-button-spacing {
@@ -297,4 +294,27 @@ select option:first-child {
 /* Select inválido (cuando no se ha seleccionado nada) */
 select:invalid {
   color: #999;
+}
+/* Personaliza el checkbox */
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #b41e46; /* Color llamativo */
+  border-radius: 5px; /* Bordes redondeados */
+  appearance: none; /* Quita el estilo predeterminado */
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Color de fondo cuando está seleccionado */
+.custom-checkbox:checked {
+  background-color: #b41e46; /* Color llamativo */
+  border-color: #000; /* Bordes más oscuros */
+}
+
+/* Agregar un efecto al pasar el mouse */
+.custom-checkbox:hover {
+  box-shadow: 0 0 5px rgba(180, 30, 70, 0.5); /* Efecto de sombra */
+  border-color: #000; /* Cambia el color del borde */
 }

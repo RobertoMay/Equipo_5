@@ -3,6 +3,7 @@ import { IStudentDocDocument } from 'models/istudentdoc.metadata';
 import { StudentService } from 'services/api/student/student.service';
 import { GestDocStudentsComponent } from '@shared/components/gest-doc-students/gest-doc-students.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import Swal from 'sweetalert2';
 import { LoadingService } from 'services/global/loading.service';
 import { Router } from '@angular/router';
 import {
@@ -12,6 +13,7 @@ import {
 import { CallService } from '../../../../services/api/call/call.service';
 import { ExpiredService } from 'services/api/expired/expired.service';
 import { IExpired } from 'models/iexpired.data';
+
 @Component({
   selector: 'app-applicants',
   templateUrl: './applicants.component.html',
@@ -24,7 +26,7 @@ export class ApplicantsComponent implements OnInit {
   currentPage = 1; //para la paginacion
   totalPages = 1;
   searchName = ''; //Para que la barra de busqueda no tenga nada
-  searchNameInput = '';
+  searchNameInput = ''; // Este es el valor para la barra de búsqueda
   noMoreStudents = false; // Bandera para mostrar el mensaje de "no hay más estudiantes"
   alumno: any;
   @ViewChild(GestDocStudentsComponent) gestDocModal!: GestDocStudentsComponent;
@@ -83,7 +85,7 @@ export class ApplicantsComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener la convocatoria actual:', error);
-        this.call = null; // Asegúrate de manejar el error adecuadamente
+        this.call = null;
       },
     });
   }
@@ -107,30 +109,33 @@ export class ApplicantsComponent implements OnInit {
   loadStudents() {
     this.isLoading = true;
     this.loadingService.startLoading();
-    this.studentService
-      .getNotEnrolledStudents(this.currentPage, this.searchName)
-      .subscribe(
-        (response) => {
-          if (!response.error) {
-            this.loadingService.stopLoading();
-            this.isLoading = false;
-            this.students = response.data; // Asegúrate de que esta asignación es correcta
-            this.filteredStudents = this.students;
-            this.totalPages = response.data.totalPages;
-          } else {
-            this.loadingService.stopLoading();
-            this.isLoading = false;
-            console.error(response.msg);
-          }
-        },
-        (error) => {
-          this.loadingService.stopLoading();
-          this.isLoading = false;
-          console.error('Error fetching students:', error);
+    this.studentService.getNotEnrolledStudents(this.currentPage, this.searchNameInput).subscribe(
+      (response) => {
+        if (!response.error) {
+          this.students = response.data || [];
+          this.filteredStudents = this.students; // Inicializa los estudiantes filtrados
+          this.noMoreStudents = this.students.length === 0;
+          console.log(this.students); // Verifica que los estudiantes se están cargando correctamente
+        } else {
+          Swal.fire(
+            'Aviso',
+            'Actualmente no hay más estudiantes no inscritos disponibles.',
+            'warning'
+          );
+          this.currentPage = this.currentPage -1;
+          
         }
-      );
+        this.isLoading = false;
+        this.loadingService.stopLoading();
+      },
+      (error) => {
+        console.error('Error fetching students:', error);
+        this.isLoading = false;
+        this.loadingService.stopLoading();
+      }
+    );
   }
-
+  
   callExpired() {
     this.expiredService.getById('days-until-delete/').subscribe(
       (response) => {
@@ -156,32 +161,31 @@ export class ApplicantsComponent implements OnInit {
 
   onSearchInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    this.searchNameInput = inputElement.value.toLowerCase();
-    this.filterStudents(); // Llama al método de filtrado cuando se escribe en el buscador
+    this.searchNameInput = inputElement.value.toLowerCase(); // Usa searchNameInput para el filtro
+    this.currentPage = 1; // Reinicia la página a 1 cuando el filtro cambie
+    this.filterStudents(); // Filtra los estudiantes localmente
   }
-
-  //Es el metodo para buscar el nombre de los estudiantes dependiendo de lo que se escriba en el buscador
+  
   filterStudents() {
     this.filteredStudents = this.students.filter((student) => {
       const name = student.name?.toLowerCase() || ''; // Manejar undefined
       const lastName1 = student.lastName1?.toLowerCase() || ''; // Manejar undefined
       const lastName2 = student.lastName2?.toLowerCase() || ''; // Manejar undefined
       return (
-        name.includes(this.searchNameInput) ||
+        name.includes(this.searchNameInput) || // Compara con searchNameInput
         lastName1.includes(this.searchNameInput) ||
         lastName2.includes(this.searchNameInput)
       );
     });
-
+  
     // Actualiza la bandera de no más estudiantes
     this.noMoreStudents = this.filteredStudents.length === 0;
   }
 
-  //Para la paginacion (Cambiar de pagina)
   changePage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
+    if (page >= 1 && (!this.noMoreStudents || page <= this.totalPages)) {
       this.currentPage = page;
-      this.loadStudents(); // Cargar los estudiantes de la nueva página
+      this.loadStudents(); // Llama a la función para cargar estudiantes de la nueva página
     }
   }
 
@@ -197,16 +201,10 @@ export class ApplicantsComponent implements OnInit {
 
   viewDocuments(aspiranteId: string) {
     console.log('Ver documentos de aspirante con ID:', aspiranteId);
-    // Lógica adicional para manejar la visualización de documentos
   }
 
   onAspiranteIdReceived(aspiranteId: string) {
-    // Aquí se define correctamente el parámetro
     this.selectedAspiranteId = aspiranteId;
-    console.log(
-      'ID recibido en EnrolledStudentsComponent:',
-      this.selectedAspiranteId
-    ); // Verificar aquí
     if (this.gestDocModal) {
       this.gestDocModal.aspiranteId = this.selectedAspiranteId;
       this.gestDocModal.openModal();
