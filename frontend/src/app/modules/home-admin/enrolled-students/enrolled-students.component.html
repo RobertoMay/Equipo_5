@@ -18,8 +18,10 @@
           <th>Nombre Completo:</th>
           <th>Correo Electrónico:</th>
           <th>Curp:</th>
+          <th>Fecha Inscripcion:</th>
+          <th>Hora:</th>
           <th>Estado:</th>
-          <th>Documentos:</th>
+          <th>Documentos</th>
         </tr>
       </thead>
       <tbody>
@@ -27,6 +29,8 @@
           <td>{{ student.name }} {{ student.lastName1 }} {{ student.lastName2 }}</td>
           <td>{{ student.email }}</td>
           <td>{{ student.curp }}</td>
+          <td>{{  formatDateMexican(student.fecha)}}</td>
+          <td>{{ student.hora}}</td>
           <td>
             <span class="badge"
               [ngClass]="{'bg-success': student.enrollmentStatus, 'bg-warning': !student.enrollmentStatus}">
