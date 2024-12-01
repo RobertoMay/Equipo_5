@@ -1,5 +1,5 @@
 .container {
-  max-width: 1000px;
+  max-width: 1300px;
   margin: 0 auto;
 }
  
@@ -103,14 +103,21 @@
   width: 25%;
 }
 .table th:nth-child(3) {
-  width: 22.5%;
+  width: 25%;
 }
 .table th:nth-child(4) {
-  width: 12.5%;
-}
-.table th:nth-child(5) {
   width: 20%;
 }
+.table th:nth-child(5) {
+  width: 15%;
+}
+.table th:nth-child(6) {
+  width: 13%;
+}
+.table th:nth-child(7) {
+  width: 25%;
+}
+
 
 .table-bordered tbody tr {
   width: 100%;

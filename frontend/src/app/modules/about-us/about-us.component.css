@@ -228,6 +228,12 @@ p {
 
 /* Tamaño de fuente más pequeño para dispositivos móviles */
 @media (max-width: 768px) {
+  .banner h1 {
+    font-size: 1rem; /* Tamaño reducido para pantallas pequeñas */
+  }
+  .banner {
+    height: 150px; /* Altura reducida del banner */
+  }
   p {
     font-size: 100%; /* Tamaño de fuente reducido para pantallas pequeñas */
   }

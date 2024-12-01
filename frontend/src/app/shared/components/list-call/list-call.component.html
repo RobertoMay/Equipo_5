@@ -3,6 +3,23 @@
     <h2 class="admin-title">Historial de Convocatorias</h2>
   </div>
 
+  <!-- Filtro por año -->
+  <div class="filter-container">
+    <h3 class="convocatorias-title">Filtrar Convocatorias</h3>
+    <div class="filter-fields">
+      <label for="filterYear" class="filter-label">Año:</label>
+      <input 
+        id="filterYear" 
+        type="number" 
+        [(ngModel)]="filterYear" 
+        placeholder="Ej. 2024" 
+        class="filter-input" 
+      />
+      <button class="filter-button" (click)="applyYearFilter()">Aplicar</button>
+      <button class="filter-button reset" (click)="resetFilter()">Resetear</button>
+    </div>
+  </div>
+  
   <div class="convocatorias-list">
     <div class="table-wrapper">
       <table class="custom-table">
@@ -12,21 +29,26 @@
             <th>Estado</th>
             <th>Fecha de Inicio</th>
             <th>Fecha de Cierre</th>
-            <th>Cupos </th>
+            <th>Cupos</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let call of callsHistory" [ngClass]="{'row-open': call.status, 'row-closed': !call.status}">
+          <tr *ngFor="let call of filteredCalls" [ngClass]="{'row-open': call.status, 'row-closed': !call.status}">
             <td>{{ call.title }}</td>
             <td>
               <span [class.status-open]="call.status" [class.status-closed]="!call.status">
                 {{ call.status ? 'Abierta' : 'Cerrada' }}
               </span>
             </td>
-            <td>{{ formatDate(call.startDate) }}</td> <!-- Fecha formateada -->
-            <td>{{ formatDate(call.endDate) }}</td>   <!-- Fecha formateada -->
-            <td>{{ call.cupo  }}</td>
-          
+            <td>{{ formatDate(call.startDate) }}</td>
+            <td>{{ formatDate(call.endDate) }}</td>
+            <td>{{ call.cupo }}</td>
+            <td>
+              <button class="btn btn-outline-danger btn-icon" (click)="deleteCall(call)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

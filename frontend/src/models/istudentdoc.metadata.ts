@@ -22,6 +22,8 @@ export class IStudentDocDocument implements IBaseModel {
   enrollmentStatus!: boolean; // Estado de inscripción
   convocatoriaId!: string;
   Documents?: StudentDocument[]; // Array de documentos relacionados con el estudiante
+  fecha!: Date; // Fecha de creación o modificación del documento
+  hora!: string; // Hora de creación o modificación del documento
 
   constructor(partial: Partial<IStudentDocDocument>) {
     Object.assign(this, partial);

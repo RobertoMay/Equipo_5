@@ -405,6 +405,8 @@ export class RegistrationProcessComponent implements OnInit {
                   convocatoriaId: idenrollment,
                   enrollmentStatus: false, // inicia en falso por que aun no esta aceptado
                   Documents: documentss, // Agrega los documentos si los tienes
+                  fecha: new Date(), // Fecha actual
+                  hora: new Date().toLocaleTimeString(), // Hora actual
                 };
 
                 this.studentdocService
