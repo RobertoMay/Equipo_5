@@ -48,8 +48,20 @@ export class NavbarComponent implements OnInit {
 
   updateHomeState(currentUrl: string): void {
     // Cuando la URL es '/', es la página de inicio; de lo contrario, no es inicio
-    this.isHome = currentUrl === '/';
-    
+   // this.isHome = currentUrl === '/';
+    // Verificar si la URL corresponde a páginas principales
+  const mainPages = ['/', '/about-us', '/activities', '/registration'];
+  
+  // Si estás en una página principal y ya estabas autenticado, no cambies el estado
+  if (mainPages.includes(currentUrl) && this.isAuthenticated) {
+    this.isHome = true;
+    return;
+  }
+
+  // Comportamiento original
+  //this.isHome = currentUrl === '/';
+  
+   
   }
   
 
@@ -121,7 +133,7 @@ export class NavbarComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  checkAuthStatus() {
+  /*checkAuthStatus() {
     const token = localStorage.getItem('token');
     this.isAuthenticated = !!token; // True si el token existe
 
@@ -137,7 +149,26 @@ export class NavbarComponent implements OnInit {
     
     // this.isHome = false; // Asegurarnos que no estamos en la página de inicio al verificar autenticación
     this.cdr.detectChanges(); // Forzar la actualización del DOM
-  }
+  }*/
+
+    checkAuthStatus() {
+      const token = localStorage.getItem('token');
+      
+      // Solo actualiza si no hay un estado de autenticación previo
+      if (!this.isAuthenticated) {
+        this.isAuthenticated = !!token; 
+    
+        if (this.isAuthenticated) {
+          const esAdmin = localStorage.getItem('esAdministrador');
+          this.isAdmin = esAdmin === 'true';
+        } else {
+          this.isAdmin = false;
+        }
+      }
+    
+      this.cdr.detectChanges(); 
+    }
+
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
