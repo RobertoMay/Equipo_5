@@ -19,25 +19,25 @@ export class AdminService {
   }
 
   async getDashboardData(): Promise<any> {
+    let adminName = 'Administrador no encontrado'; // Siempre inicializamos el nombre del administrador
+
     try {
+      // Obtener el nombre del administrador
       const adminSnapshot = await this.firestore
         .collection('Aspirantes')
         .where('esAdministrador', '==', true)
         .limit(1)
         .get();
 
-      if (adminSnapshot.empty) {
-        throw new HttpException('No se encontró administrador', HttpStatus.NOT_FOUND);
+      if (!adminSnapshot.empty) {
+        const adminData = adminSnapshot.docs[0].data();
+        adminName = adminData.nombresCompletos;
       }
-
-      const adminData = adminSnapshot.docs[0].data();
-      const adminName = adminData.nombresCompletos;
 
       const convocatoria = await this.convocatoriaService.getCurrentConvocatoria();
       const aspirantesSnapshot = await this.firestore.collection('Aspirantes').get();
       const aspirantes = aspirantesSnapshot.docs;
 
-      // Variables de conteo
       let totalAspirantes = 0;
       let aspirantesInscritos = 0;
       let aspirantesPorInscribirse = 0;
@@ -59,7 +59,6 @@ export class AdminService {
           try {
             const dataStudent = await this.dataStudentService.findByAspiranteId(aspiranteData.id);
 
-            // Encuesta contestada
             if (dataStudent?.data?.solicitud) {
               encuestaContestada = true;
               aspirantesEncuestaContestada++;
@@ -67,7 +66,6 @@ export class AdminService {
               aspirantesEncuestaNoContestada++;
             }
 
-            // Documentos completos
             const studentDocsSnapshot = await this.firestore
               .collection('StudentDocDocument')
               .where('aspiranteId', '==', aspiranteData.id)
@@ -84,7 +82,6 @@ export class AdminService {
             if (documentosCompletos) {
               aspirantesInscritos++;
 
-              // Distribución de género
               const genero = dataStudent?.data?.sexo?.toLowerCase().trim() || 'otro';
               if (['hombre', 'masculino'].includes(genero)) {
                 hombresInscritos++;
@@ -94,23 +91,25 @@ export class AdminService {
                 otrosInscritos++;
               }
             } else {
-              // Solo contar como pendiente si no está inscrito
               aspirantesPorInscribirse++;
             }
           } catch {
-            // Si ocurre un error, considerar como pendiente y encuesta no contestada
             aspirantesPorInscribirse++;
             aspirantesEncuestaNoContestada++;
+          }
+
+          if (!documentosCompletos) {
+            aspirantesPorInscribirse++;
           }
         }
       }
 
-      const plazasOcupadas = convocatoria.occupiedCupo || 0;
-      const plazasDisponibles = convocatoria.availableCupo || 0;
+      const plazasOcupadas = convocatoria?.occupiedCupo || 0;
+      const plazasDisponibles = convocatoria?.availableCupo || 0;
       const cupoTotal = plazasOcupadas + plazasDisponibles;
 
       return {
-        adminName,
+        adminName, // Aquí aseguramos que siempre se devuelva
         alumnosInscritos: aspirantesInscritos,
         alumnos: {
           total: totalAspirantes,
@@ -135,10 +134,31 @@ export class AdminService {
         },
       };
     } catch (error) {
-      throw new HttpException(
-        { message: 'Error al obtener datos del tablero', details: error.message },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      return {
+        adminName, // Devuelve el nombre del administrador incluso en caso de error
+        alumnosInscritos: 0,
+        alumnos: {
+          total: 0,
+          inscritos: 0,
+          porInscribirse: 0,
+        },
+        documentacion: {
+          totalPorInscribirse: 0,
+          encuestaContestada: 0,
+          encuestaNoContestada: 0,
+          documentosCompletos: 0,
+        },
+        albergue: {
+          cupoTotal: 0,
+          plazasOcupadas: 0,
+          plazasDisponibles: 0,
+        },
+        distribucionGenero: {
+          hombres: 0,
+          mujeres: 0,
+          otros: 0,
+        },
+      };
     }
   }
 }

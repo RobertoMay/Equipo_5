@@ -26,26 +26,37 @@ export class AspiranteController {
   @Post('login') // Compara los datos ya registrados para el inicio de sesión
   async login(@Body() credentials: { correo: string; curp: string }) {
     const { correo, curp } = credentials;
+  
     try {
       const result = await this.aspiranteService.authenticate(correo, curp);
   
-      // Generación del token
-      const token = jwt.sign({ sub: result.nombresCompletos, esAdministrador: result.esAdministrador }, 'mi-llave-secreta', { expiresIn: '1h' });
+      // Generación del token JWT
+      const token = jwt.sign(
+        { sub: result.nombresCompletos, esAdministrador: result.esAdministrador },
+        'mi-llave-secreta',
+        { expiresIn: '1h' },
+      );
   
       return {
         message: 'Inicio de sesión exitoso',
         token,
-        id: result.id, // Incluye el id en la respuesta
+        id: result.id,
         nombresCompletos: result.nombresCompletos,
-        esAdministrador: result.esAdministrador
+        esAdministrador: result.esAdministrador,
       };
     } catch (error) {
+      // Proporcionar mensajes específicos según el error lanzado
       if (error instanceof ConflictException) {
         throw new HttpException({ message: error.message }, HttpStatus.CONFLICT);
       }
-      throw new HttpException({ message: 'Error interno del servidor', details: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+  
+      throw new HttpException(
+        { message: 'Error interno del servidor', details: error.message },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
+  
   
   @Get('obtenerAspirantes')//obtiene todos los asopirantes registrados
   async getAll() {
