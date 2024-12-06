@@ -77,24 +77,40 @@ async createAspirante(aspirante: AspiranteDocument): Promise<AspiranteDocument> 
 
   // Autenticar al usuario y generar un token
   async authenticate(correo: string, curp: string): Promise<AuthResult & { id: string }> {
-    const snapshot = await this.firestore.collection('Aspirantes')
+    const aspirantesCollection = this.firestore.collection('Aspirantes');
+  
+    // Buscar aspirante por correo
+    const correoSnapshot = await aspirantesCollection.where('correo', '==', correo).get();
+    if (correoSnapshot.empty) {
+      throw new ConflictException('El correo proporcionado no está registrado');
+    }
+  
+    // Buscar aspirante por CURP
+    const curpSnapshot = await aspirantesCollection.where('curp', '==', curp).get();
+    if (curpSnapshot.empty) {
+      throw new ConflictException('La CURP proporcionada no está registrada');
+    }
+  
+    // Validar que coincidan correo y CURP
+    const aspiranteSnapshot = await aspirantesCollection
       .where('correo', '==', correo)
       .where('curp', '==', curp)
       .get();
   
-    if (snapshot.empty) {
-      throw new ConflictException('Usuario no encontrado o credenciales incorrectas');
+    if (aspiranteSnapshot.empty) {
+      throw new ConflictException('La CURP o el correo son incorrectos');
     }
   
-    const userDoc = snapshot.docs[0];
-    const userData = userDoc.data();
+    const aspiranteDoc = aspiranteSnapshot.docs[0];
+    const aspiranteData = aspiranteDoc.data();
   
     return {
-      id: userDoc.id,  // Agrega el id del documento aquí
-      nombresCompletos: userData.nombresCompletos,
-      esAdministrador: userData.esAdministrador || false
+      id: aspiranteDoc.id,
+      nombresCompletos: aspiranteData.nombresCompletos,
+      esAdministrador: aspiranteData.esAdministrador || false,
     };
   }
+  
   
   // Obtener todos los aspirantes
   async getAllAspirantes(): Promise<AspiranteDocument[]> {
