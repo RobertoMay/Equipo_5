@@ -5,13 +5,12 @@ export class StudentDocDocument {
   name: string;
   lastName1: string;
   lastName2: string;
-  email: string; // Asegúrate de tener esta propiedad
-  curp: string; // Asegúrate de tener esta propiedad
+  email: string;
+  curp: string;
   enrollmentPeriod: string;
-  fecha: Date;
-  hora: string;
   enrollmentStatus: boolean;
   convocatoriaId: string;
+  enrollmentStartDate?: Date; // Nuevo campo para la fecha y hora de inicio de inscripción
   Documents: {
     name: string;
     type: string;
@@ -24,7 +23,8 @@ export class StudentDocDocument {
     comment: string;
     createdAt: Date;
     createdBy: string;
-  }[]; // Aquí se define un array que puede contener varios comentarios
+  }[];
+
   constructor(partial: Partial<StudentDocDocument>) {
     Object.assign(this, partial);
   }

@@ -13,124 +13,115 @@ export class AdminService {
     private readonly convocatoriaService: ConvocatoriaService,
     private readonly aspiranteService: AspiranteService,
     private readonly studentDocService: StudenDocService,
-    private readonly dataStudentService: DataStudentService
+    private readonly dataStudentService: DataStudentService,
   ) {
     this.firestore = new Firestore();
   }
 
   async getDashboardData(): Promise<any> {
     try {
-      // 1. Obtener el nombre del administrador
       const adminSnapshot = await this.firestore
         .collection('Aspirantes')
         .where('esAdministrador', '==', true)
         .limit(1)
         .get();
-  
+
       if (adminSnapshot.empty) {
         throw new HttpException('No se encontró administrador', HttpStatus.NOT_FOUND);
       }
-  
+
       const adminData = adminSnapshot.docs[0].data();
       const adminName = adminData.nombresCompletos;
-  
-      // 2. Obtener la convocatoria activa
+
       const convocatoria = await this.convocatoriaService.getCurrentConvocatoria();
-  
-      // 3. Consultar los documentos de todos los aspirantes en StudentDocDocument
-      const studentDocsSnapshot = await this.firestore.collection('StudentDocDocument').get();
-      const AspirantesSnapshot = await this.firestore.collection('Aspirantes').get();
-      const aspirantes = studentDocsSnapshot.docs;
+      const aspirantesSnapshot = await this.firestore.collection('Aspirantes').get();
+      const aspirantes = aspirantesSnapshot.docs;
 
-      const proceso = AspirantesSnapshot.docs;
-      // 4. Filtrar y contar los aspirantes según su estado de inscripción y documentos
-
-  
-      // 4. Variables para contar aspirantes y documentos
-
+      // Variables de conteo
       let totalAspirantes = 0;
       let aspirantesInscritos = 0;
-      let aspirantesNoInscritos = 0;
-      let aspirantesConDocumentosCompletos = 0;
-      let aspirantesConDocumentosPendientes = 0;
-  
-      // Variables para la distribución de género
+      let aspirantesPorInscribirse = 0;
+      let aspirantesEncuestaContestada = 0;
+      let aspirantesEncuestaNoContestada = 0;
       let hombresInscritos = 0;
       let mujeresInscritos = 0;
       let otrosInscritos = 0;
-  
-      for (const doc of aspirantes) {
-        const data = doc.data();
-      
-        // Excluir administradores
-        if (!data.esAdministrador || data.esAdministrador === false) {
-          
-      
-          if (data.enrollmentStatus === true) {
-            aspirantesInscritos++;
-      
-            // Consultar el género desde DataStudent
-            const dataStudent = await this.dataStudentService.findByAspiranteId(data.aspiranteId);
-            const genero = dataStudent.data.sexo.toLowerCase().trim(); // Normalizar a minúsculas y eliminar espacios
-      
-            // Log para verificar qué valores de género se están obteniendo
-           // console.log(`Género encontrado para aspirante ${data.aspiranteId}: ${genero}`);
-      
-            // Clasificar según el género
-            if (genero === 'hombre' || genero === 'masculino') {
-              hombresInscritos++;
-            } else if (genero === 'mujer' || genero === 'femenino') {
-              mujeresInscritos++;
+
+      for (const aspiranteDoc of aspirantes) {
+        const aspiranteData = aspiranteDoc.data();
+
+        if (!aspiranteData.esAdministrador && aspiranteData.convocatoriaId === convocatoria.id) {
+          totalAspirantes++;
+
+          let documentosCompletos = false;
+          let encuestaContestada = false;
+
+          try {
+            const dataStudent = await this.dataStudentService.findByAspiranteId(aspiranteData.id);
+
+            // Encuesta contestada
+            if (dataStudent?.data?.solicitud) {
+              encuestaContestada = true;
+              aspirantesEncuestaContestada++;
             } else {
-              otrosInscritos++;
+              aspirantesEncuestaNoContestada++;
             }
-      
-            // Verificar si tienen documentos completos
-            const documentos = data.Documents || [];
-            const allApproved = documentos.length === 12 && documentos.every(d => d.status === 'approved');
-            if (allApproved) {
-              aspirantesConDocumentosCompletos++;
+
+            // Documentos completos
+            const studentDocsSnapshot = await this.firestore
+              .collection('StudentDocDocument')
+              .where('aspiranteId', '==', aspiranteData.id)
+              .get();
+
+            if (!studentDocsSnapshot.empty) {
+              const studentDocData = studentDocsSnapshot.docs[0].data();
+              const documentos = studentDocData.Documents || [];
+              documentosCompletos =
+                documentos.length === 12 &&
+                documentos.every((doc) => doc.status === 'approved');
+            }
+
+            if (documentosCompletos) {
+              aspirantesInscritos++;
+
+              // Distribución de género
+              const genero = dataStudent?.data?.sexo?.toLowerCase().trim() || 'otro';
+              if (['hombre', 'masculino'].includes(genero)) {
+                hombresInscritos++;
+              } else if (['mujer', 'femenino'].includes(genero)) {
+                mujeresInscritos++;
+              } else {
+                otrosInscritos++;
+              }
             } else {
-              aspirantesConDocumentosPendientes++;
+              // Solo contar como pendiente si no está inscrito
+              aspirantesPorInscribirse++;
             }
-          } else {
-            aspirantesNoInscritos++;
+          } catch {
+            // Si ocurre un error, considerar como pendiente y encuesta no contestada
+            aspirantesPorInscribirse++;
+            aspirantesEncuestaNoContestada++;
           }
         }
       }
 
-      for (const doc of proceso) {
-        const data = doc.data();
-      
-        // Excluir administradores
-        if (!data.esAdministrador || data.esAdministrador === false) {
-          
-      
-          if (data.convocatoriaId === convocatoria.id) {
-            totalAspirantes++;
- 
-        }
-      } 
-    }
- 
-      // 5. Calcular ocupación del albergue
       const plazasOcupadas = convocatoria.occupiedCupo || 0;
       const plazasDisponibles = convocatoria.availableCupo || 0;
       const cupoTotal = plazasOcupadas + plazasDisponibles;
-      const enproceso = totalAspirantes - aspirantesInscritos;
-  
-      // 6. Retornar los datos procesados
+
       return {
         adminName,
+        alumnosInscritos: aspirantesInscritos,
         alumnos: {
           total: totalAspirantes,
           inscritos: aspirantesInscritos,
-          porInscribirse: enproceso,
+          porInscribirse: aspirantesPorInscribirse,
         },
-        documentos: {
-          porInscribirse: aspirantesNoInscritos,
-          completos: aspirantesConDocumentosCompletos,
-          pendientes: aspirantesNoInscritos,
+        documentacion: {
+          totalPorInscribirse: aspirantesPorInscribirse,
+          encuestaContestada: aspirantesEncuestaContestada,
+          encuestaNoContestada: aspirantesEncuestaNoContestada,
+          documentosCompletos: aspirantesInscritos,
         },
         albergue: {
           cupoTotal,
@@ -138,21 +129,16 @@ export class AdminService {
           plazasDisponibles,
         },
         distribucionGenero: {
-          hombresInscritos,
-          mujeresInscritos,
-          otrosInscritos,
+          hombres: hombresInscritos,
+          mujeres: mujeresInscritos,
+          otros: otrosInscritos,
         },
       };
-  
     } catch (error) {
-      console.error('Error al obtener datos del tablero:', error.message);
       throw new HttpException(
         { message: 'Error al obtener datos del tablero', details: error.message },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
-  
-  
-  
 }

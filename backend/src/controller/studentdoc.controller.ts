@@ -204,26 +204,19 @@ export class StudentDocController extends GenericStudentDocController {
   }
   // Endpoint que regresa los datos de un aspirante
   @Get('/student/:aspiranteId')
-  async getStudentByAspiranteId(
-    @Param('aspiranteId') aspiranteId: string,
-  ): Promise<any[]> {
+  async getStudentByAspiranteId(@Param('aspiranteId') aspiranteId: string): Promise<any[]> {
     try {
-      const studentData =
-        await this.studentdocService.getStudentByAspiranteId(aspiranteId);
-      return studentData;
+      const studentData = await this.studentdocService.getStudentByAspiranteId(aspiranteId);
+      return studentData.map(student => ({
+        ...student,
+        enrollmentStartDate: student.enrollmentStartDate, // Agrega la fecha de inicio de inscripción
+      }));
     } catch (error) {
-      console.error(
-        'Error al obtener datos del estudiante por aspiranteId:',
-        error,
-      );
-
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-
-      throw new Error('Error al recuperar los datos del estudiante.');
+      console.error('Error al obtener datos del estudiante por aspiranteId:', error);
+      throw new InternalServerErrorException('Error al recuperar los datos del estudiante.');
     }
   }
+  
 
   // Endpoint que regresa la lista de los documentos asociados a un aspirante
   @Get('/documents/:aspiranteId')

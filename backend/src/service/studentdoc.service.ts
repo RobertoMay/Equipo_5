@@ -158,37 +158,38 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
     documentName: string,
   ): Promise<void> {
     try {
-      // Validar parámetros de entrada
       if (!aspiranteId || !documentBuffer || !documentType || !documentName) {
         throw new BadRequestException(
           'Faltan datos requeridos para el documento',
         );
       }
-
-      // Verificar si el aspirante existe
+  
       const aspiranteDocs = await this.firestore
         .collection('StudentDocDocument')
         .where('aspiranteId', '==', aspiranteId)
         .get();
-
+  
       if (aspiranteDocs.empty) {
         throw new NotFoundException(
           `No se encontró el aspirante con ID: ${aspiranteId}`,
         );
       }
-
-      // Acceder al primer documento encontrado por aspiranteId
+  
       const aspiranteDoc = aspiranteDocs.docs[0];
-      console.log('Aspirante Doc:', aspiranteDoc.data());
-
-      // Subir el PDF a Firebase Storage
+      const aspiranteData = aspiranteDoc.data();
+  
+      // Verificar si la fecha de inicio de inscripción ya está registrada
+      if (!aspiranteData.enrollmentStartDate) {
+        aspiranteData.enrollmentStartDate = new Date(); // Establece la fecha y hora actuales
+        await aspiranteDoc.ref.update({ enrollmentStartDate: aspiranteData.enrollmentStartDate });
+      }
+  
       const link = await this.uploadPdfToFirebase(
         documentBuffer,
         aspiranteId,
         documentName,
       );
-
-      // Crear el objeto de documento
+  
       const document = {
         name: documentName,
         type: documentType,
@@ -196,17 +197,13 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
         date: new Date().toISOString(),
         status: 'uploaded',
       };
-
-      // Actualizar el documento del aspirante en Firestore
-      const aspiranteRef = this.firestore
-        .collection('StudentDocDocument')
-        .doc(aspiranteDoc.id);
-      await aspiranteRef.update({
+  
+      await aspiranteDoc.ref.update({
         Documents: FieldValue.arrayUnion(document),
       });
     } catch (error) {
       console.error('Error al añadir documento al aspirante:', error);
-
+  
       if (
         error instanceof NotFoundException ||
         error instanceof BadRequestException
@@ -219,6 +216,7 @@ export class StudenDocService extends GenericService<StudentDocDocument> {
       }
     }
   }
+  
   // Método para editar un documento de un aspirante
   async editDocumentForAspirante(
     aspiranteId: string,
