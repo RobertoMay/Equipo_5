@@ -61,7 +61,7 @@ export class HomeAdminComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     const token = localStorage.getItem('token');
     this.isAdmin =
       localStorage.getItem('esAdministrador') === 'true' ? true : false;
@@ -89,9 +89,63 @@ export class HomeAdminComponent implements OnInit {
     } else {
       this.logout();
     }
-  }
+  }*/
+
+    ngOnInit(): void {
+      const token = localStorage.getItem('token');
+      this.isAdmin = localStorage.getItem('esAdministrador') === 'true' ? true : false;
+    
+      if (token) {
+        if (this.isAdmin) {
+          this.ngxLoader.start();
+    
+          this.dashboardService.getDashboardData().subscribe(
+            (data: AdminDashboardData) => {
+              console.log('Datos recibidos del dashboard:', data);
+              this.promotorName = data.adminName;
+              
+              // Verificar si hay alumnos
+              const totalAlumnos = data.alumnos.total;
+              if (totalAlumnos === 0) {
+                // Si no hay alumnos, resetea las opciones de gráficos
+                this.inscritosOptions = undefined;
+                this.documentosOptions = undefined;
+                this.albergueOptions = undefined;
+                this.generoOptions = undefined;
+              } else {
+                // Si hay alumnos, establece las opciones de gráficos normalmente
+                this.setChartOptions(data);
+              }
+    
+              this.dataLoaded = true;
+              this.ngxLoader.stop();
+            },
+            (error) => {
+              console.error('Error al cargar los datos del dashboard:', error);
+              this.ngxLoader.stop();
+              this.showError(); // Mostrar error con SweetAlert
+            }
+          );
+        } else {
+          this.logout();
+        }
+      } else {
+        this.logout();
+      }
+    }
 
   private setChartOptions(data: AdminDashboardData): void {
+
+ // Verificar si hay alumnos inscritos
+ const totalAlumnos = data.alumnos.total;
+  
+ if (totalAlumnos === 0) {
+   // Mostrar mensaje cuando no hay alumnos
+   this.dataLoaded = true;
+   return;
+ }
+
+
     // Gráfica de inscritos
     this.inscritosOptions = {
       series: [data.alumnos.inscritos, data.alumnos.porInscribirse],
@@ -109,16 +163,23 @@ export class HomeAdminComponent implements OnInit {
     };
 // Gráfica de documentos
     this.documentosOptions = {
-      series: [data.documentos.completos, data.documentos.pendientes],
+      series: [
+        data.documentos.encuestaContestada, 
+        data.documentos.encuestaPendiente, 
+        data.documentos.documentosCompletos
+      ],
       chart: { type: 'pie', height: 330 },
-      labels: ['Con documentos Completos', 'Con documentos pendientes'],
-
+      labels: [
+        'Encuesta Contestada', 
+        'Encuesta Pendiente', 
+        'Documentos Completos'
+      ],
       legend: {
-        position: 'bottom', // Posiciona las etiquetas debajo del pastel
+        position: 'bottom',
         horizontalAlign: 'center',
         fontSize: '15.4px',
       },
-      total: [data.documentos.porInscribirse], // Total de documentos por inscribirse
+      total: [totalAlumnos],
     };
 // Gráfica de albergue
     this.albergueOptions = {

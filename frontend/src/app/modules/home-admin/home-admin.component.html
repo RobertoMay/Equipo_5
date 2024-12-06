@@ -4,6 +4,16 @@
   </h4>
 </div>
 
+
+ <!-- Mensaje cuando no hay alumnos -->
+ <div *ngIf="dataLoaded && !inscritosOptions" class="no-students-container">
+  <div class="no-students-card">
+    <h3>No hay alumnos inscritos</h3>
+    <p>Actualmente no se han registrado estudiantes en el sistema.</p>
+  </div>
+</div>
+
+
 <!-- Contenedor principal de las gráficas -->
 <div class="charts-container">
   

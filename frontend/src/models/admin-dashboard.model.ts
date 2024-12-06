@@ -6,9 +6,9 @@ export interface AdminDashboardData {
       porInscribirse: number;
     };
     documentos: {
-      porInscribirse: number;
-      completos: number;
-      pendientes: number;
+      encuestaContestada: number;
+      encuestaPendiente: number;
+      documentosCompletos: number;
     };
     albergue: {
       cupoTotal: number;
