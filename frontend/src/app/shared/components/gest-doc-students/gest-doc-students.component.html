@@ -4,7 +4,7 @@
   [ngClass]="{ show: isModalOpen }"
   [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }"
 >
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered ">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
@@ -27,33 +27,7 @@
         ></button>
       </div>
       <div class="modal-body modal-body-scrollable">
-        <!-- Cabecera del acordeón -->
-        <!--
-         <div class="accordion-header" (click)="toggleAccordion()">
-          <div
-            class="d-flex justify-content-between align-items-center p-3 bg-light border"
-          >
-            <h4 class="mb-0">Documentos del Estudiante y Tutor</h4>
-            <i
-              class="bi"
-              [ngClass]="isAccordionOpen ? 'bi-chevron-up' : 'bi-chevron-down'"
-            ></i>
-          </div>
-        </div>
-       termina cabecera de acrodeon
-       -->
-
-        <!-- Contenido del acordeón -->
-        <!-- aqui empieza acordeon general
-        <div
-          class="accordion-content"
-          [ngClass]="{ 'accordion-active': isAccordionOpen }"
-          [ngStyle]="{
-            'max-height': isAccordionOpen ? '2000px' : '0',
-            opacity: isAccordionOpen ? '1' : '0'
-          }"
-        >
-      -->
+       
         <div class="container mt-4 mb-1">
           <!-- Documentos del Alumno -->
           <div class="row mb-4">
