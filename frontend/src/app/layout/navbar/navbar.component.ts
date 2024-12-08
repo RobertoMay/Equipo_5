@@ -44,9 +44,22 @@ export class NavbarComponent implements OnInit {
     //});
   }
 
-
-
   updateHomeState(currentUrl: string): void {
+    // Páginas principales que deben mostrar el navbar general
+    const mainPages = ['/', '/about-us', '/activities', '/registration'];
+    
+    // Si estás en una página principal, establece isHome a true
+    // Independientemente del estado de autenticación
+    if (mainPages.includes(currentUrl)) {
+      this.isHome = true;
+      return;
+    }
+  
+    // Para otras páginas, mantén el comportamiento actual
+    this.isHome = false;
+  }
+//MMETODO 07/12/24
+  /*updateHomeState(currentUrl: string): void {
     // Cuando la URL es '/', es la página de inicio; de lo contrario, no es inicio
    // this.isHome = currentUrl === '/';
     // Verificar si la URL corresponde a páginas principales
@@ -62,7 +75,7 @@ export class NavbarComponent implements OnInit {
   //this.isHome = currentUrl === '/';
   
    
-  }
+  }*/
   
 
   openLogin() {
@@ -106,9 +119,10 @@ export class NavbarComponent implements OnInit {
 
     
 
-    // Forzar la actualización del DOM para reflejar los cambios
-    this.cdr.detectChanges();
+
     this.router.navigate(['/']);
+        // Forzar la actualización del DOM para reflejar los cambios
+        this.cdr.detectChanges();
   }
 
   ngOnInit(): void {
@@ -153,6 +167,23 @@ export class NavbarComponent implements OnInit {
 
     checkAuthStatus() {
       const token = localStorage.getItem('token');
+      const esAdmin = localStorage.getItem('esAdministrador');
+    
+      // Actualizar siempre el estado de autenticación basado en el localStorage
+      this.isAuthenticated = !!token;
+      this.isAdmin = this.isAuthenticated && esAdmin === 'true';
+    
+      // Verificación adicional para prevenir que el navbar vuelva al estado general
+      if (!this.isHome) {
+        // Si está autenticado, asegurarse de que no se muestre el navbar de inicio/general
+        this.isHome = false;
+      }
+    
+      this.cdr.detectChanges();
+    }
+    //METODO REMMPLAZADO 07/12/24
+    /*checkAuthStatus() {
+      const token = localStorage.getItem('token');
       
       // Solo actualiza si no hay un estado de autenticación previo
       if (!this.isAuthenticated) {
@@ -167,7 +198,7 @@ export class NavbarComponent implements OnInit {
       }
     
       this.cdr.detectChanges(); 
-    }
+    }*/
 
 
   toggleMenu() {
