@@ -104,108 +104,183 @@ export class ButtonPdfComponent implements OnInit {
         // Obtener y aplicar los estilos del CSS del componente
         const styleElement = document.createElement('style');
         const styles = `
-          body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            
-            background-color: #ffffff;
-          }
-          .container {
-            max-width: 800px;
-            margin: 0 auto;
-          }
-          .footer2 {
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 10px;
-            padding: 10px 0;
-          }
-        
-          .lock {
-            justify-content: center; 
-            text-align: center;
-          }
-          .footer {
-          font-family: Arial, sans-serif;
-          font-size: 14px;
-          line-height: 1.6;
-          color: #333; /* Color de texto para el pie de página */
-           margin-top: 20px;
+        body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    
+    background-color: #ffffff;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .footer2 {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    padding: 10px 0;
+  }
+
+  .lock {
+    justify-content: center; 
+    text-align: center;
+  }
+  .footer {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333; /* Color de texto para el pie de página */
+   margin-top: 20px;
 }
 
 .avi {
-  font-weight: bold;
-  font-size: 18px; /* Aumentar el tamaño de la fuente */
-  color: #000; /* Color similar al de tu navbar */
-  margin-bottom: 10px; /* Espacio debajo del texto */
-  text-align: center; /* Centrar el aviso de privacidad */
+font-weight: bold;
+font-size: 14px; /* Aumentar el tamaño de la fuente */
+color: #000; /* Color similar al de tu navbar */
+margin-bottom: 0px; /* Espacio debajo del texto */
+text-align: center; /* Centrar el aviso de privacidad */
 }
 
 .footer br {
-  margin-bottom: 10px; /* Espaciado entre las líneas de texto */
-  text-align: justify;
+margin-bottom: 10px; /* Espaciado entre las líneas de texto */
+text-align: justify;
 }
-          txt {
-            font-size: 14px;
-            font-family: Arial, Helvetica, sans-serif;
-          }
-          table {
-            width: 100%;
-            border-collapse: collapse;
-          }
-          td {
-            border: 1px solid #000;
-            padding: 5px;
-            font-size: 12px;
-          }
-          .header {
-            background-color: #610f23;
-            color: white;
-            text-align: center;
-            padding: 10px;
-          }
-          .subheader {
-            background-color: #d9d9d9;
-            font-weight: bold;
-            text-align: center;
-          }
-          .footer {
-            background-color: #ffffff;
-            padding: 10px;
-            font-size: 13px;
-          }
-          input[type="text"], input[type="date"], select {
-            width: 95%;
-            padding: 2px;
-            border: none;
-            border-bottom: 1px solid #000;
-            background-color: transparent;
-          }
-          .checkbox-label {
-            display: inline-block;
-            margin-right: 10px;
-          }
-          .notice {
-            font-size: 10px;
-            text-align: center;
-            margin-bottom: 10px;
-            font-style: italic;
-          }
-          .logo {
-            text-align: left;
-            font-weight: bold;
-            font-size: 12px;
-            color: #ffffff;
-          }
-          h1, h2, h3 {
-            margin: 5px 0;
-          }
-          .ceen {
-            text-align: center;
-          }
+  txt {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  td {
+    border: 1px solid #000;
+    padding: 5px;
+    font-size: 12px;
+  }
+  .header {
+    background-color: #990033;
+    color: white;
+    text-align: center;
+    padding: 0px;
+  }
+  .subheader {
+    background-color: #d9d9d9;
+    font-weight: bold;
+    text-align: center;
+  }
+  .footer {
+    background-color: #ffffff;
+    padding: 10px;
+    font-size: 13px;
+  }
+  input[type="text"], input[type="date"], select {
+    width: 95%;
+    padding: 2px;
+    border: none;
+    border-bottom: 1px solid #000;
+    background-color: transparent;
+  }
+  .checkbox-label {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .notice {
+    font-size: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .logo {
+    text-align: left;
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+  }
+  h1, h2, h3 {
+    margin: 5px 0;
+  }
+  .ceen {
+    text-align: center;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+ 
+    position: relative;
+
+    cursor: pointer;
+}
+.checkbox-container {
+    display: flex;
+    gap: 16px;
+    align-items: center; /* Alinea verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+.label-text {
+    margin-right: 16px; /* Espacio entre "Nombre(s):" y {{nombre}} */
+
+}
+.custom-checkbox {
+    width: 7px;
+    height: 7px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    background-color: white;
+
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .custom-checkbox {
+    background-color: #000000;
+    box-shadow: 0 0 4px #2e2e2e;
+}
+table.education-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+
+}
+.education-table th, 
+.education-table td {
+    padding: 8px;
+    border: 1px solid #000;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .aviso {
+    font-family:'Times New Roman', Times, serif;
+   font-size: 1.6cap;
+    margin-bottom: 20px;
+  }
+
+  p {
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .link {
+    color: blue;
+    text-decoration: underline;
+  }
+   
         `;
         styleElement.innerHTML = styles;
         tempDiv.appendChild(styleElement);
@@ -247,9 +322,9 @@ export class ButtonPdfComponent implements OnInit {
             }
           },
 
-          margin: [15, 10, 19, 10],
-          width: 190, // Ancho máximo del contenido
-          windowWidth: 770, // Ancho simulado de la ventana del navegador
+          margin: [10, 10, 20, 10],
+          width: 193, // Ancho máximo del contenido
+          windowWidth: 800, // Ancho simulado de la ventana del navegador
           autoPaging: true,
         });
       })
@@ -396,16 +471,7 @@ export class ButtonPdfComponent implements OnInit {
           /{{nombreEscuela}}/g,
           this.aspiranteData.data.nombreEscuela || ' '
         )
-        .replace(
-          /{{escolaridad}}/g,
-          this.aspiranteData.data.escolaridad || '---'
-        )
-        .replace(
-          /{{semestreoanosCursados}}/g,
-          this.aspiranteData.data.semestreoanosCursados || '---'
-        )
-        .replace(/{{tipoCurso}}/g, this.aspiranteData.data.tipoCurso || '---')
-        // Salud
+    
         .replace(
           /{{alergiaDetalles}}/g,
           this.aspiranteData.data.alergiaDetalles || ' '
@@ -450,7 +516,42 @@ export class ButtonPdfComponent implements OnInit {
           Pueblo1: 'indigena',
           Pueblo2: 'afromexicano',
         };
-
+  // Datos mapeados
+  const curso = {
+    Anual: 'Anual',
+    Semestral: 'Semestral',
+    Cuatrimestral: 'Cuatrimestral',
+    Trimestral: 'Trimestral',
+  };
+  const presco = {
+    1: 'pre1',
+    2: 'pre2',
+    3: 'pre3',
+  };
+  const prim = {
+    1: 'pri1',
+    2: 'pri2',
+    3: 'pri3',
+  };
+  const sec = {
+    1: 'se1',
+    2: 'se2',
+    3: 'se3',
+  };
+  const bac = {
+    1: 'ba1',
+    2: 'ba2',
+    3: 'ba3',
+  };
+  const su = {
+    1: 's1',
+    2: 's2',
+    3: 's3',
+    4: 's4',
+    5: 's5',
+    6: 's6',
+    7: 's7',
+  };
         const sexos = {
           Mujer: 'mujer',
           Hombre: 'hombre',
@@ -511,6 +612,10 @@ export class ButtonPdfComponent implements OnInit {
           Pública: 'publica',
           Comunitaria: 'comunitaria',
         };
+        const parentescoTutor = {
+          Madre: 'tutm',
+          Padre: 'tutp',
+        };
 
         const tiposDiscapacidad = {
           Motriz: 'mot',
@@ -524,13 +629,49 @@ export class ButtonPdfComponent implements OnInit {
           2: '2',
           3: '3',
         };
-
+        if(this.aspiranteData.data.escolaridad == 'Preescolar'){
+          populatedHtml = replaceCheckbox(
+            populatedHtml,
+            presco,
+            data.semestreoanosCursados
+          );
+        } else if (this.aspiranteData.data.escolaridad == 'Primaria'){
+          populatedHtml = replaceCheckbox(
+            populatedHtml,
+            prim,
+            data.semestreoanosCursados
+          );
+        }else if (this.aspiranteData.data.escolaridad == 'Secundaria'){
+          populatedHtml = replaceCheckbox(
+            populatedHtml,
+            sec,
+            data.semestreoanosCursados
+          );
+        }else if (this.aspiranteData.data.escolaridad == 'Bachillerato'){
+          populatedHtml = replaceCheckbox(
+            populatedHtml,
+            bac,
+            data.semestreoanosCursados
+          );
+        }else if (this.aspiranteData.data.escolaridad == 'Superior'){
+          populatedHtml = replaceCheckbox(
+            populatedHtml,
+            su,
+            data.semestreoanosCursados
+          );
+        }
         // Reemplazo dinámico utilizando la función genérica
         populatedHtml = replaceCheckbox(
           populatedHtml,
           pueblosIndigenas,
           data.puebloIndigena
         );
+          // Reemplazo dinámico utilizando la función genérica
+          populatedHtml = replaceCheckbox(
+            populatedHtml,
+            curso,
+            data.tipoCurso
+          );
         populatedHtml = replaceCheckbox(
           populatedHtml,
           sexos,
@@ -593,9 +734,17 @@ export class ButtonPdfComponent implements OnInit {
         );
         populatedHtml = replaceCheckbox(
           populatedHtml,
+          parentescoTutor,
+          this.aspiranteData.data.parentescoTutor
+        );
+   
+        
+        populatedHtml = replaceCheckbox(
+          populatedHtml,
           solicitud,
           this.aspiranteData.data.solicitud
         );
+        
 
         // Actualización final del contenido del div
         tempDiv.innerHTML = populatedHtml;
