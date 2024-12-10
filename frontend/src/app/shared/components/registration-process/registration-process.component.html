@@ -362,10 +362,10 @@
                 <option value="Madre">Madre</option>
                 <option value="Tío">Tío</option>
                 <option value="Tía">Tía</option>
-                <option value="Tía">Abuelo</option>
-                <option value="Tía">Abuela</option>
-                <option value="Tía">Hermano</option>
-                <option value="Tía">Hermana</option>
+                <option value="Abuelo">Abuelo</option>
+                <option value="Abuela">Abuela</option>
+                <option value="Hermano">Hermano</option>
+                <option value="Hermana">Hermana</option>
                 <!-- Agregar más opciones si es necesario -->
               </select>
             </div>
@@ -595,13 +595,13 @@
                   </div>
                   <div class="col-md-3 form-check">
                     <input class="form-check-input" type="radio" name="riesgoAcceso" [(ngModel)]="formData.riesgoAcceso"
-                      value="Otro" (change)="formData.riesgoAcceso = 'Otro1'" />
+                      value="Otro" (change)="formData.riesgoAcceso = 'Otros'" />
                     <label class="form-check-label">Otro</label>
                   </div>
                 </div>
 
                 <!-- Campo para especificar el medio de acceso si se selecciona 'Otro' -->
-                <div *ngIf="formData.especifRiesgo === 'Otro1'" class="question-row">
+                <div *ngIf="formData.riesgoAcceso === 'Otros'" class="question-row">
                   <label for="especifRiesgo" class="question-text">Especifique</label><br />
                   <input type="text" id="especifRiesgo" class="form-control" [(ngModel)]="formData.especifRiesgo"
                     name="especifRiesgo" required placeholder="Especifique el riesgo de acceso" />
@@ -716,15 +716,10 @@
                   <option value="Secundaria">Secundaria</option>
                   <option value="Bachillerato">Bachillerato</option>
                   <option value="Superior">Superior</option>
-                  <option value="Otro">Otro</option>
                 </select>
               </div>
-              <!-- Campo adicional que se muestra solo si se selecciona 'Pública' -->
-              <div class="question-row" *ngIf="formData.escolaridad === 'Otro'">
-                <label for="" class="question-text">especifica:</label>
-                <input type="text" id="otraesco" class="form-control" [(ngModel)]="formData.otraesco" name="otraesco"
-                  required />
-              </div>
+
+             
               <div class="question-row">
                 <label for="anosCursados" class="question-text">Años Cursados</label>
 
@@ -787,8 +782,7 @@
 
                 <!-- Años cursados para Superior y Otro -->
                 <div class="row mb-3" *ngIf="
-                  formData.escolaridad === 'Superior' ||
-                  formData.escolaridad === 'Otro'
+                  formData.escolaridad === 'Superior' 
                 ">
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="semestreoanosCursado"
