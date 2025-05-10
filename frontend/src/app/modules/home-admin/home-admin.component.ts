@@ -8,7 +8,7 @@ import {
   ApexResponsive,
   ApexNonAxisChartSeries,
   ApexLegend,
-  ApexDataLabels
+  ApexDataLabels,
 } from 'ng-apexcharts';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -33,8 +33,6 @@ export type ChartOptions = {
   totalInscritos?: number; // Nuevo campo para total de inscritos
   xaxis?: ApexXAxis; // Agregar propiedad xaxis
   dataLabels?: ApexDataLabels; // Para etiquetas
-
-
 };
 
 @Component({
@@ -91,159 +89,179 @@ export class HomeAdminComponent implements OnInit {
     }
   }*/
 
-    ngOnInit(): void {
-      const token = localStorage.getItem('token');
-      this.isAdmin = localStorage.getItem('esAdministrador') === 'true' ? true : false;
-    
-      if (token) {
-        if (this.isAdmin) {
-          this.ngxLoader.start();
-    
-          this.dashboardService.getDashboardData().subscribe(
-            (data: AdminDashboardData) => {
-              console.log('Datos recibidos del dashboard:', data);
-              this.promotorName = data.adminName;
-              
-              // Verificar si hay alumnos
-              const totalAlumnos = data.alumnos.total;
-              if (totalAlumnos === 0) {
-                // Si no hay alumnos, resetea las opciones de gráficos
-                this.inscritosOptions = undefined;
-                this.documentosOptions = undefined;
-                this.albergueOptions = undefined;
-                this.generoOptions = undefined;
-              } else {
-                // Si hay alumnos, establece las opciones de gráficos normalmente
-                this.setChartOptions(data);
-              }
-    
-              this.dataLoaded = true;
-              this.ngxLoader.stop();
-            },
-            (error) => {
-              console.error('Error al cargar los datos del dashboard:', error);
-              this.ngxLoader.stop();
-              this.showError(); // Mostrar error con SweetAlert
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    this.isAdmin =
+      localStorage.getItem('esAdministrador') === 'true' ? true : false;
+
+    if (token) {
+      if (this.isAdmin) {
+        this.ngxLoader.start();
+
+        this.dashboardService.getDashboardData().subscribe(
+          (data: AdminDashboardData) => {
+            // console.log('Datos recibidos del dashboard:', data);
+            this.promotorName = data.adminName;
+
+            // Verificar si hay alumnos
+            const totalAlumnos = data.alumnos.total;
+            if (totalAlumnos === 0) {
+              // Si no hay alumnos, resetea las opciones de gráficos
+              this.inscritosOptions = undefined;
+              this.documentosOptions = undefined;
+              this.albergueOptions = undefined;
+              this.generoOptions = undefined;
+            } else {
+              // Si hay alumnos, establece las opciones de gráficos normalmente
+              this.setChartOptions(data);
             }
-          );
-        } else {
-          this.logout();
-        }
+
+            this.dataLoaded = true;
+            this.ngxLoader.stop();
+          },
+          (error) => {
+            console.error('Error al cargar los datos del dashboard:', error);
+            this.ngxLoader.stop();
+            this.showError(); // Mostrar error con SweetAlert
+          }
+        );
       } else {
         this.logout();
       }
+    } else {
+      this.logout();
     }
+  }
 
   private setChartOptions(data: AdminDashboardData): void {
+    // Verificar si hay alumnos inscritos
+    const totalAlumnos = data.alumnos?.total || 0;
 
- // Verificar si hay alumnos inscritos
- const totalAlumnos = data.alumnos.total;
-  
- if (totalAlumnos === 0) {
-   // Mostrar mensaje cuando no hay alumnos
-   this.dataLoaded = true;
-   return;
- }
+    // Resetear todas las opciones primero
+    this.inscritosOptions = undefined;
+    this.documentosOptions = undefined;
+    this.albergueOptions = undefined;
+    this.generoOptions = undefined;
 
+    if (totalAlumnos === 0) {
+      this.dataLoaded = true;
+      return;
+    }
 
-    // Gráfica de inscritos
-    this.inscritosOptions = {
-      series: [data.alumnos.inscritos, data.alumnos.porInscribirse],
-      chart: { type: 'pie', height: 330 },
-      labels: ['Alumnos inscritos', 'Alumnos en proceso de inscripción'],
+    //  Gráfica de Inscritos
+    if (
+      data.alumnos &&
+      (data.alumnos.inscritos > 0 || data.alumnos.porInscribirse > 0)
+    ) {
+      this.inscritosOptions = {
+        series: [data.alumnos.inscritos, data.alumnos.porInscribirse],
+        chart: { type: 'pie', height: 330 },
+        labels: ['Alumnos inscritos', 'Alumnos en proceso de inscripción'],
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          floating: false,
+          fontSize: '16px',
+        },
+        total: [data.alumnos.total],
+        totalInscritos: data.alumnos.inscritos,
+      };
+    }
 
-      legend: {
-        position: 'bottom', // Posiciona las etiquetas debajo del pastel
-        horizontalAlign: 'center',
-        floating: false,
-        fontSize: '16px',
-      },
-      total: [data.alumnos.total], // Total de alumnos
-      totalInscritos: data.alumnos.inscritos, // Total de alumnos inscritos
+    // Gráfica de Documentos
+    const documentos = data.documentos || {
+      encuestaContestada: 0,
+      encuestaPendiente: 0,
+      documentosCompletos: 0,
     };
-// Gráfica de documentos
-    this.documentosOptions = {
-      series: [
-        data.documentos.encuestaContestada, 
-        data.documentos.encuestaPendiente, 
-        data.documentos.documentosCompletos
-      ],
-      chart: { type: 'pie', height: 330 },
-      labels: [
-        'Encuesta Contestada', 
-        'Encuesta Pendiente', 
-        'Documentos Completos'
-      ],
-      legend: {
-        position: 'bottom',
-        horizontalAlign: 'center',
-        fontSize: '15.4px',
-      },
-      total: [totalAlumnos],
-    };
-// Gráfica de albergue
-    this.albergueOptions = {
-      series: [data.albergue.plazasOcupadas, data.albergue.plazasDisponibles],
-      chart: { type: 'pie', height: 330 },
-      labels: ['Ocupadas', 'Disponibles'],
-      legend: {
-        position: 'bottom', // Posiciona las etiquetas debajo del pastel
-        horizontalAlign: 'center',
-        fontSize: '16px',
-      },
-      total: [data.albergue.cupoTotal], // Cupo total del albergue
-    };
-     
-     // Gráfica de albergue
-  this.albergueOptions = {
-    series: [data.albergue.plazasOcupadas, data.albergue.plazasDisponibles],
-    chart: { type: 'pie', height: 330 },
-    labels: ['Ocupadas', 'Disponibles'],
-    legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '16px' },
-    total: [data.albergue.cupoTotal],
-  };
 
-  // Gráfica de género
-  this.generoOptions = {
-    series: [
-      {
-        name: 'Cantidad de estudiantes', // Nombre de la serie
-        data: [
-          data.distribucionGenero.hombresInscritos,
-          data.distribucionGenero.mujeresInscritos,
-          data.distribucionGenero.otrosInscritos,
+    if (
+      documentos.encuestaContestada > 0 ||
+      documentos.encuestaPendiente > 0 ||
+      documentos.documentosCompletos > 0
+    ) {
+      this.documentosOptions = {
+        series: [
+          documentos.encuestaContestada,
+          documentos.encuestaPendiente,
+          documentos.documentosCompletos,
         ],
-      },
-    ],
-    chart: { type: 'bar', height: 350 },
-    labels: ['Hombres', 'Mujeres', 'Otro'],
-    xaxis: {
-      categories: ['Hombres', 'Mujeres', 'Otro'],
-      title: { text: 'Género' },
-    },
-    legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '16px' },
-    dataLabels: {
-      enabled: true,
-      formatter: (val: number, opts: any) => {
-        // Calcular el porcentaje
-        const total = data.distribucionGenero.hombresInscritos +
-                      data.distribucionGenero.mujeresInscritos +
-                      data.distribucionGenero.otrosInscritos;
-        const percentage = ((val / total) * 100).toFixed(1);
-        return `${percentage}%`; // Mostrar el porcentaje
-      },
-      style: {
-        colors: ['#000'], // Color del texto 
-      },
-    
-   
-    },
+        chart: { type: 'pie', height: 330 },
+        labels: [
+          'Encuesta Contestada',
+          'Encuesta Pendiente',
+          'Documentos Completos',
+        ],
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          fontSize: '15.4px',
+        },
+        total: [totalAlumnos],
+      };
+    }
 
-  
+    // Gráfica de Albergue
+    if (
+      data.albergue &&
+      (data.albergue.plazasOcupadas > 0 || data.albergue.plazasDisponibles > 0)
+    ) {
+      this.albergueOptions = {
+        series: [data.albergue.plazasOcupadas, data.albergue.plazasDisponibles],
+        chart: { type: 'pie', height: 330 },
+        labels: ['Ocupadas', 'Disponibles'],
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          fontSize: '16px',
+        },
+        total: [data.albergue.cupoTotal],
+      };
+    }
 
+    // Gráfica de Género
+    if (
+      data.distribucionGenero &&
+      (data.distribucionGenero.hombresInscritos > 0 ||
+        data.distribucionGenero.mujeresInscritos > 0 ||
+        data.distribucionGenero.otrosInscritos > 0)
+    ) {
+      const totalGenero =
+        data.distribucionGenero.hombresInscritos +
+        data.distribucionGenero.mujeresInscritos +
+        data.distribucionGenero.otrosInscritos;
 
-  };
-    
+      this.generoOptions = {
+        series: [
+          {
+            name: 'Cantidad de estudiantes',
+            data: [
+              data.distribucionGenero.hombresInscritos,
+              data.distribucionGenero.mujeresInscritos,
+              data.distribucionGenero.otrosInscritos,
+            ],
+          },
+        ],
+        chart: { type: 'bar', height: 350 },
+        xaxis: {
+          categories: ['Hombres', 'Mujeres', 'Otro'],
+          title: { text: 'Género' },
+        },
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          fontSize: '16px',
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: (val: number) =>
+            `${((val / totalGenero) * 100).toFixed(1)}%`,
+          style: {
+            colors: ['#000'],
+          },
+        },
+      };
+    }
   }
 
   private showError() {

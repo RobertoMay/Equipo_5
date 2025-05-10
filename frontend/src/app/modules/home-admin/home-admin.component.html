@@ -4,86 +4,70 @@
   </h4>
 </div>
 
-
- <!-- Mensaje cuando no hay alumnos -->
- <div *ngIf="dataLoaded && !inscritosOptions" class="no-students-container">
+<!-- Mensaje cuando no hay alumnos -->
+<div *ngIf="dataLoaded && !inscritosOptions" class="no-students-container">
   <div class="no-students-card">
     <h3>No hay alumnos inscritos</h3>
     <p>Actualmente no se han registrado estudiantes en el sistema.</p>
   </div>
 </div>
 
-
 <!-- Contenedor principal de las gráficas -->
-<div class="charts-container">
-  
-  <!-- Card: Total de Alumnos Inscritos (arriba) -->
-  <div *ngIf="inscritosOptions" class="chart-card total-inscritos-card">
+<div *ngIf="dataLoaded && inscritosOptions" class="charts-container">
+
+  <!-- Card: Total de Alumnos Inscritos -->
+  <div class="chart-card total-inscritos-card">
     <div class="chart-header">
-      <h5>Total de Alumnos Inscritos</h5>  
+      <h5>Total de Alumnos Inscritos</h5>
     </div>
     <div class="chart-content center-number">
       <h2>{{ inscritosOptions.totalInscritos || 0 }}</h2>
     </div>
   </div>
 
-  <!-- Contenedor de las 4 tarjetas horizontales -->
+  <!-- Contenedor de las gráficas -->
   <div class="cards-row">
-    <!-- Card: Alumnos inscritos y por inscribirse (pie chart) -->
-    <div *ngIf="inscritosOptions" class="chart-card">
+    <!-- Alumnos inscritos y por inscribirse -->
+    <div class="chart-card">
       <div class="chart-header">
         <h5>Alumnos inscritos y por inscribirse</h5>
-        <p>(Total de alumnos: {{ inscritosOptions.total }})</p>   
+        <p>(Total de alumnos: {{ inscritosOptions.total }})</p>
       </div>
-      <apx-chart
-        [series]="inscritosOptions.series"
-        [chart]="inscritosOptions.chart"
-        [labels]="inscritosOptions.labels"
+      <apx-chart [series]="inscritosOptions.series" [chart]="inscritosOptions.chart" [labels]="inscritosOptions.labels"
         [legend]="inscritosOptions.legend">
       </apx-chart>
     </div>
 
-    <!-- Card: Documentos de alumnos por inscribirse (pie chart) -->
+    <!-- Documentos de alumnos por inscribirse -->
     <div *ngIf="documentosOptions" class="chart-card">
       <div class="chart-header">
         <h5>Documentación de alumnos en proceso de inscripción</h5>
-        <p>(Total de alumnos por inscribirse: {{ documentosOptions.total }})</p>
+        <p *ngIf="documentosOptions.total">(Total de alumnos por inscribirse: {{ documentosOptions.total }})</p>
       </div>
-      <apx-chart
-        [series]="documentosOptions.series"
-        [chart]="documentosOptions.chart"
-        [labels]="documentosOptions.labels"
-        [legend]="documentosOptions.legend">
+      <apx-chart [series]="documentosOptions.series" [chart]="documentosOptions.chart"
+        [labels]="documentosOptions.labels" [legend]="documentosOptions.legend">
       </apx-chart>
     </div>
 
-    <!-- Card: Disponibilidad de cupos (pie chart) -->
+    <!-- Disponibilidad de cupos -->
     <div *ngIf="albergueOptions" class="chart-card">
       <div class="chart-header">
         <h5>Disponibilidad de cupos</h5>
-        <p>(Plazas totales: {{ albergueOptions.total }})</p>
+        <p *ngIf="albergueOptions.total">(Plazas totales: {{ albergueOptions.total }})</p>
       </div>
-      <apx-chart
-        [series]="albergueOptions.series"
-        [chart]="albergueOptions.chart"
-        [labels]="albergueOptions.labels"
+      <apx-chart [series]="albergueOptions.series" [chart]="albergueOptions.chart" [labels]="albergueOptions.labels"
         [legend]="albergueOptions.legend">
       </apx-chart>
     </div>
 
-    <!-- Card: Distribución de género (bar chart) -->
+    <!-- Distribución de género -->
     <div *ngIf="generoOptions" class="chart-card">
       <div class="chart-header">
         <h5>Distribución de Género</h5>
       </div>
-      <apx-chart
-        [series]="generoOptions.series"
-        [chart]="generoOptions.chart"
-        [xaxis]="generoOptions.xaxis"
-        [legend]="generoOptions.legend"
-        [dataLabels]="generoOptions.dataLabels">
+      <apx-chart [series]="generoOptions.series" [chart]="generoOptions.chart" [xaxis]="generoOptions.xaxis"
+        [legend]="generoOptions.legend" [dataLabels]="generoOptions.dataLabels">
       </apx-chart>
     </div>
   </div>
-
 </div>
